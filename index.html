@@ -3,764 +3,399 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>NEXORA AI</title>
+<title>Whispry — Secret Messages</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-html{
-    scroll-behavior:smooth;
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 20% 20%, #40105f 0%, transparent 30%),
+        radial-gradient(circle at 80% 80%, #102d60 0%, transparent 30%),
+        #08080d;
+    color: white;
+    overflow-x: hidden;
 }
 
-body{
-    font-family:Arial,sans-serif;
-    background:#050507;
-    color:white;
-    overflow-x:hidden;
+/* Floating lights */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .25;
+    pointer-events: none;
 }
 
-body:before{
-    content:"";
-    position:fixed;
-    width:600px;
-    height:600px;
-    background:#7040ff;
-    opacity:.12;
-    filter:blur(150px);
-    top:-250px;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:-1;
+body::before {
+    background: #a855f7;
+    top: -100px;
+    left: -100px;
 }
 
-header{
-    position:sticky;
-    top:15px;
-    z-index:10;
-
-    width:92%;
-    max-width:1100px;
-    margin:15px auto;
-
-    padding:15px 20px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    border:1px solid #202025;
-    border-radius:18px;
-
-    background:rgba(8,8,12,.8);
-    backdrop-filter:blur(20px);
+body::after {
+    background: #3b82f6;
+    right: -100px;
+    bottom: -100px;
 }
 
-.logo{
-    font-size:20px;
-    font-weight:bold;
-    letter-spacing:3px;
+nav {
+    width: 100%;
+    padding: 22px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
 }
 
-.logo span{
-    color:#a27cff;
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
-nav{
-    display:flex;
-    gap:25px;
+.logo span {
+    color: #c084fc;
 }
 
-nav a{
-    color:#888;
-    text-decoration:none;
-    font-size:14px;
+.nav-text {
+    color: #aaa;
+    font-size: 14px;
 }
 
-nav a:hover{
-    color:white;
+.hero {
+    text-align: center;
+    padding: 65px 20px 35px;
+    position: relative;
+    z-index: 1;
 }
 
-.start{
-    background:white;
-    color:black;
-    border:0;
-    padding:10px 17px;
-    border-radius:10px;
-    font-weight:bold;
-    cursor:pointer;
+.badge {
+    display: inline-block;
+    padding: 8px 15px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50px;
+    background: rgba(255,255,255,.05);
+    color: #d8b4fe;
+    font-size: 13px;
+    margin-bottom: 20px;
 }
 
-.hero{
-    min-height:85vh;
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-    padding:70px 20px;
+.hero h1 {
+    font-size: clamp(42px, 8vw, 75px);
+    line-height: 1;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #fff, #d8b4fe, #93c5fd);
+    -webkit-background-clip: text;
+    color: transparent;
 }
 
-.badge{
-    border:1px solid #28232f;
-    background:#111017;
-
-    padding:9px 15px;
-    border-radius:30px;
-
-    color:#ad91ff;
-    font-size:10px;
-    letter-spacing:2px;
+.hero p {
+    max-width: 580px;
+    margin: auto;
+    color: #999;
+    line-height: 1.7;
 }
 
-h1{
-    font-size:clamp(55px,10vw,110px);
-    line-height:.9;
-    letter-spacing:-6px;
-    margin:30px 0;
+.container {
+    width: min(1100px, 92%);
+    margin: 35px auto 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    position: relative;
+    z-index: 1;
 }
 
-.gradient{
-    background:linear-gradient(90deg,#fff,#9875ff,#fff);
-    -webkit-background-clip:text;
-    color:transparent;
+.panel {
+    background: rgba(255,255,255,.055);
+    border: 1px solid rgba(255,255,255,.1);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    padding: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
 }
 
-.hero p{
-    max-width:650px;
-    color:#85858d;
-    line-height:1.8;
-    font-size:16px;
+.panel h2 {
+    margin-bottom: 22px;
+    font-size: 20px;
 }
 
-.buttons{
-    margin-top:30px;
-    display:flex;
-    gap:12px;
+label {
+    display: block;
+    color: #aaa;
+    font-size: 13px;
+    margin: 17px 0 8px;
 }
 
-.primary,
-.secondary{
-    padding:14px 22px;
-    border-radius:12px;
-    cursor:pointer;
-    font-weight:bold;
+input,
+textarea,
+select {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,.1);
+    background: rgba(0,0,0,.25);
+    color: white;
+    border-radius: 13px;
+    padding: 14px;
+    outline: none;
+    transition: .2s;
 }
 
-.primary{
-    border:0;
-    background:white;
-    color:black;
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 20px rgba(168,85,247,.15);
 }
 
-.secondary{
-    border:1px solid #29292f;
-    background:#111115;
-    color:white;
+textarea {
+    min-height: 150px;
+    resize: vertical;
 }
 
-.stats{
-    display:flex;
-    gap:60px;
-    margin-top:55px;
+select option {
+    background: #111118;
 }
 
-.stats div{
-    display:flex;
-    flex-direction:column;
-    gap:5px;
+button {
+    width: 100%;
+    margin-top: 20px;
+    border: none;
+    padding: 15px;
+    border-radius: 13px;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(90deg, #9333ea, #6366f1);
+    box-shadow: 0 10px 30px rgba(99,102,241,.25);
+    transition: .25s;
 }
 
-.stats b{
-    font-size:23px;
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(147,51,234,.35);
 }
 
-.stats small{
-    color:#555;
+/* Message card */
+.card-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 420px;
 }
 
-section{
-    max-width:1050px;
-    margin:auto;
-    padding:100px 20px;
+.message-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 35px 28px;
+    border-radius: 25px;
+    text-align: center;
+    background:
+        linear-gradient(145deg,
+        rgba(168,85,247,.18),
+        rgba(59,130,246,.08));
+    border: 1px solid rgba(255,255,255,.15);
+    position: relative;
+    overflow: hidden;
 }
 
-.title span{
-    color:#9b7bff;
-    font-size:10px;
-    letter-spacing:3px;
+.message-card::before {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: #a855f7;
+    filter: blur(80px);
+    opacity: .25;
+    top: -70px;
+    right: -50px;
 }
 
-.title h2{
-    font-size:45px;
-    margin-top:10px;
+.heart {
+    font-size: 45px;
+    margin-bottom: 15px;
+    animation: heartbeat 1.8s infinite;
 }
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-top:45px;
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    10% { transform: scale(1.15); }
+    20% { transform: scale(1); }
 }
 
-.card{
-    min-height:220px;
-    padding:25px;
-
-    border:1px solid #202025;
-    border-radius:20px;
-
-    background:#0b0b0f;
+.to {
+    color: #aaa;
+    font-size: 13px;
 }
 
-.card:hover{
-    transform:translateY(-5px);
-    border-color:#45404e;
+.name {
+    font-size: 27px;
+    margin: 7px 0 22px;
+    color: #e9d5ff;
 }
 
-.icon{
-    font-size:30px;
-    margin-bottom:30px;
+.message {
+    color: #ddd;
+    line-height: 1.7;
+    font-size: 15px;
+    white-space: pre-wrap;
 }
 
-.card h3{
-    margin-bottom:10px;
+.line {
+    width: 70px;
+    height: 1px;
+    background: rgba(255,255,255,.2);
+    margin: 25px auto;
 }
 
-.card p{
-    color:#686870;
-    line-height:1.6;
-    font-size:14px;
+.secret {
+    color: #888;
+    font-size: 12px;
 }
 
-.chat-title{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:20px;
+footer {
+    text-align: center;
+    color: #666;
+    padding: 0 20px 35px;
+    font-size: 12px;
 }
 
-.dot{
-    width:10px;
-    height:10px;
-    border-radius:50%;
-    background:#61ff91;
-    box-shadow:0 0 15px #61ff91;
-}
-
-.chat-title p{
-    color:#666;
-    margin-top:5px;
-}
-
-.chat{
-    border:1px solid #222228;
-    border-radius:22px;
-    overflow:hidden;
-    background:#09090d;
-}
-
-.messages{
-    height:400px;
-    padding:25px;
-    overflow-y:auto;
-}
-
-.message{
-    display:flex;
-    gap:10px;
-    margin-bottom:25px;
-}
-
-.avatar{
-    width:36px;
-    height:36px;
-    min-width:36px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:#1a1430;
-    color:#ae91ff;
-
-    border-radius:10px;
-}
-
-.bubble{
-    max-width:75%;
-}
-
-.bubble strong{
-    font-size:13px;
-}
-
-.bubble p{
-    color:#bbb;
-    margin-top:7px;
-    line-height:1.6;
-    white-space:pre-wrap;
-}
-
-.user{
-    justify-content:flex-end;
-}
-
-.user .bubble{
-    background:#18181e;
-    padding:12px 16px;
-    border-radius:15px;
-}
-
-.input-area{
-    display:flex;
-    gap:10px;
-    padding:15px;
-    border-top:1px solid #222228;
-}
-
-textarea{
-    flex:1;
-    resize:none;
-    border:0;
-    outline:0;
-    background:transparent;
-    color:white;
-    padding:12px;
-    font-size:15px;
-}
-
-textarea::placeholder{
-    color:#555;
-}
-
-.send{
-    width:46px;
-    height:46px;
-    border:0;
-    border-radius:12px;
-    background:white;
-    color:black;
-    font-size:22px;
-    cursor:pointer;
-}
-
-.suggestions{
-    display:flex;
-    gap:8px;
-    padding:0 15px 15px;
-    overflow-x:auto;
-}
-
-.suggestions button{
-    white-space:nowrap;
-    padding:9px 12px;
-    border:1px solid #25252b;
-    border-radius:10px;
-    background:#111115;
-    color:#999;
-    cursor:pointer;
-}
-
-.notice{
-    text-align:center;
-    color:#444;
-    font-size:10px;
-    padding-bottom:15px;
-}
-
-footer{
-    text-align:center;
-    padding:70px 20px;
-    border-top:1px solid #15151a;
-}
-
-footer p{
-    color:#555;
-    margin:12px;
-}
-
-@media(max-width:800px){
-
-    nav{
-        display:none;
+@media(max-width: 800px) {
+    .container {
+        grid-template-columns: 1fr;
     }
 
-    .cards{
-        grid-template-columns:1fr 1fr;
+    .hero {
+        padding-top: 40px;
     }
 
-    .stats{
-        gap:25px;
-    }
-}
-
-@media(max-width:500px){
-
-    .cards{
-        grid-template-columns:1fr;
-    }
-
-    .buttons{
-        flex-direction:column;
-        width:100%;
-        max-width:300px;
-    }
-
-    .stats{
-        gap:20px;
+    .nav-text {
+        display: none;
     }
 }
-
 </style>
 </head>
 
-
 <body>
 
-<header>
+<nav>
+    <div class="logo">Whisp<span>ry</span> ✦</div>
+    <div class="nav-text">Say it. Secretly. 💌</div>
+</nav>
 
-    <div class="logo">
-        <span>✦</span> NEXORA
-    </div>
+<section class="hero">
+    <div class="badge">🔐 PRIVATE • PERSONAL • BEAUTIFUL</div>
 
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#features">Features</a>
-        <a href="#chat">AI Chat</a>
-    </nav>
-
-    <button class="start" onclick="openChat()">
-        Get Started
-    </button>
-
-</header>
-
-
-<div id="home" class="hero">
-
-    <div class="badge">
-        ✦ NEXT GENERATION AI
-    </div>
-
-    <h1>
-        Ask anything.<br>
-        <span class="gradient">Imagine everything.</span>
-    </h1>
+    <h1>Send a Secret.</h1>
 
     <p>
-        Meet NEXORA — your intelligent AI companion built to help you
-        think, create, learn, code and discover. Ask questions,
-        explore ideas and turn your thoughts into reality.
+        Write something you can't say out loud.
+        Create a beautiful secret message for someone special.
     </p>
+</section>
 
-    <div class="buttons">
+<div class="container">
 
-        <button class="primary" onclick="openChat()">
-            Start Chatting →
-        </button>
+    <!-- Creator -->
+    <div class="panel">
 
-        <button class="secondary" onclick="showFeatures()">
-            Explore Features
+        <h2>💌 Create your message</h2>
+
+        <label>Who is it for?</label>
+        <input
+            id="nameInput"
+            type="text"
+            placeholder="e.g. Gudi ❤️"
+        >
+
+        <label>Your secret message</label>
+        <textarea
+            id="messageInput"
+            placeholder="Write something from your heart..."
+        ></textarea>
+
+        <label>Choose a vibe</label>
+
+        <select id="vibeInput">
+            <option value="💌">💌 Sweet</option>
+            <option value="❤️">❤️ Love</option>
+            <option value="🥀">🥀 Sad</option>
+            <option value="✨">✨ Friendship</option>
+            <option value="🤫">🤫 Secret</option>
+        </select>
+
+        <button onclick="createMessage()">
+            Create Secret Message ✨
         </button>
 
     </div>
 
-    <div class="stats">
+    <!-- Preview -->
+    <div class="panel card-area">
 
-        <div>
-            <b>∞</b>
-            <small>Possibilities</small>
-        </div>
+        <div class="message-card">
 
-        <div>
-            <b>24/7</b>
-            <small>Available</small>
-        </div>
+            <div class="heart" id="emoji">💌</div>
 
-        <div>
-            <b>AI</b>
-            <small>Powered</small>
+            <div class="to">A secret message for</div>
+
+            <div class="name" id="previewName">
+                Someone Special
+            </div>
+
+            <div class="line"></div>
+
+            <div class="message" id="previewMessage">
+                Your secret message will appear here...
+            </div>
+
+            <div class="line"></div>
+
+            <div class="secret">
+                🔐 Made with Whispry
+            </div>
+
         </div>
 
     </div>
 
 </div>
 
-
-<section id="features">
-
-    <div class="title">
-
-        <span>WHAT NEXORA CAN DO</span>
-
-        <h2>
-            One AI.<br>
-            Endless possibilities.
-        </h2>
-
-    </div>
-
-
-    <div class="cards">
-
-        <div class="card">
-            <div class="icon">🧠</div>
-            <h3>Think</h3>
-            <p>
-                Ask questions, solve problems and explore ideas
-                with intelligent assistance.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">✍️</div>
-            <h3>Create</h3>
-            <p>
-                Write stories, captions, messages, descriptions
-                and much more.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">💻</div>
-            <h3>Code</h3>
-            <p>
-                Understand code, find problems and build projects
-                with AI assistance.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">🚀</div>
-            <h3>Discover</h3>
-            <p>
-                Learn new concepts and turn curiosity into
-                useful knowledge.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<section id="chat">
-
-    <div class="chat-title">
-
-        <div class="dot"></div>
-
-        <div>
-            <h2>Chat with NEXORA</h2>
-            <p>Ask anything and start exploring.</p>
-        </div>
-
-    </div>
-
-
-    <div class="chat">
-
-        <div class="messages" id="messages">
-
-            <div class="message">
-
-                <div class="avatar">✦</div>
-
-                <div class="bubble">
-
-                    <strong>NEXORA</strong>
-
-                    <p>
-                        Hello! 👋 I'm NEXORA.
-
-                        Ask me anything and let's get started.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="suggestions">
-
-            <button onclick="suggest('Explain artificial intelligence')">
-                💡 Explain something
-            </button>
-
-            <button onclick="suggest('Help me write a message')">
-                ✍️ Help me write
-            </button>
-
-            <button onclick="suggest('Help me create a website')">
-                💻 Help me code
-            </button>
-
-        </div>
-
-
-        <div class="input-area">
-
-            <textarea
-                id="input"
-                placeholder="Ask NEXORA anything..."
-                rows="1"
-            ></textarea>
-
-            <button class="send" onclick="sendMessage()">
-                ↑
-            </button>
-
-        </div>
-
-        <div class="notice">
-            NEXORA may make mistakes. Verify important information.
-        </div>
-
-    </div>
-
-</section>
-
-
 <footer>
-
-    <div class="logo">
-        <span>✦</span> NEXORA
-    </div>
-
-    <p>
-        Intelligence, reimagined.
-    </p>
-
-    <small>
-        © 2026 NEXORA
-    </small>
-
+    © 2026 Whispry • Some words are better kept between two hearts.
 </footer>
-
 
 <script>
 
-const input = document.getElementById("input");
-const messages = document.getElementById("messages");
+function createMessage() {
 
+    const name =
+        document.getElementById("nameInput").value.trim();
 
-function openChat(){
+    const message =
+        document.getElementById("messageInput").value.trim();
 
-    document.getElementById("chat").scrollIntoView({
-        behavior:"smooth"
-    });
+    const vibe =
+        document.getElementById("vibeInput").value;
 
-    setTimeout(function(){
-        input.focus();
-    },600);
-}
+    document.getElementById("emoji").textContent = vibe;
 
+    document.getElementById("previewName").textContent =
+        name || "Someone Special";
 
-function showFeatures(){
-
-    document.getElementById("features").scrollIntoView({
-        behavior:"smooth"
-    });
-
-}
-
-
-function suggest(text){
-
-    input.value = text;
-
-    input.focus();
-
-}
-
-
-function sendMessage(){
-
-    const text = input.value.trim();
-
-    if(!text){
-        return;
-    }
-
-
-    const user = document.createElement("div");
-
-    user.className = "message user";
-
-    user.innerHTML = `
-        <div class="bubble">
-            <p>${escapeHTML(text)}</p>
-        </div>
-    `;
-
-    messages.appendChild(user);
-
-    input.value = "";
-
-
-    const ai = document.createElement("div");
-
-    ai.className = "message";
-
-    ai.innerHTML = `
-        <div class="avatar">✦</div>
-
-        <div class="bubble">
-
-            <strong>NEXORA</strong>
-
-            <p>Thinking...</p>
-
-        </div>
-    `;
-
-    messages.appendChild(ai);
-
-    messages.scrollTop = messages.scrollHeight;
-
-
-    setTimeout(function(){
-
-        ai.querySelector("p").textContent =
-        "I'm ready to answer your questions! 🤖\n\nReal AI connectivity will be added next.";
-
-        messages.scrollTop = messages.scrollHeight;
-
-    },800);
-
-}
-
-
-input.addEventListener("keydown",function(event){
-
-    if(event.key === "Enter" && !event.shiftKey){
-
-        event.preventDefault();
-
-        sendMessage();
-
-    }
-
-});
-
-
-function escapeHTML(text){
-
-    const div = document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
+    document.getElementById("previewMessage").textContent =
+        message || "Your secret message will appear here...";
 
 }
 
