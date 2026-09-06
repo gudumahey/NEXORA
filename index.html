@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NEXORA — Your Intelligent AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background"></div>
+
+    <!-- NAVBAR -->
+    <header>
+        <div class="logo">
+            <span>✦</span> NEXORA
+        </div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#chat">Try NEXORA</a>
+        </nav>
+
+        <button class="nav-btn" onclick="scrollToChat()">
+            Get Started
+        </button>
+    </header>
+
+
+    <!-- HERO -->
+    <main id="home">
+
+        <section class="hero">
+
+            <div class="badge">
+                ✦ NEXT-GENERATION AI
+            </div>
+
+            <h1>
+                Intelligence,<br>
+                <span>Reimagined.</span>
+            </h1>
+
+            <p class="description">
+                Meet <strong>NEXORA</strong> — your intelligent AI companion
+                designed to help you think, create, learn, code and discover.
+                Ask anything, explore ideas and turn your thoughts into reality.
+            </p>
+
+            <div class="hero-buttons">
+                <button class="primary" onclick="scrollToChat()">
+                    Start Chatting <span>→</span>
+                </button>
+
+                <button class="secondary" onclick="showFeatures()">
+                    Explore NEXORA
+                </button>
+            </div>
+
+            <div class="stats">
+                <div>
+                    <strong>∞</strong>
+                    <small>Possibilities</small>
+                </div>
+
+                <div>
+                    <strong>24/7</strong>
+                    <small>Available</small>
+                </div>
+
+                <div>
+                    <strong>AI</strong>
+                    <small>Powered</small>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+        <section id="features" class="features">
+
+            <div class="section-title">
+                <span>WHAT NEXORA CAN DO</span>
+                <h2>One AI. Endless possibilities.</h2>
+            </div>
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+                    <div class="icon">🧠</div>
+                    <h3>Think</h3>
+                    <p>
+                        Ask questions, solve problems and explore ideas
+                        with intelligent AI assistance.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">✍️</div>
+                    <h3>Create</h3>
+                    <p>
+                        Write stories, captions, messages, ideas,
+                        descriptions and much more.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">💻</div>
+                    <h3>Code</h3>
+                    <p>
+                        Build, understand and improve your code
+                        with AI-powered assistance.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon">🚀</div>
+                    <h3>Discover</h3>
+                    <p>
+                        Learn new concepts and turn your curiosity
+                        into knowledge.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHAT -->
+        <section id="chat" class="chat-section">
+
+            <div class="chat-heading">
+                <div class="online"></div>
+
+                <div>
+                    <h2>Chat with NEXORA</h2>
+                    <p>Ask anything. Let's explore together.</p>
+                </div>
+            </div>
+
+
+            <div class="chat-box">
+
+                <div id="messages">
+
+                    <div class="message ai">
+                        <div class="avatar">✦</div>
+
+                        <div class="bubble">
+                            <strong>NEXORA</strong>
+
+                            <p>
+                                Hello! 👋 I'm NEXORA.
+                                Ask me anything and let's get started.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="input-area">
+
+                    <textarea
+                        id="userInput"
+                        placeholder="Ask NEXORA anything..."
+                        rows="1"
+                        onkeydown="handleKey(event)"
+                    ></textarea>
+
+                    <button onclick="sendMessage()" id="sendBtn">
+                        ↑
+                    </button>
+
+                </div>
+
+                <div class="disclaimer">
+                    NEXORA can make mistakes. Always verify important information.
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div class="logo">
+            <span>✦</span> NEXORA
+        </div>
+
+        <p>
+            Intelligence, reimagined for everyone.
+        </p>
+
+        <small>
+            © 2026 NEXORA. All rights reserved.
+        </small>
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
