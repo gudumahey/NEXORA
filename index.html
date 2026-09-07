@@ -3,442 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXORA — Future Starts Here</title>
+
+<title>NOVA CALC</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
 }
 
 body{
-    font-family:'Inter',sans-serif;
-    background:#050509;
-    color:white;
-    overflow-x:hidden;
-}
-
-/* Background */
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-2;
-    background:
-        radial-gradient(circle at 20% 20%, rgba(109,40,217,.25), transparent 30%),
-        radial-gradient(circle at 80% 30%, rgba(37,99,235,.18), transparent 30%),
-        radial-gradient(circle at 50% 90%, rgba(236,72,153,.12), transparent 30%);
-}
-
-body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-1;
-    opacity:.08;
-    background-image:
-        linear-gradient(rgba(255,255,255,.2) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.2) 1px,transparent 1px);
-    background-size:45px 45px;
-}
-
-/* Navbar */
-nav{
-    position:fixed;
-    top:18px;
-    left:50%;
-    transform:translateX(-50%);
-    width:min(1100px,92%);
-    padding:14px 20px;
+    min-height:100vh;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    background:rgba(10,10,18,.65);
-    backdrop-filter:blur(18px);
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:18px;
-    z-index:1000;
-    box-shadow:0 10px 40px rgba(0,0,0,.3);
+    justify-content:center;
+    font-family:Arial, sans-serif;
+    background:
+        radial-gradient(circle at top left,#302060,transparent 35%),
+        radial-gradient(circle at bottom right,#123d58,transparent 35%),
+        #07070b;
+    color:white;
+    padding:20px;
+}
+
+.calculator{
+    width:390px;
+    max-width:100%;
+    padding:22px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:30px;
+    background:rgba(15,15,23,.82);
+    backdrop-filter:blur(25px);
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+}
+
+.top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
 }
 
 .logo{
-    font-size:20px;
+    font-size:18px;
     font-weight:800;
     letter-spacing:2px;
 }
 
 .logo span{
-    color:#9d7cff;
+    opacity:.45;
 }
 
-nav ul{
-    display:flex;
-    list-style:none;
-    gap:28px;
-}
-
-nav a{
+.history-btn{
+    border:0;
     color:#aaa;
-    text-decoration:none;
-    font-size:14px;
-    transition:.3s;
-}
-
-nav a:hover{
-    color:white;
-}
-
-.menu{
-    display:none;
-    font-size:24px;
+    background:rgba(255,255,255,.06);
+    border-radius:10px;
+    padding:9px 12px;
     cursor:pointer;
 }
 
-/* Hero */
-.hero{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:120px 20px 70px;
-}
-
-.hero-content{
-    max-width:900px;
-}
-
-.badge{
-    display:inline-block;
-    padding:8px 15px;
-    border-radius:30px;
-    border:1px solid rgba(255,255,255,.15);
-    background:rgba(255,255,255,.05);
-    color:#bbb;
-    font-size:12px;
-    margin-bottom:25px;
-    animation:fadeUp .8s ease;
-}
-
-.hero h1{
-    font-size:clamp(55px,9vw,105px);
-    line-height:.95;
-    font-weight:800;
-    letter-spacing:-5px;
-    animation:fadeUp 1s ease;
-}
-
-.gradient{
-    background:linear-gradient(90deg,#fff,#9d7cff,#55c8ff,#fff);
-    background-size:300%;
-    -webkit-background-clip:text;
-    color:transparent;
-    animation:gradient 5s infinite;
-}
-
-.hero p{
-    max-width:650px;
-    margin:28px auto;
-    color:#999;
-    font-size:17px;
-    line-height:1.7;
-    animation:fadeUp 1.2s ease;
-}
-
-.buttons{
-    display:flex;
-    justify-content:center;
-    gap:14px;
-    margin-top:30px;
-    animation:fadeUp 1.4s ease;
-}
-
-.btn{
-    padding:14px 23px;
-    border-radius:12px;
-    text-decoration:none;
-    font-weight:600;
-    font-size:14px;
-    transition:.3s;
-}
-
-.primary{
-    color:white;
-    background:linear-gradient(135deg,#7c3aed,#2563eb);
-    box-shadow:0 0 30px rgba(124,58,237,.25);
-}
-
-.primary:hover{
-    transform:translateY(-4px);
-    box-shadow:0 15px 40px rgba(124,58,237,.4);
-}
-
-.secondary{
-    color:#ddd;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(255,255,255,.04);
-}
-
-.secondary:hover{
-    background:rgba(255,255,255,.1);
-}
-
-/* Floating orb */
-.orb{
-    position:absolute;
-    width:350px;
-    height:350px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#7c3aed,#2563eb);
-    filter:blur(100px);
-    opacity:.12;
-    animation:float 7s ease-in-out infinite;
-}
-
-/* Sections */
-section{
-    padding:100px 7%;
-}
-
-.section-title{
-    text-align:center;
-    margin-bottom:50px;
-}
-
-.section-title small{
-    color:#9d7cff;
-    text-transform:uppercase;
-    letter-spacing:3px;
-    font-size:11px;
-}
-
-.section-title h2{
-    font-size:42px;
-    margin-top:10px;
-}
-
-/* Cards */
-.grid{
-    max-width:1100px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-}
-
-.card{
-    padding:30px;
-    min-height:230px;
-    border:1px solid rgba(255,255,255,.09);
+.display{
+    min-height:145px;
+    padding:20px;
     border-radius:22px;
-    background:rgba(255,255,255,.035);
-    backdrop-filter:blur(15px);
-    transition:.4s;
-    position:relative;
+    background:rgba(0,0,0,.28);
+    border:1px solid rgba(255,255,255,.06);
+    margin-bottom:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    text-align:right;
     overflow:hidden;
 }
 
-.card::before{
-    content:"";
-    position:absolute;
-    width:150px;
-    height:150px;
-    background:#7c3aed;
-    filter:blur(90px);
-    opacity:.12;
-    right:-50px;
-    top:-50px;
+.expression{
+    min-height:28px;
+    color:#777;
+    font-size:16px;
+    word-break:break-all;
 }
 
-.card:hover{
-    transform:translateY(-8px);
-    border-color:rgba(157,124,255,.35);
-    background:rgba(255,255,255,.06);
+.result{
+    margin-top:8px;
+    font-size:42px;
+    font-weight:700;
+    word-break:break-all;
 }
 
-.icon{
-    width:48px;
-    height:48px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    border-radius:14px;
-    background:rgba(124,58,237,.15);
-    font-size:22px;
-    margin-bottom:22px;
-}
-
-.card h3{
-    font-size:19px;
-    margin-bottom:12px;
-}
-
-.card p{
-    color:#888;
-    line-height:1.6;
-    font-size:14px;
-}
-
-/* Stats */
-.stats{
-    max-width:1000px;
-    margin:auto;
+.buttons{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:15px;
+    gap:10px;
 }
 
-.stat{
-    text-align:center;
-    padding:28px 10px;
-    border-radius:18px;
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.08);
+button{
+    height:62px;
+    border:0;
+    border-radius:17px;
+    background:rgba(255,255,255,.07);
+    color:white;
+    font-size:19px;
+    cursor:pointer;
+    transition:.15s;
 }
 
-.stat h3{
-    font-size:34px;
+button:hover{
+    background:rgba(255,255,255,.13);
 }
 
-.stat p{
-    color:#777;
-    font-size:12px;
-    margin-top:7px;
+button:active{
+    transform:scale(.94);
 }
 
-/* CTA */
-.cta{
-    max-width:1000px;
-    margin:auto;
-    padding:70px 30px;
-    text-align:center;
-    border-radius:30px;
-    border:1px solid rgba(255,255,255,.1);
-    background:
-        radial-gradient(circle at center,rgba(124,58,237,.15),transparent 60%),
-        rgba(255,255,255,.03);
+.operator{
+    background:rgba(120,80,220,.22);
 }
 
-.cta h2{
-    font-size:45px;
-    margin-bottom:15px;
-}
-
-.cta p{
-    color:#888;
-    margin-bottom:30px;
-}
-
-/* Footer */
-footer{
-    padding:40px 20px;
-    text-align:center;
-    border-top:1px solid rgba(255,255,255,.07);
-    color:#666;
-    font-size:13px;
-}
-
-footer span{
+.special{
     color:#aaa;
 }
 
-/* Cursor */
-.cursor{
-    position:fixed;
-    width:18px;
-    height:18px;
-    border:1px solid rgba(255,255,255,.7);
-    border-radius:50%;
-    pointer-events:none;
-    z-index:9999;
-    transform:translate(-50%,-50%);
-    transition:width .2s,height .2s;
+.equals{
+    background:linear-gradient(135deg,#7655ff,#407cff);
+    font-weight:bold;
 }
 
-.cursor-dot{
-    position:fixed;
-    width:4px;
-    height:4px;
-    background:white;
-    border-radius:50%;
-    pointer-events:none;
-    z-index:10000;
-    transform:translate(-50%,-50%);
+.zero{
+    grid-column:span 2;
 }
 
-/* Animations */
-@keyframes gradient{
-    0%{background-position:0%}
-    50%{background-position:100%}
-    100%{background-position:0%}
+.history{
+    display:none;
+    position:absolute;
+    width:350px;
+    max-width:calc(100% - 40px);
+    max-height:400px;
+    overflow:auto;
+    padding:18px;
+    border-radius:20px;
+    background:#111119;
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    z-index:10;
 }
 
-@keyframes float{
-    0%,100%{transform:translate(0,0)}
-    50%{transform:translate(80px,-50px)}
+.history.show{
+    display:block;
 }
 
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(25px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+.history h3{
+    margin-bottom:15px;
 }
 
-/* Mobile */
-@media(max-width:800px){
+.history-item{
+    padding:12px 0;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    color:#aaa;
+}
 
-    nav ul{
-        display:none;
-        position:absolute;
-        top:65px;
-        left:0;
-        width:100%;
-        padding:20px;
-        flex-direction:column;
-        text-align:center;
-        background:rgba(10,10,18,.95);
-        border-radius:15px;
+.history-item strong{
+    display:block;
+    color:white;
+    margin-top:5px;
+}
+
+.clear-history{
+    margin-top:15px;
+    width:100%;
+    height:45px;
+    font-size:14px;
+}
+
+@media(max-width:420px){
+    .calculator{
+        padding:16px;
+        border-radius:24px;
     }
 
-    nav ul.active{
-        display:flex;
+    button{
+        height:58px;
     }
 
-    .menu{
-        display:block;
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .hero h1{
-        letter-spacing:-3px;
-    }
-
-    .cta h2{
-        font-size:32px;
-    }
-
-    .cursor,
-    .cursor-dot{
-        display:none;
+    .result{
+        font-size:36px;
     }
 }
 </style>
@@ -446,215 +195,249 @@ footer span{
 
 <body>
 
-<div class="cursor"></div>
-<div class="cursor-dot"></div>
+<div class="calculator">
 
-<!-- NAVBAR -->
-<nav>
-    <div class="logo">NEX<span>ORA</span></div>
-
-    <ul id="navLinks">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#stats">Stats</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-
-    <div class="menu" onclick="toggleMenu()">☰</div>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="home">
-    <div class="orb"></div>
-
-    <div class="hero-content">
-        <div class="badge">✦ THE FUTURE IS NOW</div>
-
-        <h1>
-            BUILD<br>
-            <span class="gradient">WITHOUT LIMITS.</span>
-        </h1>
-
-        <p>
-            Welcome to NEXORA — a futuristic digital experience
-            designed for creators, developers and dreamers.
-        </p>
-
-        <div class="buttons">
-            <a href="#features" class="btn primary">Explore NEXORA →</a>
-            <a href="https://github.com/" target="_blank" class="btn secondary">GitHub ↗</a>
-        </div>
-    </div>
-</section>
-
-<!-- FEATURES -->
-<section id="features">
-
-    <div class="section-title">
-        <small>Why NEXORA</small>
-        <h2>Made For The Future.</h2>
+    <div class="top">
+        <div class="logo">NOVA <span>CALC</span></div>
+        <button class="history-btn" onclick="toggleHistory()">⌛</button>
     </div>
 
-    <div class="grid">
-
-        <div class="card">
-            <div class="icon">⚡</div>
-            <h3>Lightning Fast</h3>
-            <p>
-                Lightweight and optimized design that feels
-                smooth on desktop, tablet and mobile.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">◈</div>
-            <h3>Modern Design</h3>
-            <p>
-                Glassmorphism, gradients and futuristic
-                animations create a premium experience.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">⌘</div>
-            <h3>Developer Friendly</h3>
-            <p>
-                Simple HTML, CSS and JavaScript. No frameworks
-                or complicated setup required.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">◎</div>
-            <h3>Fully Responsive</h3>
-            <p>
-                Looks clean and professional across phones,
-                tablets and large desktop screens.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">✦</div>
-            <h3>Interactive</h3>
-            <p>
-                Dynamic clock, cursor effects, animations and
-                smooth scrolling bring the page alive.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">∞</div>
-            <h3>Open Possibilities</h3>
-            <p>
-                Turn this starter into your portfolio,
-                community, startup or personal website.
-            </p>
-        </div>
-
-    </div>
-</section>
-
-<!-- STATS -->
-<section id="stats">
-
-    <div class="section-title">
-        <small>Live Experience</small>
-        <h2>NEXORA Universe</h2>
+    <div class="display">
+        <div class="expression" id="expression"></div>
+        <div class="result" id="result">0</div>
     </div>
 
-    <div class="stats">
+    <div class="buttons">
 
-        <div class="stat">
-            <h3 id="visitors">1,024</h3>
-            <p>VISITORS</p>
-        </div>
+        <button class="special" onclick="clearAll()">AC</button>
+        <button class="special" onclick="backspace()">⌫</button>
+        <button class="special" onclick="percent()">%</button>
+        <button class="operator" onclick="add('÷')">÷</button>
 
-        <div class="stat">
-            <h3>99.9%</h3>
-            <p>UPTIME</p>
-        </div>
+        <button onclick="add('7')">7</button>
+        <button onclick="add('8')">8</button>
+        <button onclick="add('9')">9</button>
+        <button class="operator" onclick="add('×')">×</button>
 
-        <div class="stat">
-            <h3>24/7</h3>
-            <p>ONLINE</p>
-        </div>
+        <button onclick="add('4')">4</button>
+        <button onclick="add('5')">5</button>
+        <button onclick="add('6')">6</button>
+        <button class="operator" onclick="add('-')">−</button>
 
-        <div class="stat">
-            <h3>∞</h3>
-            <p>POSSIBILITIES</p>
-        </div>
+        <button onclick="add('1')">1</button>
+        <button onclick="add('2')">2</button>
+        <button onclick="add('3')">3</button>
+        <button class="operator" onclick="add('+')">+</button>
+
+        <button onclick="add('(')">(</button>
+        <button onclick="add(')')">)</button>
+        <button onclick="add('.')">.</button>
+        <button class="equals" onclick="calculate()">=</button>
+
+        <button class="zero" onclick="add('0')">0</button>
+        <button onclick="square()">x²</button>
 
     </div>
-</section>
+</div>
 
-<!-- CTA -->
-<section id="contact">
-
-    <div class="cta">
-        <h2>Ready to go beyond?</h2>
-
-        <p>
-            Your next digital experience starts here.
-        </p>
-
-        <a href="https://github.com/" target="_blank" class="btn primary">
-            Start Building →
-        </a>
-    </div>
-
-</section>
-
-<!-- FOOTER -->
-<footer>
-    © 2026 <span>NEXORA</span> — Built for the future.
-</footer>
+<div class="history" id="history">
+    <h3>Calculation History</h3>
+    <div id="historyList">No calculations yet.</div>
+    <button class="clear-history" onclick="clearHistory()">Clear History</button>
+</div>
 
 <script>
 
-/* Mobile Menu */
-function toggleMenu(){
-    document.getElementById("navLinks").classList.toggle("active");
+let current = "";
+let history = [];
+
+const expression = document.getElementById("expression");
+const result = document.getElementById("result");
+
+function update(){
+    expression.textContent = current || "";
 }
 
-/* Cursor */
-const cursor = document.querySelector(".cursor");
-const dot = document.querySelector(".cursor-dot");
+function add(value){
 
-document.addEventListener("mousemove",(e)=>{
-    cursor.style.left = e.clientX+"px";
-    cursor.style.top = e.clientY+"px";
+    const operators = ["+","-","×","÷"];
 
-    dot.style.left = e.clientX+"px";
-    dot.style.top = e.clientY+"px";
-});
+    if(operators.includes(value)){
 
-/* Cursor hover effect */
-document.querySelectorAll("a,.card,.btn").forEach(el=>{
-    el.addEventListener("mouseenter",()=>{
-        cursor.style.width="35px";
-        cursor.style.height="35px";
-    });
+        if(!current) return;
 
-    el.addEventListener("mouseleave",()=>{
-        cursor.style.width="18px";
-        cursor.style.height="18px";
-    });
-});
+        if(operators.includes(current.slice(-1))){
+            current = current.slice(0,-1) + value;
+        }else{
+            current += value;
+        }
 
-/* Fake live visitor animation */
-let visitors = 1024;
+    }else{
+        current += value;
+    }
 
-setInterval(()=>{
-    visitors += Math.floor(Math.random()*3);
-    document.getElementById("visitors").textContent =
-        visitors.toLocaleString();
-},4000);
+    update();
+}
 
-/* Close mobile menu after clicking */
-document.querySelectorAll("nav a").forEach(link=>{
-    link.addEventListener("click",()=>{
-        document.getElementById("navLinks").classList.remove("active");
-    });
+function clearAll(){
+    current = "";
+    result.textContent = "0";
+    update();
+}
+
+function backspace(){
+    current = current.slice(0,-1);
+    update();
+}
+
+function percent(){
+
+    if(!current) return;
+
+    let match = current.match(/(\d+(\.\d+)?)$/);
+
+    if(match){
+        let number = parseFloat(match[0]);
+        current = current.slice(0,-match[0].length) + (number / 100);
+        update();
+    }
+}
+
+function square(){
+
+    if(!current) return;
+
+    try{
+        let value = evaluate(current);
+        current = String(value * value);
+        update();
+    }catch{
+        result.textContent = "Error";
+    }
+}
+
+function evaluate(input){
+
+    let safe = input
+        .replace(/×/g,"*")
+        .replace(/÷/g,"/");
+
+    /*
+      Allow only calculator characters.
+    */
+    if(!/^[0-9+\-*/().\s]+$/.test(safe)){
+        throw new Error("Invalid");
+    }
+
+    let answer = Function('"use strict"; return (' + safe + ')')();
+
+    if(!Number.isFinite(answer)){
+        throw new Error("Invalid");
+    }
+
+    return answer;
+}
+
+function calculate(){
+
+    if(!current) return;
+
+    try{
+
+        let answer = evaluate(current);
+
+        let rounded =
+            Math.round((answer + Number.EPSILON) * 100000000) / 100000000;
+
+        result.textContent = rounded;
+
+        history.unshift({
+            expression:current,
+            result:rounded
+        });
+
+        if(history.length > 20){
+            history.pop();
+        }
+
+        renderHistory();
+
+    }catch{
+        result.textContent = "Error";
+    }
+}
+
+function toggleHistory(){
+
+    document
+        .getElementById("history")
+        .classList.toggle("show");
+}
+
+function renderHistory(){
+
+    const list = document.getElementById("historyList");
+
+    if(history.length === 0){
+        list.innerHTML = "No calculations yet.";
+        return;
+    }
+
+    list.innerHTML = history.map(item => `
+        <div class="history-item">
+            ${item.expression}
+            <strong>= ${item.result}</strong>
+        </div>
+    `).join("");
+}
+
+function clearHistory(){
+    history = [];
+    renderHistory();
+}
+
+/* Keyboard support */
+
+document.addEventListener("keydown",(e)=>{
+
+    if(
+        e.key >= "0" &&
+        e.key <= "9"
+    ){
+        add(e.key);
+    }
+
+    else if(
+        ["+","-","(",")","."].includes(e.key)
+    ){
+        add(e.key);
+    }
+
+    else if(e.key === "*"){
+        add("×");
+    }
+
+    else if(e.key === "/"){
+        e.preventDefault();
+        add("÷");
+    }
+
+    else if(e.key === "Enter" || e.key === "="){
+        calculate();
+    }
+
+    else if(e.key === "Backspace"){
+        backspace();
+    }
+
+    else if(e.key === "Escape"){
+        clearAll();
+    }
+
+    else if(e.key === "%"){
+        percent();
+    }
+
 });
 
 </script>
