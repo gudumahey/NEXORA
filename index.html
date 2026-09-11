@@ -1,83 +1,215 @@
-<!Doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-       <tittle>VORKNYX MC</tittle>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lamp Login</title>
 
-<style>
-body {
-background-color: ;
-font-family: Arial,sans-serif;
-}
-
-
-        h1 {
-            color: darkblue;
-            text-align: center;
+    <style>
+        * {
+            box-sizing: border-box;
         }
 
-        h2 {
-            color: purple;
-        }
-
-        h3 {
-            color: darkred;
-        }
-
-        button {
-            padding: 12px 25px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            background-color: darkblue;
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #0b0b12;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
             color: white;
-            cursor: pointer;
         }
 
-        button:hover {
+        /* Lamp */
+        .lamp {
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 5;
+        }
+
+        .lamp-shade {
+            width: 130px;
+            height: 75px;
+            background: #252532;
+            border-radius: 10px 10px 50px 50px;
+            margin: auto;
+            box-shadow: 0 5px 20px rgba(255, 220, 100, 0.1);
+            transition: 0.4s;
+        }
+
+        .bulb {
+            width: 35px;
+            height: 35px;
+            background: #555;
+            border-radius: 50%;
+            margin: -5px auto 0;
+            transition: 0.4s;
+        }
+
+        /* Light effect */
+        .light {
+            position: absolute;
+            top: 105px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+            height: 350px;
+            background: radial-gradient(
+                ellipse,
+                rgba(255, 220, 100, 0.35),
+                transparent 70%
+            );
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+
+        /* Button */
+        .lamp-button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            background: #22222d;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .lamp-button:hover {
+            background: #333342;
             transform: scale(1.05);
         }
 
-        /* Ye box starting mein hidden rahega */
-        #messageBox {
-            display: none;
-            margin: 25px auto;
-            padding: 20px;
-            width: 300px;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        /* ON state */
+        body.on .bulb {
+            background: #ffe36e;
+            box-shadow: 0 0 35px #ffe36e;
+        }
+
+        body.on .lamp-shade {
+            box-shadow: 0 0 30px rgba(255, 220, 100, 0.5);
+        }
+
+        body.on .light {
+            opacity: 1;
+        }
+
+        /* Login box */
+        .login-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -40%) scale(0.7);
+            width: 330px;
+            padding: 30px;
+            background: rgba(25, 25, 35, 0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s;
+            z-index: 10;
+        }
+
+        .login-box.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 13px;
+            margin: 8px 0;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            background: #15151e;
+            color: white;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #ffe36e;
+            color: #111;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            box-shadow: 0 0 20px rgba(255, 227, 110, 0.5);
         }
     </style>
 </head>
 
 <body>
 
-    <h1>Hi everyone, welcome to the server!</h1>
+    <div class="lamp">
 
-    <h2>We are glad to have you ❤️</h2>
+        <div class="lamp-shade"></div>
+        <div class="bulb"></div>
 
-    <h3>Thanks for coming!</h3>
+        <button class="lamp-button" onclick="toggleLamp()">
+            💡 Turn On
+        </button>
 
-    <button onclick="showMessage()">Click Me</button>
-
-    <div id="messageBox">
-        <h2>Welcome! 💖</h2>
-        <p>Thank you for joining our server! 🎉</p>
     </div>
 
-    <br><br>
+    <div class="light"></div>
 
-    <img src="My-image" alt="my image" width="300">
+    <!-- Login -->
+    <div class="login-box" id="loginBox">
 
-    <br><br>
+        <h2>Welcome Back 👋</h2>
 
-    <a href="https://discord.gg/YsxskUSWw">
-        Visit Discord
-    </a>
+        <input type="text" placeholder="Username">
+
+        <input type="password" placeholder="Password">
+
+        <button class="login-btn">
+            Login
+        </button>
+
+    </div>
 
     <script>
-        function showMessage() {
-            document.getElementById("messageBox").style.display = "block";
+        function toggleLamp() {
+
+            document.body.classList.toggle("on");
+
+            const loginBox = document.getElementById("loginBox");
+            const button = document.querySelector(".lamp-button");
+
+            if (document.body.classList.contains("on")) {
+
+                loginBox.classList.add("show");
+                button.innerHTML = "💡 Turn Off";
+
+            } else {
+
+                loginBox.classList.remove("show");
+                button.innerHTML = "💡 Turn On";
+
+            }
         }
     </script>
 
