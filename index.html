@@ -1,217 +1,547 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lamp Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUDU MC</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        body {
-            margin: 0;
-            height: 100vh;
-            background: #0b0b12;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            color: white;
-        }
+body{
+    min-height:100vh;
+    font-family:Arial, sans-serif;
+    background:
+        radial-gradient(circle at 50% 20%, #26304d 0%, #111522 35%, #05060a 80%);
+    color:white;
+    overflow:hidden;
+}
 
-        /* Lamp */
-        .lamp {
-            position: absolute;
-            top: 35px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            z-index: 5;
-        }
+/* ---------- STARS ---------- */
 
-        .lamp-shade {
-            width: 130px;
-            height: 75px;
-            background: #252532;
-            border-radius: 10px 10px 50px 50px;
-            margin: auto;
-            box-shadow: 0 5px 20px rgba(255, 220, 100, 0.1);
-            transition: 0.4s;
-        }
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(white 1px, transparent 1px);
+    background-size:90px 90px, 140px 140px;
+    background-position:10px 20px, 60px 80px;
+    opacity:.18;
+    pointer-events:none;
+}
 
-        .bulb {
-            width: 35px;
-            height: 35px;
-            background: #555;
-            border-radius: 50%;
-            margin: -5px auto 0;
-            transition: 0.4s;
-        }
+/* ---------- LAMP ---------- */
 
-        /* Light effect */
-        .light {
-            position: absolute;
-            top: 105px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 320px;
-            height: 350px;
-            background: radial-gradient(
-                ellipse,
-                rgba(255, 220, 100, 0.35),
-                transparent 70%
-            );
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.5s;
-        }
+.lamp{
+    position:absolute;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:10;
+    text-align:center;
+}
 
-        /* Button */
-        .lamp-button {
-            margin-top: 20px;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 30px;
-            background: #22222d;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+.wire{
+    width:4px;
+    height:85px;
+    background:#20222b;
+    margin:auto;
+    box-shadow:0 0 5px #000;
+}
 
-        .lamp-button:hover {
-            background: #333342;
-            transform: scale(1.05);
-        }
+.lamp-top{
+    width:150px;
+    height:18px;
+    background:linear-gradient(#3a3d47,#171820);
+    border-radius:50%;
+    margin:auto;
+}
 
-        /* ON state */
-        body.on .bulb {
-            background: #ffe36e;
-            box-shadow: 0 0 35px #ffe36e;
-        }
+.shade{
+    width:145px;
+    height:75px;
+    margin:auto;
+    background:linear-gradient(135deg,#333642,#111218);
+    clip-path:polygon(15% 0,85% 0,100% 100%,0 100%);
+    border-radius:10px;
+    box-shadow:0 12px 20px #000;
+    transition:.5s;
+}
 
-        body.on .lamp-shade {
-            box-shadow: 0 0 30px rgba(255, 220, 100, 0.5);
-        }
+.bulb{
+    width:38px;
+    height:38px;
+    background:#555;
+    border-radius:50%;
+    margin:-4px auto 0;
+    transition:.5s;
+}
 
-        body.on .light {
-            opacity: 1;
-        }
+.light{
+    position:absolute;
+    top:125px;
+    left:50%;
+    transform:translateX(-50%);
+    width:550px;
+    height:600px;
+    background:radial-gradient(
+        ellipse,
+        rgba(255,218,100,.38) 0%,
+        rgba(255,200,60,.15) 30%,
+        transparent 70%
+    );
+    opacity:0;
+    transition:.6s;
+    pointer-events:none;
+}
 
-        /* Login box */
-        .login-box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -40%) scale(0.7);
-            width: 330px;
-            padding: 30px;
-            background: rgba(25, 25, 35, 0.95);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+/* ---------- BUTTON ---------- */
 
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.4s;
-            z-index: 10;
-        }
+.switch{
+    margin-top:22px;
+    padding:12px 25px;
+    border:1px solid #555;
+    border-radius:30px;
+    background:rgba(20,20,30,.8);
+    color:white;
+    cursor:pointer;
+    backdrop-filter:blur(10px);
+    transition:.3s;
+}
 
-        .login-box.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
+.switch:hover{
+    transform:scale(1.08);
+    border-color:#ffd85c;
+}
 
-        .login-box h2 {
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 25px;
-        }
+/* ---------- ON ---------- */
 
-        .login-box input {
-            width: 100%;
-            padding: 13px;
-            margin: 8px 0;
-            border: none;
-            outline: none;
-            border-radius: 10px;
-            background: #15151e;
-            color: white;
-        }
+body.on .bulb{
+    background:#ffe477;
+    box-shadow:
+        0 0 15px #ffe477,
+        0 0 45px #ffe477,
+        0 0 80px #ffc400;
+}
 
-        .login-btn {
-            width: 100%;
-            padding: 13px;
-            margin-top: 15px;
-            border: none;
-            border-radius: 10px;
-            background: #ffe36e;
-            color: #111;
-            font-weight: bold;
-            cursor: pointer;
-        }
+body.on .shade{
+    box-shadow:
+        0 10px 30px #000,
+        0 0 35px rgba(255,220,100,.35);
+}
 
-        .login-btn:hover {
-            box-shadow: 0 0 20px rgba(255, 227, 110, 0.5);
-        }
-    </style>
+body.on .light{
+    opacity:1;
+}
+
+/* ---------- AUTH BOX ---------- */
+
+.auth{
+    position:absolute;
+    top:52%;
+    left:50%;
+    transform:translate(-50%,-45%) scale(.75);
+    width:360px;
+    padding:32px;
+    border-radius:24px;
+
+    background:rgba(20,22,32,.78);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.7),
+        inset 0 1px rgba(255,255,255,.08);
+
+    opacity:0;
+    visibility:hidden;
+    transition:.5s;
+    z-index:5;
+}
+
+.auth.show{
+    opacity:1;
+    visibility:visible;
+    transform:translate(-50%,-45%) scale(1);
+}
+
+.logo{
+    text-align:center;
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:5px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#9da3b5;
+    margin:8px 0 25px;
+    font-size:13px;
+}
+
+.auth input{
+    width:100%;
+    padding:14px;
+    margin:7px 0;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    background:#0e1018;
+    color:white;
+    border:1px solid #252936;
+}
+
+.auth input:focus{
+    border-color:#ffd85c;
+    box-shadow:0 0 12px rgba(255,216,92,.15);
+}
+
+.auth button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:0;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ffe477,#ffb82e);
+    color:#111;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.auth button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 25px rgba(255,200,50,.25);
+}
+
+.switch-auth{
+    text-align:center;
+    margin-top:18px;
+    font-size:13px;
+    color:#999;
+}
+
+.switch-auth span{
+    color:#ffe477;
+    cursor:pointer;
+}
+
+/* ---------- DASHBOARD ---------- */
+
+.dashboard{
+    position:absolute;
+    inset:0;
+    padding:35px;
+    background:
+        radial-gradient(circle at 70% 30%,#222c48,transparent 35%),
+        #080a10;
+
+    opacity:0;
+    visibility:hidden;
+    transform:scale(1.05);
+    transition:.6s;
+    z-index:20;
+}
+
+.dashboard.show{
+    opacity:1;
+    visibility:visible;
+    transform:scale(1);
+}
+
+.dash-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.brand{
+    font-size:28px;
+    font-weight:900;
+    letter-spacing:4px;
+}
+
+.profile{
+    padding:10px 18px;
+    border:1px solid #333847;
+    border-radius:30px;
+    background:#11141d;
+}
+
+.hero{
+    margin-top:70px;
+    max-width:750px;
+}
+
+.hero h1{
+    font-size:60px;
+    line-height:1;
+    margin-bottom:18px;
+}
+
+.hero h1 span{
+    color:#ffe477;
+}
+
+.hero p{
+    color:#9da3b5;
+    font-size:17px;
+    line-height:1.6;
+}
+
+.cards{
+    display:flex;
+    gap:18px;
+    margin-top:45px;
+    flex-wrap:wrap;
+}
+
+.card{
+    width:190px;
+    padding:25px;
+    border-radius:18px;
+    background:rgba(25,28,40,.8);
+    border:1px solid #292d3b;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-7px);
+    border-color:#ffe477;
+}
+
+.card-icon{
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:8px;
+}
+
+.card p{
+    color:#858b9c;
+    font-size:13px;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:600px){
+
+    .auth{
+        width:90%;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .dashboard{
+        padding:25px;
+        overflow:auto;
+    }
+
+    .light{
+        width:400px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="lamp">
+<!-- LAMP -->
+<div class="lamp">
 
-        <div class="lamp-shade"></div>
-        <div class="bulb"></div>
+    <div class="wire"></div>
+    <div class="lamp-top"></div>
+    <div class="shade"></div>
+    <div class="bulb"></div>
 
-        <button class="lamp-button" onclick="toggleLamp()">
-            💡 Turn On
-        </button>
+    <button class="switch" onclick="toggleLamp()">
+        💡 Turn On
+    </button>
 
+</div>
+
+<div class="light"></div>
+
+
+<!-- LOGIN / REGISTER -->
+
+<div class="auth" id="auth">
+
+    <div class="logo">GUDU MC</div>
+    <div class="subtitle" id="authSubtitle">
+        Welcome back to the community
     </div>
 
-    <div class="light"></div>
+    <input id="username" type="text" placeholder="Username">
+    <input id="email" type="text" placeholder="Email">
 
-    <!-- Login -->
-    <div class="login-box" id="loginBox">
+    <input id="password" type="password" placeholder="Password">
 
-        <h2>Welcome Back 👋</h2>
+    <button onclick="enterDashboard()">
+        <span id="mainButton">LOGIN</span>
+    </button>
 
-        <input type="text" placeholder="Username">
-
-        <input type="password" placeholder="Password">
-
-        <button class="login-btn">
-            Login
-        </button>
-
+    <div class="switch-auth">
+        <span id="switchText">Don't have an account? Register</span>
     </div>
 
-    <script>
-        function toggleLamp() {
+</div>
 
-            document.body.classList.toggle("on");
 
-            const loginBox = document.getElementById("loginBox");
-            const button = document.querySelector(".lamp-button");
+<!-- DASHBOARD -->
 
-            if (document.body.classList.contains("on")) {
+<div class="dashboard" id="dashboard">
 
-                loginBox.classList.add("show");
-                button.innerHTML = "💡 Turn Off";
+    <div class="dash-header">
+        <div class="brand">GUDU MC</div>
+        <div class="profile">👤 <span id="userDisplay">User</span></div>
+    </div>
 
-            } else {
+    <div class="hero">
+        <h1>Welcome to <span>GUDU MC</span> ✨</h1>
 
-                loginBox.classList.remove("show");
-                button.innerHTML = "💡 Turn On";
+        <p>
+            Your personal dashboard is ready.
+            Explore the community, connect with people
+            and enjoy the GUDU MC experience.
+        </p>
 
-            }
-        }
-    </script>
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-icon">👥</div>
+                <h3>Community</h3>
+                <p>Connect with everyone.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">💬</div>
+                <h3>Messages</h3>
+                <p>Stay connected.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">⭐</div>
+                <h3>Premium</h3>
+                <p>Unlock special features.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">⚙️</div>
+                <h3>Settings</h3>
+                <p>Customize your profile.</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+let registerMode = false;
+
+/* LAMP */
+
+function toggleLamp(){
+
+    document.body.classList.toggle("on");
+
+    const auth = document.getElementById("auth");
+    const button = document.querySelector(".switch");
+
+    if(document.body.classList.contains("on")){
+
+        auth.classList.add("show");
+        button.innerHTML = "💡 Turn Off";
+
+    }else{
+
+        auth.classList.remove("show");
+        button.innerHTML = "💡 Turn On";
+
+    }
+}
+
+
+/* LOGIN / REGISTER SWITCH */
+
+document.getElementById("switchText").onclick = function(){
+
+    registerMode = !registerMode;
+
+    const mainButton = document.getElementById("mainButton");
+    const subtitle = document.getElementById("authSubtitle");
+    const switchText = document.getElementById("switchText");
+
+    if(registerMode){
+
+        mainButton.innerHTML = "REGISTER";
+        subtitle.innerHTML = "Create your GUDU MC account";
+        switchText.innerHTML =
+            "Already have an account? Login";
+
+    }else{
+
+        mainButton.innerHTML = "LOGIN";
+        subtitle.innerHTML = "Welcome back to the community";
+        switchText.innerHTML =
+            "Don't have an account? Register";
+
+    }
+};
+
+
+/* DASHBOARD */
+
+function enterDashboard(){
+
+    const username =
+        document.getElementById("username").value;
+
+    const email =
+        document.getElementById("email").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    /*
+       Demo website:
+       Kuch bhi enter karoge to dashboard open hoga.
+    */
+
+    if(username === "" && email === "" && password === ""){
+
+        document.getElementById("userDisplay").innerHTML = "Guest";
+
+    }else{
+
+        document.getElementById("userDisplay").innerHTML =
+            username || "User";
+    }
+
+    document.getElementById("auth").classList.remove("show");
+
+    setTimeout(function(){
+
+        document.getElementById("dashboard")
+        .classList.add("show");
+
+    },300);
+}
+
+</script>
 
 </body>
 </html>
