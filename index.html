@@ -2,543 +2,1777 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUDU MC</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>MC Panel</title>
 
 <style>
+
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 body{
-    min-height:100vh;
-    font-family:Arial, sans-serif;
-    background:
-        radial-gradient(circle at 50% 20%, #26304d 0%, #111522 35%, #05060a 80%);
-    color:white;
-    overflow:hidden;
+    font-family:Inter,Arial,sans-serif;
+    background:#0b1120;
+    color:#e5e7eb;
 }
 
-/* ---------- STARS ---------- */
+/* SIDEBAR */
 
-body::before{
-    content:"";
+.sidebar{
     position:fixed;
-    inset:0;
-    background-image:
-        radial-gradient(white 1px, transparent 1px),
-        radial-gradient(white 1px, transparent 1px);
-    background-size:90px 90px, 140px 140px;
-    background-position:10px 20px, 60px 80px;
-    opacity:.18;
-    pointer-events:none;
-}
-
-/* ---------- LAMP ---------- */
-
-.lamp{
-    position:absolute;
+    left:0;
     top:0;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:10;
-    text-align:center;
-}
-
-.wire{
-    width:4px;
-    height:85px;
-    background:#20222b;
-    margin:auto;
-    box-shadow:0 0 5px #000;
-}
-
-.lamp-top{
-    width:150px;
-    height:18px;
-    background:linear-gradient(#3a3d47,#171820);
-    border-radius:50%;
-    margin:auto;
-}
-
-.shade{
-    width:145px;
-    height:75px;
-    margin:auto;
-    background:linear-gradient(135deg,#333642,#111218);
-    clip-path:polygon(15% 0,85% 0,100% 100%,0 100%);
-    border-radius:10px;
-    box-shadow:0 12px 20px #000;
-    transition:.5s;
-}
-
-.bulb{
-    width:38px;
-    height:38px;
-    background:#555;
-    border-radius:50%;
-    margin:-4px auto 0;
-    transition:.5s;
-}
-
-.light{
-    position:absolute;
-    top:125px;
-    left:50%;
-    transform:translateX(-50%);
-    width:550px;
-    height:600px;
-    background:radial-gradient(
-        ellipse,
-        rgba(255,218,100,.38) 0%,
-        rgba(255,200,60,.15) 30%,
-        transparent 70%
-    );
-    opacity:0;
-    transition:.6s;
-    pointer-events:none;
-}
-
-/* ---------- BUTTON ---------- */
-
-.switch{
-    margin-top:22px;
-    padding:12px 25px;
-    border:1px solid #555;
-    border-radius:30px;
-    background:rgba(20,20,30,.8);
-    color:white;
-    cursor:pointer;
-    backdrop-filter:blur(10px);
-    transition:.3s;
-}
-
-.switch:hover{
-    transform:scale(1.08);
-    border-color:#ffd85c;
-}
-
-/* ---------- ON ---------- */
-
-body.on .bulb{
-    background:#ffe477;
-    box-shadow:
-        0 0 15px #ffe477,
-        0 0 45px #ffe477,
-        0 0 80px #ffc400;
-}
-
-body.on .shade{
-    box-shadow:
-        0 10px 30px #000,
-        0 0 35px rgba(255,220,100,.35);
-}
-
-body.on .light{
-    opacity:1;
-}
-
-/* ---------- AUTH BOX ---------- */
-
-.auth{
-    position:absolute;
-    top:52%;
-    left:50%;
-    transform:translate(-50%,-45%) scale(.75);
-    width:360px;
-    padding:32px;
-    border-radius:24px;
-
-    background:rgba(20,22,32,.78);
-    border:1px solid rgba(255,255,255,.12);
-    backdrop-filter:blur(18px);
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.7),
-        inset 0 1px rgba(255,255,255,.08);
-
-    opacity:0;
-    visibility:hidden;
-    transition:.5s;
-    z-index:5;
-}
-
-.auth.show{
-    opacity:1;
-    visibility:visible;
-    transform:translate(-50%,-45%) scale(1);
+    bottom:0;
+    width:245px;
+    background:#111827;
+    border-right:1px solid #263244;
+    padding:20px 14px;
 }
 
 .logo{
-    text-align:center;
-    font-size:30px;
-    font-weight:900;
-    letter-spacing:5px;
-}
-
-.subtitle{
-    text-align:center;
-    color:#9da3b5;
-    margin:8px 0 25px;
-    font-size:13px;
-}
-
-.auth input{
-    width:100%;
-    padding:14px;
-    margin:7px 0;
-    border:none;
-    outline:none;
-    border-radius:12px;
-    background:#0e1018;
-    color:white;
-    border:1px solid #252936;
-}
-
-.auth input:focus{
-    border-color:#ffd85c;
-    box-shadow:0 0 12px rgba(255,216,92,.15);
-}
-
-.auth button{
-    width:100%;
-    padding:14px;
-    margin-top:15px;
-    border:0;
-    border-radius:12px;
-    background:linear-gradient(135deg,#ffe477,#ffb82e);
-    color:#111;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.auth button:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 25px rgba(255,200,50,.25);
-}
-
-.switch-auth{
-    text-align:center;
-    margin-top:18px;
-    font-size:13px;
-    color:#999;
-}
-
-.switch-auth span{
-    color:#ffe477;
-    cursor:pointer;
-}
-
-/* ---------- DASHBOARD ---------- */
-
-.dashboard{
-    position:absolute;
-    inset:0;
-    padding:35px;
-    background:
-        radial-gradient(circle at 70% 30%,#222c48,transparent 35%),
-        #080a10;
-
-    opacity:0;
-    visibility:hidden;
-    transform:scale(1.05);
-    transition:.6s;
-    z-index:20;
-}
-
-.dashboard.show{
-    opacity:1;
-    visibility:visible;
-    transform:scale(1);
-}
-
-.dash-header{
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    gap:12px;
+    font-size:20px;
+    font-weight:800;
+    padding:10px;
+    margin-bottom:25px;
 }
 
-.brand{
-    font-size:28px;
-    font-weight:900;
-    letter-spacing:4px;
+.logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:11px;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
 }
 
-.profile{
-    padding:10px 18px;
-    border:1px solid #333847;
-    border-radius:30px;
-    background:#11141d;
-}
-
-.hero{
-    margin-top:70px;
-    max-width:750px;
-}
-
-.hero h1{
-    font-size:60px;
-    line-height:1;
+.server-mini{
+    background:#1b2535;
+    border:1px solid #2c394d;
+    padding:12px;
+    border-radius:10px;
     margin-bottom:18px;
 }
 
-.hero h1 span{
-    color:#ffe477;
+.server-mini-name{
+    font-weight:700;
 }
 
-.hero p{
-    color:#9da3b5;
-    font-size:17px;
-    line-height:1.6;
+.online{
+    color:#22c55e;
+    font-size:12px;
+    margin-top:5px;
 }
 
-.cards{
+.nav-title{
+    color:#64748b;
+    font-size:10px;
+    text-transform:uppercase;
+    margin:16px 10px 7px;
+}
+
+.nav button{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#aeb9c9;
+    text-align:left;
+    padding:11px 12px;
+    border-radius:9px;
+    margin:2px 0;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.nav button:hover,
+.nav button.active{
+    background:#202c40;
+    color:white;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:245px;
+    min-height:100vh;
+}
+
+/* TOP */
+
+.topbar{
+    height:65px;
+    border-bottom:1px solid #263244;
+    background:#0f172a;
     display:flex;
-    gap:18px;
-    margin-top:45px;
-    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 25px;
 }
+
+.top-title{
+    font-size:15px;
+    font-weight:700;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.status{
+    background:#052e1a;
+    color:#4ade80;
+    border:1px solid #166534;
+    padding:7px 11px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.avatar{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#6366f1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* CONTENT */
+
+.content{
+    padding:25px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.page-head h1{
+    font-size:25px;
+}
+
+.muted{
+    color:#8491a5;
+    font-size:13px;
+    margin-top:5px;
+}
+
+/* BUTTONS */
+
+button{
+    font-family:inherit;
+}
+
+.primary{
+    background:#6366f1;
+    color:white;
+    border:0;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.primary:hover{
+    background:#5458d8;
+}
+
+.danger{
+    background:#7f1d1d;
+    color:#fecaca;
+    border:1px solid #991b1b;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.secondary{
+    background:#1e293b;
+    color:#dbe4f0;
+    border:1px solid #334155;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.stat{
+    background:#111827;
+    border:1px solid #263244;
+    border-radius:12px;
+    padding:18px;
+}
+
+.stat-label{
+    color:#8491a5;
+    font-size:12px;
+}
+
+.stat-value{
+    font-size:24px;
+    font-weight:800;
+    margin-top:7px;
+}
+
+.stat-small{
+    color:#22c55e;
+    font-size:11px;
+    margin-top:6px;
+}
+
+/* CARDS */
 
 .card{
-    width:190px;
-    padding:25px;
-    border-radius:18px;
-    background:rgba(25,28,40,.8);
-    border:1px solid #292d3b;
-    transition:.3s;
+    background:#111827;
+    border:1px solid #263244;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:18px;
 }
 
-.card:hover{
-    transform:translateY(-7px);
-    border-color:#ffe477;
-}
-
-.card-icon{
-    font-size:30px;
+.card-title{
+    font-size:15px;
+    font-weight:700;
     margin-bottom:15px;
 }
 
-.card h3{
-    margin-bottom:8px;
+/* SERVER CONTROL */
+
+.server-control{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
-.card p{
-    color:#858b9c;
+/* CONSOLE */
+
+.console{
+    background:#050914;
+    border:1px solid #263244;
+    border-radius:10px;
+    padding:15px;
+    height:430px;
+    overflow:auto;
+    font-family:Consolas,monospace;
     font-size:13px;
+    line-height:1.7;
 }
 
-/* ---------- MOBILE ---------- */
+.log-info{
+    color:#94a3b8;
+}
+
+.log-success{
+    color:#4ade80;
+}
+
+.log-warning{
+    color:#fbbf24;
+}
+
+.log-error{
+    color:#f87171;
+}
+
+.command-row{
+    display:flex;
+    margin-top:10px;
+}
+
+.command-row input{
+    flex:1;
+    background:#070c17;
+    color:white;
+    border:1px solid #334155;
+    padding:12px;
+    border-radius:8px 0 0 8px;
+    outline:none;
+}
+
+.command-row button{
+    border-radius:0 8px 8px 0;
+}
+
+/* FILES */
+
+.file-toolbar{
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.file-list{
+    display:flex;
+    flex-direction:column;
+}
+
+.file{
+    display:grid;
+    grid-template-columns:40px 1fr 120px 100px;
+    align-items:center;
+    gap:10px;
+    padding:13px;
+    border-bottom:1px solid #202b3d;
+}
+
+.file:hover{
+    background:#151e2d;
+}
+
+.file-icon{
+    font-size:21px;
+}
+
+.file-name{
+    font-weight:600;
+}
+
+.file-meta{
+    color:#8491a5;
+    font-size:12px;
+}
+
+/* PLUGINS */
+
+.plugin-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.plugin{
+    background:#111827;
+    border:1px solid #263244;
+    border-radius:12px;
+    padding:17px;
+}
+
+.plugin-icon{
+    width:45px;
+    height:45px;
+    border-radius:10px;
+    background:#1f2937;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    margin-bottom:12px;
+}
+
+.plugin h3{
+    font-size:15px;
+}
+
+.plugin p{
+    color:#8491a5;
+    font-size:12px;
+    margin:7px 0 15px;
+}
+
+/* PLAYERS */
+
+.player{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px;
+    border-bottom:1px solid #202b3d;
+}
+
+.player-avatar{
+    width:35px;
+    height:35px;
+    border-radius:8px;
+    background:#334155;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* SETTINGS */
+
+.form{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+.field label{
+    color:#aeb9c9;
+    font-size:12px;
+}
+
+.field input,
+.field select,
+.field textarea{
+    background:#080e1b;
+    color:white;
+    border:1px solid #334155;
+    border-radius:8px;
+    padding:11px;
+    outline:none;
+}
+
+.field textarea{
+    min-height:120px;
+}
+
+/* BACKUPS */
+
+.backup{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+    border-bottom:1px solid #202b3d;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    .sidebar{
+        width:70px;
+        padding:15px 8px;
+    }
+
+    .logo span,
+    .server-mini,
+    .nav-title,
+    .nav button span{
+        display:none;
+    }
+
+    .logo{
+        justify-content:center;
+    }
+
+    .nav button{
+        text-align:center;
+        font-size:20px;
+    }
+
+    .main{
+        margin-left:70px;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .plugin-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
 
 @media(max-width:600px){
 
-    .auth{
-        width:90%;
+    .content{
+        padding:14px;
     }
 
-    .hero h1{
-        font-size:42px;
+    .topbar{
+        padding:0 14px;
     }
 
-    .dashboard{
-        padding:25px;
-        overflow:auto;
+    .stats{
+        grid-template-columns:1fr;
     }
 
-    .light{
-        width:400px;
+    .plugin-grid{
+        grid-template-columns:1fr;
     }
+
+    .form{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    .file{
+        grid-template-columns:35px 1fr;
+    }
+
+    .file > div:nth-child(3),
+    .file > button{
+        display:none;
+    }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- LAMP -->
-<div class="lamp">
+<div class="sidebar">
 
-    <div class="wire"></div>
-    <div class="lamp-top"></div>
-    <div class="shade"></div>
-    <div class="bulb"></div>
+    <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <span>MC Panel</span>
+    </div>
 
-    <button class="switch" onclick="toggleLamp()">
-        💡 Turn On
-    </button>
+    <div class="server-mini">
+
+        <div class="server-mini-name">
+            GUDU MC
+        </div>
+
+        <div class="online">
+            ● Online
+        </div>
+
+    </div>
+
+    <div class="nav">
+
+        <div class="nav-title">
+            Server
+        </div>
+
+        <button class="active" onclick="page('overview')">
+            📊 <span>Overview</span>
+        </button>
+
+        <button onclick="page('console')">
+            🖥️ <span>Console</span>
+        </button>
+
+        <button onclick="page('files')">
+            📁 <span>Files</span>
+        </button>
+
+        <button onclick="page('plugins')">
+            🔌 <span>Plugins</span>
+        </button>
+
+        <button onclick="page('players')">
+            👥 <span>Players</span>
+        </button>
+
+        <div class="nav-title">
+            Management
+        </div>
+
+        <button onclick="page('worlds')">
+            🌍 <span>Worlds</span>
+        </button>
+
+        <button onclick="page('backups')">
+            💾 <span>Backups</span>
+        </button>
+
+        <button onclick="page('settings')">
+            ⚙️ <span>Settings</span>
+        </button>
+
+    </div>
 
 </div>
 
-<div class="light"></div>
 
+<div class="main">
 
-<!-- LOGIN / REGISTER -->
+<header class="topbar">
 
-<div class="auth" id="auth">
-
-    <div class="logo">GUDU MC</div>
-    <div class="subtitle" id="authSubtitle">
-        Welcome back to the community
+    <div class="top-title">
+        GUDU MC / Server
     </div>
 
-    <input id="username" type="text" placeholder="Username">
-    <input id="email" type="text" placeholder="Email">
+    <div class="top-right">
 
-    <input id="password" type="password" placeholder="Password">
+        <div class="status">
+            ● Running
+        </div>
 
-    <button onclick="enterDashboard()">
-        <span id="mainButton">LOGIN</span>
-    </button>
+        <div class="avatar">
+            G
+        </div>
 
-    <div class="switch-auth">
-        <span id="switchText">Don't have an account? Register</span>
     </div>
 
-</div>
+</header>
 
 
-<!-- DASHBOARD -->
+<div class="content">
 
-<div class="dashboard" id="dashboard">
 
-    <div class="dash-header">
-        <div class="brand">GUDU MC</div>
-        <div class="profile">👤 <span id="userDisplay">User</span></div>
+<!-- OVERVIEW -->
+
+<section id="overview" class="page active">
+
+    <div class="page-head">
+
+        <div>
+
+            <h1>Server Overview</h1>
+
+            <p class="muted">
+                Manage your Minecraft server
+            </p>
+
+        </div>
+
+        <div class="server-control">
+
+            <button class="primary" onclick="serverAction('start')">
+                ▶ Start
+            </button>
+
+            <button class="secondary" onclick="serverAction('restart')">
+                🔄 Restart
+            </button>
+
+            <button class="danger" onclick="serverAction('stop')">
+                ■ Stop
+            </button>
+
+        </div>
+
     </div>
 
-    <div class="hero">
-        <h1>Welcome to <span>GUDU MC</span> ✨</h1>
 
-        <p>
-            Your personal dashboard is ready.
-            Explore the community, connect with people
-            and enjoy the GUDU MC experience.
-        </p>
+    <div class="stats">
 
-        <div class="cards">
+        <div class="stat">
 
-            <div class="card">
-                <div class="card-icon">👥</div>
-                <h3>Community</h3>
-                <p>Connect with everyone.</p>
+            <div class="stat-label">
+                CPU Usage
             </div>
 
-            <div class="card">
-                <div class="card-icon">💬</div>
-                <h3>Messages</h3>
-                <p>Stay connected.</p>
+            <div class="stat-value">
+                18%
             </div>
 
-            <div class="card">
-                <div class="card-icon">⭐</div>
-                <h3>Premium</h3>
-                <p>Unlock special features.</p>
-            </div>
-
-            <div class="card">
-                <div class="card-icon">⚙️</div>
-                <h3>Settings</h3>
-                <p>Customize your profile.</p>
+            <div class="stat-small">
+                ● Normal
             </div>
 
         </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Memory
+            </div>
+
+            <div class="stat-value">
+                3.2 GB
+            </div>
+
+            <div class="stat-small">
+                / 8 GB
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Storage
+            </div>
+
+            <div class="stat-value">
+                12.8 GB
+            </div>
+
+            <div class="stat-small">
+                / 50 GB
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Players
+            </div>
+
+            <div class="stat-value" id="playerCount">
+                7
+            </div>
+
+            <div class="stat-small">
+                ● Online
+            </div>
+
+        </div>
+
     </div>
 
+
+    <div class="card">
+
+        <div class="card-title">
+            Server Information
+        </div>
+
+        <div class="form">
+
+            <div class="field">
+                <label>Server Address</label>
+                <input value="play.gudumc.net" readonly>
+            </div>
+
+            <div class="field">
+                <label>Version</label>
+                <input value="Paper 1.21.11" readonly>
+            </div>
+
+            <div class="field">
+                <label>Java Version</label>
+                <input value="Java 21" readonly>
+            </div>
+
+            <div class="field">
+                <label>Server Location</label>
+                <input value="Europe" readonly>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONSOLE -->
+
+<section id="console" class="page">
+
+    <div class="page-head">
+
+        <div>
+
+            <h1>Console</h1>
+
+            <p class="muted">
+                Live Minecraft server console
+            </p>
+
+        </div>
+
+        <button class="danger" onclick="clearConsole()">
+            Clear
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="console" id="consoleOutput">
+
+            <div class="log-info">
+                [22:41:03 INFO]: Starting Minecraft server...
+            </div>
+
+            <div class="log-success">
+                [22:41:04 INFO]: Done (3.421s)! For help, type "help"
+            </div>
+
+            <div class="log-info">
+                [22:41:05 INFO]: Loaded 48 plugins
+            </div>
+
+            <div class="log-info">
+                [22:42:11 INFO]: Player Steve joined the game
+            </div>
+
+            <div class="log-info">
+                [22:42:19 INFO]: Player Alex joined the game
+            </div>
+
+            <div class="log-warning">
+                [22:43:02 WARN]: Can't keep up!
+            </div>
+
+        </div>
+
+
+        <div class="command-row">
+
+            <input
+                id="command"
+                placeholder="Type a Minecraft command..."
+                onkeydown="if(event.key==='Enter')sendCommand()"
+            >
+
+            <button
+                class="primary"
+                onclick="sendCommand()"
+            >
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FILES -->
+
+<section id="files" class="page">
+
+    <div class="page-head">
+
+        <div>
+
+            <h1>Files</h1>
+
+            <p class="muted">
+                /home/container
+            </p>
+
+        </div>
+
+        <button class="primary">
+            ⬆ Upload
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="file-toolbar">
+
+            <button class="secondary">
+                📁 New Folder
+            </button>
+
+            <button class="secondary">
+                📄 New File
+            </button>
+
+            <button class="secondary">
+                ↻ Refresh
+            </button>
+
+        </div>
+
+
+        <div class="file-list">
+
+            <div class="file">
+
+                <div class="file-icon">📁</div>
+
+                <div class="file-name">
+                    plugins
+                    <div class="file-meta">
+                        Folder
+                    </div>
+                </div>
+
+                <div class="file-meta">
+                    —
+                </div>
+
+                <button class="secondary">
+                    Open
+                </button>
+
+            </div>
+
+
+            <div class="file">
+
+                <div class="file-icon">🌍</div>
+
+                <div class="file-name">
+                    world
+                    <div class="file-meta">
+                        Folder
+                    </div>
+                </div>
+
+                <div class="file-meta">
+                    8.4 GB
+                </div>
+
+                <button class="secondary">
+                    Open
+                </button>
+
+            </div>
+
+
+            <div class="file">
+
+                <div class="file-icon">⚙️</div>
+
+                <div class="file-name">
+                    server.properties
+                    <div class="file-meta">
+                        Configuration
+                    </div>
+                </div>
+
+                <div class="file-meta">
+                    4 KB
+                </div>
+
+                <button class="secondary">
+                    Edit
+                </button>
+
+            </div>
+
+
+            <div class="file">
+
+                <div class="file-icon">📄</div>
+
+                <div class="file-name">
+                    paper.yml
+                    <div class="file-meta">
+                        Configuration
+                    </div>
+                </div>
+
+                <div class="file-meta">
+                    12 KB
+                </div>
+
+                <button class="secondary">
+                    Edit
+                </button>
+
+            </div>
+
+
+            <div class="file">
+
+                <div class="file-icon">📄</div>
+
+                <div class="file-name">
+                    eula.txt
+                    <div class="file-meta">
+                        Text file
+                    </div>
+                </div>
+
+                <div class="file-meta">
+                    1 KB
+                </div>
+
+                <button class="secondary">
+                    Edit
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PLUGINS -->
+
+<section id="plugins" class="page">
+
+    <div class="page-head">
+
+        <div>
+
+            <h1>Plugins</h1>
+
+            <p class="muted">
+                Manage installed Minecraft plugins
+            </p>
+
+        </div>
+
+        <button class="primary" onclick="alert('Plugin marketplace demo')">
+            + Install Plugin
+        </button>
+
+    </div>
+
+
+    <div class="plugin-grid">
+
+        <div class="plugin">
+
+            <div class="plugin-icon">
+                🔐
+            </div>
+
+            <h3>AuthMe</h3>
+
+            <p>
+                Player authentication
+            </p>
+
+            <button class="secondary">
+                Configure
+            </button>
+
+        </div>
+
+
+        <div class="plugin">
+
+            <div class="plugin-icon">
+                👤
+            </div>
+
+            <h3>LuckPerms</h3>
+
+            <p>
+                Permissions management
+            </p>
+
+            <button class="secondary">
+                Configure
+            </button>
+
+        </div>
+
+
+        <div class="plugin">
+
+            <div class="plugin-icon">
+                🌍
+            </div>
+
+            <h3>Multiverse-Core</h3>
+
+            <p>
+                Multiple worlds
+            </p>
+
+            <button class="secondary">
+                Configure
+            </button>
+
+        </div>
+
+
+        <div class="plugin">
+
+            <div class="plugin-icon">
+                🧑‍🤝‍🧑
+            </div>
+
+            <h3>EssentialsX</h3>
+
+            <p>
+                Server utility commands
+            </p>
+
+            <button class="secondary">
+                Configure
+            </button>
+
+        </div>
+
+
+        <div class="plugin">
+
+            <div class="plugin-icon">
+                🎁
+            </div>
+
+            <h3>CrazyCrates</h3>
+
+            <p>
+                Crate system
+            </p>
+
+            <button class="secondary">
+                Configure
+            </button>
+
+        </div>
+
+
+        <div class="plugin">
+
+            <div class="plugin-icon">
+                🛡️
+            </div>
+
+            <h3>WorldGuard</h3>
+
+            <p>
+                World protection
+            </p>
+
+            <button class="secondary">
+                Configure
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PLAYERS -->
+
+<section id="players" class="page">
+
+    <div class="page-head">
+
+        <div>
+
+            <h1>Players</h1>
+
+            <p class="muted">
+                Online players
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="player">
+
+            <div class="player-avatar">S</div>
+
+            <div style="flex:1">
+
+                <b>Steve</b>
+
+                <div class="muted">
+                    Survival • 32ms
+                </div>
+
+            </div>
+
+            <button class="danger">
+                Kick
+            </button>
+
+        </div>
+
+
+        <div class="player">
+
+            <div class="player-avatar">A</div>
+
+            <div style="flex:1">
+
+                <b>Alex</b>
+
+                <div class="muted">
+                    Survival • 41ms
+                </div>
+
+            </div>
+
+            <button class="danger">
+                Kick
+            </button>
+
+        </div>
+
+
+        <div class="player">
+
+            <div class="player-avatar">G</div>
+
+            <div style="flex:1">
+
+                <b>GUDU</b>
+
+                <div class="muted">
+                    Lobby • 27ms
+                </div>
+
+            </div>
+
+            <button class="danger">
+                Kick
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- WORLDS -->
+
+<section id="worlds" class="page">
+
+    <div class="page-head">
+
+        <div>
+
+            <h1>Worlds</h1>
+
+            <p class="muted">
+                Manage server worlds
+            </p>
+
+        </div>
+
+        <button class="primary">
+            + Create World
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="file">
+
+            <div class="file-icon">🌍</div>
+
+            <div>
+                <b>world</b>
+                <div class="file-meta">
+                    Survival
+                </div>
+            </div>
+
+            <div class="file-meta">
+                8.4 GB
+            </div>
+
+            <button class="secondary">
+                Manage
+            </button>
+
+        </div>
+
+
+        <div class="file">
+
+            <div class="file-icon">🔥</div>
+
+            <div>
+                <b>world_nether</b>
+                <div class="file-meta">
+                    Nether
+                </div>
+            </div>
+
+            <div class="file-meta">
+                2.1 GB
+            </div>
+
+            <button class="secondary">
+                Manage
+            </button>
+
+        </div>
+
+
+        <div class="file">
+
+            <div class="file-icon">🌌</div>
+
+            <div>
+                <b>world_the_end</b>
+                <div class="file-meta">
+                    The End
+                </div>
+            </div>
+
+            <div class="file-meta">
+                1.6 GB
+            </div>
+
+            <button class="secondary">
+                Manage
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BACKUPS -->
+
+<section id="backups" class="page">
+
+    <div class="page-head">
+
+        <div>
+
+            <h1>Backups</h1>
+
+            <p class="muted">
+                Protect your server data
+            </p>
+
+        </div>
+
+        <button class="primary" onclick="createBackup()">
+            + Create Backup
+        </button>
+
+    </div>
+
+
+    <div class="card" id="backupList">
+
+        <div class="backup">
+
+            <div>
+
+                <b>backup-2026-09-29</b>
+
+                <div class="muted">
+                    Today • 12.4 GB
+                </div>
+
+            </div>
+
+            <button class="secondary">
+                Restore
+            </button>
+
+        </div>
+
+
+        <div class="backup">
+
+            <div>
+
+                <b>backup-2026-09-28</b>
+
+                <div class="muted">
+                    Yesterday • 11.9 GB
+                </div>
+
+            </div>
+
+            <button class="secondary">
+                Restore
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section id="settings" class="page">
+
+    <div class="page-head">
+
+        <div>
+
+            <h1>Server Settings</h1>
+
+            <p class="muted">
+                Configure your Minecraft server
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="form">
+
+            <div class="field">
+
+                <label>
+                    Server Name
+                </label>
+
+                <input
+                    id="serverName"
+                    value="GUDU MC"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Minecraft Version
+                </label>
+
+                <select>
+
+                    <option>1.21.11</option>
+                    <option>1.21.10</option>
+                    <option>1.21.8</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Maximum Players
+                </label>
+
+                <input
+                    type="number"
+                    value="100"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    RAM
+                </label>
+
+                <select>
+
+                    <option>4 GB</option>
+                    <option selected>8 GB</option>
+                    <option>12 GB</option>
+                    <option>16 GB</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Server Port
+                </label>
+
+                <input
+                    value="25565"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Difficulty
+                </label>
+
+                <select>
+
+                    <option>Peaceful</option>
+                    <option>Easy</option>
+                    <option selected>Normal</option>
+                    <option>Hard</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Gamemode
+                </label>
+
+                <select>
+
+                    <option>Survival</option>
+                    <option>Creative</option>
+                    <option>Adventure</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Online Mode
+                </label>
+
+                <select>
+
+                    <option selected>Enabled</option>
+                    <option>Disabled</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <br>
+
+        <button class="primary" onclick="saveSettings()">
+            💾 Save Settings
+        </button>
+
+    </div>
+
+</section>
+
+
+</div>
 </div>
 
 
 <script>
 
-let registerMode = false;
+/* PAGE NAVIGATION */
 
-/* LAMP */
+function page(id){
 
-function toggleLamp(){
+    document
+        .querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
 
-    document.body.classList.toggle("on");
+    document
+        .getElementById(id)
+        .classList.add("active");
 
-    const auth = document.getElementById("auth");
-    const button = document.querySelector(".switch");
 
-    if(document.body.classList.contains("on")){
+    document
+        .querySelectorAll(".nav button")
+        .forEach(b => b.classList.remove("active"));
 
-        auth.classList.add("show");
-        button.innerHTML = "💡 Turn Off";
+    event.currentTarget.classList.add("active");
 
-    }else{
-
-        auth.classList.remove("show");
-        button.innerHTML = "💡 Turn On";
-
-    }
 }
 
 
-/* LOGIN / REGISTER SWITCH */
+/* SERVER ACTION */
 
-document.getElementById("switchText").onclick = function(){
+function serverAction(action){
 
-    registerMode = !registerMode;
+    const output =
+        document.getElementById("consoleOutput");
 
-    const mainButton = document.getElementById("mainButton");
-    const subtitle = document.getElementById("authSubtitle");
-    const switchText = document.getElementById("switchText");
-
-    if(registerMode){
-
-        mainButton.innerHTML = "REGISTER";
-        subtitle.innerHTML = "Create your GUDU MC account";
-        switchText.innerHTML =
-            "Already have an account? Login";
-
-    }else{
-
-        mainButton.innerHTML = "LOGIN";
-        subtitle.innerHTML = "Welcome back to the community";
-        switchText.innerHTML =
-            "Don't have an account? Register";
-
-    }
-};
+    const time =
+        new Date().toLocaleTimeString();
 
 
-/* DASHBOARD */
+    let message = "";
 
-function enterDashboard(){
-
-    const username =
-        document.getElementById("username").value;
-
-    const email =
-        document.getElementById("email").value;
-
-    const password =
-        document.getElementById("password").value;
-
-    /*
-       Demo website:
-       Kuch bhi enter karoge to dashboard open hoga.
-    */
-
-    if(username === "" && email === "" && password === ""){
-
-        document.getElementById("userDisplay").innerHTML = "Guest";
-
-    }else{
-
-        document.getElementById("userDisplay").innerHTML =
-            username || "User";
+    if(action === "start"){
+        message =
+            `[${time}] INFO: Starting server...`;
     }
 
-    document.getElementById("auth").classList.remove("show");
+    if(action === "restart"){
+        message =
+            `[${time}] INFO: Restarting server...`;
+    }
 
-    setTimeout(function(){
+    if(action === "stop"){
+        message =
+            `[${time}] INFO: Stopping server...`;
+    }
 
-        document.getElementById("dashboard")
-        .classList.add("show");
 
-    },300);
+    output.innerHTML +=
+        `<div class="log-success">${message}</div>`;
+
+    output.scrollTop =
+        output.scrollHeight;
+
+}
+
+
+/* CONSOLE COMMAND */
+
+function sendCommand(){
+
+    const input =
+        document.getElementById("command");
+
+    const command =
+        input.value.trim();
+
+    if(!command)
+        return;
+
+
+    const output =
+        document.getElementById("consoleOutput");
+
+
+    const time =
+        new Date().toLocaleTimeString();
+
+
+    output.innerHTML +=
+        `<div class="log-info">[${time}] &gt; ${escapeHTML(command)}</div>`;
+
+
+    let response =
+        "Unknown command";
+
+
+    if(command === "list"){
+        response =
+            "There are 7 of a max of 100 players online.";
+    }
+
+    if(command === "say hello"){
+        response =
+            "[Server] hello";
+    }
+
+    if(command === "help"){
+        response =
+            "Available commands: list, say, help, time set day";
+    }
+
+    if(command === "time set day"){
+        response =
+            "Set the time to 1000";
+    }
+
+
+    output.innerHTML +=
+        `<div class="log-success">[${time}] ${escapeHTML(response)}</div>`;
+
+
+    input.value = "";
+
+    output.scrollTop =
+        output.scrollHeight;
+
+}
+
+
+/* CLEAR CONSOLE */
+
+function clearConsole(){
+
+    document.getElementById(
+        "consoleOutput"
+    ).innerHTML = "";
+
+}
+
+
+/* BACKUP */
+
+function createBackup(){
+
+    const list =
+        document.getElementById("backupList");
+
+    const date =
+        new Date()
+        .toISOString()
+        .slice(0,10);
+
+
+    list.innerHTML =
+        `<div class="backup">
+
+            <div>
+
+                <b>backup-${date}</b>
+
+                <div class="muted">
+                    Just now • Creating...
+                </div>
+
+            </div>
+
+            <span class="status">
+                Creating
+            </span>
+
+        </div>` +
+        list.innerHTML;
+
+}
+
+
+/* SETTINGS */
+
+function saveSettings(){
+
+    alert(
+        "Settings saved successfully! (Demo)"
+    );
+
+}
+
+
+/* ESCAPE */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
 }
 
 </script>
