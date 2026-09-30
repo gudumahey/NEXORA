@@ -6,647 +6,201 @@
 <title>EduCore Classroom</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Inter,Arial,sans-serif;
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+body{background:#070b14;color:#f4f7ff;min-height:100vh}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
 
-body{
-    background:#070b14;
-    color:#f4f7ff;
-    min-height:100vh;
-}
-
-button,input,textarea,select{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.app{
-    display:flex;
-    min-height:100vh;
-}
-
-/* SIDEBAR */
+.app{display:flex;min-height:100vh}
 
 .sidebar{
-    width:250px;
-    background:linear-gradient(180deg,#0d1424,#080c15);
-    border-right:1px solid #202a3d;
-    padding:20px 14px;
-    position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    z-index:20;
+ width:250px;background:linear-gradient(180deg,#0d1424,#080c15);
+ border-right:1px solid #202a3d;padding:20px 14px;
+ position:fixed;left:0;top:0;bottom:0;z-index:20
 }
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:10px;
-    margin-bottom:25px;
-}
-
+.logo{display:flex;align-items:center;gap:12px;padding:10px;margin-bottom:25px}
 .logo-icon{
-    width:42px;
-    height:42px;
-    border-radius:14px;
-    display:grid;
-    place-items:center;
-    background:linear-gradient(135deg,#6d5dfc,#20d6ff);
-    box-shadow:0 10px 30px #4e5bff40;
-    font-size:21px;
+ width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+ background:linear-gradient(135deg,#6d5dfc,#20d6ff);font-size:21px
 }
-
-.logo h2{
-    font-size:18px;
-}
-
-.logo span{
-    display:block;
-    font-size:11px;
-    color:#7f8ba3;
-    margin-top:3px;
-}
-
-.nav-title{
-    color:#59657c;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:1.5px;
-    padding:12px 10px 7px;
-}
-
+.logo h2{font-size:18px}.logo span{display:block;font-size:11px;color:#7f8ba3;margin-top:3px}
+.nav-title{color:#59657c;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;padding:12px 10px 7px}
 .nav-btn{
-    width:100%;
-    border:0;
-    background:transparent;
-    color:#9aa6bd;
-    padding:12px;
-    border-radius:12px;
-    text-align:left;
-    margin:3px 0;
-    transition:.2s;
+ width:100%;border:0;background:transparent;color:#9aa6bd;padding:12px;
+ border-radius:12px;text-align:left;margin:3px 0;transition:.2s
 }
+.nav-btn:hover,.nav-btn.active{background:#151e31;color:white}
+.nav-btn span{margin-right:10px}
 
-.nav-btn:hover,
-.nav-btn.active{
-    background:#151e31;
-    color:white;
-}
-
-.nav-btn span{
-    margin-right:10px;
-}
-
-/* MAIN */
-
-.main{
-    margin-left:250px;
-    width:calc(100% - 250px);
-    min-height:100vh;
-}
-
+.main{margin-left:250px;width:calc(100% - 250px);min-height:100vh}
 .topbar{
-    height:72px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 28px;
-    border-bottom:1px solid #202a3d;
-    background:#090e18dd;
-    backdrop-filter:blur(15px);
-    position:sticky;
-    top:0;
-    z-index:10;
+ height:72px;display:flex;justify-content:space-between;align-items:center;
+ padding:0 28px;border-bottom:1px solid #202a3d;background:#090e18dd;
+ backdrop-filter:blur(15px);position:sticky;top:0;z-index:10
 }
-
-.page-title{
-    font-size:20px;
-    font-weight:700;
-}
-
-.date{
-    color:#76839b;
-    font-size:12px;
-}
-
-.profile{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
+.page-title{font-size:20px;font-weight:700}
+.date{color:#76839b;font-size:12px}
+.profile{display:flex;align-items:center;gap:10px}
 .avatar{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#775cff,#00c8ff);
-    display:grid;
-    place-items:center;
-    font-weight:bold;
+ width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#775cff,#00c8ff);
+ display:grid;place-items:center;font-weight:bold
 }
-
-/* CONTENT */
-
-.content{
-    padding:28px;
-}
-
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
+.content{padding:28px}
+.page{display:none}.page.active{display:block}
 
 .hero{
-    padding:28px;
-    border:1px solid #263149;
-    border-radius:22px;
-    background:
-      radial-gradient(circle at top right,#4237b630,transparent 40%),
-      linear-gradient(135deg,#11192a,#0c1220);
-    margin-bottom:22px;
+ padding:28px;border:1px solid #263149;border-radius:22px;
+ background:radial-gradient(circle at top right,#4237b630,transparent 40%),
+ linear-gradient(135deg,#11192a,#0c1220);margin-bottom:22px
 }
+.hero h1{font-size:30px;margin-bottom:8px}.hero p{color:#8290a9}
 
-.hero h1{
-    font-size:30px;
-    margin-bottom:8px;
-}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:22px}
+.card{background:#0e1523;border:1px solid #202c43;border-radius:17px;padding:19px}
+.stat-label{color:#78859d;font-size:12px}.stat-value{font-size:27px;font-weight:800;margin-top:8px}
+.card-icon{font-size:23px;margin-bottom:10px}
 
-.hero p{
-    color:#8290a9;
-}
+.table-wrap{overflow:auto;background:#0d1421;border:1px solid #202c43;border-radius:17px}
+table{width:100%;border-collapse:collapse;min-width:800px}
+th,td{padding:14px;text-align:left;border-bottom:1px solid #202a3c}
+th{color:#77849c;font-size:11px;text-transform:uppercase}td{font-size:13px}
+tr:hover{background:#121b2b}
 
-/* CARDS */
+.btn{border:0;padding:9px 13px;border-radius:9px;color:white;background:#26344d}
+.btn:hover{filter:brightness(1.2)}
+.btn-primary{background:linear-gradient(135deg,#6656f6,#278eff)}
+.btn-green{background:#123f31;color:#55e7b0}
+.btn-red{background:#451d27;color:#ff7f92}
+.btn-orange{background:#453119;color:#ffbd62}
+.btn-small{padding:7px 10px;font-size:11px}
 
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:22px;
-}
-
-.card{
-    background:#0e1523;
-    border:1px solid #202c43;
-    border-radius:17px;
-    padding:19px;
-}
-
-.stat-label{
-    color:#78859d;
-    font-size:12px;
-}
-
-.stat-value{
-    font-size:27px;
-    font-weight:800;
-    margin-top:8px;
-}
-
-.card-icon{
-    font-size:23px;
-    margin-bottom:10px;
-}
-
-/* TABLE */
-
-.table-wrap{
-    overflow:auto;
-    background:#0d1421;
-    border:1px solid #202c43;
-    border-radius:17px;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:700px;
-}
-
-th,td{
-    padding:14px;
-    text-align:left;
-    border-bottom:1px solid #202a3c;
-}
-
-th{
-    color:#77849c;
-    font-size:11px;
-    text-transform:uppercase;
-}
-
-td{
-    font-size:13px;
-}
-
-tr:hover{
-    background:#121b2b;
-}
-
-/* BUTTONS */
-
-.btn{
-    border:0;
-    padding:9px 13px;
-    border-radius:9px;
-    color:white;
-    background:#26344d;
-}
-
-.btn:hover{
-    filter:brightness(1.2);
-}
-
-.btn-primary{
-    background:linear-gradient(135deg,#6656f6,#278eff);
-}
-
-.btn-green{
-    background:#123f31;
-    color:#55e7b0;
-}
-
-.btn-red{
-    background:#451d27;
-    color:#ff7f92;
-}
-
-.btn-orange{
-    background:#453119;
-    color:#ffbd62;
-}
-
-.btn-small{
-    padding:7px 10px;
-    font-size:11px;
-}
-
-/* BADGES */
-
-.badge{
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:10px;
-    font-weight:bold;
-}
-
-.present{
-    background:#103d2e;
-    color:#55e7b0;
-}
-
-.absent{
-    background:#421d28;
-    color:#ff8294;
-}
-
-.suspended{
-    background:#443018;
-    color:#ffc261;
-}
-
-/* TOOLBAR */
+.badge{padding:5px 9px;border-radius:20px;font-size:10px;font-weight:bold}
+.present{background:#103d2e;color:#55e7b0}
+.absent{background:#421d28;color:#ff8294}
+.suspended{background:#443018;color:#ffc261}
+.warning{background:#443018;color:#ffc261}
+.blue{background:#172b50;color:#72aaff}
 
 .toolbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    margin-bottom:15px;
-    flex-wrap:wrap;
+ display:flex;justify-content:space-between;align-items:center;gap:12px;
+ margin-bottom:15px;flex-wrap:wrap
 }
-
 .search{
-    background:#0d1421;
-    border:1px solid #253149;
-    color:white;
-    padding:11px 13px;
-    border-radius:10px;
-    outline:none;
-    min-width:220px;
+ background:#0d1421;border:1px solid #253149;color:white;padding:11px 13px;
+ border-radius:10px;outline:none;min-width:220px
 }
+.date-input{background:#0d1421;border:1px solid #253149;color:white;padding:10px;border-radius:9px}
 
-.date-input{
-    background:#0d1421;
-    border:1px solid #253149;
-    color:white;
-    padding:10px;
-    border-radius:9px;
-}
-
-/* BOOKS */
-
-.books{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px;
-}
-
+.books{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
 .book{
-    padding:25px;
-    min-height:210px;
-    border-radius:20px;
-    border:1px solid #293650;
-    background:
-      linear-gradient(135deg,#111b31,#0c1320);
-    cursor:pointer;
-    transition:.25s;
+ padding:25px;min-height:210px;border-radius:20px;border:1px solid #293650;
+ background:linear-gradient(135deg,#111b31,#0c1320);cursor:pointer;transition:.25s
 }
-
-.book:hover{
-    transform:translateY(-5px);
-    border-color:#615cff;
-    box-shadow:0 15px 40px #0005;
-}
-
+.book:hover{transform:translateY(-5px);border-color:#615cff;box-shadow:0 15px 40px #0005}
 .book-cover{
-    width:55px;
-    height:70px;
-    border-radius:8px;
-    background:linear-gradient(135deg,#725bff,#13c9ff);
-    margin-bottom:18px;
-    display:grid;
-    place-items:center;
-    font-size:25px;
+ width:55px;height:70px;border-radius:8px;background:linear-gradient(135deg,#725bff,#13c9ff);
+ margin-bottom:18px;display:grid;place-items:center;font-size:25px
 }
+.book h2{margin-bottom:8px}.book p{color:#7f8ba1;font-size:13px}
 
-.book h2{
-    margin-bottom:8px;
-}
-
-.book p{
-    color:#7f8ba1;
-    font-size:13px;
-}
-
-/* CHAPTERS */
-
-.chapter-list{
-    display:grid;
-    gap:12px;
-}
-
+.chapter-list{display:grid;gap:12px}
 .chapter{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:17px;
-    background:#0e1625;
-    border:1px solid #243149;
-    border-radius:13px;
-    cursor:pointer;
+ display:flex;justify-content:space-between;align-items:center;padding:17px;
+ background:#0e1625;border:1px solid #243149;border-radius:13px;cursor:pointer
 }
-
-.chapter:hover{
-    background:#141e31;
-}
-
-.chapter-info{
-    display:flex;
-    align-items:center;
-    gap:13px;
-}
-
+.chapter:hover{background:#141e31}
+.chapter-info{display:flex;align-items:center;gap:13px}
 .chapter-number{
-    width:35px;
-    height:35px;
-    border-radius:10px;
-    display:grid;
-    place-items:center;
-    background:#1b2740;
-    color:#9eabff;
+ width:35px;height:35px;border-radius:10px;display:grid;place-items:center;
+ background:#1b2740;color:#9eabff
 }
 
-/* READER */
-
-.reader{
-    max-width:1000px;
-    margin:auto;
-}
-
-.reader h1{
-    font-size:30px;
-    margin-bottom:10px;
-}
-
-.reader-meta{
-    color:#73819a;
-    margin-bottom:25px;
-}
-
+.reader{max-width:1000px;margin:auto}
+.reader h1{font-size:30px;margin-bottom:10px}
+.reader-meta{color:#73819a;margin-bottom:25px}
 .reader-text{
-    background:#0d1421;
-    border:1px solid #253149;
-    padding:28px;
-    border-radius:18px;
-    line-height:1.9;
-    color:#c9d1df;
+ background:#0d1421;border:1px solid #253149;padding:28px;border-radius:18px;
+ line-height:1.9;color:#c9d1df
 }
+.reader-text p{margin-bottom:20px}
+.reader-actions{display:flex;gap:10px;margin-bottom:18px}
 
-.reader-text p{
-    margin-bottom:20px;
-}
-
-.reader-actions{
-    display:flex;
-    gap:10px;
-    margin-bottom:18px;
-}
-
-/* EXAM */
-
-.exam-grid{
-    display:grid;
-    gap:15px;
-}
-
+.exam-grid{display:grid;gap:15px}
 .question{
-    padding:20px;
-    background:#0e1625;
-    border:1px solid #263149;
-    border-radius:15px;
+ padding:20px;background:#0e1625;border:1px solid #263149;border-radius:15px
 }
+.question h3{margin-bottom:14px;font-size:15px}
+.option{display:block;padding:11px;border:1px solid #263149;border-radius:9px;margin:7px 0;cursor:pointer}
+.option:hover{background:#151f31}.option input{margin-right:8px}
 
-.question h3{
-    margin-bottom:14px;
-    font-size:15px;
-}
-
-.option{
-    padding:11px;
-    border:1px solid #263149;
-    border-radius:9px;
-    margin:7px 0;
-    cursor:pointer;
-}
-
-.option:hover{
-    background:#151f31;
-}
-
-.option input{
-    margin-right:8px;
-}
-
-/* FORM */
-
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
-}
-
-.form-group{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-}
-
-.form-group.full{
-    grid-column:1/-1;
-}
-
-label{
-    color:#8592aa;
-    font-size:12px;
-}
-
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.form-group{display:flex;flex-direction:column;gap:7px}
+.form-group.full{grid-column:1/-1}
+label{color:#8592aa;font-size:12px}
 input,textarea,select{
-    width:100%;
-    background:#0a111d;
-    color:white;
-    border:1px solid #263149;
-    border-radius:10px;
-    padding:11px;
-    outline:none;
+ width:100%;background:#0a111d;color:white;border:1px solid #263149;
+ border-radius:10px;padding:11px;outline:none
+}
+textarea{min-height:110px;resize:vertical}
+
+.rating{
+ display:flex;gap:5px;flex-wrap:wrap
+}
+.rating button{
+ border:1px solid #2a3850;background:#111a2a;color:#8d9ab0;
+ border-radius:8px;padding:7px 10px
+}
+.rating button.selected{
+ background:#6656f6;color:white;border-color:#8176ff
 }
 
-textarea{
-    min-height:110px;
-    resize:vertical;
+.eval-grid{
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:10px;
+ margin-top:10px
 }
-
-/* MODAL */
+.eval-box{
+ background:#101a2b;
+ border:1px solid #26344d;
+ padding:14px;
+ border-radius:12px;
+ text-align:center
+}
+.eval-box strong{display:block;font-size:20px;margin-top:5px}
 
 .modal{
-    position:fixed;
-    inset:0;
-    background:#000b;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:100;
+ position:fixed;inset:0;background:#000b;display:none;
+ align-items:center;justify-content:center;padding:20px;z-index:100
 }
-
-.modal.show{
-    display:flex;
-}
-
+.modal.show{display:flex}
 .modal-box{
-    width:min(600px,100%);
-    background:#101827;
-    border:1px solid #2b3850;
-    border-radius:20px;
-    padding:25px;
-    max-height:90vh;
-    overflow:auto;
+ width:min(700px,100%);background:#101827;border:1px solid #2b3850;
+ border-radius:20px;padding:25px;max-height:90vh;overflow:auto
 }
+.modal-head{display:flex;justify-content:space-between;margin-bottom:20px}
+.close{border:0;background:#1c2739;color:white;width:35px;height:35px;border-radius:50%}
 
-.modal-head{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:20px;
+.mobile-menu{display:none}
+
+@media(max-width:1000px){
+ .eval-grid{grid-template-columns:repeat(3,1fr)}
 }
-
-.close{
-    border:0;
-    background:#1c2739;
-    color:white;
-    width:35px;
-    height:35px;
-    border-radius:50%;
-}
-
-/* MOBILE */
-
-.mobile-menu{
-    display:none;
-}
-
 @media(max-width:900px){
-    .sidebar{
-        transform:translateX(-100%);
-        transition:.3s;
-    }
-
-    .sidebar.open{
-        transform:translateX(0);
-    }
-
-    .main{
-        margin-left:0;
-        width:100%;
-    }
-
-    .mobile-menu{
-        display:block;
-        background:#19243a;
-        color:white;
-        border:0;
-        padding:9px 12px;
-        border-radius:9px;
-        margin-right:10px;
-    }
-
-    .topbar{
-        padding:0 15px;
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .books{
-        grid-template-columns:1fr;
-    }
-
-    .content{
-        padding:15px;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .form-group.full{
-        grid-column:auto;
-    }
+ .sidebar{transform:translateX(-100%);transition:.3s}
+ .sidebar.open{transform:translateX(0)}
+ .main{margin-left:0;width:100%}
+ .mobile-menu{
+  display:block;background:#19243a;color:white;border:0;padding:9px 12px;
+  border-radius:9px;margin-right:10px
+ }
+ .topbar{padding:0 15px}.stats{grid-template-columns:repeat(2,1fr)}
+ .books{grid-template-columns:1fr}.content{padding:15px}
+ .form-grid{grid-template-columns:1fr}.form-group.full{grid-column:auto}
 }
-
-@media(max-width:500px){
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .hero h1{
-        font-size:23px;
-    }
-
-    .profile{
-        display:none;
-    }
+@media(max-width:600px){
+ .eval-grid{grid-template-columns:repeat(2,1fr)}
+ .hero h1{font-size:23px}.profile{display:none}
 }
 </style>
 </head>
@@ -655,84 +209,86 @@ textarea{
 
 <div class="app">
 
-<!-- SIDEBAR -->
-
 <aside class="sidebar" id="sidebar">
 
-    <div class="logo">
-        <div class="logo-icon">🎓</div>
-        <div>
-            <h2>EduCore</h2>
-            <span>Classroom System</span>
-        </div>
-    </div>
+<div class="logo">
+<div class="logo-icon">🎓</div>
+<div>
+<h2>EduCore</h2>
+<span>Classroom System</span>
+</div>
+</div>
 
-    <div class="nav-title">Main</div>
+<div class="nav-title">Main</div>
 
-    <button class="nav-btn active" onclick="showPage('dashboard',this)">
-        <span>⌂</span> Dashboard
-    </button>
+<button class="nav-btn active" onclick="showPage('dashboard',this)">
+<span>⌂</span> Dashboard
+</button>
 
-    <button class="nav-btn" onclick="showPage('attendance',this)">
-        <span>✓</span> Attendance
-    </button>
+<button class="nav-btn" onclick="showPage('attendance',this)">
+<span>✓</span> Attendance
+</button>
 
-    <button class="nav-btn" onclick="showPage('students',this)">
-        <span>👨‍🎓</span> Students
-    </button>
+<button class="nav-btn" onclick="showPage('students',this)">
+<span>👨‍🎓</span> Students
+</button>
 
-    <button class="nav-btn" onclick="showPage('daily',this)">
-        <span>📅</span> Daily Data
-    </button>
+<button class="nav-btn" onclick="showPage('daily',this)">
+<span>📅</span> Daily Data
+</button>
 
-    <div class="nav-title">Learning</div>
+<button class="nav-btn" onclick="showPage('evaluation',this)">
+<span>⭐</span> Student Evaluation
+</button>
 
-    <button class="nav-btn" onclick="showPage('books',this)">
-        <span>📚</span> Books
-    </button>
+<div class="nav-title">Learning</div>
 
-    <button class="nav-btn" onclick="showPage('exam',this)">
-        <span>🧪</span> Exam
-    </button>
+<button class="nav-btn" onclick="showPage('books',this)">
+<span>📚</span> Books
+</button>
 
-    <button class="nav-btn" onclick="showPage('results',this)">
-        <span>📊</span> Exam Results
-    </button>
+<button class="nav-btn" onclick="showPage('exam',this)">
+<span>🧪</span> Exam
+</button>
 
-    <div class="nav-title">Administration</div>
+<button class="nav-btn" onclick="showPage('results',this)">
+<span>📊</span> Exam Results
+</button>
 
-    <button class="nav-btn" onclick="showPage('examAdmin',this)">
-        <span>🔐</span> Exam Admin
-    </button>
+<div class="nav-title">Administration</div>
 
-    <button class="nav-btn" onclick="showPage('ai',this)">
-        <span>🤖</span> AI Helper
-    </button>
+<button class="nav-btn" onclick="showPage('examAdmin',this)">
+<span>🔐</span> Exam Admin
+</button>
+
+<button class="nav-btn" onclick="showPage('ai',this)">
+<span>🤖</span> AI Helper
+</button>
 
 </aside>
-
-<!-- MAIN -->
 
 <main class="main">
 
 <header class="topbar">
 
-    <div style="display:flex;align-items:center;">
-        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+<div style="display:flex;align-items:center">
 
-        <div>
-            <div class="page-title" id="pageTitle">Dashboard</div>
-            <div class="date" id="currentDate"></div>
-        </div>
-    </div>
+<button class="mobile-menu" onclick="toggleSidebar()">☰</button>
 
-    <div class="profile">
-        <div>
-            <b>Teacher</b>
-            <div style="font-size:11px;color:#748099;">Class Administrator</div>
-        </div>
-        <div class="avatar">T</div>
-    </div>
+<div>
+<div class="page-title" id="pageTitle">Dashboard</div>
+<div class="date" id="currentDate"></div>
+</div>
+
+</div>
+
+<div class="profile">
+<div>
+<b>Teacher</b>
+<div style="font-size:11px;color:#748099">Class Administrator</div>
+</div>
+<div class="avatar">T</div>
+</div>
 
 </header>
 
@@ -742,61 +298,65 @@ textarea{
 
 <section class="page active" id="dashboard">
 
-    <div class="hero">
-        <h1>Good Evening, Teacher 👋</h1>
-        <p>Manage your classroom, attendance, students, books and exams from one place.</p>
-    </div>
+<div class="hero">
+<h1>Good Evening, Teacher 👋</h1>
+<p>Manage your classroom, attendance, learning and student performance.</p>
+</div>
 
-    <div class="stats">
+<div class="stats">
 
-        <div class="card">
-            <div class="card-icon">👨‍🎓</div>
-            <div class="stat-label">Total Students</div>
-            <div class="stat-value" id="totalStudents">40</div>
-        </div>
+<div class="card">
+<div class="card-icon">👨‍🎓</div>
+<div class="stat-label">Total Students</div>
+<div class="stat-value">40</div>
+</div>
 
-        <div class="card">
-            <div class="card-icon">✓</div>
-            <div class="stat-label">Present Today</div>
-            <div class="stat-value" id="presentCount">0</div>
-        </div>
+<div class="card">
+<div class="card-icon">✓</div>
+<div class="stat-label">Present Today</div>
+<div class="stat-value" id="presentCount">0</div>
+</div>
 
-        <div class="card">
-            <div class="card-icon">❌</div>
-            <div class="stat-label">Absent Today</div>
-            <div class="stat-value" id="absentCount">0</div>
-        </div>
+<div class="card">
+<div class="card-icon">❌</div>
+<div class="stat-label">Absent Today</div>
+<div class="stat-value" id="absentCount">0</div>
+</div>
 
-        <div class="card">
-            <div class="card-icon">⛔</div>
-            <div class="stat-label">Suspended</div>
-            <div class="stat-value" id="suspendedCount">0</div>
-        </div>
+<div class="card">
+<div class="card-icon">⛔</div>
+<div class="stat-label">Suspended</div>
+<div class="stat-value" id="suspendedCount">0</div>
+</div>
 
-    </div>
+</div>
 
-    <div class="card">
-        <h3 style="margin-bottom:15px;">Today's Overview</h3>
+<div class="card">
 
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+<h3>Class Overview</h3>
 
-            <div style="padding:18px;background:#111b2b;border-radius:12px;">
-                <small style="color:#75829b;">Attendance Rate</small>
-                <h2 id="attendanceRate">0%</h2>
-            </div>
+<br>
 
-            <div style="padding:18px;background:#111b2b;border-radius:12px;">
-                <small style="color:#75829b;">Books</small>
-                <h2>2</h2>
-            </div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
 
-            <div style="padding:18px;background:#111b2b;border-radius:12px;">
-                <small style="color:#75829b;">Exam Questions</small>
-                <h2>10</h2>
-            </div>
+<div style="padding:18px;background:#111b2b;border-radius:12px">
+<small style="color:#75829b">Attendance Rate</small>
+<h2 id="attendanceRate">0%</h2>
+</div>
 
-        </div>
-    </div>
+<div style="padding:18px;background:#111b2b;border-radius:12px">
+<small style="color:#75829b">Books</small>
+<h2>2</h2>
+</div>
+
+<div style="padding:18px;background:#111b2b;border-radius:12px">
+<small style="color:#75829b">Chapters</small>
+<h2>20</h2>
+</div>
+
+</div>
+
+</div>
 
 </section>
 
@@ -804,51 +364,42 @@ textarea{
 
 <section class="page" id="attendance">
 
-    <div class="hero">
-        <h1>Daily Attendance</h1>
-        <p>Mark attendance for every student. Records are saved by date.</p>
-    </div>
+<div class="hero">
+<h1>Daily Attendance</h1>
+<p>Mark attendance and keep a daily report for every student.</p>
+</div>
 
-    <div class="toolbar">
+<div class="toolbar">
 
-        <input
-            type="date"
-            id="attendanceDate"
-            class="date-input"
-            onchange="renderAttendance()"
-        >
+<input type="date" id="attendanceDate" class="date-input" onchange="renderAttendance()">
 
-        <input
-            class="search"
-            placeholder="Search student..."
-            oninput="filterAttendance(this.value)"
-        >
+<input class="search" placeholder="Search student..." oninput="filterAttendance(this.value)">
 
-        <button class="btn btn-primary" onclick="markAllPresent()">
-            ✓ Mark All Present
-        </button>
+<button class="btn btn-primary" onclick="markAllPresent()">
+✓ Mark All Present
+</button>
 
-    </div>
+</div>
 
-    <div class="table-wrap">
+<div class="table-wrap">
 
-        <table>
+<table>
 
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Student</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                    <th>Daily Report</th>
-                </tr>
-            </thead>
+<thead>
+<tr>
+<th>#</th>
+<th>Student</th>
+<th>Status</th>
+<th>Action</th>
+<th>Daily Report</th>
+</tr>
+</thead>
 
-            <tbody id="attendanceBody"></tbody>
+<tbody id="attendanceBody"></tbody>
 
-        </table>
+</table>
 
-    </div>
+</div>
 
 </section>
 
@@ -856,101 +407,220 @@ textarea{
 
 <section class="page" id="students">
 
-    <div class="hero">
-        <h1>Students</h1>
-        <p>All 40 students in your classroom.</p>
-    </div>
+<div class="hero">
+<h1>Students</h1>
+<p>All students and their current status.</p>
+</div>
 
-    <div class="table-wrap">
+<div class="table-wrap">
 
-        <table>
+<table>
 
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Attendance</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Attendance</th>
+<th>Status</th>
+<th>Evaluation</th>
+</tr>
+</thead>
 
-            <tbody id="studentsBody"></tbody>
+<tbody id="studentsBody"></tbody>
 
-        </table>
+</table>
 
-    </div>
+</div>
 
 </section>
 
-<!-- DAILY DATA -->
+<!-- DAILY -->
 
 <section class="page" id="daily">
 
-    <div class="hero">
-        <h1>Daily Student Data</h1>
-        <p>Write notes about students for each day.</p>
-    </div>
+<div class="hero">
+<h1>Daily Student Data</h1>
+<p>Write information about a student for a particular day.</p>
+</div>
 
-    <div class="toolbar">
-        <input type="date" id="dailyDate" class="date-input">
-    </div>
+<div class="card">
 
-    <div class="card">
+<div class="form-grid">
 
-        <div class="form-grid">
+<div class="form-group">
+<label>Date</label>
+<input type="date" id="dailyDate">
+</div>
 
-            <div class="form-group">
-                <label>Student</label>
-                <select id="dailyStudent"></select>
-            </div>
+<div class="form-group">
+<label>Student</label>
+<select id="dailyStudent"></select>
+</div>
 
-            <div class="form-group">
-                <label>Daily Status</label>
-                <select id="dailyStatus">
-                    <option>Normal</option>
-                    <option>Good</option>
-                    <option>Needs Attention</option>
-                    <option>Excellent</option>
-                </select>
-            </div>
+<div class="form-group">
+<label>Daily Status</label>
+<select id="dailyStatus">
+<option>Normal</option>
+<option>Good</option>
+<option>Needs Attention</option>
+<option>Excellent</option>
+</select>
+</div>
 
-            <div class="form-group full">
-                <label>Daily Notes</label>
-                <textarea id="dailyNote"
-                placeholder="Write today's student information..."></textarea>
-            </div>
+<div class="form-group full">
+<label>Daily Notes</label>
+<textarea id="dailyNote" placeholder="Write today's information..."></textarea>
+</div>
 
-        </div>
+</div>
 
-        <br>
+<br>
 
-        <button class="btn btn-primary" onclick="saveDailyData()">
-            Save Daily Data
-        </button>
+<button class="btn btn-primary" onclick="saveDailyData()">
+Save Daily Data
+</button>
 
-    </div>
+</div>
 
-    <br>
+<br>
 
-    <div class="table-wrap">
+<div class="table-wrap">
 
-        <table>
+<table>
 
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Student</th>
-                    <th>Status</th>
-                    <th>Notes</th>
-                </tr>
-            </thead>
+<thead>
+<tr>
+<th>Date</th>
+<th>Student</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
 
-            <tbody id="dailyBody"></tbody>
+<tbody id="dailyBody"></tbody>
 
-        </table>
+</table>
 
-    </div>
+</div>
+
+</section>
+
+<!-- EVALUATION -->
+
+<section class="page" id="evaluation">
+
+<div class="hero">
+
+<h1>Student Evaluation ⭐</h1>
+
+<p>
+Give each student a score for homework, behaviour,
+participation, studying and exams.
+</p>
+
+</div>
+
+<div class="toolbar">
+
+<select id="evaluationStudent" class="search"
+onchange="loadEvaluation()"></select>
+
+<button class="btn btn-primary" onclick="saveEvaluation()">
+💾 Save Evaluation
+</button>
+
+</div>
+
+<div class="card">
+
+<h2 id="evaluationName">Student</h2>
+
+<br>
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Homework</label>
+<div class="rating" id="rateHomework"></div>
+</div>
+
+<div class="form-group">
+<label>Class Behaviour</label>
+<div class="rating" id="rateBehaviour"></div>
+</div>
+
+<div class="form-group">
+<label>Class Participation</label>
+<div class="rating" id="rateParticipation"></div>
+</div>
+
+<div class="form-group">
+<label>Study / Learning</label>
+<div class="rating" id="rateStudy"></div>
+</div>
+
+<div class="form-group">
+<label>Exam Performance</label>
+<div class="rating" id="rateExam"></div>
+</div>
+
+<div class="form-group full">
+<label>Teacher Notes</label>
+
+<textarea id="evaluationNotes"
+placeholder="Example: Did homework, behaved well, participated in class..."></textarea>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h3>Current Evaluation</h3>
+
+<div class="eval-grid">
+
+<div class="eval-box">
+Homework
+<strong id="showHomework">-</strong>
+</div>
+
+<div class="eval-box">
+Behaviour
+<strong id="showBehaviour">-</strong>
+</div>
+
+<div class="eval-box">
+Participation
+<strong id="showParticipation">-</strong>
+</div>
+
+<div class="eval-box">
+Study
+<strong id="showStudy">-</strong>
+</div>
+
+<div class="eval-box">
+Exam
+<strong id="showExam">-</strong>
+</div>
+
+</div>
+
+<br>
+
+<div style="background:#111b2b;padding:18px;border-radius:12px">
+<b>Teacher Notes</b>
+<p id="showNotes" style="color:#8794aa;margin-top:8px">
+No notes yet.
+</p>
+</div>
+
+</div>
 
 </section>
 
@@ -958,101 +628,99 @@ textarea{
 
 <section class="page" id="books">
 
-    <div id="bookHome">
+<div id="bookHome">
 
-        <div class="hero">
-            <h1>Library 📚</h1>
-            <p>Select a book to open its chapters.</p>
-        </div>
+<div class="hero">
+<h1>Library 📚</h1>
+<p>Choose a book and open its chapters.</p>
+</div>
 
-        <div class="books">
+<div class="books">
 
-            <div class="book" onclick="openBook(1)">
+<div class="book" onclick="openBook(1)">
 
-                <div class="book-cover">📘</div>
+<div class="book-cover">📘</div>
 
-                <h2>Computer Science</h2>
+<h2>Computer Science</h2>
 
-                <p>
-                    Learn computers, hardware, software,
-                    networking and programming.
-                </p>
+<p>
+Computers, hardware, software, networks,
+internet, security and programming.
+</p>
 
-                <br>
+<br>
 
-                <span class="badge present">10 Chapters</span>
+<span class="badge blue">10 Chapters</span>
 
-            </div>
+</div>
 
-            <div class="book" onclick="openBook(2)">
+<div class="book" onclick="openBook(2)">
 
-                <div class="book-cover">📕</div>
+<div class="book-cover">📕</div>
 
-                <h2>Mathematics</h2>
+<h2>Mathematics</h2>
 
-                <p>
-                    Numbers, algebra, geometry,
-                    equations and problem solving.
-                </p>
+<p>
+Numbers, algebra, geometry, statistics,
+probability and problem solving.
+</p>
 
-                <br>
+<br>
 
-                <span class="badge present">10 Chapters</span>
+<span class="badge blue">10 Chapters</span>
 
-            </div>
+</div>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
-    <div id="chapterHome" style="display:none;">
+<div id="chapterHome" style="display:none">
 
-        <button class="btn" onclick="backBooks()">← Back to Books</button>
+<button class="btn" onclick="backBooks()">← Back to Books</button>
 
-        <br><br>
+<br><br>
 
-        <div class="hero">
-            <h1 id="bookTitle"></h1>
-            <p>Select a chapter.</p>
-        </div>
+<div class="hero">
+<h1 id="bookTitle"></h1>
+<p>Choose a chapter.</p>
+</div>
 
-        <div class="chapter-list" id="chapterList"></div>
+<div class="chapter-list" id="chapterList"></div>
 
-    </div>
+</div>
 
-    <div id="readerHome" style="display:none;">
+<div id="readerHome" style="display:none">
 
-        <div class="reader">
+<div class="reader">
 
-            <button class="btn" onclick="backChapters()">← Chapters</button>
+<button class="btn" onclick="backChapters()">← Chapters</button>
 
-            <br><br>
+<br><br>
 
-            <h1 id="chapterTitle"></h1>
+<h1 id="chapterTitle"></h1>
 
-            <div class="reader-meta">
-                Educational explanation
-            </div>
+<div class="reader-meta">
+Chapter explanation
+</div>
 
-            <div class="reader-actions">
+<div class="reader-actions">
 
-                <button class="btn btn-primary"
-                    onclick="shortenChapter()">
-                    ✂️ Short Explanation
-                </button>
+<button class="btn btn-primary" onclick="shortenChapter()">
+✂️ Short Explanation
+</button>
 
-                <button class="btn"
-                    onclick="resetChapter()">
-                    ↻ Full Explanation
-                </button>
+<button class="btn" onclick="resetChapter()">
+↻ Full Explanation
+</button>
 
-            </div>
+</div>
 
-            <article class="reader-text" id="readerText"></article>
+<article class="reader-text" id="readerText"></article>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
 </section>
 
@@ -1060,21 +728,53 @@ textarea{
 
 <section class="page" id="exam">
 
-    <div class="hero">
-        <h1>Class Exam 🧪</h1>
-        <p>Complete the exam and submit your answers.</p>
-    </div>
+<div class="hero">
 
-    <div class="exam-grid" id="examQuestions"></div>
+<h1>Chapter Exam 🧪</h1>
 
-    <br>
+<p>
+Questions are based directly on the chapters from the two books.
+Choose a book and chapter to create the exam.
+</p>
 
-    <button class="btn btn-primary"
-        onclick="submitExam()">
-        Submit Exam
-    </button>
+</div>
 
-    <div id="examMessage"></div>
+<div class="card">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Book</label>
+
+<select id="examBook" onchange="loadExamChapters()">
+
+<option value="1">Computer Science</option>
+<option value="2">Mathematics</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+<label>Chapter</label>
+
+<select id="examChapter"></select>
+
+</div>
+
+</div>
+
+<br>
+
+<button class="btn btn-primary" onclick="generateChapterExam()">
+🧪 Start Chapter Exam
+</button>
+
+</div>
+
+<br>
+
+<div id="examArea"></div>
 
 </section>
 
@@ -1082,56 +782,49 @@ textarea{
 
 <section class="page" id="results">
 
-    <div class="hero">
-        <h1>Exam Results 📊</h1>
-        <p>Enter marks and calculate the final result.</p>
-    </div>
+<div class="hero">
 
-    <div class="card">
+<h1>Exam Results 📊</h1>
 
-        <div class="form-grid">
+<p>Enter marks and calculate the result.</p>
 
-            <div class="form-group">
-                <label>Student</label>
+</div>
 
-                <select id="resultStudent"></select>
+<div class="card">
 
-            </div>
+<div class="form-grid">
 
-            <div class="form-group">
-                <label>Total Marks</label>
+<div class="form-group">
+<label>Student</label>
+<select id="resultStudent"></select>
+</div>
 
-                <input
-                    type="number"
-                    id="totalMarks"
-                    value="100"
-                >
+<div class="form-group">
+<label>Exam / Chapter</label>
+<input id="resultExamName" placeholder="Example: Algebra Chapter 4">
+</div>
 
-            </div>
+<div class="form-group">
+<label>Total Marks</label>
+<input type="number" id="totalMarks" value="100">
+</div>
 
-            <div class="form-group">
-                <label>Obtained Marks</label>
+<div class="form-group">
+<label>Obtained Marks</label>
+<input type="number" id="obtainedMarks">
+</div>
 
-                <input
-                    type="number"
-                    id="obtainedMarks"
-                    placeholder="Enter marks"
-                >
+</div>
 
-            </div>
+<br>
 
-        </div>
+<button class="btn btn-primary" onclick="calculateResult()">
+Calculate Result
+</button>
 
-        <br>
+<div id="resultOutput"></div>
 
-        <button class="btn btn-primary"
-            onclick="calculateResult()">
-            Calculate Result
-        </button>
-
-        <div id="resultOutput"></div>
-
-    </div>
+</div>
 
 </section>
 
@@ -1139,20 +832,23 @@ textarea{
 
 <section class="page" id="examAdmin">
 
-    <div class="hero">
-        <h1>Exam Admin 🔐</h1>
-        <p>Teacher-only answer key and exam control.</p>
-    </div>
+<div class="hero">
 
-    <div class="card">
+<h1>Exam Admin 🔐</h1>
 
-        <h3>Answer Key</h3>
+<p>
+Teacher answer key for the current chapter exam.
+</p>
 
-        <br>
+</div>
 
-        <div id="answerAdmin"></div>
+<div class="card">
 
-    </div>
+<div id="answerAdmin">
+Start an exam first.
+</div>
+
+</div>
 
 </section>
 
@@ -1160,73 +856,74 @@ textarea{
 
 <section class="page" id="ai">
 
-    <div class="hero">
-        <h1>Simple AI Exam Helper 🤖</h1>
-        <p>Use this tool to create a quick explanation or revision answer.</p>
-    </div>
+<div class="hero">
 
-    <div class="card">
+<h1>Simple AI Helper 🤖</h1>
 
-        <div class="form-group">
+<p>
+Create a short revision explanation from a question or topic.
+</p>
 
-            <label>Topic / Question</label>
+</div>
 
-            <textarea
-                id="aiQuestion"
-                placeholder="Example: Explain photosynthesis"></textarea>
+<div class="card">
 
-        </div>
+<div class="form-group">
 
-        <br>
+<label>Question / Topic</label>
 
-        <button class="btn btn-primary"
-            onclick="simpleAI()">
-            🤖 Generate Simple Explanation
-        </button>
+<textarea id="aiQuestion"
+placeholder="Example: Explain computer networks"></textarea>
 
-        <br><br>
+</div>
 
-        <div id="aiOutput"
-            style="background:#0a111d;border:1px solid #27334a;border-radius:12px;padding:18px;color:#bfc9da;">
-        </div>
+<br>
 
-    </div>
+<button class="btn btn-primary" onclick="simpleAI()">
+🤖 Generate Simple Explanation
+</button>
+
+<br><br>
+
+<div id="aiOutput"
+style="background:#0a111d;border:1px solid #27334a;border-radius:12px;padding:18px;color:#bfc9da">
+</div>
+
+</div>
 
 </section>
 
 </div>
 </main>
-
 </div>
 
 <!-- MODAL -->
 
 <div class="modal" id="modal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <div class="modal-head">
+<div class="modal-head">
 
-            <h2 id="modalTitle">Student</h2>
+<h2 id="modalTitle">Student</h2>
 
-            <button class="close"
-                onclick="closeModal()">×</button>
+<button class="close" onclick="closeModal()">×</button>
 
-        </div>
+</div>
 
-        <div id="modalContent"></div>
+<div id="modalContent"></div>
 
-    </div>
+</div>
 
 </div>
 
 <script>
 
 /* =========================
-   STUDENTS
+STUDENTS
 ========================= */
 
-const students = [
+const students=[
 "Aarav Sharma","Arjun Kumar","Ayaan Singh","Kabir Verma",
 "Vivaan Patel","Aditya Mehta","Reyansh Gupta","Vihaan Shah",
 "Krish Malhotra","Rohan Kapoor","Dhruv Bansal","Karan Saini",
@@ -1240,68 +937,41 @@ const students = [
 ];
 
 /* =========================
-   DATA
+DATA
 ========================= */
 
-let attendance =
-JSON.parse(localStorage.getItem("attendance")) || {};
+let attendance=JSON.parse(localStorage.getItem("attendance"))||{};
+let suspended=JSON.parse(localStorage.getItem("suspended"))||{};
+let dailyData=JSON.parse(localStorage.getItem("dailyData"))||{};
+let evaluations=JSON.parse(localStorage.getItem("evaluations"))||{};
+let examResults=JSON.parse(localStorage.getItem("examResults"))||{};
 
-let suspended =
-JSON.parse(localStorage.getItem("suspended")) || {};
+let currentBook=1;
+let currentChapter=0;
+let currentExam=[];
 
-let dailyData =
-JSON.parse(localStorage.getItem("dailyData")) || {};
+const today=new Date().toISOString().split("T")[0];
 
-let examResults =
-JSON.parse(localStorage.getItem("examResults")) || {};
+document.getElementById("attendanceDate").value=today;
+document.getElementById("dailyDate").value=today;
 
-/* =========================
-   INIT
-========================= */
-
-const today =
-new Date().toISOString().split("T")[0];
-
-document.getElementById("attendanceDate").value = today;
-document.getElementById("dailyDate").value = today;
-
-document.getElementById("currentDate").textContent =
-new Date().toLocaleDateString(
-"en-GB",
-{
-weekday:"long",
-day:"numeric",
-month:"long",
-year:"numeric"
-}
-);
+document.getElementById("currentDate").textContent=
+new Date().toLocaleDateString("en-GB",{
+weekday:"long",day:"numeric",month:"long",year:"numeric"
+});
 
 function saveData(){
 
-localStorage.setItem(
-"attendance",
-JSON.stringify(attendance)
-);
-
-localStorage.setItem(
-"suspended",
-JSON.stringify(suspended)
-);
-
-localStorage.setItem(
-"dailyData",
-JSON.stringify(dailyData)
-);
-
-localStorage.setItem(
-"examResults",
-JSON.stringify(examResults)
-);
+localStorage.setItem("attendance",JSON.stringify(attendance));
+localStorage.setItem("suspended",JSON.stringify(suspended));
+localStorage.setItem("dailyData",JSON.stringify(dailyData));
+localStorage.setItem("evaluations",JSON.stringify(evaluations));
+localStorage.setItem("examResults",JSON.stringify(examResults));
 
 }
 
 /* =========================
-   NAVIGATION
+NAVIGATION
 ========================= */
 
 function showPage(id,btn){
@@ -1309,19 +979,19 @@ function showPage(id,btn){
 document.querySelectorAll(".page")
 .forEach(p=>p.classList.remove("active"));
 
-document.getElementById(id)
-.classList.add("active");
+document.getElementById(id).classList.add("active");
 
 document.querySelectorAll(".nav-btn")
 .forEach(b=>b.classList.remove("active"));
 
-if(btn) btn.classList.add("active");
+if(btn)btn.classList.add("active");
 
 const names={
 dashboard:"Dashboard",
 attendance:"Attendance",
 students:"Students",
 daily:"Daily Data",
+evaluation:"Student Evaluation",
 books:"Books",
 exam:"Exam",
 results:"Exam Results",
@@ -1329,54 +999,40 @@ examAdmin:"Exam Admin",
 ai:"AI Helper"
 };
 
-document.getElementById("pageTitle")
-.textContent=names[id];
+document.getElementById("pageTitle").textContent=names[id];
 
-if(id==="attendance") renderAttendance();
-if(id==="students") renderStudents();
-if(id==="daily") renderDaily();
-if(id==="exam") renderExam();
-if(id==="examAdmin") renderAnswerAdmin();
+if(id==="attendance")renderAttendance();
+if(id==="students")renderStudents();
+if(id==="daily")renderDaily();
+if(id==="evaluation")loadEvaluation();
+if(id==="examAdmin")renderAnswerAdmin();
 
 }
-
-/* =========================
-   SIDEBAR
-========================= */
 
 function toggleSidebar(){
-
-document.getElementById("sidebar")
-.classList.toggle("open");
-
+document.getElementById("sidebar").classList.toggle("open");
 }
 
 /* =========================
-   ATTENDANCE
+ATTENDANCE
 ========================= */
 
 function getDate(){
-
 return document.getElementById("attendanceDate").value;
-
 }
 
 function renderAttendance(){
 
 const date=getDate();
 
-if(!attendance[date])
-attendance[date]={};
+if(!attendance[date])attendance[date]={};
 
 let html="";
 
 students.forEach((name,i)=>{
 
-let status=
-attendance[date][name] || "Absent";
-
-let isSuspended=
-suspended[name] || false;
+const status=attendance[date][name]||"Absent";
+const isSuspended=suspended[name]||false;
 
 html+=`
 
@@ -1384,46 +1040,30 @@ html+=`
 
 <td>${i+1}</td>
 
-<td>
-<b>${name}</b>
-</td>
+<td><b>${name}</b></td>
 
 <td>
-
 <span class="badge ${
-isSuspended
-?"suspended"
-:status==="Present"
-?"present"
-:"absent"
+isSuspended?"suspended":status==="Present"?"present":"absent"
 }">
 ${isSuspended?"SUSPENDED":status}
 </span>
-
 </td>
 
 <td>
 
 <button class="btn btn-small ${
-status==="Present"
-?"btn-red"
-:"btn-green"
-}"
-onclick="toggleAttendance('${name}')">
+status==="Present"?"btn-red":"btn-green"
+}" onclick="toggleAttendance('${name}')">
 
-${status==="Present"
-?"Mark Absent"
-:"Mark Present"}
+${status==="Present"?"Mark Absent":"Mark Present"}
 
 </button>
 
-<button
-class="btn btn-small btn-orange"
+<button class="btn btn-small btn-orange"
 onclick="toggleSuspend('${name}')">
 
-${isSuspended
-?"Unsuspend"
-:"Suspend"}
+${isSuspended?"Unsuspend":"Suspend"}
 
 </button>
 
@@ -1433,19 +1073,19 @@ ${isSuspended
 
 <button class="btn btn-small"
 onclick="studentReport('${name}')">
+
 View Report
+
 </button>
 
 </td>
 
 </tr>
-
 `;
 
 });
 
-document.getElementById("attendanceBody")
-.innerHTML=html;
+document.getElementById("attendanceBody").innerHTML=html;
 
 updateStats();
 
@@ -1455,13 +1095,10 @@ function toggleAttendance(name){
 
 const date=getDate();
 
-if(!attendance[date])
-attendance[date]={};
+if(!attendance[date])attendance[date]={};
 
 attendance[date][name]=
-attendance[date][name]==="Present"
-?"Absent"
-:"Present";
+attendance[date][name]==="Present"?"Absent":"Present";
 
 saveData();
 renderAttendance();
@@ -1474,9 +1111,7 @@ const date=getDate();
 
 attendance[date]={};
 
-students.forEach(s=>{
-attendance[date][s]="Present";
-});
+students.forEach(s=>attendance[date][s]="Present");
 
 saveData();
 renderAttendance();
@@ -1488,35 +1123,25 @@ function toggleSuspend(name){
 suspended[name]=!suspended[name];
 
 saveData();
+
 renderAttendance();
 renderStudents();
 updateStats();
 
 }
 
-/* =========================
-   SEARCH
-========================= */
-
 function filterAttendance(value){
 
-document.querySelectorAll(
-"#attendanceBody tr"
-).forEach(row=>{
-
+document.querySelectorAll("#attendanceBody tr")
+.forEach(row=>{
 row.style.display=
-row.dataset.name.includes(
-value.toLowerCase()
-)
-?""
-:"none";
-
+row.dataset.name.includes(value.toLowerCase())?"":"none";
 });
 
 }
 
 /* =========================
-   STUDENTS
+STUDENTS
 ========================= */
 
 function renderStudents(){
@@ -1525,25 +1150,21 @@ let html="";
 
 students.forEach((name,i)=>{
 
-let present=0;
-let total=0;
+let present=0,total=0;
 
 Object.keys(attendance).forEach(date=>{
 
 if(attendance[date][name]){
+
 total++;
 
-if(attendance[date][name]==="Present")
-present++;
+if(attendance[date][name]==="Present")present++;
 
 }
 
 });
 
-let percent=
-total
-?Math.round(present/total*100)
-:0;
+const percent=total?Math.round(present/total*100):0;
 
 html+=`
 
@@ -1558,21 +1179,22 @@ html+=`
 <td>
 
 <span class="badge ${
-suspended[name]
-?"suspended"
-:"present"
+suspended[name]?"suspended":"present"
 }">
+
 ${suspended[name]?"SUSPENDED":"ACTIVE"}
+
 </span>
 
 </td>
 
 <td>
 
-<button
-class="btn btn-small"
-onclick="studentReport('${name}')">
-Report
+<button class="btn btn-small"
+onclick="openEvaluation('${name}')">
+
+⭐ Evaluation
+
 </button>
 
 </td>
@@ -1583,13 +1205,12 @@ Report
 
 });
 
-document.getElementById("studentsBody")
-.innerHTML=html;
+document.getElementById("studentsBody").innerHTML=html;
 
 }
 
 /* =========================
-   REPORT
+STUDENT REPORT
 ========================= */
 
 function studentReport(name){
@@ -1598,8 +1219,7 @@ let rows="";
 
 Object.keys(attendance).forEach(date=>{
 
-let status=
-attendance[date][name] || "Absent";
+const status=attendance[date][name]||"Absent";
 
 rows+=`
 
@@ -1609,16 +1229,13 @@ rows+=`
 
 <td>
 <span class="badge ${
-status==="Present"
-?"present"
-:"absent"
+status==="Present"?"present":"absent"
 }">
 ${status}
 </span>
 </td>
 
 </tr>
-
 `;
 
 });
@@ -1626,11 +1243,9 @@ ${status}
 if(!rows)
 rows="<tr><td colspan='2'>No attendance data yet.</td></tr>";
 
-document.getElementById("modalTitle")
-.textContent=name;
+document.getElementById("modalTitle").textContent=name;
 
-document.getElementById("modalContent")
-.innerHTML=`
+document.getElementById("modalContent").innerHTML=`
 
 <h3>Attendance Report</h3>
 
@@ -1655,73 +1270,52 @@ document.getElementById("modalContent")
 
 <br>
 
-<p style="color:#8290a9;">
-Status:
-<b>${suspended[name]?"Suspended":"Active"}</b>
-</p>
+<button class="btn btn-primary"
+onclick="openEvaluation('${name}');closeModal()">
 
+⭐ Open Student Evaluation
+
+</button>
 `;
 
-document.getElementById("modal")
-.classList.add("show");
+document.getElementById("modal").classList.add("show");
 
 }
 
 function closeModal(){
-
-document.getElementById("modal")
-.classList.remove("show");
-
+document.getElementById("modal").classList.remove("show");
 }
 
 /* =========================
-   DAILY DATA
+DAILY DATA
 ========================= */
 
 function loadStudentSelect(){
 
-document.getElementById("dailyStudent")
-.innerHTML=
-students.map(s=>
-`<option>${s}</option>`
-).join("");
+const options=students.map(s=>`<option>${s}</option>`).join("");
 
-document.getElementById("resultStudent")
-.innerHTML=
-students.map(s=>
-`<option>${s}</option>`
-).join("");
+document.getElementById("dailyStudent").innerHTML=options;
+document.getElementById("resultStudent").innerHTML=options;
+document.getElementById("evaluationStudent").innerHTML=options;
 
 }
 
 function saveDailyData(){
 
-const date=
-document.getElementById("dailyDate").value;
-
-const student=
-document.getElementById("dailyStudent").value;
-
-const status=
-document.getElementById("dailyStatus").value;
-
-const note=
-document.getElementById("dailyNote").value;
+const date=document.getElementById("dailyDate").value;
+const student=document.getElementById("dailyStudent").value;
+const status=document.getElementById("dailyStatus").value;
+const note=document.getElementById("dailyNote").value;
 
 if(!note.trim()){
-
 alert("Please write a note.");
 return;
-
 }
 
-if(!dailyData[date])
-dailyData[date]=[];
+if(!dailyData[date])dailyData[date]=[];
 
 dailyData[date].push({
-student,
-status,
-note
+student,status,note
 });
 
 saveData();
@@ -1736,10 +1330,7 @@ function renderDaily(){
 
 let html="";
 
-Object.keys(dailyData)
-.sort()
-.reverse()
-.forEach(date=>{
+Object.keys(dailyData).sort().reverse().forEach(date=>{
 
 dailyData[date].forEach(item=>{
 
@@ -1753,7 +1344,6 @@ html+=`
 <td>${item.note}</td>
 
 </tr>
-
 `;
 
 });
@@ -1761,60 +1351,179 @@ html+=`
 });
 
 if(!html)
-html=`
-<tr>
-<td colspan="4">
-No daily data yet.
-</td>
-</tr>
-`;
+html="<tr><td colspan='4'>No daily data yet.</td></tr>";
 
-document.getElementById("dailyBody")
-.innerHTML=html;
+document.getElementById("dailyBody").innerHTML=html;
 
 }
 
 /* =========================
-   STATS
+EVALUATION
 ========================= */
 
-function updateStats(){
+const evaluationFields=[
+"Homework",
+"Behaviour",
+"Participation",
+"Study",
+"Exam"
+];
 
-const date=getDate();
+function createRating(id){
 
-let present=0;
-let absent=0;
+let html="";
 
-students.forEach(s=>{
+for(let i=1;i<=5;i++){
 
-if(attendance[date] &&
-attendance[date][s]==="Present")
-present++;
-else
-absent++;
+html+=`
 
+<button type="button"
+onclick="setRating('${id}',${i})"
+id="${id}_${i}">
+
+${i}
+
+</button>
+
+`;
+
+}
+
+document.getElementById(id).innerHTML=html;
+
+}
+
+function setRating(field,value){
+
+for(let i=1;i<=5;i++){
+
+const btn=document.getElementById(field+"_"+i);
+
+if(btn)btn.classList.remove("selected");
+
+}
+
+document.getElementById(field+"_"+value)
+.classList.add("selected");
+
+}
+
+function getRating(field){
+
+for(let i=1;i<=5;i++){
+
+const btn=document.getElementById(field+"_"+i);
+
+if(btn && btn.classList.contains("selected"))
+return i;
+
+}
+
+return 0;
+
+}
+
+function openEvaluation(name){
+
+showPage(
+"evaluation",
+document.querySelector(
+'.nav-btn[onclick*="evaluation"]'
+)
+);
+
+document.getElementById("evaluationStudent").value=name;
+
+loadEvaluation();
+
+}
+
+function loadEvaluation(){
+
+const student=document.getElementById("evaluationStudent").value;
+
+document.getElementById("evaluationName").textContent=student;
+
+createRating("rateHomework");
+createRating("rateBehaviour");
+createRating("rateParticipation");
+createRating("rateStudy");
+createRating("rateExam");
+
+const data=evaluations[student];
+
+if(data){
+
+setRating("rateHomework",data.homework);
+setRating("rateBehaviour",data.behaviour);
+setRating("rateParticipation",data.participation);
+setRating("rateStudy",data.study);
+setRating("rateExam",data.exam);
+
+document.getElementById("evaluationNotes").value=
+data.notes||"";
+
+document.getElementById("showHomework").textContent=
+data.homework+"/5";
+
+document.getElementById("showBehaviour").textContent=
+data.behaviour+"/5";
+
+document.getElementById("showParticipation").textContent=
+data.participation+"/5";
+
+document.getElementById("showStudy").textContent=
+data.study+"/5";
+
+document.getElementById("showExam").textContent=
+data.exam+"/5";
+
+document.getElementById("showNotes").textContent=
+data.notes||"No notes.";
+
+}else{
+
+document.getElementById("evaluationNotes").value="";
+
+["Homework","Behaviour","Participation","Study","Exam"]
+.forEach(x=>{
+document.getElementById(
+"show"+x
+).textContent="-";
 });
 
-document.getElementById("presentCount")
-.textContent=present;
+document.getElementById("showNotes").textContent=
+"No evaluation saved yet.";
 
-document.getElementById("absentCount")
-.textContent=absent;
+}
 
-const rate=
-Math.round(present/students.length*100);
+}
 
-document.getElementById("attendanceRate")
-.textContent=rate+"%";
+function saveEvaluation(){
 
-document.getElementById("suspendedCount")
-.textContent=
-students.filter(s=>suspended[s]).length;
+const student=document.getElementById("evaluationStudent").value;
+
+const data={
+homework:getRating("rateHomework"),
+behaviour:getRating("rateBehaviour"),
+participation:getRating("rateParticipation"),
+study:getRating("rateStudy"),
+exam:getRating("rateExam"),
+notes:document.getElementById("evaluationNotes").value
+};
+
+evaluations[student]=data;
+
+saveData();
+
+loadEvaluation();
+
+alert("Evaluation saved for "+student+".");
 
 }
 
 /* =========================
-   BOOK SYSTEM
+BOOKS + CHAPTERS
 ========================= */
 
 const books={
@@ -1833,6 +1542,7 @@ chapters:[
 "Future Technology"
 ]
 },
+
 2:{
 title:"Mathematics",
 chapters:[
@@ -1850,43 +1560,34 @@ chapters:[
 }
 };
 
-let currentBook=1;
-let currentChapter=0;
-
 function openBook(id){
 
 currentBook=id;
 
-document.getElementById("bookHome")
-.style.display="none";
+document.getElementById("bookHome").style.display="none";
+document.getElementById("chapterHome").style.display="block";
+document.getElementById("readerHome").style.display="none";
 
-document.getElementById("chapterHome")
-.style.display="block";
+document.getElementById("bookTitle").textContent=
+books[id].title;
 
-document.getElementById("readerHome")
-.style.display="none";
-
-document.getElementById("bookTitle")
-.textContent=books[id].title;
-
-document.getElementById("chapterList")
-.innerHTML=
+document.getElementById("chapterList").innerHTML=
 books[id].chapters.map((chapter,i)=>`
 
-<div class="chapter"
-onclick="openChapter(${i})">
+<div class="chapter" onclick="openChapter(${i})">
 
 <div class="chapter-info">
 
-<div class="chapter-number">
-${i+1}
-</div>
+<div class="chapter-number">${i+1}</div>
 
 <div>
+
 <b>${chapter}</b>
-<div style="font-size:11px;color:#738099;margin-top:4px;">
+
+<div style="font-size:11px;color:#738099;margin-top:4px">
 Chapter ${i+1} • Explanation
 </div>
+
 </div>
 
 </div>
@@ -1901,24 +1602,16 @@ Chapter ${i+1} • Explanation
 
 function backBooks(){
 
-document.getElementById("bookHome")
-.style.display="block";
-
-document.getElementById("chapterHome")
-.style.display="none";
-
-document.getElementById("readerHome")
-.style.display="none";
+document.getElementById("bookHome").style.display="block";
+document.getElementById("chapterHome").style.display="none";
+document.getElementById("readerHome").style.display="none";
 
 }
 
 function backChapters(){
 
-document.getElementById("chapterHome")
-.style.display="block";
-
-document.getElementById("readerHome")
-.style.display="none";
+document.getElementById("chapterHome").style.display="block";
+document.getElementById("readerHome").style.display="none";
 
 }
 
@@ -1926,14 +1619,10 @@ function openChapter(index){
 
 currentChapter=index;
 
-document.getElementById("chapterHome")
-.style.display="none";
+document.getElementById("chapterHome").style.display="none";
+document.getElementById("readerHome").style.display="block";
 
-document.getElementById("readerHome")
-.style.display="block";
-
-document.getElementById("chapterTitle")
-.textContent=
+document.getElementById("chapterTitle").textContent=
 books[currentBook].chapters[index];
 
 renderChapter(false);
@@ -1947,70 +1636,51 @@ books[currentBook].chapters[currentChapter];
 
 return `
 
-<p>
-<b>Introduction</b>
-</p>
+<p><b>Introduction</b></p>
 
 <p>
-${title} is an important topic that helps students
-understand the basic ideas and practical use of this subject.
-In this chapter we will learn the main concepts, important
-terms, examples and real-world applications.
+${title} is an important topic. It helps students understand
+the basic ideas, important terms and practical uses related
+to this subject.
 </p>
 
-<p>
-<b>Basic Concept</b>
-</p>
+<p><b>Basic Concept</b></p>
 
 <p>
-The main idea behind ${title} is to understand how different
-parts of a topic work together. A good understanding starts
-with simple definitions and then moves towards examples and
-more advanced concepts.
+The first step is to understand what ${title} means.
+Students should learn the main definition and then understand
+how the different parts of the topic work together.
 </p>
 
-<p>
-<b>Detailed Explanation</b>
-</p>
+<p><b>Detailed Explanation</b></p>
 
 <p>
-Students should first identify the important elements of
-${title}. Each element has its own purpose. By studying
-these elements one by one, it becomes easier to understand
-the complete topic. Practical examples can then be used to
-connect the theory with real situations.
+When studying ${title}, break the topic into smaller parts.
+Learn each part separately and then connect them together.
+Examples make the concept easier to understand because they
+show how the theory can be used in a real situation.
 </p>
 
-<p>
-<b>Example</b>
-</p>
+<p><b>Example</b></p>
 
 <p>
-Imagine a classroom where a teacher explains a new idea.
-The teacher starts with a simple example, explains each step,
-and then gives students a problem to solve. The same learning
-method can be applied to ${title}: understand the definition,
-learn the process, study examples and finally practise.
+A simple example can be used to understand the topic.
+First identify the problem, then identify the important
+information and finally apply the correct concept or method.
 </p>
 
-<p>
-<b>Important Points</b>
-</p>
+<p><b>Important Points</b></p>
 
 <p>
-Remember the important definitions, steps, formulas,
-relationships and examples from this chapter. These points
-are useful when preparing for an examination.
+Remember the definitions, steps, formulas, relationships
+and examples. These are useful for revision and examination.
 </p>
 
-<p>
-<b>Revision</b>
-</p>
+<p><b>Revision</b></p>
 
 <p>
-For revision, read the main headings first. Then review the
-important terms and examples. Finally, try to explain the
-topic in your own words without looking at the book.
+For revision, read the headings, remember the key terms,
+and explain the chapter in your own words.
 </p>
 
 `;
@@ -2024,30 +1694,25 @@ books[currentBook].chapters[currentChapter];
 
 if(short){
 
-document.getElementById("readerText")
-.innerHTML=`
+document.getElementById("readerText").innerHTML=`
 
 <p><b>${title}</b></p>
 
 <p>
-${title} is an important topic. Learn its basic definition,
-main concepts, important steps and practical examples.
-Remember the key points and practise questions related to
-the chapter.
+${title} means understanding its main definition,
+important concepts, steps and examples.
 </p>
 
 <p>
-<b>Quick Revision:</b> Understand the definition, identify
-the important parts, study examples and review the main
-points before the exam.
+<b>Quick Revision:</b>
+Learn the definition, main points, examples and important
+terms. Then practise questions from this chapter.
 </p>
-
 `;
 
 }else{
 
-document.getElementById("readerText")
-.innerHTML=
+document.getElementById("readerText").innerHTML=
 generateExplanation();
 
 }
@@ -2055,154 +1720,165 @@ generateExplanation();
 }
 
 function shortenChapter(){
-
 renderChapter(true);
-
 }
 
 function resetChapter(){
-
 renderChapter(false);
-
 }
 
 /* =========================
-   EXAM
+CHAPTER EXAM
 ========================= */
 
-const examQuestions=[
+const chapterQuestions={
 
-{
-q:"What does CPU stand for?",
-options:[
-"Central Processing Unit",
-"Computer Personal Unit",
-"Central Program Utility",
-"Control Processing User"
+"Introduction to Computers":[
+["What is a computer?","A machine that processes information",["A type of food","A machine that processes information","A book","A network cable"],1],
+["Which part processes instructions?","CPU",["Monitor","CPU","Mouse","Printer"],1]
 ],
-answer:0
-},
 
-{
-q:"Which device is used to display information?",
-options:[
-"Keyboard",
-"Monitor",
-"Mouse",
-"Microphone"
+"Computer Hardware":[
+["Which is hardware?","Keyboard",["Windows","Keyboard","Google","HTML"],1],
+["Which device displays information?","Monitor",["Keyboard","Monitor","CPU","RAM"],1]
 ],
-answer:1
-},
 
-{
-q:"Which one is an operating system?",
-options:[
-"Windows",
-"HTML",
-"CPU",
-"RAM"
+"Operating Systems":[
+["Which is an operating system?","Windows",["HTML","Windows","CPU","RAM"],1],
+["What does an operating system manage?","Computer resources",["Only paper","Computer resources","Only speakers","Only cables"],1]
 ],
-answer:0
-},
 
-{
-q:"What is 10 + 15?",
-options:[
-"20",
-"25",
-"30",
-"35"
+"Software":[
+["Which is software?","Microsoft Word",["Keyboard","Microsoft Word","Monitor","Mouse"],1],
+["Software gives instructions to a computer.","True",["False","True","Never","None"],1]
 ],
-answer:1
-},
 
-{
-q:"What is 5 × 6?",
-options:[
-"20",
-"25",
-"30",
-"35"
+"Computer Networks":[
+["What connects computers together?","A network",["A chair","A network","A book","A pencil"],1],
+["LAN is a type of what?","Network",["Keyboard","Network","Printer","Screen"],1]
 ],
-answer:2
-},
 
-{
-q:"Which is used to connect computers?",
-options:[
-"Network",
-"Chair",
-"Book",
-"Pen"
+"Internet":[
+["What is the Internet?","A global network",["A keyboard","A global network","A CPU","A monitor"],1],
+["Which is used to open websites?","Web browser",["Keyboard cable","Web browser","RAM","CPU"],1]
 ],
-answer:0
-},
 
-{
-q:"Which number is even?",
-options:[
-"7",
-"9",
-"11",
-"12"
+"Cyber Security":[
+["What does cyber security protect?","Digital systems and data",["Only chairs","Digital systems and data","Books","Paper"],1],
+["A strong password improves security.","True",["False","True","Never","None"],1]
 ],
-answer:3
-},
 
-{
-q:"What does RAM help a computer with?",
-options:[
-"Temporary working memory",
-"Printing paper",
-"Internet cables",
-"Sound only"
+"Programming Basics":[
+["What is Python?","A programming language",["A monitor","A programming language","A mouse","A cable"],1],
+["Programming creates instructions for computers.","True",["False","True","Never","None"],1]
 ],
-answer:0
-},
 
-{
-q:"Which is a programming language?",
-options:[
-"Python",
-"Keyboard",
-"Monitor",
-"Printer"
+"Databases":[
+["What stores organized information?","Database",["Keyboard","Database","Monitor","Mouse"],1],
+["A database can contain records.","True",["False","True","Never","None"],1]
 ],
-answer:0
-},
 
-{
-q:"What is 100 ÷ 10?",
-options:[
-"5",
-"10",
-"15",
-"20"
+"Future Technology":[
+["Which is a modern technology?","Artificial Intelligence",["Paper","Artificial Intelligence","Chair","Pen"],1],
+["AI can be used in many fields.","True",["False","True","Never","None"],1]
 ],
-answer:1
+
+"Numbers":[
+["What is 10 + 15?","25",["20","25","30","35"],1],
+["Which is an even number?","12",["7","9","11","12"],3]
+],
+
+"Fractions":[
+["What is 1/2 as a decimal?","0.5",["0.2","0.5","1.5","2"],1],
+["A fraction represents part of a whole.","True",["False","True","Never","None"],1]
+],
+
+"Decimals":[
+["What is 0.5 equal to?","1/2",["1/5","1/2","5/1","2/5"],1],
+["Which is a decimal?","2.75",["2/3","2.75","2×3","23"],1]
+],
+
+"Algebra":[
+["What is x + 5 = 10?","x = 5",["x = 2","x = 5","x = 10","x = 15"],1],
+["Which is a variable?","x",["5","10","x","+"],2]
+],
+
+"Linear Equations":[
+["Solve: x + 2 = 7","5",["2","3","5","9"],2],
+["A linear equation has variables with what power?","1",["0","1","2","3"],1]
+],
+
+"Geometry":[
+["How many sides does a triangle have?","3",["2","3","4","5"],1],
+["A square has four equal sides.","True",["False","True","Never","None"],1]
+],
+
+"Angles":[
+["A right angle is how many degrees?","90",["45","60","90","180"],2],
+["A straight angle is how many degrees?","180",["90","120","180","360"],2]
+],
+
+"Statistics":[
+["What is the average also called?","Mean",["Mode","Mean","Range","Median"],1],
+["Statistics deals with data.","True",["False","True","Never","None"],1]
+],
+
+"Probability":[
+["Probability describes what?","Chance of an event",["Length","Chance of an event","Weight","Speed"],1],
+["Probability can be between 0 and 1.","True",["False","True","Never","None"],1]
+],
+
+"Problem Solving":[
+["What should you identify first?","The problem",["The answer","The problem","The colour","The page"],1],
+["Checking the answer is useful.","True",["False","True","Never","None"],1]
+]
+
+};
+
+function loadExamChapters(){
+
+const book=document.getElementById("examBook").value;
+
+document.getElementById("examChapter").innerHTML=
+books[book].chapters.map((c,i)=>
+`<option value="${i}">${i+1}. ${c}</option>`
+).join("");
+
 }
 
-];
+function generateChapterExam(){
 
-function renderExam(){
+const book=document.getElementById("examBook").value;
+const index=Number(document.getElementById("examChapter").value);
 
-document.getElementById("examQuestions")
-.innerHTML=
-examQuestions.map((q,i)=>`
+const title=books[book].chapters[index];
+
+currentExam=chapterQuestions[title]||[];
+
+document.getElementById("examArea").innerHTML=`
+
+<div class="card">
+
+<h2>${title} — Exam</h2>
+
+<p style="color:#8290a9;margin-top:6px">
+Questions from this chapter.
+</p>
+
+<br>
+
+${currentExam.map((q,i)=>`
 
 <div class="question">
 
-<h3>
-${i+1}. ${q.q}
-</h3>
+<h3>${i+1}. ${q[0]}</h3>
 
-${q.options.map((op,j)=>`
+${q[2].map((op,j)=>`
 
 <label class="option">
 
-<input
-type="radio"
-name="q${i}"
+<input type="radio"
+name="chapterQ${i}"
 value="${j}">
 
 ${op}
@@ -2213,58 +1889,109 @@ ${op}
 
 </div>
 
-`).join("");
+<br>
+
+`).join("")}
+
+<button class="btn btn-primary" onclick="submitChapterExam()">
+Submit Exam
+</button>
+
+<div id="chapterExamResult"></div>
+
+</div>
+`;
+
+renderAnswerAdmin();
 
 }
 
-function submitExam(){
+function submitChapterExam(){
 
 let score=0;
 
-examQuestions.forEach((q,i)=>{
+currentExam.forEach((q,i)=>{
 
 const selected=
 document.querySelector(
-`input[name="q${i}"]:checked`
+`input[name="chapterQ${i}"]:checked`
 );
 
-if(selected &&
-Number(selected.value)===q.answer)
+if(selected && Number(selected.value)===q[3])
 score++;
 
 });
 
-const percent=
-Math.round(score/examQuestions.length*100);
+const percentage=
+Math.round(score/currentExam.length*100);
 
-document.getElementById("examMessage")
-.innerHTML=`
+document.getElementById("chapterExamResult").innerHTML=`
 
-<div class="card"
-style="margin-top:20px;">
+<div class="card" style="margin-top:20px">
 
-<h2>Exam Submitted 🎉</h2>
+<h2>Exam Complete 🎉</h2>
 
 <br>
 
 <p>
 Score:
-<b>${score}/${examQuestions.length}</b>
+<b>${score}/${currentExam.length}</b>
 </p>
 
 <p>
 Percentage:
-<b>${percent}%</b>
+<b>${percentage}%</b>
 </p>
 
 </div>
-
 `;
 
 }
 
 /* =========================
-   RESULT
+EXAM ADMIN
+========================= */
+
+function renderAnswerAdmin(){
+
+if(!currentExam.length){
+
+document.getElementById("answerAdmin").innerHTML=
+"Start a chapter exam to view its answer key.";
+
+return;
+
+}
+
+document.getElementById("answerAdmin").innerHTML=
+currentExam.map((q,i)=>`
+
+<div style="
+padding:15px;
+margin-bottom:10px;
+background:#0b121f;
+border:1px solid #263149;
+border-radius:10px
+">
+
+<b>Q${i+1}.</b>
+${q[0]}
+
+<br><br>
+
+<span style="color:#55e7b0">
+Correct Answer:
+${q[2][q[3]]}
+</span>
+
+</div>
+
+`).join("");
+
+}
+
+/* =========================
+RESULTS
 ========================= */
 
 function calculateResult(){
@@ -2272,65 +1999,65 @@ function calculateResult(){
 const student=
 document.getElementById("resultStudent").value;
 
+const examName=
+document.getElementById("resultExamName").value||"Exam";
+
 const total=
 Number(document.getElementById("totalMarks").value);
 
 const obtained=
 Number(document.getElementById("obtainedMarks").value);
 
-if(!total || obtained<0 || obtained>total){
+if(!total||obtained<0||obtained>total){
 
-alert("Please enter valid marks.");
+alert("Enter valid marks.");
 return;
 
 }
 
-const percentage=
-Math.round(obtained/total*100);
+const percentage=Math.round(obtained/total*100);
 
 let grade;
 
-if(percentage>=90) grade="A+";
-else if(percentage>=80) grade="A";
-else if(percentage>=70) grade="B";
-else if(percentage>=60) grade="C";
-else if(percentage>=50) grade="D";
+if(percentage>=90)grade="A+";
+else if(percentage>=80)grade="A";
+else if(percentage>=70)grade="B";
+else if(percentage>=60)grade="C";
+else if(percentage>=50)grade="D";
 else grade="F";
 
-examResults[student]={
+if(!examResults[student])
+examResults[student]=[];
+
+examResults[student].push({
+exam:examName,
 total,
 obtained,
 percentage,
-grade
-};
+grade,
+date:today
+});
 
 saveData();
 
-document.getElementById("resultOutput")
-.innerHTML=`
+document.getElementById("resultOutput").innerHTML=`
 
 <div style="
-margin-top:20px;
-padding:25px;
-border-radius:15px;
-background:#111b2b;
-border:1px solid #283650;
+margin-top:20px;padding:25px;border-radius:15px;
+background:#111b2b;border:1px solid #283650
 ">
 
 <h2>${student}</h2>
 
+<p style="color:#8290a9">${examName}</p>
+
 <br>
 
-<div style="
-font-size:38px;
-font-weight:800;
-">
+<div style="font-size:38px;font-weight:800">
 ${percentage}%
 </div>
 
-<p>
-${obtained} / ${total} marks
-</p>
+<p>${obtained} / ${total} marks</p>
 
 <br>
 
@@ -2345,41 +2072,7 @@ Grade ${grade}
 }
 
 /* =========================
-   EXAM ADMIN
-========================= */
-
-function renderAnswerAdmin(){
-
-document.getElementById("answerAdmin")
-.innerHTML=
-examQuestions.map((q,i)=>`
-
-<div style="
-padding:15px;
-margin-bottom:10px;
-background:#0b121f;
-border:1px solid #263149;
-border-radius:10px;
-">
-
-<b>Q${i+1}.</b>
-${q.q}
-
-<br>
-
-<span style="color:#55e7b0;">
-Correct Answer:
-${q.options[q.answer]}
-</span>
-
-</div>
-
-`).join("");
-
-}
-
-/* =========================
-   SIMPLE AI
+AI
 ========================= */
 
 function simpleAI(){
@@ -2389,40 +2082,36 @@ document.getElementById("aiQuestion").value.trim();
 
 if(!question){
 
-document.getElementById("aiOutput")
-.textContent=
-"Please enter a question or topic.";
+document.getElementById("aiOutput").textContent=
+"Please enter a topic.";
 
 return;
 
 }
 
-document.getElementById("aiOutput")
-.innerHTML=`
+document.getElementById("aiOutput").innerHTML=`
 
 <h3>Simple Explanation</h3>
 
 <br>
 
-<p>
-<b>Topic:</b> ${question}
-</p>
+<p><b>Topic:</b> ${question}</p>
 
 <br>
 
 <p>
 This topic can be understood by breaking it into
 three simple parts: definition, main idea and example.
-Start by understanding what the topic means, then learn
-how it works and finally practise it with an example.
+First understand what it means, then learn how it works,
+and finally practise it with an example.
 </p>
 
 <br>
 
 <p>
-<b>Revision Tip:</b>
-Write the main idea in 2–3 simple sentences and then
-try to explain it without looking at your notes.
+<b>Quick Revision:</b>
+Remember the main definition, important points and one
+simple example.
 </p>
 
 `;
@@ -2430,14 +2119,54 @@ try to explain it without looking at your notes.
 }
 
 /* =========================
-   INIT
+STATS
+========================= */
+
+function updateStats(){
+
+const date=getDate();
+
+let present=0;
+
+students.forEach(s=>{
+
+if(attendance[date] &&
+attendance[date][s]==="Present")
+present++;
+
+});
+
+const absent=students.length-present;
+
+document.getElementById("presentCount").textContent=present;
+document.getElementById("absentCount").textContent=absent;
+
+document.getElementById("attendanceRate").textContent=
+Math.round(present/students.length*100)+"%";
+
+document.getElementById("suspendedCount").textContent=
+students.filter(s=>suspended[s]).length;
+
+}
+
+/* =========================
+INIT
 ========================= */
 
 loadStudentSelect();
+
+createRating("rateHomework");
+createRating("rateBehaviour");
+createRating("rateParticipation");
+createRating("rateStudy");
+createRating("rateExam");
+
+loadExamChapters();
+
 renderAttendance();
 renderStudents();
 renderDaily();
-renderExam();
+loadEvaluation();
 renderAnswerAdmin();
 updateStats();
 
