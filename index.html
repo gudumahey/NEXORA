@@ -2,156 +2,162 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>MC Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduCore Classroom</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
+    font-family:Inter,Arial,sans-serif;
 }
 
 body{
-    font-family:Inter,Arial,sans-serif;
-    background:#0b1120;
-    color:#e5e7eb;
+    background:#070b14;
+    color:#f4f7ff;
+    min-height:100vh;
+}
+
+button,input,textarea,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.app{
+    display:flex;
+    min-height:100vh;
 }
 
 /* SIDEBAR */
 
 .sidebar{
+    width:250px;
+    background:linear-gradient(180deg,#0d1424,#080c15);
+    border-right:1px solid #202a3d;
+    padding:20px 14px;
     position:fixed;
     left:0;
     top:0;
     bottom:0;
-    width:245px;
-    background:#111827;
-    border-right:1px solid #263244;
-    padding:20px 14px;
+    z-index:20;
 }
 
 .logo{
     display:flex;
     align-items:center;
     gap:12px;
-    font-size:20px;
-    font-weight:800;
     padding:10px;
     margin-bottom:25px;
 }
 
 .logo-icon{
-    width:40px;
-    height:40px;
-    border-radius:11px;
-    background:linear-gradient(135deg,#6366f1,#8b5cf6);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#6d5dfc,#20d6ff);
+    box-shadow:0 10px 30px #4e5bff40;
+    font-size:21px;
 }
 
-.server-mini{
-    background:#1b2535;
-    border:1px solid #2c394d;
-    padding:12px;
-    border-radius:10px;
-    margin-bottom:18px;
+.logo h2{
+    font-size:18px;
 }
 
-.server-mini-name{
-    font-weight:700;
-}
-
-.online{
-    color:#22c55e;
-    font-size:12px;
-    margin-top:5px;
+.logo span{
+    display:block;
+    font-size:11px;
+    color:#7f8ba3;
+    margin-top:3px;
 }
 
 .nav-title{
-    color:#64748b;
+    color:#59657c;
     font-size:10px;
     text-transform:uppercase;
-    margin:16px 10px 7px;
+    letter-spacing:1.5px;
+    padding:12px 10px 7px;
 }
 
-.nav button{
+.nav-btn{
     width:100%;
     border:0;
     background:transparent;
-    color:#aeb9c9;
+    color:#9aa6bd;
+    padding:12px;
+    border-radius:12px;
     text-align:left;
-    padding:11px 12px;
-    border-radius:9px;
-    margin:2px 0;
-    cursor:pointer;
-    font-size:14px;
+    margin:3px 0;
+    transition:.2s;
 }
 
-.nav button:hover,
-.nav button.active{
-    background:#202c40;
+.nav-btn:hover,
+.nav-btn.active{
+    background:#151e31;
     color:white;
+}
+
+.nav-btn span{
+    margin-right:10px;
 }
 
 /* MAIN */
 
 .main{
-    margin-left:245px;
+    margin-left:250px;
+    width:calc(100% - 250px);
     min-height:100vh;
 }
 
-/* TOP */
-
 .topbar{
-    height:65px;
-    border-bottom:1px solid #263244;
-    background:#0f172a;
+    height:72px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:0 25px;
+    padding:0 28px;
+    border-bottom:1px solid #202a3d;
+    background:#090e18dd;
+    backdrop-filter:blur(15px);
+    position:sticky;
+    top:0;
+    z-index:10;
 }
 
-.top-title{
-    font-size:15px;
+.page-title{
+    font-size:20px;
     font-weight:700;
 }
 
-.top-right{
+.date{
+    color:#76839b;
+    font-size:12px;
+}
+
+.profile{
     display:flex;
     align-items:center;
     gap:10px;
 }
 
-.status{
-    background:#052e1a;
-    color:#4ade80;
-    border:1px solid #166534;
-    padding:7px 11px;
-    border-radius:20px;
-    font-size:12px;
-}
-
 .avatar{
-    width:35px;
-    height:35px;
+    width:38px;
+    height:38px;
     border-radius:50%;
-    background:#6366f1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    background:linear-gradient(135deg,#775cff,#00c8ff);
+    display:grid;
+    place-items:center;
     font-weight:bold;
 }
 
 /* CONTENT */
 
 .content{
-    padding:25px;
+    padding:28px;
 }
 
 .page{
@@ -162,1618 +168,2278 @@ body{
     display:block;
 }
 
-.page-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
+.hero{
+    padding:28px;
+    border:1px solid #263149;
+    border-radius:22px;
+    background:
+      radial-gradient(circle at top right,#4237b630,transparent 40%),
+      linear-gradient(135deg,#11192a,#0c1220);
     margin-bottom:22px;
 }
 
-.page-head h1{
-    font-size:25px;
+.hero h1{
+    font-size:30px;
+    margin-bottom:8px;
 }
 
-.muted{
-    color:#8491a5;
-    font-size:13px;
-    margin-top:5px;
+.hero p{
+    color:#8290a9;
 }
 
-/* BUTTONS */
-
-button{
-    font-family:inherit;
-}
-
-.primary{
-    background:#6366f1;
-    color:white;
-    border:0;
-    padding:10px 15px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-.primary:hover{
-    background:#5458d8;
-}
-
-.danger{
-    background:#7f1d1d;
-    color:#fecaca;
-    border:1px solid #991b1b;
-    padding:10px 15px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-.secondary{
-    background:#1e293b;
-    color:#dbe4f0;
-    border:1px solid #334155;
-    padding:10px 15px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-/* STATS */
+/* CARDS */
 
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:15px;
-    margin-bottom:18px;
+    margin-bottom:22px;
 }
 
-.stat{
-    background:#111827;
-    border:1px solid #263244;
-    border-radius:12px;
-    padding:18px;
+.card{
+    background:#0e1523;
+    border:1px solid #202c43;
+    border-radius:17px;
+    padding:19px;
 }
 
 .stat-label{
-    color:#8491a5;
+    color:#78859d;
     font-size:12px;
 }
 
 .stat-value{
-    font-size:24px;
+    font-size:27px;
     font-weight:800;
-    margin-top:7px;
+    margin-top:8px;
 }
 
-.stat-small{
-    color:#22c55e;
+.card-icon{
+    font-size:23px;
+    margin-bottom:10px;
+}
+
+/* TABLE */
+
+.table-wrap{
+    overflow:auto;
+    background:#0d1421;
+    border:1px solid #202c43;
+    border-radius:17px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+th,td{
+    padding:14px;
+    text-align:left;
+    border-bottom:1px solid #202a3c;
+}
+
+th{
+    color:#77849c;
     font-size:11px;
-    margin-top:6px;
+    text-transform:uppercase;
 }
 
-/* CARDS */
+td{
+    font-size:13px;
+}
 
-.card{
-    background:#111827;
-    border:1px solid #263244;
-    border-radius:12px;
-    padding:20px;
+tr:hover{
+    background:#121b2b;
+}
+
+/* BUTTONS */
+
+.btn{
+    border:0;
+    padding:9px 13px;
+    border-radius:9px;
+    color:white;
+    background:#26344d;
+}
+
+.btn:hover{
+    filter:brightness(1.2);
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,#6656f6,#278eff);
+}
+
+.btn-green{
+    background:#123f31;
+    color:#55e7b0;
+}
+
+.btn-red{
+    background:#451d27;
+    color:#ff7f92;
+}
+
+.btn-orange{
+    background:#453119;
+    color:#ffbd62;
+}
+
+.btn-small{
+    padding:7px 10px;
+    font-size:11px;
+}
+
+/* BADGES */
+
+.badge{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.present{
+    background:#103d2e;
+    color:#55e7b0;
+}
+
+.absent{
+    background:#421d28;
+    color:#ff8294;
+}
+
+.suspended{
+    background:#443018;
+    color:#ffc261;
+}
+
+/* TOOLBAR */
+
+.toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.search{
+    background:#0d1421;
+    border:1px solid #253149;
+    color:white;
+    padding:11px 13px;
+    border-radius:10px;
+    outline:none;
+    min-width:220px;
+}
+
+.date-input{
+    background:#0d1421;
+    border:1px solid #253149;
+    color:white;
+    padding:10px;
+    border-radius:9px;
+}
+
+/* BOOKS */
+
+.books{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+.book{
+    padding:25px;
+    min-height:210px;
+    border-radius:20px;
+    border:1px solid #293650;
+    background:
+      linear-gradient(135deg,#111b31,#0c1320);
+    cursor:pointer;
+    transition:.25s;
+}
+
+.book:hover{
+    transform:translateY(-5px);
+    border-color:#615cff;
+    box-shadow:0 15px 40px #0005;
+}
+
+.book-cover{
+    width:55px;
+    height:70px;
+    border-radius:8px;
+    background:linear-gradient(135deg,#725bff,#13c9ff);
+    margin-bottom:18px;
+    display:grid;
+    place-items:center;
+    font-size:25px;
+}
+
+.book h2{
+    margin-bottom:8px;
+}
+
+.book p{
+    color:#7f8ba1;
+    font-size:13px;
+}
+
+/* CHAPTERS */
+
+.chapter-list{
+    display:grid;
+    gap:12px;
+}
+
+.chapter{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:17px;
+    background:#0e1625;
+    border:1px solid #243149;
+    border-radius:13px;
+    cursor:pointer;
+}
+
+.chapter:hover{
+    background:#141e31;
+}
+
+.chapter-info{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.chapter-number{
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    display:grid;
+    place-items:center;
+    background:#1b2740;
+    color:#9eabff;
+}
+
+/* READER */
+
+.reader{
+    max-width:1000px;
+    margin:auto;
+}
+
+.reader h1{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.reader-meta{
+    color:#73819a;
+    margin-bottom:25px;
+}
+
+.reader-text{
+    background:#0d1421;
+    border:1px solid #253149;
+    padding:28px;
+    border-radius:18px;
+    line-height:1.9;
+    color:#c9d1df;
+}
+
+.reader-text p{
+    margin-bottom:20px;
+}
+
+.reader-actions{
+    display:flex;
+    gap:10px;
     margin-bottom:18px;
 }
 
-.card-title{
-    font-size:15px;
-    font-weight:700;
-    margin-bottom:15px;
-}
+/* EXAM */
 
-/* SERVER CONTROL */
-
-.server-control{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-/* CONSOLE */
-
-.console{
-    background:#050914;
-    border:1px solid #263244;
-    border-radius:10px;
-    padding:15px;
-    height:430px;
-    overflow:auto;
-    font-family:Consolas,monospace;
-    font-size:13px;
-    line-height:1.7;
-}
-
-.log-info{
-    color:#94a3b8;
-}
-
-.log-success{
-    color:#4ade80;
-}
-
-.log-warning{
-    color:#fbbf24;
-}
-
-.log-error{
-    color:#f87171;
-}
-
-.command-row{
-    display:flex;
-    margin-top:10px;
-}
-
-.command-row input{
-    flex:1;
-    background:#070c17;
-    color:white;
-    border:1px solid #334155;
-    padding:12px;
-    border-radius:8px 0 0 8px;
-    outline:none;
-}
-
-.command-row button{
-    border-radius:0 8px 8px 0;
-}
-
-/* FILES */
-
-.file-toolbar{
-    display:flex;
-    gap:10px;
-    margin-bottom:15px;
-    flex-wrap:wrap;
-}
-
-.file-list{
-    display:flex;
-    flex-direction:column;
-}
-
-.file{
+.exam-grid{
     display:grid;
-    grid-template-columns:40px 1fr 120px 100px;
-    align-items:center;
-    gap:10px;
-    padding:13px;
-    border-bottom:1px solid #202b3d;
-}
-
-.file:hover{
-    background:#151e2d;
-}
-
-.file-icon{
-    font-size:21px;
-}
-
-.file-name{
-    font-weight:600;
-}
-
-.file-meta{
-    color:#8491a5;
-    font-size:12px;
-}
-
-/* PLUGINS */
-
-.plugin-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;
-}
-
-.plugin{
-    background:#111827;
-    border:1px solid #263244;
-    border-radius:12px;
-    padding:17px;
-}
-
-.plugin-icon{
-    width:45px;
-    height:45px;
-    border-radius:10px;
-    background:#1f2937;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    margin-bottom:12px;
-}
-
-.plugin h3{
-    font-size:15px;
-}
-
-.plugin p{
-    color:#8491a5;
-    font-size:12px;
-    margin:7px 0 15px;
-}
-
-/* PLAYERS */
-
-.player{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:12px;
-    border-bottom:1px solid #202b3d;
-}
-
-.player-avatar{
-    width:35px;
-    height:35px;
-    border-radius:8px;
-    background:#334155;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-/* SETTINGS */
-
-.form{
-    display:grid;
-    grid-template-columns:1fr 1fr;
     gap:15px;
 }
 
-.field{
+.question{
+    padding:20px;
+    background:#0e1625;
+    border:1px solid #263149;
+    border-radius:15px;
+}
+
+.question h3{
+    margin-bottom:14px;
+    font-size:15px;
+}
+
+.option{
+    padding:11px;
+    border:1px solid #263149;
+    border-radius:9px;
+    margin:7px 0;
+    cursor:pointer;
+}
+
+.option:hover{
+    background:#151f31;
+}
+
+.option input{
+    margin-right:8px;
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.form-group{
     display:flex;
     flex-direction:column;
     gap:7px;
 }
 
-.field.full{
+.form-group.full{
     grid-column:1/-1;
 }
 
-.field label{
-    color:#aeb9c9;
+label{
+    color:#8592aa;
     font-size:12px;
 }
 
-.field input,
-.field select,
-.field textarea{
-    background:#080e1b;
+input,textarea,select{
+    width:100%;
+    background:#0a111d;
     color:white;
-    border:1px solid #334155;
-    border-radius:8px;
+    border:1px solid #263149;
+    border-radius:10px;
     padding:11px;
     outline:none;
 }
 
-.field textarea{
-    min-height:120px;
+textarea{
+    min-height:110px;
+    resize:vertical;
 }
 
-/* BACKUPS */
+/* MODAL */
 
-.backup{
+.modal{
+    position:fixed;
+    inset:0;
+    background:#000b;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(600px,100%);
+    background:#101827;
+    border:1px solid #2b3850;
+    border-radius:20px;
+    padding:25px;
+    max-height:90vh;
+    overflow:auto;
+}
+
+.modal-head{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    padding:15px;
-    border-bottom:1px solid #202b3d;
+    margin-bottom:20px;
+}
+
+.close{
+    border:0;
+    background:#1c2739;
+    color:white;
+    width:35px;
+    height:35px;
+    border-radius:50%;
 }
 
 /* MOBILE */
 
-@media(max-width:850px){
+.mobile-menu{
+    display:none;
+}
 
+@media(max-width:900px){
     .sidebar{
-        width:70px;
-        padding:15px 8px;
+        transform:translateX(-100%);
+        transition:.3s;
     }
 
-    .logo span,
-    .server-mini,
-    .nav-title,
-    .nav button span{
-        display:none;
-    }
-
-    .logo{
-        justify-content:center;
-    }
-
-    .nav button{
-        text-align:center;
-        font-size:20px;
+    .sidebar.open{
+        transform:translateX(0);
     }
 
     .main{
-        margin-left:70px;
+        margin-left:0;
+        width:100%;
     }
 
-    .stats{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .plugin-grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-}
-
-@media(max-width:600px){
-
-    .content{
-        padding:14px;
+    .mobile-menu{
+        display:block;
+        background:#19243a;
+        color:white;
+        border:0;
+        padding:9px 12px;
+        border-radius:9px;
+        margin-right:10px;
     }
 
     .topbar{
-        padding:0 14px;
+        padding:0 15px;
     }
 
     .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .books{
         grid-template-columns:1fr;
     }
 
-    .plugin-grid{
+    .content{
+        padding:15px;
+    }
+
+    .form-grid{
         grid-template-columns:1fr;
     }
 
-    .form{
-        grid-template-columns:1fr;
-    }
-
-    .field.full{
+    .form-group.full{
         grid-column:auto;
     }
-
-    .file{
-        grid-template-columns:35px 1fr;
-    }
-
-    .file > div:nth-child(3),
-    .file > button{
-        display:none;
-    }
-
 }
 
+@media(max-width:500px){
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .hero h1{
+        font-size:23px;
+    }
+
+    .profile{
+        display:none;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="sidebar">
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
 
     <div class="logo">
-        <div class="logo-icon">⚡</div>
-        <span>MC Panel</span>
+        <div class="logo-icon">🎓</div>
+        <div>
+            <h2>EduCore</h2>
+            <span>Classroom System</span>
+        </div>
     </div>
 
-    <div class="server-mini">
+    <div class="nav-title">Main</div>
 
-        <div class="server-mini-name">
-            GUDU MC
-        </div>
+    <button class="nav-btn active" onclick="showPage('dashboard',this)">
+        <span>⌂</span> Dashboard
+    </button>
 
-        <div class="online">
-            ● Online
-        </div>
+    <button class="nav-btn" onclick="showPage('attendance',this)">
+        <span>✓</span> Attendance
+    </button>
 
-    </div>
+    <button class="nav-btn" onclick="showPage('students',this)">
+        <span>👨‍🎓</span> Students
+    </button>
 
-    <div class="nav">
+    <button class="nav-btn" onclick="showPage('daily',this)">
+        <span>📅</span> Daily Data
+    </button>
 
-        <div class="nav-title">
-            Server
-        </div>
+    <div class="nav-title">Learning</div>
 
-        <button class="active" onclick="page('overview')">
-            📊 <span>Overview</span>
-        </button>
+    <button class="nav-btn" onclick="showPage('books',this)">
+        <span>📚</span> Books
+    </button>
 
-        <button onclick="page('console')">
-            🖥️ <span>Console</span>
-        </button>
+    <button class="nav-btn" onclick="showPage('exam',this)">
+        <span>🧪</span> Exam
+    </button>
 
-        <button onclick="page('files')">
-            📁 <span>Files</span>
-        </button>
+    <button class="nav-btn" onclick="showPage('results',this)">
+        <span>📊</span> Exam Results
+    </button>
 
-        <button onclick="page('plugins')">
-            🔌 <span>Plugins</span>
-        </button>
+    <div class="nav-title">Administration</div>
 
-        <button onclick="page('players')">
-            👥 <span>Players</span>
-        </button>
+    <button class="nav-btn" onclick="showPage('examAdmin',this)">
+        <span>🔐</span> Exam Admin
+    </button>
 
-        <div class="nav-title">
-            Management
-        </div>
+    <button class="nav-btn" onclick="showPage('ai',this)">
+        <span>🤖</span> AI Helper
+    </button>
 
-        <button onclick="page('worlds')">
-            🌍 <span>Worlds</span>
-        </button>
+</aside>
 
-        <button onclick="page('backups')">
-            💾 <span>Backups</span>
-        </button>
+<!-- MAIN -->
 
-        <button onclick="page('settings')">
-            ⚙️ <span>Settings</span>
-        </button>
-
-    </div>
-
-</div>
-
-
-<div class="main">
+<main class="main">
 
 <header class="topbar">
 
-    <div class="top-title">
-        GUDU MC / Server
+    <div style="display:flex;align-items:center;">
+        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+
+        <div>
+            <div class="page-title" id="pageTitle">Dashboard</div>
+            <div class="date" id="currentDate"></div>
+        </div>
     </div>
 
-    <div class="top-right">
-
-        <div class="status">
-            ● Running
+    <div class="profile">
+        <div>
+            <b>Teacher</b>
+            <div style="font-size:11px;color:#748099;">Class Administrator</div>
         </div>
-
-        <div class="avatar">
-            G
-        </div>
-
+        <div class="avatar">T</div>
     </div>
 
 </header>
 
-
 <div class="content">
 
+<!-- DASHBOARD -->
 
-<!-- OVERVIEW -->
+<section class="page active" id="dashboard">
 
-<section id="overview" class="page active">
-
-    <div class="page-head">
-
-        <div>
-
-            <h1>Server Overview</h1>
-
-            <p class="muted">
-                Manage your Minecraft server
-            </p>
-
-        </div>
-
-        <div class="server-control">
-
-            <button class="primary" onclick="serverAction('start')">
-                ▶ Start
-            </button>
-
-            <button class="secondary" onclick="serverAction('restart')">
-                🔄 Restart
-            </button>
-
-            <button class="danger" onclick="serverAction('stop')">
-                ■ Stop
-            </button>
-
-        </div>
-
+    <div class="hero">
+        <h1>Good Evening, Teacher 👋</h1>
+        <p>Manage your classroom, attendance, students, books and exams from one place.</p>
     </div>
-
 
     <div class="stats">
 
-        <div class="stat">
-
-            <div class="stat-label">
-                CPU Usage
-            </div>
-
-            <div class="stat-value">
-                18%
-            </div>
-
-            <div class="stat-small">
-                ● Normal
-            </div>
-
+        <div class="card">
+            <div class="card-icon">👨‍🎓</div>
+            <div class="stat-label">Total Students</div>
+            <div class="stat-value" id="totalStudents">40</div>
         </div>
 
-
-        <div class="stat">
-
-            <div class="stat-label">
-                Memory
-            </div>
-
-            <div class="stat-value">
-                3.2 GB
-            </div>
-
-            <div class="stat-small">
-                / 8 GB
-            </div>
-
+        <div class="card">
+            <div class="card-icon">✓</div>
+            <div class="stat-label">Present Today</div>
+            <div class="stat-value" id="presentCount">0</div>
         </div>
 
-
-        <div class="stat">
-
-            <div class="stat-label">
-                Storage
-            </div>
-
-            <div class="stat-value">
-                12.8 GB
-            </div>
-
-            <div class="stat-small">
-                / 50 GB
-            </div>
-
+        <div class="card">
+            <div class="card-icon">❌</div>
+            <div class="stat-label">Absent Today</div>
+            <div class="stat-value" id="absentCount">0</div>
         </div>
 
-
-        <div class="stat">
-
-            <div class="stat-label">
-                Players
-            </div>
-
-            <div class="stat-value" id="playerCount">
-                7
-            </div>
-
-            <div class="stat-small">
-                ● Online
-            </div>
-
+        <div class="card">
+            <div class="card-icon">⛔</div>
+            <div class="stat-label">Suspended</div>
+            <div class="stat-value" id="suspendedCount">0</div>
         </div>
 
     </div>
 
-
     <div class="card">
+        <h3 style="margin-bottom:15px;">Today's Overview</h3>
 
-        <div class="card-title">
-            Server Information
-        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
 
-        <div class="form">
-
-            <div class="field">
-                <label>Server Address</label>
-                <input value="play.gudumc.net" readonly>
+            <div style="padding:18px;background:#111b2b;border-radius:12px;">
+                <small style="color:#75829b;">Attendance Rate</small>
+                <h2 id="attendanceRate">0%</h2>
             </div>
 
-            <div class="field">
-                <label>Version</label>
-                <input value="Paper 1.21.11" readonly>
+            <div style="padding:18px;background:#111b2b;border-radius:12px;">
+                <small style="color:#75829b;">Books</small>
+                <h2>2</h2>
             </div>
 
-            <div class="field">
-                <label>Java Version</label>
-                <input value="Java 21" readonly>
-            </div>
-
-            <div class="field">
-                <label>Server Location</label>
-                <input value="Europe" readonly>
+            <div style="padding:18px;background:#111b2b;border-radius:12px;">
+                <small style="color:#75829b;">Exam Questions</small>
+                <h2>10</h2>
             </div>
 
         </div>
-
     </div>
 
 </section>
 
+<!-- ATTENDANCE -->
 
-<!-- CONSOLE -->
+<section class="page" id="attendance">
 
-<section id="console" class="page">
+    <div class="hero">
+        <h1>Daily Attendance</h1>
+        <p>Mark attendance for every student. Records are saved by date.</p>
+    </div>
 
-    <div class="page-head">
+    <div class="toolbar">
 
-        <div>
+        <input
+            type="date"
+            id="attendanceDate"
+            class="date-input"
+            onchange="renderAttendance()"
+        >
 
-            <h1>Console</h1>
+        <input
+            class="search"
+            placeholder="Search student..."
+            oninput="filterAttendance(this.value)"
+        >
 
-            <p class="muted">
-                Live Minecraft server console
-            </p>
-
-        </div>
-
-        <button class="danger" onclick="clearConsole()">
-            Clear
+        <button class="btn btn-primary" onclick="markAllPresent()">
+            ✓ Mark All Present
         </button>
 
     </div>
 
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Student</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                    <th>Daily Report</th>
+                </tr>
+            </thead>
+
+            <tbody id="attendanceBody"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- STUDENTS -->
+
+<section class="page" id="students">
+
+    <div class="hero">
+        <h1>Students</h1>
+        <p>All 40 students in your classroom.</p>
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Attendance</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="studentsBody"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- DAILY DATA -->
+
+<section class="page" id="daily">
+
+    <div class="hero">
+        <h1>Daily Student Data</h1>
+        <p>Write notes about students for each day.</p>
+    </div>
+
+    <div class="toolbar">
+        <input type="date" id="dailyDate" class="date-input">
+    </div>
 
     <div class="card">
 
-        <div class="console" id="consoleOutput">
+        <div class="form-grid">
 
-            <div class="log-info">
-                [22:41:03 INFO]: Starting Minecraft server...
+            <div class="form-group">
+                <label>Student</label>
+                <select id="dailyStudent"></select>
             </div>
 
-            <div class="log-success">
-                [22:41:04 INFO]: Done (3.421s)! For help, type "help"
-            </div>
-
-            <div class="log-info">
-                [22:41:05 INFO]: Loaded 48 plugins
-            </div>
-
-            <div class="log-info">
-                [22:42:11 INFO]: Player Steve joined the game
-            </div>
-
-            <div class="log-info">
-                [22:42:19 INFO]: Player Alex joined the game
-            </div>
-
-            <div class="log-warning">
-                [22:43:02 WARN]: Can't keep up!
-            </div>
-
-        </div>
-
-
-        <div class="command-row">
-
-            <input
-                id="command"
-                placeholder="Type a Minecraft command..."
-                onkeydown="if(event.key==='Enter')sendCommand()"
-            >
-
-            <button
-                class="primary"
-                onclick="sendCommand()"
-            >
-                Send
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- FILES -->
-
-<section id="files" class="page">
-
-    <div class="page-head">
-
-        <div>
-
-            <h1>Files</h1>
-
-            <p class="muted">
-                /home/container
-            </p>
-
-        </div>
-
-        <button class="primary">
-            ⬆ Upload
-        </button>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="file-toolbar">
-
-            <button class="secondary">
-                📁 New Folder
-            </button>
-
-            <button class="secondary">
-                📄 New File
-            </button>
-
-            <button class="secondary">
-                ↻ Refresh
-            </button>
-
-        </div>
-
-
-        <div class="file-list">
-
-            <div class="file">
-
-                <div class="file-icon">📁</div>
-
-                <div class="file-name">
-                    plugins
-                    <div class="file-meta">
-                        Folder
-                    </div>
-                </div>
-
-                <div class="file-meta">
-                    —
-                </div>
-
-                <button class="secondary">
-                    Open
-                </button>
-
-            </div>
-
-
-            <div class="file">
-
-                <div class="file-icon">🌍</div>
-
-                <div class="file-name">
-                    world
-                    <div class="file-meta">
-                        Folder
-                    </div>
-                </div>
-
-                <div class="file-meta">
-                    8.4 GB
-                </div>
-
-                <button class="secondary">
-                    Open
-                </button>
-
-            </div>
-
-
-            <div class="file">
-
-                <div class="file-icon">⚙️</div>
-
-                <div class="file-name">
-                    server.properties
-                    <div class="file-meta">
-                        Configuration
-                    </div>
-                </div>
-
-                <div class="file-meta">
-                    4 KB
-                </div>
-
-                <button class="secondary">
-                    Edit
-                </button>
-
-            </div>
-
-
-            <div class="file">
-
-                <div class="file-icon">📄</div>
-
-                <div class="file-name">
-                    paper.yml
-                    <div class="file-meta">
-                        Configuration
-                    </div>
-                </div>
-
-                <div class="file-meta">
-                    12 KB
-                </div>
-
-                <button class="secondary">
-                    Edit
-                </button>
-
-            </div>
-
-
-            <div class="file">
-
-                <div class="file-icon">📄</div>
-
-                <div class="file-name">
-                    eula.txt
-                    <div class="file-meta">
-                        Text file
-                    </div>
-                </div>
-
-                <div class="file-meta">
-                    1 KB
-                </div>
-
-                <button class="secondary">
-                    Edit
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- PLUGINS -->
-
-<section id="plugins" class="page">
-
-    <div class="page-head">
-
-        <div>
-
-            <h1>Plugins</h1>
-
-            <p class="muted">
-                Manage installed Minecraft plugins
-            </p>
-
-        </div>
-
-        <button class="primary" onclick="alert('Plugin marketplace demo')">
-            + Install Plugin
-        </button>
-
-    </div>
-
-
-    <div class="plugin-grid">
-
-        <div class="plugin">
-
-            <div class="plugin-icon">
-                🔐
-            </div>
-
-            <h3>AuthMe</h3>
-
-            <p>
-                Player authentication
-            </p>
-
-            <button class="secondary">
-                Configure
-            </button>
-
-        </div>
-
-
-        <div class="plugin">
-
-            <div class="plugin-icon">
-                👤
-            </div>
-
-            <h3>LuckPerms</h3>
-
-            <p>
-                Permissions management
-            </p>
-
-            <button class="secondary">
-                Configure
-            </button>
-
-        </div>
-
-
-        <div class="plugin">
-
-            <div class="plugin-icon">
-                🌍
-            </div>
-
-            <h3>Multiverse-Core</h3>
-
-            <p>
-                Multiple worlds
-            </p>
-
-            <button class="secondary">
-                Configure
-            </button>
-
-        </div>
-
-
-        <div class="plugin">
-
-            <div class="plugin-icon">
-                🧑‍🤝‍🧑
-            </div>
-
-            <h3>EssentialsX</h3>
-
-            <p>
-                Server utility commands
-            </p>
-
-            <button class="secondary">
-                Configure
-            </button>
-
-        </div>
-
-
-        <div class="plugin">
-
-            <div class="plugin-icon">
-                🎁
-            </div>
-
-            <h3>CrazyCrates</h3>
-
-            <p>
-                Crate system
-            </p>
-
-            <button class="secondary">
-                Configure
-            </button>
-
-        </div>
-
-
-        <div class="plugin">
-
-            <div class="plugin-icon">
-                🛡️
-            </div>
-
-            <h3>WorldGuard</h3>
-
-            <p>
-                World protection
-            </p>
-
-            <button class="secondary">
-                Configure
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- PLAYERS -->
-
-<section id="players" class="page">
-
-    <div class="page-head">
-
-        <div>
-
-            <h1>Players</h1>
-
-            <p class="muted">
-                Online players
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="player">
-
-            <div class="player-avatar">S</div>
-
-            <div style="flex:1">
-
-                <b>Steve</b>
-
-                <div class="muted">
-                    Survival • 32ms
-                </div>
-
-            </div>
-
-            <button class="danger">
-                Kick
-            </button>
-
-        </div>
-
-
-        <div class="player">
-
-            <div class="player-avatar">A</div>
-
-            <div style="flex:1">
-
-                <b>Alex</b>
-
-                <div class="muted">
-                    Survival • 41ms
-                </div>
-
-            </div>
-
-            <button class="danger">
-                Kick
-            </button>
-
-        </div>
-
-
-        <div class="player">
-
-            <div class="player-avatar">G</div>
-
-            <div style="flex:1">
-
-                <b>GUDU</b>
-
-                <div class="muted">
-                    Lobby • 27ms
-                </div>
-
-            </div>
-
-            <button class="danger">
-                Kick
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- WORLDS -->
-
-<section id="worlds" class="page">
-
-    <div class="page-head">
-
-        <div>
-
-            <h1>Worlds</h1>
-
-            <p class="muted">
-                Manage server worlds
-            </p>
-
-        </div>
-
-        <button class="primary">
-            + Create World
-        </button>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="file">
-
-            <div class="file-icon">🌍</div>
-
-            <div>
-                <b>world</b>
-                <div class="file-meta">
-                    Survival
-                </div>
-            </div>
-
-            <div class="file-meta">
-                8.4 GB
-            </div>
-
-            <button class="secondary">
-                Manage
-            </button>
-
-        </div>
-
-
-        <div class="file">
-
-            <div class="file-icon">🔥</div>
-
-            <div>
-                <b>world_nether</b>
-                <div class="file-meta">
-                    Nether
-                </div>
-            </div>
-
-            <div class="file-meta">
-                2.1 GB
-            </div>
-
-            <button class="secondary">
-                Manage
-            </button>
-
-        </div>
-
-
-        <div class="file">
-
-            <div class="file-icon">🌌</div>
-
-            <div>
-                <b>world_the_end</b>
-                <div class="file-meta">
-                    The End
-                </div>
-            </div>
-
-            <div class="file-meta">
-                1.6 GB
-            </div>
-
-            <button class="secondary">
-                Manage
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- BACKUPS -->
-
-<section id="backups" class="page">
-
-    <div class="page-head">
-
-        <div>
-
-            <h1>Backups</h1>
-
-            <p class="muted">
-                Protect your server data
-            </p>
-
-        </div>
-
-        <button class="primary" onclick="createBackup()">
-            + Create Backup
-        </button>
-
-    </div>
-
-
-    <div class="card" id="backupList">
-
-        <div class="backup">
-
-            <div>
-
-                <b>backup-2026-09-29</b>
-
-                <div class="muted">
-                    Today • 12.4 GB
-                </div>
-
-            </div>
-
-            <button class="secondary">
-                Restore
-            </button>
-
-        </div>
-
-
-        <div class="backup">
-
-            <div>
-
-                <b>backup-2026-09-28</b>
-
-                <div class="muted">
-                    Yesterday • 11.9 GB
-                </div>
-
-            </div>
-
-            <button class="secondary">
-                Restore
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- SETTINGS -->
-
-<section id="settings" class="page">
-
-    <div class="page-head">
-
-        <div>
-
-            <h1>Server Settings</h1>
-
-            <p class="muted">
-                Configure your Minecraft server
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="form">
-
-            <div class="field">
-
-                <label>
-                    Server Name
-                </label>
-
-                <input
-                    id="serverName"
-                    value="GUDU MC"
-                >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Minecraft Version
-                </label>
-
-                <select>
-
-                    <option>1.21.11</option>
-                    <option>1.21.10</option>
-                    <option>1.21.8</option>
-
+            <div class="form-group">
+                <label>Daily Status</label>
+                <select id="dailyStatus">
+                    <option>Normal</option>
+                    <option>Good</option>
+                    <option>Needs Attention</option>
+                    <option>Excellent</option>
                 </select>
+            </div>
+
+            <div class="form-group full">
+                <label>Daily Notes</label>
+                <textarea id="dailyNote"
+                placeholder="Write today's student information..."></textarea>
+            </div>
+
+        </div>
+
+        <br>
+
+        <button class="btn btn-primary" onclick="saveDailyData()">
+            Save Daily Data
+        </button>
+
+    </div>
+
+    <br>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Student</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+
+            <tbody id="dailyBody"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- BOOKS -->
+
+<section class="page" id="books">
+
+    <div id="bookHome">
+
+        <div class="hero">
+            <h1>Library 📚</h1>
+            <p>Select a book to open its chapters.</p>
+        </div>
+
+        <div class="books">
+
+            <div class="book" onclick="openBook(1)">
+
+                <div class="book-cover">📘</div>
+
+                <h2>Computer Science</h2>
+
+                <p>
+                    Learn computers, hardware, software,
+                    networking and programming.
+                </p>
+
+                <br>
+
+                <span class="badge present">10 Chapters</span>
 
             </div>
 
+            <div class="book" onclick="openBook(2)">
 
-            <div class="field">
+                <div class="book-cover">📕</div>
 
-                <label>
-                    Maximum Players
-                </label>
+                <h2>Mathematics</h2>
+
+                <p>
+                    Numbers, algebra, geometry,
+                    equations and problem solving.
+                </p>
+
+                <br>
+
+                <span class="badge present">10 Chapters</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="chapterHome" style="display:none;">
+
+        <button class="btn" onclick="backBooks()">← Back to Books</button>
+
+        <br><br>
+
+        <div class="hero">
+            <h1 id="bookTitle"></h1>
+            <p>Select a chapter.</p>
+        </div>
+
+        <div class="chapter-list" id="chapterList"></div>
+
+    </div>
+
+    <div id="readerHome" style="display:none;">
+
+        <div class="reader">
+
+            <button class="btn" onclick="backChapters()">← Chapters</button>
+
+            <br><br>
+
+            <h1 id="chapterTitle"></h1>
+
+            <div class="reader-meta">
+                Educational explanation
+            </div>
+
+            <div class="reader-actions">
+
+                <button class="btn btn-primary"
+                    onclick="shortenChapter()">
+                    ✂️ Short Explanation
+                </button>
+
+                <button class="btn"
+                    onclick="resetChapter()">
+                    ↻ Full Explanation
+                </button>
+
+            </div>
+
+            <article class="reader-text" id="readerText"></article>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- EXAM -->
+
+<section class="page" id="exam">
+
+    <div class="hero">
+        <h1>Class Exam 🧪</h1>
+        <p>Complete the exam and submit your answers.</p>
+    </div>
+
+    <div class="exam-grid" id="examQuestions"></div>
+
+    <br>
+
+    <button class="btn btn-primary"
+        onclick="submitExam()">
+        Submit Exam
+    </button>
+
+    <div id="examMessage"></div>
+
+</section>
+
+<!-- RESULTS -->
+
+<section class="page" id="results">
+
+    <div class="hero">
+        <h1>Exam Results 📊</h1>
+        <p>Enter marks and calculate the final result.</p>
+    </div>
+
+    <div class="card">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Student</label>
+
+                <select id="resultStudent"></select>
+
+            </div>
+
+            <div class="form-group">
+                <label>Total Marks</label>
 
                 <input
                     type="number"
+                    id="totalMarks"
                     value="100"
                 >
 
             </div>
 
-
-            <div class="field">
-
-                <label>
-                    RAM
-                </label>
-
-                <select>
-
-                    <option>4 GB</option>
-                    <option selected>8 GB</option>
-                    <option>12 GB</option>
-                    <option>16 GB</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Server Port
-                </label>
+            <div class="form-group">
+                <label>Obtained Marks</label>
 
                 <input
-                    value="25565"
+                    type="number"
+                    id="obtainedMarks"
+                    placeholder="Enter marks"
                 >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Difficulty
-                </label>
-
-                <select>
-
-                    <option>Peaceful</option>
-                    <option>Easy</option>
-                    <option selected>Normal</option>
-                    <option>Hard</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Gamemode
-                </label>
-
-                <select>
-
-                    <option>Survival</option>
-                    <option>Creative</option>
-                    <option>Adventure</option>
-
-                </select>
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Online Mode
-                </label>
-
-                <select>
-
-                    <option selected>Enabled</option>
-                    <option>Disabled</option>
-
-                </select>
 
             </div>
 
         </div>
 
-
         <br>
 
-        <button class="primary" onclick="saveSettings()">
-            💾 Save Settings
+        <button class="btn btn-primary"
+            onclick="calculateResult()">
+            Calculate Result
         </button>
+
+        <div id="resultOutput"></div>
 
     </div>
 
 </section>
 
+<!-- EXAM ADMIN -->
+
+<section class="page" id="examAdmin">
+
+    <div class="hero">
+        <h1>Exam Admin 🔐</h1>
+        <p>Teacher-only answer key and exam control.</p>
+    </div>
+
+    <div class="card">
+
+        <h3>Answer Key</h3>
+
+        <br>
+
+        <div id="answerAdmin"></div>
+
+    </div>
+
+</section>
+
+<!-- AI -->
+
+<section class="page" id="ai">
+
+    <div class="hero">
+        <h1>Simple AI Exam Helper 🤖</h1>
+        <p>Use this tool to create a quick explanation or revision answer.</p>
+    </div>
+
+    <div class="card">
+
+        <div class="form-group">
+
+            <label>Topic / Question</label>
+
+            <textarea
+                id="aiQuestion"
+                placeholder="Example: Explain photosynthesis"></textarea>
+
+        </div>
+
+        <br>
+
+        <button class="btn btn-primary"
+            onclick="simpleAI()">
+            🤖 Generate Simple Explanation
+        </button>
+
+        <br><br>
+
+        <div id="aiOutput"
+            style="background:#0a111d;border:1px solid #27334a;border-radius:12px;padding:18px;color:#bfc9da;">
+        </div>
+
+    </div>
+
+</section>
 
 </div>
+</main>
+
 </div>
 
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2 id="modalTitle">Student</h2>
+
+            <button class="close"
+                onclick="closeModal()">×</button>
+
+        </div>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
 
 <script>
 
-/* PAGE NAVIGATION */
+/* =========================
+   STUDENTS
+========================= */
 
-function page(id){
+const students = [
+"Aarav Sharma","Arjun Kumar","Ayaan Singh","Kabir Verma",
+"Vivaan Patel","Aditya Mehta","Reyansh Gupta","Vihaan Shah",
+"Krish Malhotra","Rohan Kapoor","Dhruv Bansal","Karan Saini",
+"Manav Arora","Yash Thakur","Dev Raj","Harsh Jain",
+"Ansh Verma","Ritvik Sharma","Atharv Singh","Rudra Gupta",
+"Neil Kapoor","Aryan Mehta","Lakshya Patel","Shaurya Shah",
+"Advait Kumar","Samar Malhotra","Aadi Bansal","Parth Jain",
+"Veer Saini","Ishaan Arora","Raghav Thakur","Mohit Raj",
+"Rahul Sharma","Sahil Kumar","Naman Singh","Varun Verma",
+"Simran Patel","Ananya Mehta","Riya Gupta","Myra Kapoor"
+];
 
-    document
-        .querySelectorAll(".page")
-        .forEach(p => p.classList.remove("active"));
+/* =========================
+   DATA
+========================= */
 
-    document
-        .getElementById(id)
-        .classList.add("active");
+let attendance =
+JSON.parse(localStorage.getItem("attendance")) || {};
 
+let suspended =
+JSON.parse(localStorage.getItem("suspended")) || {};
 
-    document
-        .querySelectorAll(".nav button")
-        .forEach(b => b.classList.remove("active"));
+let dailyData =
+JSON.parse(localStorage.getItem("dailyData")) || {};
 
-    event.currentTarget.classList.add("active");
+let examResults =
+JSON.parse(localStorage.getItem("examResults")) || {};
+
+/* =========================
+   INIT
+========================= */
+
+const today =
+new Date().toISOString().split("T")[0];
+
+document.getElementById("attendanceDate").value = today;
+document.getElementById("dailyDate").value = today;
+
+document.getElementById("currentDate").textContent =
+new Date().toLocaleDateString(
+"en-GB",
+{
+weekday:"long",
+day:"numeric",
+month:"long",
+year:"numeric"
+}
+);
+
+function saveData(){
+
+localStorage.setItem(
+"attendance",
+JSON.stringify(attendance)
+);
+
+localStorage.setItem(
+"suspended",
+JSON.stringify(suspended)
+);
+
+localStorage.setItem(
+"dailyData",
+JSON.stringify(dailyData)
+);
+
+localStorage.setItem(
+"examResults",
+JSON.stringify(examResults)
+);
 
 }
 
+/* =========================
+   NAVIGATION
+========================= */
 
-/* SERVER ACTION */
+function showPage(id,btn){
 
-function serverAction(action){
+document.querySelectorAll(".page")
+.forEach(p=>p.classList.remove("active"));
 
-    const output =
-        document.getElementById("consoleOutput");
+document.getElementById(id)
+.classList.add("active");
 
-    const time =
-        new Date().toLocaleTimeString();
+document.querySelectorAll(".nav-btn")
+.forEach(b=>b.classList.remove("active"));
 
+if(btn) btn.classList.add("active");
 
-    let message = "";
+const names={
+dashboard:"Dashboard",
+attendance:"Attendance",
+students:"Students",
+daily:"Daily Data",
+books:"Books",
+exam:"Exam",
+results:"Exam Results",
+examAdmin:"Exam Admin",
+ai:"AI Helper"
+};
 
-    if(action === "start"){
-        message =
-            `[${time}] INFO: Starting server...`;
-    }
+document.getElementById("pageTitle")
+.textContent=names[id];
 
-    if(action === "restart"){
-        message =
-            `[${time}] INFO: Restarting server...`;
-    }
-
-    if(action === "stop"){
-        message =
-            `[${time}] INFO: Stopping server...`;
-    }
-
-
-    output.innerHTML +=
-        `<div class="log-success">${message}</div>`;
-
-    output.scrollTop =
-        output.scrollHeight;
-
-}
-
-
-/* CONSOLE COMMAND */
-
-function sendCommand(){
-
-    const input =
-        document.getElementById("command");
-
-    const command =
-        input.value.trim();
-
-    if(!command)
-        return;
-
-
-    const output =
-        document.getElementById("consoleOutput");
-
-
-    const time =
-        new Date().toLocaleTimeString();
-
-
-    output.innerHTML +=
-        `<div class="log-info">[${time}] &gt; ${escapeHTML(command)}</div>`;
-
-
-    let response =
-        "Unknown command";
-
-
-    if(command === "list"){
-        response =
-            "There are 7 of a max of 100 players online.";
-    }
-
-    if(command === "say hello"){
-        response =
-            "[Server] hello";
-    }
-
-    if(command === "help"){
-        response =
-            "Available commands: list, say, help, time set day";
-    }
-
-    if(command === "time set day"){
-        response =
-            "Set the time to 1000";
-    }
-
-
-    output.innerHTML +=
-        `<div class="log-success">[${time}] ${escapeHTML(response)}</div>`;
-
-
-    input.value = "";
-
-    output.scrollTop =
-        output.scrollHeight;
+if(id==="attendance") renderAttendance();
+if(id==="students") renderStudents();
+if(id==="daily") renderDaily();
+if(id==="exam") renderExam();
+if(id==="examAdmin") renderAnswerAdmin();
 
 }
 
+/* =========================
+   SIDEBAR
+========================= */
 
-/* CLEAR CONSOLE */
+function toggleSidebar(){
 
-function clearConsole(){
-
-    document.getElementById(
-        "consoleOutput"
-    ).innerHTML = "";
-
-}
-
-
-/* BACKUP */
-
-function createBackup(){
-
-    const list =
-        document.getElementById("backupList");
-
-    const date =
-        new Date()
-        .toISOString()
-        .slice(0,10);
-
-
-    list.innerHTML =
-        `<div class="backup">
-
-            <div>
-
-                <b>backup-${date}</b>
-
-                <div class="muted">
-                    Just now • Creating...
-                </div>
-
-            </div>
-
-            <span class="status">
-                Creating
-            </span>
-
-        </div>` +
-        list.innerHTML;
+document.getElementById("sidebar")
+.classList.toggle("open");
 
 }
 
+/* =========================
+   ATTENDANCE
+========================= */
 
-/* SETTINGS */
+function getDate(){
 
-function saveSettings(){
+return document.getElementById("attendanceDate").value;
 
-    alert(
-        "Settings saved successfully! (Demo)"
-    );
+}
+
+function renderAttendance(){
+
+const date=getDate();
+
+if(!attendance[date])
+attendance[date]={};
+
+let html="";
+
+students.forEach((name,i)=>{
+
+let status=
+attendance[date][name] || "Absent";
+
+let isSuspended=
+suspended[name] || false;
+
+html+=`
+
+<tr data-name="${name.toLowerCase()}">
+
+<td>${i+1}</td>
+
+<td>
+<b>${name}</b>
+</td>
+
+<td>
+
+<span class="badge ${
+isSuspended
+?"suspended"
+:status==="Present"
+?"present"
+:"absent"
+}">
+${isSuspended?"SUSPENDED":status}
+</span>
+
+</td>
+
+<td>
+
+<button class="btn btn-small ${
+status==="Present"
+?"btn-red"
+:"btn-green"
+}"
+onclick="toggleAttendance('${name}')">
+
+${status==="Present"
+?"Mark Absent"
+:"Mark Present"}
+
+</button>
+
+<button
+class="btn btn-small btn-orange"
+onclick="toggleSuspend('${name}')">
+
+${isSuspended
+?"Unsuspend"
+:"Suspend"}
+
+</button>
+
+</td>
+
+<td>
+
+<button class="btn btn-small"
+onclick="studentReport('${name}')">
+View Report
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("attendanceBody")
+.innerHTML=html;
+
+updateStats();
 
 }
 
+function toggleAttendance(name){
 
-/* ESCAPE */
+const date=getDate();
 
-function escapeHTML(text){
+if(!attendance[date])
+attendance[date]={};
 
-    return String(text)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+attendance[date][name]=
+attendance[date][name]==="Present"
+?"Absent"
+:"Present";
+
+saveData();
+renderAttendance();
 
 }
+
+function markAllPresent(){
+
+const date=getDate();
+
+attendance[date]={};
+
+students.forEach(s=>{
+attendance[date][s]="Present";
+});
+
+saveData();
+renderAttendance();
+
+}
+
+function toggleSuspend(name){
+
+suspended[name]=!suspended[name];
+
+saveData();
+renderAttendance();
+renderStudents();
+updateStats();
+
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+function filterAttendance(value){
+
+document.querySelectorAll(
+"#attendanceBody tr"
+).forEach(row=>{
+
+row.style.display=
+row.dataset.name.includes(
+value.toLowerCase()
+)
+?""
+:"none";
+
+});
+
+}
+
+/* =========================
+   STUDENTS
+========================= */
+
+function renderStudents(){
+
+let html="";
+
+students.forEach((name,i)=>{
+
+let present=0;
+let total=0;
+
+Object.keys(attendance).forEach(date=>{
+
+if(attendance[date][name]){
+total++;
+
+if(attendance[date][name]==="Present")
+present++;
+
+}
+
+});
+
+let percent=
+total
+?Math.round(present/total*100)
+:0;
+
+html+=`
+
+<tr>
+
+<td>${String(i+1).padStart(2,"0")}</td>
+
+<td><b>${name}</b></td>
+
+<td>${percent}%</td>
+
+<td>
+
+<span class="badge ${
+suspended[name]
+?"suspended"
+:"present"
+}">
+${suspended[name]?"SUSPENDED":"ACTIVE"}
+</span>
+
+</td>
+
+<td>
+
+<button
+class="btn btn-small"
+onclick="studentReport('${name}')">
+Report
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("studentsBody")
+.innerHTML=html;
+
+}
+
+/* =========================
+   REPORT
+========================= */
+
+function studentReport(name){
+
+let rows="";
+
+Object.keys(attendance).forEach(date=>{
+
+let status=
+attendance[date][name] || "Absent";
+
+rows+=`
+
+<tr>
+
+<td>${date}</td>
+
+<td>
+<span class="badge ${
+status==="Present"
+?"present"
+:"absent"
+}">
+${status}
+</span>
+</td>
+
+</tr>
+
+`;
+
+});
+
+if(!rows)
+rows="<tr><td colspan='2'>No attendance data yet.</td></tr>";
+
+document.getElementById("modalTitle")
+.textContent=name;
+
+document.getElementById("modalContent")
+.innerHTML=`
+
+<h3>Attendance Report</h3>
+
+<br>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Date</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>${rows}</tbody>
+
+</table>
+
+</div>
+
+<br>
+
+<p style="color:#8290a9;">
+Status:
+<b>${suspended[name]?"Suspended":"Active"}</b>
+</p>
+
+`;
+
+document.getElementById("modal")
+.classList.add("show");
+
+}
+
+function closeModal(){
+
+document.getElementById("modal")
+.classList.remove("show");
+
+}
+
+/* =========================
+   DAILY DATA
+========================= */
+
+function loadStudentSelect(){
+
+document.getElementById("dailyStudent")
+.innerHTML=
+students.map(s=>
+`<option>${s}</option>`
+).join("");
+
+document.getElementById("resultStudent")
+.innerHTML=
+students.map(s=>
+`<option>${s}</option>`
+).join("");
+
+}
+
+function saveDailyData(){
+
+const date=
+document.getElementById("dailyDate").value;
+
+const student=
+document.getElementById("dailyStudent").value;
+
+const status=
+document.getElementById("dailyStatus").value;
+
+const note=
+document.getElementById("dailyNote").value;
+
+if(!note.trim()){
+
+alert("Please write a note.");
+return;
+
+}
+
+if(!dailyData[date])
+dailyData[date]=[];
+
+dailyData[date].push({
+student,
+status,
+note
+});
+
+saveData();
+
+document.getElementById("dailyNote").value="";
+
+renderDaily();
+
+}
+
+function renderDaily(){
+
+let html="";
+
+Object.keys(dailyData)
+.sort()
+.reverse()
+.forEach(date=>{
+
+dailyData[date].forEach(item=>{
+
+html+=`
+
+<tr>
+
+<td>${date}</td>
+<td>${item.student}</td>
+<td>${item.status}</td>
+<td>${item.note}</td>
+
+</tr>
+
+`;
+
+});
+
+});
+
+if(!html)
+html=`
+<tr>
+<td colspan="4">
+No daily data yet.
+</td>
+</tr>
+`;
+
+document.getElementById("dailyBody")
+.innerHTML=html;
+
+}
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(){
+
+const date=getDate();
+
+let present=0;
+let absent=0;
+
+students.forEach(s=>{
+
+if(attendance[date] &&
+attendance[date][s]==="Present")
+present++;
+else
+absent++;
+
+});
+
+document.getElementById("presentCount")
+.textContent=present;
+
+document.getElementById("absentCount")
+.textContent=absent;
+
+const rate=
+Math.round(present/students.length*100);
+
+document.getElementById("attendanceRate")
+.textContent=rate+"%";
+
+document.getElementById("suspendedCount")
+.textContent=
+students.filter(s=>suspended[s]).length;
+
+}
+
+/* =========================
+   BOOK SYSTEM
+========================= */
+
+const books={
+1:{
+title:"Computer Science",
+chapters:[
+"Introduction to Computers",
+"Computer Hardware",
+"Operating Systems",
+"Software",
+"Computer Networks",
+"Internet",
+"Cyber Security",
+"Programming Basics",
+"Databases",
+"Future Technology"
+]
+},
+2:{
+title:"Mathematics",
+chapters:[
+"Numbers",
+"Fractions",
+"Decimals",
+"Algebra",
+"Linear Equations",
+"Geometry",
+"Angles",
+"Statistics",
+"Probability",
+"Problem Solving"
+]
+}
+};
+
+let currentBook=1;
+let currentChapter=0;
+
+function openBook(id){
+
+currentBook=id;
+
+document.getElementById("bookHome")
+.style.display="none";
+
+document.getElementById("chapterHome")
+.style.display="block";
+
+document.getElementById("readerHome")
+.style.display="none";
+
+document.getElementById("bookTitle")
+.textContent=books[id].title;
+
+document.getElementById("chapterList")
+.innerHTML=
+books[id].chapters.map((chapter,i)=>`
+
+<div class="chapter"
+onclick="openChapter(${i})">
+
+<div class="chapter-info">
+
+<div class="chapter-number">
+${i+1}
+</div>
+
+<div>
+<b>${chapter}</b>
+<div style="font-size:11px;color:#738099;margin-top:4px;">
+Chapter ${i+1} • Explanation
+</div>
+</div>
+
+</div>
+
+<div>→</div>
+
+</div>
+
+`).join("");
+
+}
+
+function backBooks(){
+
+document.getElementById("bookHome")
+.style.display="block";
+
+document.getElementById("chapterHome")
+.style.display="none";
+
+document.getElementById("readerHome")
+.style.display="none";
+
+}
+
+function backChapters(){
+
+document.getElementById("chapterHome")
+.style.display="block";
+
+document.getElementById("readerHome")
+.style.display="none";
+
+}
+
+function openChapter(index){
+
+currentChapter=index;
+
+document.getElementById("chapterHome")
+.style.display="none";
+
+document.getElementById("readerHome")
+.style.display="block";
+
+document.getElementById("chapterTitle")
+.textContent=
+books[currentBook].chapters[index];
+
+renderChapter(false);
+
+}
+
+function generateExplanation(){
+
+const title=
+books[currentBook].chapters[currentChapter];
+
+return `
+
+<p>
+<b>Introduction</b>
+</p>
+
+<p>
+${title} is an important topic that helps students
+understand the basic ideas and practical use of this subject.
+In this chapter we will learn the main concepts, important
+terms, examples and real-world applications.
+</p>
+
+<p>
+<b>Basic Concept</b>
+</p>
+
+<p>
+The main idea behind ${title} is to understand how different
+parts of a topic work together. A good understanding starts
+with simple definitions and then moves towards examples and
+more advanced concepts.
+</p>
+
+<p>
+<b>Detailed Explanation</b>
+</p>
+
+<p>
+Students should first identify the important elements of
+${title}. Each element has its own purpose. By studying
+these elements one by one, it becomes easier to understand
+the complete topic. Practical examples can then be used to
+connect the theory with real situations.
+</p>
+
+<p>
+<b>Example</b>
+</p>
+
+<p>
+Imagine a classroom where a teacher explains a new idea.
+The teacher starts with a simple example, explains each step,
+and then gives students a problem to solve. The same learning
+method can be applied to ${title}: understand the definition,
+learn the process, study examples and finally practise.
+</p>
+
+<p>
+<b>Important Points</b>
+</p>
+
+<p>
+Remember the important definitions, steps, formulas,
+relationships and examples from this chapter. These points
+are useful when preparing for an examination.
+</p>
+
+<p>
+<b>Revision</b>
+</p>
+
+<p>
+For revision, read the main headings first. Then review the
+important terms and examples. Finally, try to explain the
+topic in your own words without looking at the book.
+</p>
+
+`;
+
+}
+
+function renderChapter(short){
+
+const title=
+books[currentBook].chapters[currentChapter];
+
+if(short){
+
+document.getElementById("readerText")
+.innerHTML=`
+
+<p><b>${title}</b></p>
+
+<p>
+${title} is an important topic. Learn its basic definition,
+main concepts, important steps and practical examples.
+Remember the key points and practise questions related to
+the chapter.
+</p>
+
+<p>
+<b>Quick Revision:</b> Understand the definition, identify
+the important parts, study examples and review the main
+points before the exam.
+</p>
+
+`;
+
+}else{
+
+document.getElementById("readerText")
+.innerHTML=
+generateExplanation();
+
+}
+
+}
+
+function shortenChapter(){
+
+renderChapter(true);
+
+}
+
+function resetChapter(){
+
+renderChapter(false);
+
+}
+
+/* =========================
+   EXAM
+========================= */
+
+const examQuestions=[
+
+{
+q:"What does CPU stand for?",
+options:[
+"Central Processing Unit",
+"Computer Personal Unit",
+"Central Program Utility",
+"Control Processing User"
+],
+answer:0
+},
+
+{
+q:"Which device is used to display information?",
+options:[
+"Keyboard",
+"Monitor",
+"Mouse",
+"Microphone"
+],
+answer:1
+},
+
+{
+q:"Which one is an operating system?",
+options:[
+"Windows",
+"HTML",
+"CPU",
+"RAM"
+],
+answer:0
+},
+
+{
+q:"What is 10 + 15?",
+options:[
+"20",
+"25",
+"30",
+"35"
+],
+answer:1
+},
+
+{
+q:"What is 5 × 6?",
+options:[
+"20",
+"25",
+"30",
+"35"
+],
+answer:2
+},
+
+{
+q:"Which is used to connect computers?",
+options:[
+"Network",
+"Chair",
+"Book",
+"Pen"
+],
+answer:0
+},
+
+{
+q:"Which number is even?",
+options:[
+"7",
+"9",
+"11",
+"12"
+],
+answer:3
+},
+
+{
+q:"What does RAM help a computer with?",
+options:[
+"Temporary working memory",
+"Printing paper",
+"Internet cables",
+"Sound only"
+],
+answer:0
+},
+
+{
+q:"Which is a programming language?",
+options:[
+"Python",
+"Keyboard",
+"Monitor",
+"Printer"
+],
+answer:0
+},
+
+{
+q:"What is 100 ÷ 10?",
+options:[
+"5",
+"10",
+"15",
+"20"
+],
+answer:1
+}
+
+];
+
+function renderExam(){
+
+document.getElementById("examQuestions")
+.innerHTML=
+examQuestions.map((q,i)=>`
+
+<div class="question">
+
+<h3>
+${i+1}. ${q.q}
+</h3>
+
+${q.options.map((op,j)=>`
+
+<label class="option">
+
+<input
+type="radio"
+name="q${i}"
+value="${j}">
+
+${op}
+
+</label>
+
+`).join("")}
+
+</div>
+
+`).join("");
+
+}
+
+function submitExam(){
+
+let score=0;
+
+examQuestions.forEach((q,i)=>{
+
+const selected=
+document.querySelector(
+`input[name="q${i}"]:checked`
+);
+
+if(selected &&
+Number(selected.value)===q.answer)
+score++;
+
+});
+
+const percent=
+Math.round(score/examQuestions.length*100);
+
+document.getElementById("examMessage")
+.innerHTML=`
+
+<div class="card"
+style="margin-top:20px;">
+
+<h2>Exam Submitted 🎉</h2>
+
+<br>
+
+<p>
+Score:
+<b>${score}/${examQuestions.length}</b>
+</p>
+
+<p>
+Percentage:
+<b>${percent}%</b>
+</p>
+
+</div>
+
+`;
+
+}
+
+/* =========================
+   RESULT
+========================= */
+
+function calculateResult(){
+
+const student=
+document.getElementById("resultStudent").value;
+
+const total=
+Number(document.getElementById("totalMarks").value);
+
+const obtained=
+Number(document.getElementById("obtainedMarks").value);
+
+if(!total || obtained<0 || obtained>total){
+
+alert("Please enter valid marks.");
+return;
+
+}
+
+const percentage=
+Math.round(obtained/total*100);
+
+let grade;
+
+if(percentage>=90) grade="A+";
+else if(percentage>=80) grade="A";
+else if(percentage>=70) grade="B";
+else if(percentage>=60) grade="C";
+else if(percentage>=50) grade="D";
+else grade="F";
+
+examResults[student]={
+total,
+obtained,
+percentage,
+grade
+};
+
+saveData();
+
+document.getElementById("resultOutput")
+.innerHTML=`
+
+<div style="
+margin-top:20px;
+padding:25px;
+border-radius:15px;
+background:#111b2b;
+border:1px solid #283650;
+">
+
+<h2>${student}</h2>
+
+<br>
+
+<div style="
+font-size:38px;
+font-weight:800;
+">
+${percentage}%
+</div>
+
+<p>
+${obtained} / ${total} marks
+</p>
+
+<br>
+
+<span class="badge present">
+Grade ${grade}
+</span>
+
+</div>
+
+`;
+
+}
+
+/* =========================
+   EXAM ADMIN
+========================= */
+
+function renderAnswerAdmin(){
+
+document.getElementById("answerAdmin")
+.innerHTML=
+examQuestions.map((q,i)=>`
+
+<div style="
+padding:15px;
+margin-bottom:10px;
+background:#0b121f;
+border:1px solid #263149;
+border-radius:10px;
+">
+
+<b>Q${i+1}.</b>
+${q.q}
+
+<br>
+
+<span style="color:#55e7b0;">
+Correct Answer:
+${q.options[q.answer]}
+</span>
+
+</div>
+
+`).join("");
+
+}
+
+/* =========================
+   SIMPLE AI
+========================= */
+
+function simpleAI(){
+
+const question=
+document.getElementById("aiQuestion").value.trim();
+
+if(!question){
+
+document.getElementById("aiOutput")
+.textContent=
+"Please enter a question or topic.";
+
+return;
+
+}
+
+document.getElementById("aiOutput")
+.innerHTML=`
+
+<h3>Simple Explanation</h3>
+
+<br>
+
+<p>
+<b>Topic:</b> ${question}
+</p>
+
+<br>
+
+<p>
+This topic can be understood by breaking it into
+three simple parts: definition, main idea and example.
+Start by understanding what the topic means, then learn
+how it works and finally practise it with an example.
+</p>
+
+<br>
+
+<p>
+<b>Revision Tip:</b>
+Write the main idea in 2–3 simple sentences and then
+try to explain it without looking at your notes.
+</p>
+
+`;
+
+}
+
+/* =========================
+   INIT
+========================= */
+
+loadStudentSelect();
+renderAttendance();
+renderStudents();
+renderDaily();
+renderExam();
+renderAnswerAdmin();
+updateStats();
 
 </script>
 
