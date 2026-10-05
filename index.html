@@ -1,383 +1,776 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EduCore Classroom</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
-body{background:#070b14;color:#f4f7ff;min-height:100vh}
-button,input,textarea,select{font:inherit}button{cursor:pointer}
-.app{display:flex;min-height:100vh}.sidebar{width:250px;background:linear-gradient(180deg,#0d1424,#080c15);border-right:1px solid #202a3d;padding:20px 14px;position:fixed;inset:0 auto 0 0;z-index:20}
-.logo{display:flex;align-items:center;gap:12px;padding:10px;margin-bottom:25px}.logo-icon{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#6d5dfc,#20d6ff);font-size:21px}.logo h2{font-size:18px}.logo span{display:block;font-size:11px;color:#7f8ba3;margin-top:3px}
-.nav-title{color:#59657c;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;padding:12px 10px 7px}.nav-btn{width:100%;border:0;background:transparent;color:#9aa6bd;padding:12px;border-radius:12px;text-align:left;margin:3px 0}.nav-btn:hover,.nav-btn.active{background:#151e31;color:#fff}.nav-btn span{margin-right:10px}
-.main{margin-left:250px;width:calc(100% - 250px);min-height:100vh}.topbar{height:72px;display:flex;justify-content:space-between;align-items:center;padding:0 28px;border-bottom:1px solid #202a3d;background:#090e18dd;backdrop-filter:blur(15px);position:sticky;top:0;z-index:10}.page-title{font-size:20px;font-weight:700}.date{color:#76839b;font-size:12px}.profile{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#775cff,#00c8ff);display:grid;place-items:center;font-weight:bold}
-.content{padding:28px}.page{display:none}.page.active{display:block}.hero{padding:28px;border:1px solid #263149;border-radius:22px;background:radial-gradient(circle at top right,#4237b630,transparent 40%),linear-gradient(135deg,#11192a,#0c1220);margin-bottom:22px}.hero h1{font-size:30px;margin-bottom:8px}.hero p{color:#8290a9}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:22px}.card{background:#0e1523;border:1px solid #202c43;border-radius:17px;padding:19px}.stat-label{color:#78859d;font-size:12px}.stat-value{font-size:27px;font-weight:800;margin-top:8px}.card-icon{font-size:23px;margin-bottom:10px}
-.table-wrap{overflow:auto;background:#0d1421;border:1px solid #202c43;border-radius:17px}table{width:100%;border-collapse:collapse;min-width:800px}th,td{padding:13px;text-align:left;border-bottom:1px solid #202a3c}th{color:#77849c;font-size:11px;text-transform:uppercase;background:#111b2b}td{font-size:13px}tr:hover{background:#121b2b}
-.btn{border:0;padding:9px 13px;border-radius:9px;color:#fff;background:#26344d}.btn:hover{filter:brightness(1.2)}.btn-primary{background:linear-gradient(135deg,#6656f6,#278eff)}.btn-green{background:#123f31;color:#55e7b0}.btn-red{background:#451d27;color:#ff7f92}.btn-orange{background:#453119;color:#ffbd62}.btn-small{padding:7px 10px;font-size:11px}
-.badge{padding:5px 9px;border-radius:20px;font-size:10px;font-weight:bold}.present{background:#103d2e;color:#55e7b0}.absent{background:#421d28;color:#ff8294}.suspended{background:#443018;color:#ffc261}.blue{background:#172b50;color:#72aaff}
-.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px;flex-wrap:wrap}.search,.date-input{background:#0d1421;border:1px solid #253149;color:#fff;padding:10px 13px;border-radius:10px;outline:none}.search{min-width:220px}
-.books{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}.book{padding:25px;min-height:210px;border-radius:20px;border:1px solid #293650;background:linear-gradient(135deg,#111b31,#0c1320);cursor:pointer;transition:.25s}.book:hover{transform:translateY(-5px);border-color:#615cff;box-shadow:0 15px 40px #0005}.book-cover{width:55px;height:70px;border-radius:8px;background:linear-gradient(135deg,#725bff,#13c9ff);margin-bottom:18px;display:grid;place-items:center;font-size:25px}.book h2{margin-bottom:8px}.book p{color:#7f8ba1;font-size:13px}
-.chapter-list{display:grid;gap:12px}.chapter{display:flex;justify-content:space-between;align-items:center;padding:17px;background:#0e1625;border:1px solid #243149;border-radius:13px;cursor:pointer}.chapter:hover{background:#141e31}.chapter-info{display:flex;align-items:center;gap:13px}.chapter-number{width:35px;height:35px;border-radius:10px;display:grid;place-items:center;background:#1b2740;color:#9eabff}
-.reader{max-width:1000px;margin:auto}.reader h1{font-size:30px;margin-bottom:10px}.reader-meta{color:#73819a;margin-bottom:25px}.reader-text{background:#0d1421;border:1px solid #253149;padding:28px;border-radius:18px;line-height:1.9;color:#c9d1df}.reader-text p{margin-bottom:20px}.reader-actions{display:flex;gap:10px;margin-bottom:18px}
-.question{padding:20px;background:#0e1625;border:1px solid #263149;border-radius:15px;margin-bottom:14px}.question h3{margin-bottom:14px;font-size:15px}.option{display:block;padding:11px;border:1px solid #263149;border-radius:9px;margin:7px 0;cursor:pointer}.option:hover{background:#151f31}.option input{margin-right:8px}
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.form-group{display:flex;flex-direction:column;gap:7px}.form-group.full{grid-column:1/-1}label{color:#8592aa;font-size:12px}input,textarea,select{width:100%;background:#0a111d;color:#fff;border:1px solid #263149;border-radius:10px;padding:11px;outline:none}textarea{min-height:110px;resize:vertical}
-.rating{display:flex;gap:5px;flex-wrap:wrap}.rating button{border:1px solid #2a3850;background:#111a2a;color:#8d9ab0;border-radius:8px;padding:7px 10px}.rating button.selected{background:#6656f6;color:#fff;border-color:#8176ff}
-.eval-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:10px}.eval-box{background:#101a2b;border:1px solid #26344d;padding:14px;border-radius:12px;text-align:center}.eval-box strong{display:block;font-size:20px;margin-top:5px}
-.daily-table{min-width:1450px}.daily-table th{position:sticky;top:0;z-index:2}.daily-select,.daily-input{width:100%;min-width:105px;padding:8px;background:#0a111d;border:1px solid #293750;color:#fff;border-radius:7px;outline:none}.notes-input{min-width:220px}.daily-select:focus,.daily-input:focus{border-color:#6656f6}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedCare - Doctor Dashboard</title>
 
-.sheet-wrap{overflow:auto;max-width:100%;background:#0b111d;border:1px solid #27344b;border-radius:16px;box-shadow:0 15px 45px #0005}
-.evaluation-sheet{border-collapse:separate;border-spacing:0;min-width:5200px;width:max-content}
-.evaluation-sheet th,.evaluation-sheet td{border-right:1px solid #27344b;border-bottom:1px solid #27344b;padding:8px;min-width:125px;height:58px}
-.evaluation-sheet thead th{background:#172238;color:#eaf0ff;position:sticky;top:0;z-index:5;font-size:11px;text-transform:none}
-.evaluation-sheet .sticky-col{position:sticky;left:0;z-index:7;background:#131d30;min-width:170px;width:170px;text-align:left;font-size:12px;color:#dce5f7}
-.evaluation-sheet thead .sticky-col{z-index:10;background:#1b2740}
-.evaluation-sheet tbody tr:nth-child(even) td{background:#0f1726}
-.evaluation-sheet tbody tr:hover td{background:#152033}
-.student-head{white-space:normal;vertical-align:middle;text-align:center}
-.student-number{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;background:#6656f6;margin-right:5px;font-size:10px}
-.sheet-input{width:100%;min-width:105px;background:#080e18;color:#fff;border:1px solid #293750;border-radius:7px;padding:9px 8px;outline:none}
-.sheet-input:focus{border-color:#7064ff;box-shadow:0 0 0 2px #7064ff22}
-.sheet-notes{min-height:70px;resize:vertical}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
+    body {
+      background: #f4f7fb;
+      color: #1f2937;
+    }
 
-.chapter-pages{background:#0d1421;border:1px solid #253149;border-radius:18px;overflow:hidden}
-.chapter-page{min-height:700px;padding:42px;display:none;line-height:1.9;color:#cbd4e4}
-.chapter-page.active{display:block}
-.chapter-page h2{font-size:26px;margin-bottom:10px;color:#fff}
-.chapter-page h3{font-size:17px;margin:24px 0 10px;color:#9eaaff}
-.chapter-page p{margin:0 0 17px}
-.chapter-page ul{padding-left:25px;margin-bottom:18px}
-.chapter-page li{margin:8px 0}
-.page-counter{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:14px 0;color:#7f8ca3}
-.page-dots{display:flex;gap:5px;flex-wrap:wrap}
-.page-dot{width:9px;height:9px;border-radius:50%;background:#26344d}
-.page-dot.active{background:#7568ff}
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
 
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: #0f766e;
+      color: white;
+      padding: 25px 15px;
+      position: fixed;
+      height: 100vh;
+    }
 
-.sheet-wrap{overflow:auto;max-width:100%;background:#0b111d;border:1px solid #27344b;border-radius:16px;box-shadow:0 15px 45px #0005}
-.evaluation-sheet{border-collapse:separate;border-spacing:0;min-width:5200px;width:max-content}
-.evaluation-sheet th,.evaluation-sheet td{border-right:1px solid #27344b;border-bottom:1px solid #27344b;padding:8px;min-width:125px;height:58px}
-.evaluation-sheet thead th{background:#172238;color:#eaf0ff;position:sticky;top:0;z-index:5;font-size:11px;text-transform:none}
-.evaluation-sheet .sticky-col{position:sticky;left:0;z-index:7;background:#131d30;min-width:170px;width:170px;text-align:left;font-size:12px;color:#dce5f7}
-.evaluation-sheet thead .sticky-col{z-index:10;background:#1b2740}
-.evaluation-sheet tbody tr:nth-child(even) td{background:#0f1726}
-.evaluation-sheet tbody tr:hover td{background:#152033}
-.student-head{white-space:normal;vertical-align:middle;text-align:center}
-.student-number{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;background:#6656f6;margin-right:5px;font-size:10px}
-.sheet-input{width:100%;min-width:105px;background:#080e18;color:#fff;border:1px solid #293750;border-radius:7px;padding:9px 8px;outline:none}
-.sheet-input:focus{border-color:#7064ff;box-shadow:0 0 0 2px #7064ff22}
-.sheet-notes{min-height:70px;resize:vertical}
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 35px;
+      padding-left: 10px;
+    }
 
-.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:20px;z-index:100}.modal.show{display:flex}.modal-box{width:min(700px,100%);background:#101827;border:1px solid #2b3850;border-radius:20px;padding:25px;max-height:90vh;overflow:auto}.modal-head{display:flex;justify-content:space-between;margin-bottom:20px}.close{border:0;background:#1c2739;color:#fff;width:35px;height:35px;border-radius:50%}.mobile-menu{display:none}
-@media(max-width:1000px){.eval-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:900px){.sidebar{transform:translateX(-100%);transition:.3s}.sidebar.open{transform:translateX(0)}.main{margin-left:0;width:100%}.mobile-menu{display:block;background:#19243a;color:#fff;border:0;padding:9px 12px;border-radius:9px;margin-right:10px}.topbar{padding:0 15px}.stats{grid-template-columns:repeat(2,1fr)}.books{grid-template-columns:1fr}.content{padding:15px}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:auto}}@media(max-width:600px){.eval-grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:23px}.profile{display:none}}
-</style>
+    .nav-btn {
+      width: 100%;
+      padding: 13px;
+      margin: 5px 0;
+      border: none;
+      background: transparent;
+      color: white;
+      text-align: left;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      background: rgba(255,255,255,0.18);
+    }
+
+    /* Main */
+    .main {
+      margin-left: 240px;
+      width: calc(100% - 240px);
+      padding: 25px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .topbar h1 {
+      font-size: 28px;
+    }
+
+    .doctor {
+      background: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.05);
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .card h3 {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .card .number {
+      font-size: 28px;
+      font-weight: bold;
+      color: #0f766e;
+    }
+
+    /* Content */
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .section {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.05);
+    }
+
+    .section h2 {
+      margin-bottom: 18px;
+      font-size: 20px;
+    }
+
+    /* Patients */
+    .patient {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 0;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+
+    .patient:last-child {
+      border-bottom: none;
+    }
+
+    .patient-info {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      background: #ccfbf1;
+      color: #0f766e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .patient small {
+      color: #6b7280;
+    }
+
+    /* Buttons */
+    button.primary {
+      background: #0f766e;
+      color: white;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button.primary:hover {
+      background: #115e59;
+    }
+
+    .danger {
+      background: #dc2626 !important;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal-box {
+      background: white;
+      width: 600px;
+      max-width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 15px;
+      padding: 25px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .close {
+      border: none;
+      background: none;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .form-group textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .patient-detail {
+      line-height: 1.8;
+    }
+
+    .detail-box {
+      background: #f8fafc;
+      padding: 15px;
+      margin-top: 12px;
+      border-radius: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #ccfbf1;
+      color: #115e59;
+      padding: 5px 9px;
+      border-radius: 20px;
+      margin: 3px;
+      font-size: 13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .sidebar {
+        width: 70px;
+        padding: 15px 8px;
+      }
+
+      .logo {
+        font-size: 0;
+      }
+
+      .logo::after {
+        content: "MC";
+        font-size: 20px;
+      }
+
+      .nav-btn {
+        font-size: 0;
+        text-align: center;
+      }
+
+      .nav-btn::first-letter {
+        font-size: 20px;
+      }
+
+      .main {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 15px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+
 <div class="app">
 
-<aside class="sidebar" id="sidebar">
-<div class="logo"><div class="logo-icon">🎓</div><div><h2>EduCore</h2><span>Classroom System</span></div></div>
-<div class="nav-title">Main</div>
-<button class="nav-btn active" onclick="showPage('dashboard',this)"><span>⌂</span>Dashboard</button>
-<button class="nav-btn" onclick="showPage('attendance',this)"><span>✓</span>Attendance</button>
-<button class="nav-btn" onclick="showPage('students',this)"><span>👨‍🎓</span>Students</button>
-<button class="nav-btn" onclick="showPage('daily',this)"><span>📋</span>Daily Data</button>
-<button class="nav-btn" onclick="showPage('evaluation',this)"><span>⭐</span>Student Evaluation</button>
-<div class="nav-title">Learning</div>
-<button class="nav-btn" onclick="showPage('books',this)"><span>📚</span>Books</button>
-<button class="nav-btn" onclick="showPage('exam',this)"><span>🧪</span>Exam</button>
-<button class="nav-btn" onclick="showPage('results',this)"><span>📊</span>Exam Results</button>
-<div class="nav-title">Administration</div>
-<button class="nav-btn" onclick="showPage('examAdmin',this)"><span>🔐</span>Exam Admin</button>
-<button class="nav-btn" onclick="showPage('ai',this)"><span>🤖</span>AI Helper</button>
-</aside>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">🩺 MedCare</div>
 
-<main class="main">
-<header class="topbar">
-<div style="display:flex;align-items:center"><button class="mobile-menu" onclick="toggleSidebar()">☰</button><div><div class="page-title" id="pageTitle">Dashboard</div><div class="date" id="currentDate"></div></div></div>
-<div class="profile"><div><b>Teacher</b><div style="font-size:11px;color:#748099">Class Administrator</div></div><div class="avatar">T</div></div>
-</header>
+    <button class="nav-btn active" onclick="showDashboard()">🏠 Dashboard</button>
+    <button class="nav-btn" onclick="showPatients()">👥 Patients</button>
+    <button class="nav-btn" onclick="openAddPatient()">➕ Add Patient</button>
+  </aside>
 
-<div class="content">
 
-<section class="page active" id="dashboard">
-<div class="hero"><h1>Good Evening, Teacher 👋</h1><p>Manage attendance, daily records, books, exams and student performance.</p></div>
-<div class="stats">
-<div class="card"><div class="card-icon">👨‍🎓</div><div class="stat-label">Total Students</div><div class="stat-value">40</div></div>
-<div class="card"><div class="card-icon">✓</div><div class="stat-label">Present Today</div><div class="stat-value" id="presentCount">0</div></div>
-<div class="card"><div class="card-icon">❌</div><div class="stat-label">Absent Today</div><div class="stat-value" id="absentCount">0</div></div>
-<div class="card"><div class="card-icon">⛔</div><div class="stat-label">Suspended</div><div class="stat-value" id="suspendedCount">0</div></div>
-</div>
-<div class="card"><h3>Class Overview</h3><br><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px"><div style="padding:18px;background:#111b2b;border-radius:12px"><small style="color:#75829b">Attendance Rate</small><h2 id="attendanceRate">0%</h2></div><div style="padding:18px;background:#111b2b;border-radius:12px"><small style="color:#75829b">Books</small><h2>2</h2></div><div style="padding:18px;background:#111b2b;border-radius:12px"><small style="color:#75829b">Chapters</small><h2>20</h2></div></div></div>
-</section>
+  <!-- Main -->
+  <main class="main">
 
-<section class="page" id="attendance">
-<div class="hero"><h1>Daily Attendance</h1><p>Mark attendance for all students and view individual reports.</p></div>
-<div class="toolbar"><input type="date" id="attendanceDate" class="date-input" onchange="renderAttendance()"><input class="search" placeholder="Search student..." oninput="filterAttendance(this.value)"><button class="btn btn-primary" onclick="markAllPresent()">✓ Mark All Present</button></div>
-<div class="table-wrap"><table><thead><tr><th>#</th><th>Student</th><th>Status</th><th>Action</th><th>Report</th></tr></thead><tbody id="attendanceBody"></tbody></table></div>
-</section>
+    <div class="topbar">
+      <h1 id="pageTitle">Doctor Dashboard</h1>
 
-<section class="page" id="students">
-<div class="hero"><h1>Students</h1><p>All 40 students and their current status.</p></div>
-<div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Attendance</th><th>Status</th><th>Evaluation</th></tr></thead><tbody id="studentsBody"></tbody></table></div>
-</section>
+      <div class="doctor">
+        👨‍⚕️ <b>Dr. Sharma</b>
+      </div>
+    </div>
 
-<section class="page" id="daily">
-<div class="hero"><h1>Daily Student Data 📋</h1><p>Excel-style daily record. All 40 students are shown together.</p></div>
-<div class="toolbar"><input type="date" id="dailyTableDate" class="date-input" onchange="renderDailyTable()"><button class="btn btn-primary" onclick="saveDailyTable()">💾 Save Daily Data</button></div>
-<div class="table-wrap"><table class="daily-table"><thead><tr><th>#</th><th>Student Name</th><th>Homework</th><th>Behaviour</th><th>Study</th><th>Participation</th><th>Exam</th><th>Teacher Notes</th></tr></thead><tbody id="dailyTableBody"></tbody></table></div>
-</section>
 
-<section class="page" id="evaluation">
-<div class="hero">
-<h1>Student Evaluation — Hojas de cálculo ⭐</h1>
-<p>Spreadsheet-style class evaluation. All 40 students are shown across the top, like a real spreadsheet.</p>
-</div>
-<div class="toolbar">
-<button class="btn btn-primary" onclick="saveEvaluationSheet()">💾 Save Evaluation Sheet</button>
-<button class="btn" onclick="clearEvaluationSheet()">↻ Clear Unsaved Changes</button>
-<span style="color:#77849c;font-size:12px">Scroll horizontally to see every student.</span>
-</div>
-<div class="sheet-wrap">
-<table class="evaluation-sheet">
-<thead>
-<tr>
-<th class="sticky-col">Evaluation</th>
-<th class="student-head"><div class="student-number">1</div>Aarav Sharma</th><th class="student-head"><div class="student-number">2</div>Arjun Kumar</th><th class="student-head"><div class="student-number">3</div>Ayaan Singh</th><th class="student-head"><div class="student-number">4</div>Kabir Verma</th><th class="student-head"><div class="student-number">5</div>Vivaan Patel</th><th class="student-head"><div class="student-number">6</div>Aditya Mehta</th><th class="student-head"><div class="student-number">7</div>Reyansh Gupta</th><th class="student-head"><div class="student-number">8</div>Vihaan Shah</th><th class="student-head"><div class="student-number">9</div>Krish Malhotra</th><th class="student-head"><div class="student-number">10</div>Rohan Kapoor</th><th class="student-head"><div class="student-number">11</div>Dhruv Bansal</th><th class="student-head"><div class="student-number">12</div>Karan Saini</th><th class="student-head"><div class="student-number">13</div>Manav Arora</th><th class="student-head"><div class="student-number">14</div>Yash Thakur</th><th class="student-head"><div class="student-number">15</div>Dev Raj</th><th class="student-head"><div class="student-number">16</div>Harsh Jain</th><th class="student-head"><div class="student-number">17</div>Ansh Verma</th><th class="student-head"><div class="student-number">18</div>Ritvik Sharma</th><th class="student-head"><div class="student-number">19</div>Atharv Singh</th><th class="student-head"><div class="student-number">20</div>Rudra Gupta</th><th class="student-head"><div class="student-number">21</div>Neil Kapoor</th><th class="student-head"><div class="student-number">22</div>Aryan Mehta</th><th class="student-head"><div class="student-number">23</div>Lakshya Patel</th><th class="student-head"><div class="student-number">24</div>Shaurya Shah</th><th class="student-head"><div class="student-number">25</div>Advait Kumar</th><th class="student-head"><div class="student-number">26</div>Samar Malhotra</th><th class="student-head"><div class="student-number">27</div>Aadi Bansal</th><th class="student-head"><div class="student-number">28</div>Parth Jain</th><th class="student-head"><div class="student-number">29</div>Veer Saini</th><th class="student-head"><div class="student-number">30</div>Ishaan Arora</th><th class="student-head"><div class="student-number">31</div>Raghav Thakur</th><th class="student-head"><div class="student-number">32</div>Mohit Raj</th><th class="student-head"><div class="student-number">33</div>Rahul Sharma</th><th class="student-head"><div class="student-number">34</div>Sahil Kumar</th><th class="student-head"><div class="student-number">35</div>Naman Singh</th><th class="student-head"><div class="student-number">36</div>Varun Verma</th><th class="student-head"><div class="student-number">37</div>Simran Patel</th><th class="student-head"><div class="student-number">38</div>Ananya Mehta</th><th class="student-head"><div class="student-number">39</div>Riya Gupta</th><th class="student-head"><div class="student-number">40</div>Myra Kapoor</th>
-</tr>
-</thead>
-<tbody>
-<tr><th class="sticky-col">Age</th><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_0" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_1" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_2" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_3" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_4" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_5" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_6" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_7" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_8" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_9" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_10" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_11" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_12" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_13" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_14" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_15" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_16" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_17" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_18" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_19" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_20" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_21" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_22" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_23" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_24" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_25" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_26" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_27" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_28" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_29" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_30" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_31" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_32" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_33" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_34" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_35" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_36" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_37" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_38" placeholder="Age"></td><td><input class="sheet-input" type="number" min="1" max="30" id="ev_age_39" placeholder="Age"></td></tr>
-<tr><th class="sticky-col">Homework</th><td><input class="sheet-input" id="ev_homework_0" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_1" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_2" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_3" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_4" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_5" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_6" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_7" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_8" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_9" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_10" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_11" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_12" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_13" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_14" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_15" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_16" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_17" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_18" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_19" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_20" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_21" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_22" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_23" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_24" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_25" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_26" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_27" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_28" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_29" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_30" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_31" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_32" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_33" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_34" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_35" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_36" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_37" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_38" placeholder="e.g. 5/5"></td><td><input class="sheet-input" id="ev_homework_39" placeholder="e.g. 5/5"></td></tr>
-<tr><th class="sticky-col">Class Behaviour</th><td><input class="sheet-input" id="ev_behaviour_0" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_1" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_2" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_3" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_4" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_5" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_6" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_7" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_8" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_9" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_10" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_11" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_12" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_13" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_14" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_15" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_16" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_17" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_18" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_19" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_20" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_21" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_22" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_23" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_24" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_25" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_26" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_27" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_28" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_29" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_30" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_31" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_32" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_33" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_34" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_35" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_36" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_37" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_38" placeholder="Good"></td><td><input class="sheet-input" id="ev_behaviour_39" placeholder="Good"></td></tr>
-<tr><th class="sticky-col">Study / Learning</th><td><input class="sheet-input" id="ev_study_0" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_1" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_2" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_3" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_4" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_5" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_6" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_7" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_8" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_9" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_10" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_11" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_12" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_13" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_14" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_15" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_16" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_17" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_18" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_19" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_20" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_21" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_22" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_23" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_24" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_25" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_26" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_27" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_28" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_29" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_30" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_31" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_32" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_33" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_34" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_35" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_36" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_37" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_38" placeholder="Good"></td><td><input class="sheet-input" id="ev_study_39" placeholder="Good"></td></tr>
-<tr><th class="sticky-col">Participation</th><td><input class="sheet-input" id="ev_participation_0" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_1" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_2" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_3" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_4" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_5" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_6" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_7" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_8" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_9" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_10" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_11" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_12" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_13" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_14" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_15" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_16" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_17" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_18" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_19" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_20" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_21" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_22" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_23" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_24" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_25" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_26" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_27" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_28" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_29" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_30" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_31" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_32" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_33" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_34" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_35" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_36" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_37" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_38" placeholder="5/5"></td><td><input class="sheet-input" id="ev_participation_39" placeholder="5/5"></td></tr>
-<tr><th class="sticky-col">Exam 1</th><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_0" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_1" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_2" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_3" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_4" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_5" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_6" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_7" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_8" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_9" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_10" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_11" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_12" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_13" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_14" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_15" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_16" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_17" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_18" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_19" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_20" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_21" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_22" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_23" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_24" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_25" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_26" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_27" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_28" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_29" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_30" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_31" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_32" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_33" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_34" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_35" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_36" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_37" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_38" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam1_39" placeholder="Marks"></td></tr>
-<tr><th class="sticky-col">Exam 2</th><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_0" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_1" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_2" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_3" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_4" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_5" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_6" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_7" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_8" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_9" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_10" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_11" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_12" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_13" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_14" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_15" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_16" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_17" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_18" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_19" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_20" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_21" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_22" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_23" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_24" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_25" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_26" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_27" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_28" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_29" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_30" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_31" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_32" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_33" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_34" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_35" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_36" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_37" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_38" placeholder="Marks"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_exam2_39" placeholder="Marks"></td></tr>
-<tr><th class="sticky-col">Attendance %</th><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_0" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_1" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_2" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_3" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_4" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_5" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_6" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_7" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_8" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_9" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_10" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_11" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_12" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_13" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_14" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_15" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_16" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_17" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_18" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_19" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_20" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_21" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_22" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_23" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_24" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_25" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_26" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_27" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_28" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_29" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_30" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_31" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_32" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_33" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_34" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_35" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_36" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_37" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_38" placeholder="%"></td><td><input class="sheet-input" type="number" min="0" max="100" id="ev_attendance_39" placeholder="%"></td></tr>
-<tr><th class="sticky-col">Final Result</th><td><input class="sheet-input" id="ev_result_0" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_1" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_2" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_3" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_4" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_5" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_6" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_7" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_8" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_9" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_10" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_11" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_12" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_13" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_14" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_15" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_16" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_17" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_18" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_19" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_20" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_21" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_22" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_23" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_24" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_25" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_26" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_27" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_28" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_29" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_30" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_31" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_32" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_33" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_34" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_35" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_36" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_37" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_38" placeholder="A / B / C"></td><td><input class="sheet-input" id="ev_result_39" placeholder="A / B / C"></td></tr>
-<tr><th class="sticky-col">Teacher Notes</th><td><textarea class="sheet-input sheet-notes" id="ev_notes_0" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_1" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_2" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_3" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_4" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_5" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_6" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_7" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_8" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_9" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_10" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_11" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_12" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_13" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_14" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_15" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_16" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_17" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_18" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_19" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_20" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_21" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_22" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_23" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_24" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_25" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_26" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_27" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_28" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_29" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_30" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_31" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_32" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_33" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_34" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_35" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_36" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_37" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_38" placeholder="Write note..."></textarea></td><td><textarea class="sheet-input sheet-notes" id="ev_notes_39" placeholder="Write note..."></textarea></td></tr>
-</tbody>
-</table>
-</div>
-</section>
+    <!-- Dashboard -->
+    <div id="dashboard">
 
-<section class="page" id="books">
-<div id="bookHome"><div class="hero"><h1>Library 📚</h1><p>Choose a book and open its chapters.</p></div><div class="books">
-<div class="book" onclick="openBook(1)"><div class="book-cover">📘</div><h2>Computer Science</h2><p>Computers, hardware, software, networks, internet, security and programming.</p><br><span class="badge blue">10 Chapters</span></div>
-<div class="book" onclick="openBook(2)"><div class="book-cover">📕</div><h2>Mathematics</h2><p>Numbers, algebra, geometry, statistics, probability and problem solving.</p><br><span class="badge blue">10 Chapters</span></div>
-</div></div>
-<div id="chapterHome" style="display:none"><button class="btn" onclick="backBooks()">← Back to Books</button><br><br><div class="hero"><h1 id="bookTitle"></h1><p>Choose a chapter.</p></div><div class="chapter-list" id="chapterList"></div></div>
-<div id="readerHome" style="display:none"><div class="reader"><button class="btn" onclick="backChapters()">← Chapters</button><br><br><h1 id="chapterTitle"></h1><div class="reader-meta">Chapter explanation</div><div class="reader-actions"><button class="btn btn-primary" onclick="shortenChapter()">✂️ Short Explanation</button><button class="btn" onclick="resetChapter()">↻ Full Explanation</button></div><div class="chapter-pages" id="chapterPages"></div><div class="page-counter"><button class="btn" onclick="prevChapterPage()">← Previous</button><div id="chapterPageCounter">Page 1 / 10</div><button class="btn btn-primary" onclick="nextChapterPage()">Next →</button></div></div></div>
-</section>
+      <div class="cards">
 
-<section class="page" id="exam">
-<div class="hero"><h1>Chapter Exam 🧪</h1><p>Choose a book and chapter. Questions come from that chapter.</p></div>
-<div class="card"><div class="form-grid"><div class="form-group"><label>Book</label><select id="examBook" onchange="loadExamChapters()"><option value="1">Computer Science</option><option value="2">Mathematics</option></select></div><div class="form-group"><label>Chapter</label><select id="examChapter"></select></div></div><br><button class="btn btn-primary" onclick="generateChapterExam()">🧪 Start Chapter Exam</button></div>
-<br><div id="examArea"></div>
-</section>
+        <div class="card">
+          <h3>Total Patients</h3>
+          <div class="number" id="totalPatients">0</div>
+        </div>
 
-<section class="page" id="results">
-<div class="hero"><h1>Exam Results 📊</h1><p>Enter marks and calculate a result.</p></div>
-<div class="card"><div class="form-grid"><div class="form-group"><label>Student</label><select id="resultStudent"></select></div><div class="form-group"><label>Exam / Chapter</label><input id="resultExamName" placeholder="Example: Algebra Chapter 4"></div><div class="form-group"><label>Total Marks</label><input type="number" id="totalMarks" value="100"></div><div class="form-group"><label>Obtained Marks</label><input type="number" id="obtainedMarks"></div></div><br><button class="btn btn-primary" onclick="calculateResult()">Calculate Result</button><div id="resultOutput"></div></div>
-<br><div class="card"><h3>Saved Results</h3><div id="savedResults"></div></div>
-</section>
+        <div class="card">
+          <h3>Today's Visits</h3>
+          <div class="number">8</div>
+        </div>
 
-<section class="page" id="examAdmin">
-<div class="hero"><h1>Exam Admin 🔐</h1><p>Teacher answer key for the currently generated chapter exam.</p></div>
-<div class="card"><div id="answerAdmin">Start an exam first.</div></div>
-</section>
+        <div class="card">
+          <h3>Reports</h3>
+          <div class="number" id="totalReports">0</div>
+        </div>
 
-<section class="page" id="ai">
-<div class="hero"><h1>Simple AI Helper 🤖</h1><p>Simple revision helper for your class.</p></div>
-<div class="card"><div class="form-group"><label>Question / Topic</label><textarea id="aiQuestion" placeholder="Example: Explain computer networks"></textarea></div><br><button class="btn btn-primary" onclick="simpleAI()">🤖 Generate Simple Explanation</button><br><br><div id="aiOutput" style="background:#0a111d;border:1px solid #27334a;border-radius:12px;padding:18px;color:#bfc9da"></div></div>
-</section>
+        <div class="card">
+          <h3>Prescriptions</h3>
+          <div class="number" id="totalMedicines">0</div>
+        </div>
 
-</div>
-</main>
+      </div>
+
+
+      <div class="content">
+
+        <div class="section">
+          <h2>Recent Patients</h2>
+          <div id="patientList"></div>
+        </div>
+
+
+        <div class="section">
+          <h2>Today's Appointments</h2>
+
+          <div class="patient">
+            <div>
+              <b>Rahul Kumar</b><br>
+              <small>General Checkup</small>
+            </div>
+            <b>10:00 AM</b>
+          </div>
+
+          <div class="patient">
+            <div>
+              <b>Priya Singh</b><br>
+              <small>Blood Pressure</small>
+            </div>
+            <b>11:30 AM</b>
+          </div>
+
+          <div class="patient">
+            <div>
+              <b>Aman Verma</b><br>
+              <small>Follow-up</small>
+            </div>
+            <b>02:00 PM</b>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Patients Page -->
+    <div id="patientsPage" style="display:none">
+
+      <div class="section">
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+          <h2>All Patients</h2>
+
+          <button class="primary" onclick="openAddPatient()">
+            + Add Patient
+          </button>
+        </div>
+
+        <div id="allPatients"></div>
+
+      </div>
+
+    </div>
+
+  </main>
 </div>
 
-<div class="modal" id="modal"><div class="modal-box"><div class="modal-head"><h2 id="modalTitle">Student</h2><button class="close" onclick="closeModal()">×</button></div><div id="modalContent"></div></div></div>
+
+<!-- Add Patient Modal -->
+<div class="modal" id="addPatientModal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h2>Add Patient</h2>
+      <button class="close" onclick="closeModal('addPatientModal')">×</button>
+    </div>
+
+    <form id="patientForm">
+
+      <div class="form-group">
+        <label>Patient Name</label>
+        <input id="name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Age</label>
+        <input id="age" type="number" required>
+      </div>
+
+      <div class="form-group">
+        <label>Gender</label>
+        <select id="gender">
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Phone</label>
+        <input id="phone">
+      </div>
+
+      <div class="form-group">
+        <label>Diagnosis</label>
+        <input id="diagnosis" placeholder="e.g. Hypertension">
+      </div>
+
+      <div class="form-group">
+        <label>Medicines</label>
+        <textarea id="medicines"
+          placeholder="Medicine name, dosage and timing"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Reports / Tests</label>
+        <textarea id="reports"
+          placeholder="Blood test, X-Ray, MRI etc."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Doctor Notes</label>
+        <textarea id="notes"></textarea>
+      </div>
+
+      <button class="primary" type="submit">
+        Save Patient
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- Patient Details Modal -->
+<div class="modal" id="patientModal">
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h2 id="detailName"></h2>
+      <button class="close" onclick="closeModal('patientModal')">×</button>
+    </div>
+
+    <div class="patient-detail">
+
+      <p><b>Age:</b> <span id="detailAge"></span></p>
+      <p><b>Gender:</b> <span id="detailGender"></span></p>
+      <p><b>Phone:</b> <span id="detailPhone"></span></p>
+
+      <div class="detail-box">
+        <b>Diagnosis</b>
+        <p id="detailDiagnosis"></p>
+      </div>
+
+      <div class="detail-box">
+        <b>Medicines</b>
+        <p id="detailMedicines"></p>
+      </div>
+
+      <div class="detail-box">
+        <b>Reports / Tests</b>
+        <p id="detailReports"></p>
+      </div>
+
+      <div class="detail-box">
+        <b>Doctor Notes</b>
+        <p id="detailNotes"></p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
 
 <script>
-const students=["Aarav Sharma","Arjun Kumar","Ayaan Singh","Kabir Verma","Vivaan Patel","Aditya Mehta","Reyansh Gupta","Vihaan Shah","Krish Malhotra","Rohan Kapoor","Dhruv Bansal","Karan Saini","Manav Arora","Yash Thakur","Dev Raj","Harsh Jain","Ansh Verma","Ritvik Sharma","Atharv Singh","Rudra Gupta","Neil Kapoor","Aryan Mehta","Lakshya Patel","Shaurya Shah","Advait Kumar","Samar Malhotra","Aadi Bansal","Parth Jain","Veer Saini","Ishaan Arora","Raghav Thakur","Mohit Raj","Rahul Sharma","Sahil Kumar","Naman Singh","Varun Verma","Simran Patel","Ananya Mehta","Riya Gupta","Myra Kapoor"];
 
-let attendance=JSON.parse(localStorage.getItem("attendance")||"{}");
-let suspended=JSON.parse(localStorage.getItem("suspended")||"{}");
-let dailyTableData=JSON.parse(localStorage.getItem("dailyTableData")||"{}");
-let evaluations=JSON.parse(localStorage.getItem("evaluations")||"{}");
-let examResults=JSON.parse(localStorage.getItem("examResults")||"{}");
-let currentBook=1,currentChapter=0,currentExam=[];
-const today=new Date().toISOString().split("T")[0];
+  // Demo patients
+  let patients = JSON.parse(localStorage.getItem("patients")) || [
 
-document.getElementById("attendanceDate").value=today;
-document.getElementById("dailyTableDate").value=today;
-document.getElementById("currentDate").textContent=new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    {
+      id: 1,
+      name: "Rahul Kumar",
+      age: 42,
+      gender: "Male",
+      phone: "9876543210",
+      diagnosis: "Hypertension",
+      medicines: "Amlodipine 5mg - Once daily",
+      reports: "Blood Pressure: 150/95",
+      notes: "Regular BP monitoring required."
+    },
 
-function saveData(){localStorage.setItem("attendance",JSON.stringify(attendance));localStorage.setItem("suspended",JSON.stringify(suspended));localStorage.setItem("dailyTableData",JSON.stringify(dailyTableData));localStorage.setItem("evaluations",JSON.stringify(evaluations));localStorage.setItem("examResults",JSON.stringify(examResults));}
+    {
+      id: 2,
+      name: "Priya Singh",
+      age: 35,
+      gender: "Female",
+      phone: "9876501234",
+      diagnosis: "Vitamin D Deficiency",
+      medicines: "Vitamin D3 - Weekly",
+      reports: "Vitamin D: 18 ng/mL",
+      notes: "Follow-up after 1 month."
+    },
 
-function showPage(id,btn){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".nav-btn").forEach(x=>x.classList.remove("active"));if(btn)btn.classList.add("active");const n={dashboard:"Dashboard",attendance:"Attendance",students:"Students",daily:"Daily Data",evaluation:"Student Evaluation",books:"Books",exam:"Exam",results:"Exam Results",examAdmin:"Exam Admin",ai:"AI Helper"};document.getElementById("pageTitle").textContent=n[id];if(id==="attendance")renderAttendance();if(id==="students")renderStudents();if(id==="daily")renderDailyTable();if(id==="evaluation")loadEvaluation();if(id==="results")renderSavedResults();if(id==="examAdmin")renderAnswerAdmin();}
-function toggleSidebar(){document.getElementById("sidebar").classList.toggle("open");}
-
-function renderAttendance(){const d=document.getElementById("attendanceDate").value;if(!attendance[d])attendance[d]={};let h="";students.forEach((s,i)=>{let st=attendance[d][s]||"Absent",sus=!!suspended[s];h+=`<tr data-name="${s.toLowerCase()}"><td>${i+1}</td><td><b>${s}</b></td><td><span class="badge ${sus?"suspended":st==="Present"?"present":"absent"}">${sus?"SUSPENDED":st}</span></td><td><button class="btn btn-small ${st==="Present"?"btn-red":"btn-green"}" onclick="toggleAttendance('${s}')">${st==="Present"?"Mark Absent":"Mark Present"}</button> <button class="btn btn-small btn-orange" onclick="toggleSuspend('${s}')">${sus?"Unsuspend":"Suspend"}</button></td><td><button class="btn btn-small" onclick="studentReport('${s}')">View Report</button></td></tr>`});document.getElementById("attendanceBody").innerHTML=h;updateStats();}
-function toggleAttendance(s){const d=document.getElementById("attendanceDate").value;if(!attendance[d])attendance[d]={};attendance[d][s]=attendance[d][s]==="Present"?"Absent":"Present";saveData();renderAttendance();}
-function markAllPresent(){const d=document.getElementById("attendanceDate").value;attendance[d]={};students.forEach(s=>attendance[d][s]="Present");saveData();renderAttendance();}
-function toggleSuspend(s){suspended[s]=!suspended[s];saveData();renderAttendance();renderStudents();updateStats();}
-function filterAttendance(v){document.querySelectorAll("#attendanceBody tr").forEach(r=>r.style.display=r.dataset.name.includes(v.toLowerCase())?"":"none");}
-
-function renderStudents(){let h="";students.forEach((s,i)=>{let p=0,t=0;Object.values(attendance).forEach(day=>{if(day[s]){t++;if(day[s]==="Present")p++;}});let pct=t?Math.round(p/t*100):0;h+=`<tr><td>${String(i+1).padStart(2,"0")}</td><td><b>${s}</b></td><td>${pct}%</td><td><span class="badge ${suspended[s]?"suspended":"present"}">${suspended[s]?"SUSPENDED":"ACTIVE"}</span></td><td><button class="btn btn-small" onclick="openEvaluation('${s}')">⭐ Evaluation</button></td></tr>`});document.getElementById("studentsBody").innerHTML=h;}
-
-function studentReport(name){let rows="";Object.keys(attendance).sort().reverse().forEach(d=>{let st=attendance[d][name]||"Absent";rows+=`<tr><td>${d}</td><td><span class="badge ${st==="Present"?"present":"absent"}">${st}</span></td></tr>`});if(!rows)rows="<tr><td colspan=2>No attendance data yet.</td></tr>";document.getElementById("modalTitle").textContent=name;document.getElementById("modalContent").innerHTML=`<h3>Attendance Report</h3><br><div class="table-wrap"><table><thead><tr><th>Date</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div><br><button class="btn btn-primary" onclick="openEvaluation('${name}');closeModal()">⭐ Open Evaluation</button>`;document.getElementById("modal").classList.add("show");}
-function closeModal(){document.getElementById("modal").classList.remove("show");}
-
-function renderDailyTable(){const d=document.getElementById("dailyTableDate").value;if(!dailyTableData[d])dailyTableData[d]={};let h="";students.forEach((s,i)=>{let x=dailyTableData[d][s]||{};h+=`<tr><td>${i+1}</td><td><b>${s}</b></td><td><select id="hw_${i}" class="daily-select"><option value="">-</option><option ${x.homework==="Done"?"selected":""}>Done</option><option ${x.homework==="Pending"?"selected":""}>Pending</option></select></td><td><select id="beh_${i}" class="daily-select"><option value="">-</option><option ${x.behaviour==="Excellent"?"selected":""}>Excellent</option><option ${x.behaviour==="Good"?"selected":""}>Good</option><option ${x.behaviour==="Normal"?"selected":""}>Normal</option><option ${x.behaviour==="Needs Attention"?"selected":""}>Needs Attention</option></select></td><td><select id="study_${i}" class="daily-select"><option value="">-</option><option ${x.study==="Excellent"?"selected":""}>Excellent</option><option ${x.study==="Good"?"selected":""}>Good</option><option ${x.study==="Normal"?"selected":""}>Normal</option><option ${x.study==="Needs Attention"?"selected":""}>Needs Attention</option></select></td><td><select id="part_${i}" class="daily-select"><option value="">-</option><option ${x.participation==="5/5"?"selected":""}>5/5</option><option ${x.participation==="4/5"?"selected":""}>4/5</option><option ${x.participation==="3/5"?"selected":""}>3/5</option><option ${x.participation==="2/5"?"selected":""}>2/5</option><option ${x.participation==="1/5"?"selected":""}>1/5</option></select></td><td><input id="exam_${i}" class="daily-input" type="number" min="0" max="100" value="${x.exam||""}" placeholder="Marks"></td><td><input id="note_${i}" class="daily-input notes-input" value="${x.notes||""}" placeholder="Write note..."></td></tr>`});document.getElementById("dailyTableBody").innerHTML=h;}
-function saveDailyTable(){const d=document.getElementById("dailyTableDate").value;if(!d)return alert("Select a date.");dailyTableData[d]={};students.forEach((s,i)=>dailyTableData[d][s]={homework:document.getElementById(`hw_${i}`).value,behaviour:document.getElementById(`beh_${i}`).value,study:document.getElementById(`study_${i}`).value,participation:document.getElementById(`part_${i}`).value,exam:document.getElementById(`exam_${i}`).value,notes:document.getElementById(`note_${i}`).value});saveData();alert("Daily data saved for all 40 students! ✅");}
-
-
-function saveEvaluationSheet(){
-    const sheet={};
-    students.forEach((s,i)=>{
-        sheet[s]={
-            age:document.getElementById(`ev_age_${i}`).value,
-            homework:document.getElementById(`ev_homework_${i}`).value,
-            behaviour:document.getElementById(`ev_behaviour_${i}`).value,
-            study:document.getElementById(`ev_study_${i}`).value,
-            participation:document.getElementById(`ev_participation_${i}`).value,
-            exam1:document.getElementById(`ev_exam1_${i}`).value,
-            exam2:document.getElementById(`ev_exam2_${i}`).value,
-            attendance:document.getElementById(`ev_attendance_${i}`).value,
-            result:document.getElementById(`ev_result_${i}`).value,
-            notes:document.getElementById(`ev_notes_${i}`).value
-        };
-    });
-    localStorage.setItem("evaluationSheet",JSON.stringify(sheet));
-    alert("Evaluation spreadsheet saved for all 40 students! ✅");
-}
-function loadEvaluationSheet(){
-    const sheet=JSON.parse(localStorage.getItem("evaluationSheet")||"{}");
-    students.forEach((s,i)=>{
-        const x=sheet[s]||{};
-        const map={age:"age",homework:"homework",behaviour:"behaviour",study:"study",participation:"participation",exam1:"exam1",exam2:"exam2",attendance:"attendance",result:"result",notes:"notes"};
-        Object.entries(map).forEach(([key,id])=>{
-            const el=document.getElementById(`ev_${id}_${i}`);
-            if(el)el.value=x[key]||"";
-        });
-    });
-}
-function clearEvaluationSheet(){loadEvaluationSheet();}
-function createRatings(){}
-function loadEvaluation(){}
-function openEvaluation(name){showPage("evaluation",document.querySelector('.nav-btn[onclick*="evaluation"]'));}
-function saveEvaluation(){saveEvaluationSheet();}
-
-const books={1:{title:"Computer Science",chapters:["Introduction to Computers","Computer Hardware","Operating Systems","Software","Computer Networks","Internet","Cyber Security","Programming Basics","Databases","Future Technology"]},2:{title:"Mathematics",chapters:["Numbers","Fractions","Decimals","Algebra","Linear Equations","Geometry","Angles","Statistics","Probability","Problem Solving"]}};
-function openBook(id){currentBook=id;bookHome.style.display="none";chapterHome.style.display="block";readerHome.style.display="none";bookTitle.textContent=books[id].title;chapterList.innerHTML=books[id].chapters.map((c,i)=>`<div class="chapter" onclick="openChapter(${i})"><div class="chapter-info"><div class="chapter-number">${i+1}</div><div><b>${c}</b><div style="font-size:11px;color:#738099">Chapter ${i+1} • Explanation</div></div></div><div>→</div></div>`).join("");}
-function backBooks(){bookHome.style.display="block";chapterHome.style.display="none";readerHome.style.display="none";}
-function backChapters(){chapterHome.style.display="block";readerHome.style.display="none";}
-function openChapter(i){currentChapter=i;chapterHome.style.display="none";readerHome.style.display="block";chapterTitle.textContent=books[currentBook].chapters[i];renderChapter(false);}
-
-let chapterPageIndex=0;
-let chapterShort=false;
-
-function chapterPageContent(title,page,short){
-    const topics = [
-        ["Overview","definition, background and the purpose of the topic"],
-        ["Key Terms","the important words and ideas students should know"],
-        ["How It Works","the basic process, parts and relationships involved"],
-        ["Main Concepts","the central ideas that explain the topic clearly"],
-        ["Examples","simple real-world examples and classroom situations"],
-        ["Practical Use","where this topic is used and why it matters"],
-        ["Common Mistakes","frequent misunderstandings and how to avoid them"],
-        ["Step-by-Step Learning","a simple method for studying and applying the topic"],
-        ["Exam Revision","important points to remember before a test"],
-        ["Summary & Practice","a final recap plus questions for self-practice"]
-    ];
-    const [heading,focus]=topics[page];
-    if(short){
-        return `<h2>${page+1}. ${heading}</h2>
-        <p><b>${title}</b> — ${focus}.</p>
-        <p>For quick revision, remember the definition, the main idea, one example and the most important terms.</p>
-        <h3>Quick Check</h3><ul><li>What is the main idea?</li><li>What are the key terms?</li><li>Can you give one example?</li></ul>`;
+    {
+      id: 3,
+      name: "Aman Verma",
+      age: 29,
+      gender: "Male",
+      phone: "9876512345",
+      diagnosis: "Fever",
+      medicines: "Paracetamol - As prescribed",
+      reports: "CBC Normal",
+      notes: "Rest and hydration."
     }
-    const extra = {
-        "Computer Science":"Computers are systems that receive input, process information, store data and produce output. Understanding each part makes later topics such as networks, security and programming easier.",
-        "Mathematics":"Mathematics uses numbers, symbols, patterns, measurements and logical methods to solve problems. A strong understanding of basic ideas makes more advanced work easier."
-    }[books[currentBook].title];
-    return `<h2>${page+1}. ${heading}</h2>
-    <p><b>Chapter: ${title}</b></p>
-    <p>This section explains ${focus}. The goal is to understand the idea rather than simply memorise words. Read the explanation slowly and connect it with examples from class.</p>
-    <p>${extra}</p>
-    <h3>Detailed Explanation</h3>
-    <p>${title} can be understood by breaking the topic into smaller parts. Start with the basic definition, identify the important components, and then look at how those components are connected. When you learn a new term, try to explain it in your own words and connect it to something you already know.</p>
-    <p>In a classroom situation, teachers normally move from a simple example to a more detailed example. You can use the same method when revising. First identify the problem or idea, then list the information you already know, and finally apply the correct method.</p>
-    <h3>Example</h3>
-    <p>Imagine a student is learning <b>${title}</b> for the first time. The student reads the definition, studies two examples, writes the important terms, and then tries a question without looking at the answer. If the answer is incorrect, the student checks which step caused the mistake and tries again.</p>
-    <h3>Important Points</h3>
-    <ul><li>Learn the main definition and purpose.</li><li>Understand the relationship between the important parts.</li><li>Use examples instead of memorising only a sentence.</li><li>Practise questions and explain the answer in your own words.</li><li>Review the topic again after a short break.</li></ul>
-    <h3>Remember</h3>
-    <p>The most useful way to learn ${title} is to understand it, practise it, and then explain it without looking at the notes.</p>`;
-}
 
-function renderChapterPages(short=false){
-    chapterShort=short;
-    const title=books[currentBook].chapters[currentChapter];
-    chapterPages.innerHTML=Array.from({length:10},(_,i)=>`<article class="chapter-page ${i===0?'active':''}">${chapterPageContent(title,i,short)}</article>`).join("");
-    chapterPageIndex=0;
-    updateChapterPage();
-}
-function updateChapterPage(){
-    const pages=document.querySelectorAll(".chapter-page");
-    pages.forEach((p,i)=>p.classList.toggle("active",i===chapterPageIndex));
-    chapterPageCounter.textContent=`Page ${chapterPageIndex+1} / 10`;
-}
-function nextChapterPage(){if(chapterPageIndex<9){chapterPageIndex++;updateChapterPage();}}
-function prevChapterPage(){if(chapterPageIndex>0){chapterPageIndex--;updateChapterPage();}}
-function generateExplanation(){renderChapterPages(false);}
-function renderChapter(short){renderChapterPages(short);}
-function shortenChapter(){renderChapterPages(true)}
-function resetChapter(){renderChapterPages(false)}
+  ];
 
 
-const chapterQuestions={
-"Introduction to Computers":[["What is a computer?",["A type of food","A machine that processes information","A book","A cable"],1],["Which part processes instructions?",["Monitor","CPU","Mouse","Printer"],1]],
-"Computer Hardware":[["Which is hardware?",["Windows","Keyboard","Google","HTML"],1],["Which device displays information?",["Keyboard","Monitor","CPU","RAM"],1]],
-"Operating Systems":[["Which is an operating system?",["HTML","Windows","CPU","RAM"],1],["What does an operating system manage?",["Paper","Computer resources","Only speakers","Only cables"],1]],
-"Software":[["Which is software?",["Keyboard","Microsoft Word","Monitor","Mouse"],1],["Software gives instructions to a computer.",["False","True","Never","None"],1]],
-"Computer Networks":[["What connects computers together?",["A chair","A network","A book","A pencil"],1],["LAN is a type of what?",["Keyboard","Network","Printer","Screen"],1]],
-"Internet":[["What is the Internet?",["A keyboard","A global network","A CPU","A monitor"],1],["Which is used to open websites?",["Keyboard cable","Web browser","RAM","CPU"],1]],
-"Cyber Security":[["What does cyber security protect?",["Only chairs","Digital systems and data","Books","Paper"],1],["A strong password improves security.",["False","True","Never","None"],1]],
-"Programming Basics":[["What is Python?",["A monitor","A programming language","A mouse","A cable"],1],["Programming creates instructions for computers.",["False","True","Never","None"],1]],
-"Databases":[["What stores organized information?",["Keyboard","Database","Monitor","Mouse"],1],["A database can contain records.",["False","True","Never","None"],1]],
-"Future Technology":[["Which is a modern technology?",["Paper","Artificial Intelligence","Chair","Pen"],1],["AI can be used in many fields.",["False","True","Never","None"],1]],
-"Numbers":[["What is 10 + 15?",["20","25","30","35"],1],["Which is an even number?",["7","9","11","12"],3]],
-"Fractions":[["What is 1/2 as a decimal?",["0.2","0.5","1.5","2"],1],["A fraction represents part of a whole.",["False","True","Never","None"],1]],
-"Decimals":[["What is 0.5 equal to?",["1/5","1/2","5/1","2/5"],1],["Which is a decimal?",["2/3","2.75","2×3","23"],1]],
-"Algebra":[["What is x + 5 = 10?",["x = 2","x = 5","x = 10","x = 15"],1],["Which is a variable?",["5","10","x","+"],2]],
-"Linear Equations":[["Solve: x + 2 = 7",["2","3","5","9"],2],["A linear equation has variables with what power?",["0","1","2","3"],1]],
-"Geometry":[["How many sides does a triangle have?",["2","3","4","5"],1],["A square has four equal sides.",["False","True","Never","None"],1]],
-"Angles":[["A right angle is how many degrees?",["45","60","90","180"],2],["A straight angle is how many degrees?",["90","120","180","360"],2]],
-"Statistics":[["What is the average also called?",["Mode","Mean","Range","Median"],1],["Statistics deals with data.",["False","True","Never","None"],1]],
-"Probability":[["Probability describes what?",["Length","Chance of an event","Weight","Speed"],1],["Probability can be between 0 and 1.",["False","True","Never","None"],1]],
-"Problem Solving":[["What should you identify first?",["The answer","The problem","The colour","The page"],1],["Checking the answer is useful.",["False","True","Never","None"],1]]
-};
+  function saveData() {
+    localStorage.setItem("patients", JSON.stringify(patients));
+  }
 
-function loadExamChapters(){examChapter.innerHTML=books[examBook.value].chapters.map((c,i)=>`<option value="${i}">${i+1}. ${c}</option>`).join("");}
-function generateChapterExam(){let title=books[examBook.value].chapters[Number(examChapter.value)];currentExam=chapterQuestions[title]||[];examArea.innerHTML=`<div class="card"><h2>${title} — Exam</h2><br>${currentExam.map((q,i)=>`<div class="question"><h3>${i+1}. ${q[0]}</h3>${q[1].map((o,j)=>`<label class="option"><input type="radio" name="cq${i}" value="${j}">${o}</label>`).join("")}</div>`).join("")}<button class="btn btn-primary" onclick="submitChapterExam()">Submit Exam</button><div id="chapterExamResult"></div></div>`;renderAnswerAdmin();}
-function submitChapterExam(){let score=0;currentExam.forEach((q,i)=>{let a=document.querySelector(`input[name="cq${i}"]:checked`);if(a&&+a.value===q[2])score++});let pct=Math.round(score/currentExam.length*100);chapterExamResult.innerHTML=`<div class="card" style="margin-top:20px"><h2>Exam Complete 🎉</h2><br><p>Score: <b>${score}/${currentExam.length}</b></p><p>Percentage: <b>${pct}%</b></p></div>`;}
-function renderAnswerAdmin(){answerAdmin.innerHTML=currentExam.length?currentExam.map((q,i)=>`<div style="padding:15px;margin-bottom:10px;background:#0b121f;border:1px solid #263149;border-radius:10px"><b>Q${i+1}.</b> ${q[0]}<br><br><span style="color:#55e7b0">Correct Answer: ${q[1][q[2]]}</span></div>`).join(""):"Start a chapter exam to view its answer key.";}
 
-function calculateResult(){let s=resultStudent.value,n=resultExamName.value||"Exam",total=+totalMarks.value,got=+obtainedMarks.value;if(!total||got<0||got>total)return alert("Enter valid marks.");let pct=Math.round(got/total*100),grade=pct>=90?"A+":pct>=80?"A":pct>=70?"B":pct>=60?"C":pct>=50?"D":"F";if(!examResults[s])examResults[s]=[];examResults[s].push({exam:n,total,obtained:got,percentage:pct,grade,date:today});saveData();resultOutput.innerHTML=`<div style="margin-top:20px;padding:25px;border-radius:15px;background:#111b2b;border:1px solid #283650"><h2>${s}</h2><p style="color:#8290a9">${n}</p><br><div style="font-size:38px;font-weight:800">${pct}%</div><p>${got}/${total} marks</p><br><span class="badge present">Grade ${grade}</span></div>`;renderSavedResults();}
-function renderSavedResults(){let h="";Object.entries(examResults).forEach(([s,arr])=>arr.forEach(x=>h+=`<tr><td>${s}</td><td>${x.exam}</td><td>${x.obtained}/${x.total}</td><td>${x.percentage}%</td><td>${x.grade}</td><td>${x.date}</td></tr>`));savedResults.innerHTML=h?`<div class="table-wrap"><table><thead><tr><th>Student</th><th>Exam</th><th>Marks</th><th>Percent</th><th>Grade</th><th>Date</th></tr></thead><tbody>${h}</tbody></table></div>`:"No saved results yet.";}
+  function renderPatients() {
 
-function simpleAI(){let q=aiQuestion.value.trim();aiOutput.innerHTML=q?`<h3>Simple Explanation</h3><br><p><b>Topic:</b> ${q}</p><br><p>Break this topic into three parts: definition, main idea and example. First understand what it means, then learn how it works, and finally practise with an example.</p><br><p><b>Quick Revision:</b> Remember the main definition, important points and one simple example.</p>`:"Please enter a topic.";}
+    const list = document.getElementById("patientList");
+    const all = document.getElementById("allPatients");
 
-function updateStats(){let d=attendanceDate.value,p=0;students.forEach(s=>{if(attendance[d]?.[s]==="Present")p++});presentCount.textContent=p;absentCount.textContent=students.length-p;attendanceRate.textContent=Math.round(p/students.length*100)+"%";suspendedCount.textContent=students.filter(s=>suspended[s]).length;}
+    list.innerHTML = "";
+    all.innerHTML = "";
 
-function fillSelects(){let o=students.map(s=>`<option>${s}</option>`).join("");if(document.getElementById('resultStudent'))resultStudent.innerHTML=o;if(document.getElementById('evaluationStudent'))evaluationStudent.innerHTML=o;}
+    patients.forEach(patient => {
 
-fillSelects();loadEvaluationSheet();loadExamChapters();renderAttendance();renderStudents();renderDailyTable();renderSavedResults();renderAnswerAdmin();updateStats();
+      const firstLetter = patient.name.charAt(0).toUpperCase();
+
+      list.innerHTML += `
+        <div class="patient" onclick="viewPatient(${patient.id})">
+
+          <div class="patient-info">
+
+            <div class="avatar">
+              ${firstLetter}
+            </div>
+
+            <div>
+              <b>${patient.name}</b><br>
+              <small>${patient.age} years • ${patient.gender}</small>
+            </div>
+
+          </div>
+
+          <span>→</span>
+
+        </div>
+      `;
+
+
+      all.innerHTML += `
+        <div class="patient" onclick="viewPatient(${patient.id})">
+
+          <div class="patient-info">
+
+            <div class="avatar">
+              ${firstLetter}
+            </div>
+
+            <div>
+              <b>${patient.name}</b><br>
+              <small>${patient.age} years • ${patient.diagnosis || "No diagnosis"}</small>
+            </div>
+
+          </div>
+
+          <span>View →</span>
+
+        </div>
+      `;
+
+    });
+
+
+    document.getElementById("totalPatients").innerText =
+      patients.length;
+
+    document.getElementById("totalReports").innerText =
+      patients.filter(p => p.reports).length;
+
+    document.getElementById("totalMedicines").innerText =
+      patients.filter(p => p.medicines).length;
+  }
+
+
+  function viewPatient(id) {
+
+    const patient = patients.find(p => p.id === id);
+
+    if (!patient) return;
+
+    document.getElementById("detailName").innerText = patient.name;
+    document.getElementById("detailAge").innerText = patient.age;
+    document.getElementById("detailGender").innerText = patient.gender;
+    document.getElementById("detailPhone").innerText = patient.phone || "-";
+
+    document.getElementById("detailDiagnosis").innerText =
+      patient.diagnosis || "No diagnosis";
+
+    document.getElementById("detailMedicines").innerText =
+      patient.medicines || "No medicines";
+
+    document.getElementById("detailReports").innerText =
+      patient.reports || "No reports";
+
+    document.getElementById("detailNotes").innerText =
+      patient.notes || "No notes";
+
+    document.getElementById("patientModal").style.display = "flex";
+  }
+
+
+  function openAddPatient() {
+    document.getElementById("addPatientModal").style.display = "flex";
+  }
+
+
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+  }
+
+
+  function showDashboard() {
+
+    document.getElementById("dashboard").style.display = "block";
+    document.getElementById("patientsPage").style.display = "none";
+
+    document.getElementById("pageTitle").innerText =
+      "Doctor Dashboard";
+  }
+
+
+  function showPatients() {
+
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("patientsPage").style.display = "block";
+
+    document.getElementById("pageTitle").innerText =
+      "Patients";
+  }
+
+
+  document.getElementById("patientForm").addEventListener(
+    "submit",
+    function(e) {
+
+      e.preventDefault();
+
+      const newPatient = {
+
+        id: Date.now(),
+
+        name: document.getElementById("name").value,
+
+        age: document.getElementById("age").value,
+
+        gender: document.getElementById("gender").value,
+
+        phone: document.getElementById("phone").value,
+
+        diagnosis: document.getElementById("diagnosis").value,
+
+        medicines: document.getElementById("medicines").value,
+
+        reports: document.getElementById("reports").value,
+
+        notes: document.getElementById("notes").value
+
+      };
+
+
+      patients.push(newPatient);
+
+      saveData();
+
+      renderPatients();
+
+      document.getElementById("patientForm").reset();
+
+      closeModal("addPatientModal");
+
+      alert("Patient saved successfully!");
+
+    }
+  );
+
+
+  // Initial load
+  renderPatients();
+
 </script>
+
 </body>
 </html>
