@@ -1,776 +1,803 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MedCare - Doctor Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07120d">
+<title>GUDU MC | Applications Portal</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      background: #f4f7fb;
-      color: #1f2937;
-    }
-
-    .app {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 240px;
-      background: #0f766e;
-      color: white;
-      padding: 25px 15px;
-      position: fixed;
-      height: 100vh;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 35px;
-      padding-left: 10px;
-    }
-
-    .nav-btn {
-      width: 100%;
-      padding: 13px;
-      margin: 5px 0;
-      border: none;
-      background: transparent;
-      color: white;
-      text-align: left;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    .nav-btn:hover,
-    .nav-btn.active {
-      background: rgba(255,255,255,0.18);
-    }
-
-    /* Main */
-    .main {
-      margin-left: 240px;
-      width: calc(100% - 240px);
-      padding: 25px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-    }
-
-    .topbar h1 {
-      font-size: 28px;
-    }
-
-    .doctor {
-      background: white;
-      padding: 10px 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
-    }
-
-    /* Cards */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 25px;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 14px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
-    }
-
-    .card h3 {
-      color: #6b7280;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .card .number {
-      font-size: 28px;
-      font-weight: bold;
-      color: #0f766e;
-    }
-
-    /* Content */
-    .content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .section {
-      background: white;
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
-    }
-
-    .section h2 {
-      margin-bottom: 18px;
-      font-size: 20px;
-    }
-
-    /* Patients */
-    .patient {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 13px 0;
-      border-bottom: 1px solid #eee;
-      cursor: pointer;
-    }
-
-    .patient:last-child {
-      border-bottom: none;
-    }
-
-    .patient-info {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .avatar {
-      width: 42px;
-      height: 42px;
-      background: #ccfbf1;
-      color: #0f766e;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    .patient small {
-      color: #6b7280;
-    }
-
-    /* Buttons */
-    button.primary {
-      background: #0f766e;
-      color: white;
-      border: none;
-      padding: 11px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button.primary:hover {
-      background: #115e59;
-    }
-
-    .danger {
-      background: #dc2626 !important;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.5);
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      z-index: 100;
-    }
-
-    .modal-box {
-      background: white;
-      width: 600px;
-      max-width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      border-radius: 15px;
-      padding: 25px;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .close {
-      border: none;
-      background: none;
-      font-size: 25px;
-      cursor: pointer;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 11px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      outline: none;
-    }
-
-    .form-group textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
-
-    .patient-detail {
-      line-height: 1.8;
-    }
-
-    .detail-box {
-      background: #f8fafc;
-      padding: 15px;
-      margin-top: 12px;
-      border-radius: 10px;
-    }
-
-    .tag {
-      display: inline-block;
-      background: #ccfbf1;
-      color: #115e59;
-      padding: 5px 9px;
-      border-radius: 20px;
-      margin: 3px;
-      font-size: 13px;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .content {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 650px) {
-      .sidebar {
-        width: 70px;
-        padding: 15px 8px;
-      }
-
-      .logo {
-        font-size: 0;
-      }
-
-      .logo::after {
-        content: "MC";
-        font-size: 20px;
-      }
-
-      .nav-btn {
-        font-size: 0;
-        text-align: center;
-      }
-
-      .nav-btn::first-letter {
-        font-size: 20px;
-      }
-
-      .main {
-        margin-left: 70px;
-        width: calc(100% - 70px);
-        padding: 15px;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .topbar h1 {
-        font-size: 22px;
-      }
-    }
-  </style>
+<style>
+:root{
+  --bg:#060b09;
+  --panel:rgba(15,29,22,.83);
+  --green:#43ff9b;
+  --green2:#14c879;
+  --muted:#92a79a;
+  --line:rgba(100,255,165,.15);
+  --text:#f0fff5;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;
+  min-height:100vh;overflow-x:hidden;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
+  outline:2px solid var(--green);outline-offset:3px
+}
+#particles{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.particle{
+  position:absolute;bottom:-30px;width:3px;height:3px;
+  background:var(--green);border-radius:50%;opacity:.5;
+  box-shadow:0 0 12px var(--green);
+  animation:floatUp linear infinite;
+}
+@keyframes floatUp{
+  to{transform:translateY(-115vh) translateX(45px);opacity:0}
+}
+body:before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+   radial-gradient(ellipse at 15% 15%,rgba(20,200,121,.13),transparent 40%),
+   radial-gradient(ellipse at 90% 65%,rgba(35,150,95,.10),transparent 40%),
+   linear-gradient(120deg,#060b09,#09150e 55%,#060b09);
+}
+button,.btn{transition:transform .2s,border-color .2s,background .2s}
+button:hover,.btn:hover{transform:translateY(-2px)}
+.nav{
+  height:76px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;border-bottom:1px solid var(--line);
+  background:rgba(5,12,8,.8);backdrop-filter:blur(18px);
+  position:sticky;top:0;z-index:20;gap:15px;
+}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:1px}
+.brand-icon{
+  width:43px;height:43px;border-radius:13px;display:grid;place-items:center;
+  background:linear-gradient(145deg,#59ffad,#078e51);
+  color:#04130b;font-size:20px;box-shadow:0 0 25px #20d67b35;
+}
+.brand small{display:block;font-size:10px;color:var(--muted);letter-spacing:3px;margin-top:3px}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav button,.secondary{
+  color:var(--text);background:#122219;border:1px solid var(--line);
+  border-radius:11px;padding:10px 14px;
+}
+.primary{
+  background:linear-gradient(120deg,#5affad,#19c77a)!important;
+  color:#052013!important;border:0!important;font-weight:850;
+  border-radius:12px;padding:13px 19px;
+  box-shadow:0 5px 24px #28f08b17;
+}
+.danger{color:#ff9c9c!important;border-color:#ff77772c!important}
+.user-chip{display:flex;align-items:center;gap:9px;font-size:13px}
+.avatar{
+  width:36px;height:36px;display:grid;place-items:center;
+  border:1px solid #49f5a054;background:#163a26;
+  border-radius:12px;color:var(--green);font-weight:900;
+}
+.wrap{width:min(1120px,90%);margin:auto}
+.hero{padding:78px 0 45px;text-align:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 13px;
+  color:var(--green);border:1px solid var(--line);border-radius:99px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  background:#10221880;
+}
+.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}
+h1{
+  font-size:clamp(42px,7vw,82px);line-height:.98;letter-spacing:-4px;
+  margin:25px 0 20px;font-weight:950;
+}
+h1 span{color:var(--green);text-shadow:0 0 38px #3dff9925}
+.hero p{max-width:610px;margin:0 auto;color:var(--muted);line-height:1.8;font-size:15px}
+.hero-actions{display:flex;justify-content:center;gap:12px;margin-top:27px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:35px auto 0;max-width:660px}
+.stat{border:1px solid var(--line);background:#0c1911ad;border-radius:15px;padding:17px}
+.stat strong{font-size:23px;color:var(--green);display:block}
+.stat span{font-size:11px;color:var(--muted)}
+.section-title{margin:48px 0 20px}
+.section-title h2{font-size:26px;margin:0 0 8px;letter-spacing:-1px}
+.section-title p{color:var(--muted);margin:0;font-size:13px;line-height:1.7}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{
+  background:linear-gradient(145deg,rgba(17,35,24,.96),rgba(8,17,12,.95));
+  border:1px solid var(--line);border-radius:22px;padding:27px;
+  position:relative;overflow:hidden;
+}
+.card:after{
+  content:"";position:absolute;top:0;left:0;width:70px;height:2px;
+  background:var(--green);box-shadow:0 0 18px var(--green);
+}
+.card-icon{
+  width:53px;height:53px;display:grid;place-items:center;font-size:25px;
+  background:#153725;border:1px solid #50ff9b22;border-radius:16px;
+}
+.card h3{font-size:23px;margin:20px 0 10px}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;min-height:45px}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin:17px 0 23px}
+.tag{font-size:10px;padding:7px 10px;border-radius:8px;background:#173021;color:#a8edc3}
+.card button{width:100%}
+.dashboard{margin-top:40px;display:none}
+.dash-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.dash-head h2{margin:0 0 7px;font-size:27px}
+.dash-head p{margin:0;color:var(--muted);font-size:13px}
+.dash-grid{display:grid;grid-template-columns:220px 1fr;gap:18px;margin-top:20px}
+.side,.content{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:18px;padding:16px;
+}
+.side button{width:100%;text-align:left;margin-bottom:8px;background:transparent;border:1px solid transparent;color:var(--muted);padding:13px;border-radius:11px}
+.side button.active,.side button:hover{color:var(--green);background:#173021;border-color:var(--line)}
+.content h3{margin:4px 0 20px}
+.panel{display:none}.panel.active{display:block}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12px;color:#c0d7c8;margin-bottom:9px;font-weight:650}
+.field input,.field textarea,.field select{
+  display:block;width:100%;padding:13px 14px;border-radius:11px;
+  border:1px solid #284333;background:#09140d;color:var(--text);
+  outline:none;min-width:0;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--green)}
+.field textarea{min-height:110px;resize:vertical;line-height:1.65}
+.field small{display:block;color:var(--muted);font-size:11px;line-height:1.6;margin-top:7px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.progress-row{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-bottom:9px}
+.progress{height:5px;background:#1a2c20;border-radius:9px;overflow:hidden;margin-bottom:23px}
+.progress div{height:100%;width:0;background:var(--green);transition:width .3s}
+.question{border-bottom:1px solid var(--line);padding:20px 0}
+.question:first-child{padding-top:0}
+.question label{display:block;font-size:13px;line-height:1.7;font-weight:700;margin-bottom:12px}
+.question .number{color:var(--green);margin-right:8px}
+.question textarea,.question select{
+  width:100%;padding:13px;border:1px solid #284333;background:#09140d;
+  color:var(--text);border-radius:11px;resize:vertical;
+}
+.question textarea{min-height:105px}
+.question small{display:block;margin-top:7px;color:var(--muted);font-size:11px}
+.notice{font-size:12px;color:var(--muted);line-height:1.7;padding:13px;background:#14251a;border-radius:10px;margin:16px 0}
+.list-item{
+  padding:17px;border:1px solid var(--line);background:#0b170f;
+  border-radius:13px;margin-bottom:12px;
+}
+.list-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.list-item p{font-size:12px;color:var(--muted);line-height:1.7}
+.status{font-size:10px;padding:6px 9px;background:#183423;color:var(--green);border-radius:7px}
+.empty{text-align:center;padding:38px 10px;color:var(--muted);line-height:1.8}
+.empty strong{display:block;color:var(--text);margin-bottom:8px}
+footer{margin-top:75px;border-top:1px solid var(--line);padding:30px 5%;text-align:center;color:var(--muted);font-size:11px;line-height:2}
+footer strong{color:var(--green)}
+.modal-backdrop{
+  position:fixed;inset:0;z-index:100;background:#020704d9;
+  backdrop-filter:blur(12px);display:grid;place-items:center;padding:18px;
+}
+.modal{
+  width:min(430px,100%);padding:29px;background:#0b1710;
+  border:1px solid #43ff9b35;border-radius:22px;
+  box-shadow:0 30px 100px #0009;position:relative;
+}
+.modal h2{margin:15px 0 8px;font-size:27px}
+.modal p{font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:22px}
+.modal .primary{width:100%}
+.hidden{display:none!important}
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);
+  background:#143722;border:1px solid #43ff9b50;color:var(--text);
+  padding:13px 20px;border-radius:12px;font-size:13px;z-index:200;
+  opacity:0;pointer-events:none;transition:.25s;max-width:90%;text-align:center;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.profile-box{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.profile-big{width:58px;height:58px;border-radius:17px;display:grid;place-items:center;background:#163a26;color:var(--green);font-size:25px;font-weight:900}
+@media(max-width:700px){
+ .nav{padding:0 5%;height:67px}.brand-icon{width:37px;height:37px}
+ .brand{font-size:13px}.brand small{font-size:8px}
+ .nav-right{gap:6px}.nav button{padding:9px;font-size:11px}
+ .user-chip span{display:none}
+ .hero{padding:60px 0 28px}h1{letter-spacing:-2px}
+ .stats{gap:7px}.stat{padding:12px 5px}.stat strong{font-size:20px}
+ .cards{grid-template-columns:1fr}.card{padding:22px}
+ .dash-grid{grid-template-columns:1fr}
+ .side{display:flex;gap:6px;overflow-x:auto;padding:9px}
+ .side button{white-space:nowrap;width:auto;margin:0;font-size:11px;padding:10px}
+ .form-grid{grid-template-columns:1fr;gap:0}
+ .content{padding:15px}
+}
+</style>
 </head>
 
 <body>
+<div id="particles"></div>
 
-<div class="app">
-
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">🩺 MedCare</div>
-
-    <button class="nav-btn active" onclick="showDashboard()">🏠 Dashboard</button>
-    <button class="nav-btn" onclick="showPatients()">👥 Patients</button>
-    <button class="nav-btn" onclick="openAddPatient()">➕ Add Patient</button>
-  </aside>
-
-
-  <!-- Main -->
-  <main class="main">
-
-    <div class="topbar">
-      <h1 id="pageTitle">Doctor Dashboard</h1>
-
-      <div class="doctor">
-        👨‍⚕️ <b>Dr. Sharma</b>
-      </div>
+<header class="nav">
+  <div class="brand">
+    <div class="brand-icon">G</div>
+    <div>GUDU MC<small>APPLICATIONS PORTAL</small></div>
+  </div>
+  <div class="nav-right">
+    <button id="langBtn" type="button" onclick="cycleLanguage()">🌐 EN</button>
+    <button type="button" onclick="showDashboard('applications')" data-i18n="myApps">My Apps</button>
+    <button id="loginBtn" class="primary" type="button" onclick="openLogin()">Login ↗</button>
+    <div id="userChip" class="user-chip hidden">
+      <div id="navAvatar" class="avatar">G</div><span id="navName"></span>
     </div>
+  </div>
+</header>
 
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow"><span class="dot"></span><span data-i18n="heroEyebrow">YOUR JOURNEY STARTS HERE</span></div>
+    <h1>BUILD THE<br><span>GUDU MC</span><br>LEGACY.</h1>
+    <p data-i18n="heroText">More than a Minecraft server. A community built by dedicated people. Apply to join our team and help shape what comes next.</p>
+    <div class="hero-actions">
+      <button class="primary" onclick="beginApply('staff')" data-i18n="staffApply">Apply for Staff ↗</button>
+      <button class="secondary" onclick="beginApply('media')" data-i18n="mediaApply">Apply for Media ↗</button>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>02</strong><span data-i18n="roles">APPLICATION TRACKS</span></div>
+      <div class="stat"><strong>24/7</strong><span data-i18n="community">COMMUNITY FIRST</span></div>
+      <div class="stat"><strong>∞</strong><span data-i18n="potential">YOUR POTENTIAL</span></div>
+    </div>
+  </section>
 
-    <!-- Dashboard -->
-    <div id="dashboard">
+  <section id="roles">
+    <div class="section-title">
+      <h2 data-i18n="chooseTitle">Choose your path.</h2>
+      <p data-i18n="chooseText">Find your place in the GUDU MC community.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="card-icon">⚔</div>
+        <div class="eyebrow" style="margin-top:20px">TEAM / 01</div>
+        <h3 data-i18n="staffTitle">Staff Team</h3>
+        <p data-i18n="staffDesc">Help players, handle reports, resolve conflicts and make the server a fair and welcoming place.</p>
+        <div class="tags"><span class="tag">Moderation</span><span class="tag">Responsibility</span><span class="tag">Teamwork</span></div>
+        <button class="primary" onclick="beginApply('staff')" data-i18n="startStaff">Start Staff Application →</button>
+      </article>
+      <article class="card">
+        <div class="card-icon">◈</div>
+        <div class="eyebrow" style="margin-top:20px">CREATOR / 02</div>
+        <h3 data-i18n="mediaTitle">Media Team</h3>
+        <p data-i18n="mediaDesc">Create exciting videos, showcase the server, bring new players and grow the GUDU MC brand.</p>
+        <div class="tags"><span class="tag">YouTube</span><span class="tag">TikTok</span><span class="tag">Creativity</span></div>
+        <button class="primary" onclick="beginApply('media')" data-i18n="startMedia">Start Media Application →</button>
+      </article>
+    </div>
+  </section>
 
-      <div class="cards">
-
-        <div class="card">
-          <h3>Total Patients</h3>
-          <div class="number" id="totalPatients">0</div>
-        </div>
-
-        <div class="card">
-          <h3>Today's Visits</h3>
-          <div class="number">8</div>
-        </div>
-
-        <div class="card">
-          <h3>Reports</h3>
-          <div class="number" id="totalReports">0</div>
-        </div>
-
-        <div class="card">
-          <h3>Prescriptions</h3>
-          <div class="number" id="totalMedicines">0</div>
-        </div>
-
-      </div>
-
-
+  <section id="dashboard" class="dashboard">
+    <div class="dash-head">
+      <div><h2 data-i18n="dashboardTitle">Your dashboard.</h2><p data-i18n="dashboardText">Manage your profile and applications.</p></div>
+      <button class="secondary" onclick="hideDashboard()" data-i18n="backHome">← Back home</button>
+    </div>
+    <div class="dash-grid">
+      <aside class="side">
+        <button id="tab-profile" onclick="switchTab('profile')" data-i18n="profileTab">◉ Profile</button>
+        <button id="tab-apply" onclick="switchTab('apply')" data-i18n="applyTab">＋ New Application</button>
+        <button id="tab-applications" onclick="switchTab('applications')" data-i18n="appsTab">▤ My Applications</button>
+      </aside>
       <div class="content">
-
-        <div class="section">
-          <h2>Recent Patients</h2>
-          <div id="patientList"></div>
+        <div id="panel-profile" class="panel">
+          <h3 data-i18n="profileTitle">Your profile</h3>
+          <div class="profile-box">
+            <div id="profileAvatar" class="profile-big">G</div>
+            <div><strong id="profileDisplayName">Player</strong><div style="color:var(--muted);font-size:12px;margin-top:5px" id="profileSince"></div></div>
+          </div>
+          <div class="field"><label data-i18n="usernameLabel">Username</label><input id="editUsername" maxlength="24"></div>
+          <div class="field"><label data-i18n="minecraftLabel">Minecraft Java/Bedrock username</label><input id="editMinecraft" maxlength="24" placeholder="Your Minecraft name"></div>
+          <div class="field"><label data-i18n="discordLabel">Discord username</label><input id="editDiscord" maxlength="50" placeholder="username"></div>
+          <button class="primary" onclick="saveProfile()" data-i18n="saveProfile">Save Profile</button>
+          <button class="secondary danger" onclick="logout()" style="margin-left:8px" data-i18n="logout">Log out</button>
+          <div class="notice" data-i18n="localNotice">This demo stores your profile in this browser. It is not a secure online account.</div>
         </div>
 
-
-        <div class="section">
-          <h2>Today's Appointments</h2>
-
-          <div class="patient">
-            <div>
-              <b>Rahul Kumar</b><br>
-              <small>General Checkup</small>
+        <div id="panel-apply" class="panel">
+          <h3 id="formTitle">Staff application</h3>
+          <div class="progress-row"><span data-i18n="formProgress">APPLICATION COMPLETION</span><span id="progressText">0%</span></div>
+          <div class="progress"><div id="progressBar"></div></div>
+          <form id="applicationForm" onsubmit="submitApplication(event)">
+            <div class="form-grid">
+              <div class="field"><label data-i18n="appName">Display name *</label><input id="appName" required maxlength="40"></div>
+              <div class="field"><label data-i18n="appAge">Age *</label><input id="appAge" type="number" min="13" max="99" required></div>
+              <div class="field"><label data-i18n="appMinecraft">Minecraft username *</label><input id="appMinecraft" required maxlength="24"></div>
+              <div class="field"><label data-i18n="appDiscord">Discord username *</label><input id="appDiscord" required maxlength="50"></div>
+              <div class="field"><label data-i18n="appTimezone">Timezone *</label><input id="appTimezone" placeholder="e.g. CET / UTC+2" required maxlength="40"></div>
+              <div class="field"><label data-i18n="appHours">Hours available per week *</label><select id="appHours" required><option value="">Choose...</option><option>1–3 hours</option><option>4–7 hours</option><option>8–14 hours</option><option>15+ hours</option></select></div>
             </div>
-            <b>10:00 AM</b>
-          </div>
-
-          <div class="patient">
-            <div>
-              <b>Priya Singh</b><br>
-              <small>Blood Pressure</small>
-            </div>
-            <b>11:30 AM</b>
-          </div>
-
-          <div class="patient">
-            <div>
-              <b>Aman Verma</b><br>
-              <small>Follow-up</small>
-            </div>
-            <b>02:00 PM</b>
-          </div>
-
+            <div id="questions"></div>
+            <div class="field"><label data-i18n="honestyLabel">Confirmation *</label><label style="font-weight:400;line-height:1.8"><input type="checkbox" id="honesty" required style="width:auto;display:inline;margin-right:8px" data-i18n="honestyText">I confirm my answers are honest and my own.</label></div>
+            <div class="notice" data-i18n="reviewNotice">Take your time. Detailed, honest answers help the team understand your skills. Do not share passwords or other private information.</div>
+            <button type="submit" class="primary" data-i18n="submitApp">Submit Application ↗</button>
+            <button type="button" class="secondary" onclick="switchTab('applications')" data-i18n="cancel">Cancel</button>
+          </form>
         </div>
 
-      </div>
-
-    </div>
-
-
-    <!-- Patients Page -->
-    <div id="patientsPage" style="display:none">
-
-      <div class="section">
-
-        <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-          <h2>All Patients</h2>
-
-          <button class="primary" onclick="openAddPatient()">
-            + Add Patient
-          </button>
+        <div id="panel-applications" class="panel">
+          <h3 data-i18n="appsTitle">Your applications</h3>
+          <div id="applicationList"></div>
         </div>
-
-        <div id="allPatients"></div>
-
       </div>
-
     </div>
+  </section>
 
-  </main>
-</div>
+  <section class="section-title" style="margin-top:65px">
+    <h2 data-i18n="rulesTitle">Before you apply.</h2>
+    <p data-i18n="rulesText">Be respectful, answer honestly and use your own words. Applications are not a guarantee of acceptance.</p>
+  </section>
+</main>
 
+<footer>
+  <strong>GUDU MC</strong> · STAFF & MEDIA PORTAL<br>
+  <span data-i18n="footerText">Made for our community. Keep it fair. Keep it creative.</span><br>
+  <a href="https://discord.gg/HmHvmCQDX" target="_blank" rel="noopener noreferrer" style="color:var(--green);text-decoration:none">Join our Discord ↗</a>
+  <div style="margin-top:12px">© <span id="year"></span> GUDU MC</div>
+</footer>
 
-<!-- Add Patient Modal -->
-<div class="modal" id="addPatientModal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-      <h2>Add Patient</h2>
-      <button class="close" onclick="closeModal('addPatientModal')">×</button>
-    </div>
-
-    <form id="patientForm">
-
-      <div class="form-group">
-        <label>Patient Name</label>
-        <input id="name" required>
-      </div>
-
-      <div class="form-group">
-        <label>Age</label>
-        <input id="age" type="number" required>
-      </div>
-
-      <div class="form-group">
-        <label>Gender</label>
-        <select id="gender">
-          <option>Male</option>
-          <option>Female</option>
-          <option>Other</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Phone</label>
-        <input id="phone">
-      </div>
-
-      <div class="form-group">
-        <label>Diagnosis</label>
-        <input id="diagnosis" placeholder="e.g. Hypertension">
-      </div>
-
-      <div class="form-group">
-        <label>Medicines</label>
-        <textarea id="medicines"
-          placeholder="Medicine name, dosage and timing"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Reports / Tests</label>
-        <textarea id="reports"
-          placeholder="Blood test, X-Ray, MRI etc."></textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Doctor Notes</label>
-        <textarea id="notes"></textarea>
-      </div>
-
-      <button class="primary" type="submit">
-        Save Patient
-      </button>
-
+<div id="loginModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="loginHeading">
+  <div class="modal">
+    <div class="brand-icon">G</div>
+    <h2 id="loginHeading">Welcome to GUDU MC.</h2>
+    <p id="loginDescription">Create your local demo profile or return to your existing profile on this browser.</p>
+    <form onsubmit="login(event)">
+      <div class="field"><label for="loginUsername" data-i18n="loginUsername">Username</label><input id="loginUsername" required minlength="3" maxlength="24" autocomplete="nickname" placeholder="Choose a username"></div>
+      <div class="field"><label for="loginMinecraft" data-i18n="minecraftLabel">Minecraft username</label><input id="loginMinecraft" maxlength="24" placeholder="Minecraft name"></div>
+      <div class="field"><label for="loginDiscord" data-i18n="discordLabel">Discord username</label><input id="loginDiscord" maxlength="50" placeholder="Discord username"></div>
+      <button class="primary" type="submit" data-i18n="continueBtn">Continue →</button>
+      <button class="secondary" type="button" onclick="closeLogin()" style="width:100%;margin-top:10px" data-i18n="closeBtn">Close</button>
     </form>
-
+    <div class="notice">Demo profile only. This does not verify your identity or create a secure account.</div>
   </div>
-
 </div>
 
-
-<!-- Patient Details Modal -->
-<div class="modal" id="patientModal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-      <h2 id="detailName"></h2>
-      <button class="close" onclick="closeModal('patientModal')">×</button>
-    </div>
-
-    <div class="patient-detail">
-
-      <p><b>Age:</b> <span id="detailAge"></span></p>
-      <p><b>Gender:</b> <span id="detailGender"></span></p>
-      <p><b>Phone:</b> <span id="detailPhone"></span></p>
-
-      <div class="detail-box">
-        <b>Diagnosis</b>
-        <p id="detailDiagnosis"></p>
-      </div>
-
-      <div class="detail-box">
-        <b>Medicines</b>
-        <p id="detailMedicines"></p>
-      </div>
-
-      <div class="detail-box">
-        <b>Reports / Tests</b>
-        <p id="detailReports"></p>
-      </div>
-
-      <div class="detail-box">
-        <b>Doctor Notes</b>
-        <p id="detailNotes"></p>
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
+const STORAGE = {
+  profile: "gudumc_demo_profile_v1",
+  apps: "gudumc_demo_apps_v1",
+  lang: "gudumc_demo_lang_v1"
+};
 
-  // Demo patients
-  let patients = JSON.parse(localStorage.getItem("patients")) || [
-
-    {
-      id: 1,
-      name: "Rahul Kumar",
-      age: 42,
-      gender: "Male",
-      phone: "9876543210",
-      diagnosis: "Hypertension",
-      medicines: "Amlodipine 5mg - Once daily",
-      reports: "Blood Pressure: 150/95",
-      notes: "Regular BP monitoring required."
-    },
-
-    {
-      id: 2,
-      name: "Priya Singh",
-      age: 35,
-      gender: "Female",
-      phone: "9876501234",
-      diagnosis: "Vitamin D Deficiency",
-      medicines: "Vitamin D3 - Weekly",
-      reports: "Vitamin D: 18 ng/mL",
-      notes: "Follow-up after 1 month."
-    },
-
-    {
-      id: 3,
-      name: "Aman Verma",
-      age: 29,
-      gender: "Male",
-      phone: "9876512345",
-      diagnosis: "Fever",
-      medicines: "Paracetamol - As prescribed",
-      reports: "CBC Normal",
-      notes: "Rest and hydration."
-    }
-
-  ];
-
-
-  function saveData() {
-    localStorage.setItem("patients", JSON.stringify(patients));
+const translations = {
+  en: {
+    myApps:"My Apps",heroEyebrow:"YOUR JOURNEY STARTS HERE",
+    heroText:"More than a Minecraft server. A community built by dedicated people. Apply to join our team and help shape what comes next.",
+    staffApply:"Apply for Staff ↗",mediaApply:"Apply for Media ↗",
+    roles:"APPLICATION TRACKS",community:"COMMUNITY FIRST",potential:"YOUR POTENTIAL",
+    chooseTitle:"Choose your path.",chooseText:"Find your place in the GUDU MC community.",
+    staffTitle:"Staff Team",staffDesc:"Help players, handle reports, resolve conflicts and make the server a fair and welcoming place.",
+    mediaTitle:"Media Team",mediaDesc:"Create exciting videos, showcase the server, bring new players and grow the GUDU MC brand.",
+    startStaff:"Start Staff Application →",startMedia:"Start Media Application →",
+    dashboardTitle:"Your dashboard.",dashboardText:"Manage your profile and applications.",
+    backHome:"← Back home",profileTab:"◉ Profile",applyTab:"＋ New Application",appsTab:"▤ My Applications",
+    profileTitle:"Your profile",usernameLabel:"Username",minecraftLabel:"Minecraft username",
+    discordLabel:"Discord username",saveProfile:"Save Profile",logout:"Log out",
+    localNotice:"This demo stores your profile in this browser. It is not a secure online account.",
+    formProgress:"APPLICATION COMPLETION",appName:"Display name *",appAge:"Age *",
+    appMinecraft:"Minecraft username *",appDiscord:"Discord username *",appTimezone:"Timezone *",
+    appHours:"Hours available per week *",honestyLabel:"Confirmation *",
+    honestyText:"I confirm my answers are honest and my own.",
+    reviewNotice:"Take your time. Detailed, honest answers help the team understand your skills. Do not share passwords or other private information.",
+    submitApp:"Submit Application ↗",cancel:"Cancel",appsTitle:"Your applications",
+    rulesTitle:"Before you apply.",rulesText:"Be respectful, answer honestly and use your own words. Applications are not a guarantee of acceptance.",
+    footerText:"Made for our community. Keep it fair. Keep it creative.",
+    loginUsername:"Username",continueBtn:"Continue →",closeBtn:"Close",
+    staffForm:"Staff application",mediaForm:"Media application",
+    loginFirst:"Please create your demo profile first.",saved:"Profile saved.",
+    submitted:"Application saved in this browser!",emptyTitle:"Nothing here yet.",
+    emptyText:"Your submitted applications will appear here.",
+    noAccount:"Please log in first.",deleted:"Application deleted.",
+    deleteBtn:"Delete local copy",created:"Submitted",status:"Status: Submitted",
+    staffQ:[
+      ["Why do you want to join the GUDU MC staff team, and what would you contribute that other applicants might not?","Explain your motivation and give concrete examples."],
+      ["A player reports another player for cheating, but you have no direct evidence. What steps would you take?","Explain how you would investigate fairly."],
+      ["A close friend breaks a server rule and asks you to ignore it. How would you respond?","Show how you would handle impartiality."],
+      ["Two players are arguing in public chat and other players are joining in. What would you do first, and why?","Describe a calm, proportionate response."],
+      ["A senior staff member makes a decision you believe is unfair. How would you handle the disagreement?","Consider appropriate escalation and evidence."],
+      ["Tell us about a time you received criticism or made a mistake. What did you learn?","A real example or an honest hypothetical is fine."],
+      ["How would you balance school, personal time and staff duties without overpromising?","Give a realistic plan."],
+      ["What would you do if you accidentally punished the wrong player?","Explain accountability and corrective action."]
+    ],
+    mediaQ:[
+      ["What type of Minecraft content do you create, and what makes your style distinctive?","Describe your niche, tone and creative strengths."],
+      ["Pitch three original video ideas that would make players curious about GUDU MC.","Give each idea a title and short concept."],
+      ["How would you create a compelling 30-second video introducing our server?","Describe the opening hook, middle and call to action."],
+      ["Which platforms do you use, and what is your experience with them?","Include links to public work if you have any."],
+      ["How would you measure whether your content is helping the server grow?","Consider useful metrics beyond views."],
+      ["A video performs poorly. How would you learn from it and improve the next one?","Explain your testing and improvement process."],
+      ["How would you handle a disagreement about creative direction or a requested edit?","Show how you would communicate professionally."],
+      ["Share a portfolio or public channel link, if available, and explain which piece best represents your work.","Optional portfolio link; never share account passwords."]
+    ]
+  },
+  es: {
+    myApps:"Mis solicitudes",heroEyebrow:"TU CAMINO EMPIEZA AQUÍ",
+    heroText:"Más que un servidor de Minecraft. Una comunidad creada por personas dedicadas. Solicita unirte al equipo.",
+    staffApply:"Solicitar Staff ↗",mediaApply:"Solicitar Media ↗",
+    roles:"TIPOS DE SOLICITUD",community:"LA COMUNIDAD PRIMERO",potential:"TU POTENCIAL",
+    chooseTitle:"Elige tu camino.",chooseText:"Encuentra tu lugar en la comunidad GUDU MC.",
+    staffTitle:"Equipo Staff",staffDesc:"Ayuda a los jugadores, revisa reportes y crea un entorno justo y acogedor.",
+    mediaTitle:"Equipo Media",mediaDesc:"Crea vídeos, muestra el servidor y ayuda a crecer la comunidad GUDU MC.",
+    startStaff:"Solicitar Staff →",startMedia:"Solicitar Media →",
+    dashboardTitle:"Tu panel.",dashboardText:"Gestiona tu perfil y solicitudes.",
+    backHome:"← Inicio",profileTab:"◉ Perfil",applyTab:"＋ Nueva solicitud",appsTab:"▤ Mis solicitudes",
+    profileTitle:"Tu perfil",usernameLabel:"Nombre de usuario",minecraftLabel:"Usuario de Minecraft",
+    discordLabel:"Usuario de Discord",saveProfile:"Guardar perfil",logout:"Cerrar sesión",
+    localNotice:"Este perfil de demostración se guarda en este navegador. No es una cuenta segura.",
+    formProgress:"PROGRESO DE LA SOLICITUD",appName:"Nombre *",appAge:"Edad *",
+    appMinecraft:"Usuario de Minecraft *",appDiscord:"Usuario de Discord *",appTimezone:"Zona horaria *",
+    appHours:"Horas disponibles por semana *",honestyLabel:"Confirmación *",
+    honestyText:"Confirmo que mis respuestas son sinceras y propias.",
+    reviewNotice:"Responde con calma y sinceridad. No compartas contraseñas ni información privada.",
+    submitApp:"Enviar solicitud ↗",cancel:"Cancelar",appsTitle:"Tus solicitudes",
+    rulesTitle:"Antes de solicitar.",rulesText:"Sé respetuoso y responde con sinceridad. Enviar una solicitud no garantiza la aceptación.",
+    footerText:"Hecho para nuestra comunidad. Justicia y creatividad.",
+    loginUsername:"Nombre de usuario",continueBtn:"Continuar →",closeBtn:"Cerrar",
+    staffForm:"Solicitud Staff",mediaForm:"Solicitud Media",
+    loginFirst:"Crea primero tu perfil de demostración.",saved:"Perfil guardado.",
+    submitted:"¡Solicitud guardada en este navegador!",emptyTitle:"Todavía no hay solicitudes.",
+    emptyText:"Tus solicitudes aparecerán aquí.",noAccount:"Inicia sesión primero.",
+    deleted:"Copia local eliminada.",deleteBtn:"Eliminar copia local",
+    created:"Enviada",status:"Estado: Enviada",
+    staffQ:[
+      ["¿Por qué quieres entrar en el equipo Staff de GUDU MC y qué aportarías?","Explica tu motivación con ejemplos concretos."],
+      ["Un jugador denuncia trampas sin aportar pruebas directas. ¿Qué harías?","Explica cómo investigarías de forma justa."],
+      ["Un amigo cercano incumple las normas y te pide ignorarlo. ¿Cómo responderías?","Explica cómo actuarías con imparcialidad."],
+      ["Dos jugadores discuten en el chat público. ¿Qué harías primero y por qué?","Describe una respuesta calmada y proporcionada."],
+      ["Un superior toma una decisión que consideras injusta. ¿Cómo actuarías?","Considera la comunicación y las pruebas."],
+      ["Cuenta una ocasión en que recibiste críticas o cometiste un error. ¿Qué aprendiste?","Puedes dar un ejemplo real o hipotético sincero."],
+      ["¿Cómo equilibrarías los estudios, tu tiempo personal y las tareas Staff?","Propón un plan realista."],
+      ["¿Qué harías si sancionas por error al jugador equivocado?","Explica cómo asumirías y corregirías el error."]
+    ],
+    mediaQ:[
+      ["¿Qué contenido de Minecraft creas y qué hace especial tu estilo?","Describe tu temática y tus puntos fuertes."],
+      ["Propón tres ideas originales de vídeos para GUDU MC.","Incluye un título y una breve idea."],
+      ["¿Cómo harías un vídeo de 30 segundos para presentar el servidor?","Describe el gancho inicial y el final."],
+      ["¿Qué plataformas utilizas y qué experiencia tienes?","Puedes incluir enlaces públicos a tu trabajo."],
+      ["¿Cómo medirías si tu contenido ayuda a crecer al servidor?","Piensa más allá de las visualizaciones."],
+      ["Un vídeo funciona mal. ¿Cómo mejorarías el siguiente?","Explica tu método de aprendizaje."],
+      ["¿Cómo resolverías un desacuerdo sobre una edición o una idea creativa?","Demuestra comunicación profesional."],
+      ["Comparte un enlace público a tu portafolio, si tienes, y explica tu mejor trabajo.","El enlace es opcional. Nunca compartas contraseñas."]
+    ]
+  },
+  hi: {
+    myApps:"मेरे आवेदन",heroEyebrow:"तुम्हारा सफर यहाँ से शुरू",
+    heroText:"Minecraft सर्वर से बढ़कर एक कम्युनिटी। GUDU MC टीम में शामिल होने और इसे बेहतर बनाने के लिए आवेदन करो।",
+    staffApply:"Staff के लिए आवेदन ↗",mediaApply:"Media के लिए आवेदन ↗",
+    roles:"आवेदन के प्रकार",community:"कम्युनिटी सबसे पहले",potential:"तुम्हारी क्षमता",
+    chooseTitle:"अपना रास्ता चुनो।",chooseText:"GUDU MC कम्युनिटी में अपनी जगह बनाओ।",
+    staffTitle:"Staff टीम",staffDesc:"खिलाड़ियों की मदद करो, रिपोर्ट संभालो और सर्वर को सुरक्षित व निष्पक्ष बनाओ।",
+    mediaTitle:"Media टीम",mediaDesc:"वीडियो बनाओ, सर्वर दिखाओ और GUDU MC को आगे बढ़ाओ।",
+    startStaff:"Staff आवेदन शुरू करो →",startMedia:"Media आवेदन शुरू करो →",
+    dashboardTitle:"तुम्हारा डैशबोर्ड।",dashboardText:"अपनी प्रोफाइल और आवेदन संभालो।",
+    backHome:"← वापस",profileTab:"◉ प्रोफाइल",applyTab:"＋ नया आवेदन",appsTab:"▤ मेरे आवेदन",
+    profileTitle:"तुम्हारी प्रोफाइल",usernameLabel:"यूज़रनेम",minecraftLabel:"Minecraft यूज़रनेम",
+    discordLabel:"Discord यूज़रनेम",saveProfile:"प्रोफाइल सेव करो",logout:"लॉग आउट",
+    localNotice:"यह डेमो प्रोफाइल इसी ब्राउज़र में सेव होती है। यह सुरक्षित ऑनलाइन अकाउंट नहीं है।",
+    formProgress:"आवेदन की प्रगति",appName:"नाम *",appAge:"उम्र *",
+    appMinecraft:"Minecraft यूज़रनेम *",appDiscord:"Discord यूज़रनेम *",appTimezone:"टाइमज़ोन *",
+    appHours:"हर हफ्ते उपलब्ध घंटे *",honestyLabel:"पुष्टि *",
+    honestyText:"मैं पुष्टि करता/करती हूँ कि मेरे जवाब ईमानदार और मेरे अपने हैं।",
+    reviewNotice:"सोचकर और ईमानदारी से जवाब दो। पासवर्ड या निजी जानकारी साझा मत करो।",
+    submitApp:"आवेदन जमा करो ↗",cancel:"रद्द करो",appsTitle:"तुम्हारे आवेदन",
+    rulesTitle:"आवेदन से पहले।",rulesText:"सम्मान से बात करो और अपने शब्दों में ईमानदारी से जवाब दो। आवेदन से चयन की गारंटी नहीं है।",
+    footerText:"हमारी कम्युनिटी के लिए। निष्पक्ष रहो, क्रिएटिव रहो।",
+    loginUsername:"यूज़रनेम",continueBtn:"आगे बढ़ो →",closeBtn:"बंद करो",
+    staffForm:"Staff आवेदन",mediaForm:"Media आवेदन",
+    loginFirst:"पहले अपनी डेमो प्रोफाइल बनाओ।",saved:"प्रोफाइल सेव हो गई।",
+    submitted:"आवेदन इस ब्राउज़र में सेव हो गया!",emptyTitle:"अभी कोई आवेदन नहीं है।",
+    emptyText:"तुम्हारे आवेदन यहाँ दिखेंगे।",noAccount:"पहले लॉगिन करो।",
+    deleted:"लोकल कॉपी हटा दी गई।",deleteBtn:"लोकल कॉपी हटाओ",
+    created:"जमा किया",status:"स्थिति: जमा किया",
+    staffQ:[
+      ["तुम GUDU MC की Staff टीम में क्यों शामिल होना चाहते हो और क्या योगदान दोगे?","अपनी प्रेरणा और ठोस उदाहरण बताओ।"],
+      ["कोई खिलाड़ी बिना सीधे सबूत के चीटिंग की शिकायत करे तो क्या करोगे?","निष्पक्ष जाँच का तरीका बताओ।"],
+      ["तुम्हारा दोस्त नियम तोड़ता है और अनदेखा करने को कहता है। क्या करोगे?","निष्पक्ष रहने का तरीका बताओ।"],
+      ["दो खिलाड़ी पब्लिक चैट में झगड़ रहे हों तो सबसे पहले क्या करोगे?","शांत और उचित प्रतिक्रिया बताओ।"],
+      ["सीनियर स्टाफ का फैसला तुम्हें गलत लगे तो कैसे बात करोगे?","सबूत और सही तरीके से शिकायत करने पर सोचो।"],
+      ["किसी गलती या आलोचना से तुमने क्या सीखा?","असली या ईमानदार काल्पनिक उदाहरण दे सकते हो।"],
+      ["पढ़ाई, निजी समय और Staff काम में संतुलन कैसे रखोगे?","एक वास्तविक योजना बताओ।"],
+      ["अगर गलती से गलत खिलाड़ी को सज़ा दे दो तो क्या करोगे?","गलती स्वीकारने और सुधारने का तरीका बताओ।"]
+    ],
+    mediaQ:[
+      ["तुम किस तरह का Minecraft कंटेंट बनाते हो और तुम्हारी शैली अलग कैसे है?","अपनी खासियत बताओ।"],
+      ["GUDU MC के लिए तीन नए वीडियो आइडिया बताओ।","हर आइडिया का टाइटल और छोटी जानकारी दो।"],
+      ["सर्वर दिखाने वाला 30 सेकंड का वीडियो कैसे बनाओगे?","शुरुआत, मुख्य हिस्सा और अंत बताओ।"],
+      ["कौन-से प्लेटफॉर्म इस्तेमाल करते हो और कितना अनुभव है?","चाहो तो अपने सार्वजनिक काम के लिंक दो।"],
+      ["कैसे पता करोगे कि तुम्हारा कंटेंट सर्वर बढ़ाने में मदद कर रहा है?","सिर्फ व्यूज़ से आगे सोचो।"],
+      ["वीडियो अच्छा न चले तो अगला बेहतर कैसे बनाओगे?","सीखने का तरीका बताओ।"],
+      ["क्रिएटिव आइडिया पर असहमति हो तो कैसे सुलझाओगे?","प्रोफेशनल तरीके से बात करने का तरीका बताओ।"],
+      ["अपने पोर्टफोलियो या चैनल का सार्वजनिक लिंक दो, अगर है, और अपना सबसे अच्छा काम बताओ।","लिंक वैकल्पिक है। पासवर्ड कभी साझा मत करो।"]
+    ]
   }
+};
 
+let lang = localStorage.getItem(STORAGE.lang) || "en";
+if(!translations[lang]) lang = "en";
+let profile = readJSON(STORAGE.profile, null);
+let applications = readJSON(STORAGE.apps, []);
+let currentType = "staff";
+let toastTimer;
 
-  function renderPatients() {
+function readJSON(key, fallback){
+  try{
+    const v = localStorage.getItem(key);
+    return v === null ? fallback : JSON.parse(v);
+  }catch(e){return fallback}
+}
+function persist(){
+  try{
+    localStorage.setItem(STORAGE.profile,JSON.stringify(profile));
+    localStorage.setItem(STORAGE.apps,JSON.stringify(applications));
+    return true;
+  }catch(e){
+    notify("Browser storage unavailable. Check your browser settings.");
+    return false;
+  }
+}
+function t(key){return translations[lang][key] ?? translations.en[key] ?? key}
 
-    const list = document.getElementById("patientList");
-    const all = document.getElementById("allPatients");
+function translatePage(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.dataset.i18n;
+    if(translations[lang][key]) el.textContent = translations[lang][key];
+  });
+  document.getElementById("langBtn").textContent = "🌐 " + lang.toUpperCase();
+  document.getElementById("formTitle").textContent = currentType==="staff"?t("staffForm"):t("mediaForm");
+  document.getElementById("year").textContent = new Date().getFullYear();
+  renderQuestions();
+  renderApplications();
+  if(profile) updateProfileUI();
+}
+function cycleLanguage(){
+  const langs=["en","es","hi"];
+  lang=langs[(langs.indexOf(lang)+1)%langs.length];
+  localStorage.setItem(STORAGE.lang,lang);
+  translatePage();
+}
+function notify(message){
+  const el=document.getElementById("toast");
+  el.textContent=message;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove("show"),3000);
+}
+function openLogin(){
+  document.getElementById("loginModal").classList.remove("hidden");
+  setTimeout(()=>document.getElementById("loginUsername").focus(),50);
+}
+function closeLogin(){document.getElementById("loginModal").classList.add("hidden")}
+document.getElementById("loginModal").addEventListener("click",e=>{
+  if(e.target.id==="loginModal") closeLogin();
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") closeLogin();
+});
 
-    list.innerHTML = "";
-    all.innerHTML = "";
+function login(e){
+  e.preventDefault();
+  const username=document.getElementById("loginUsername").value.trim();
+  if(username.length<3){notify("Username must contain at least 3 characters.");return}
+  if(!profile){
+    profile={username,minecraft:document.getElementById("loginMinecraft").value.trim(),
+      discord:document.getElementById("loginDiscord").value.trim(),
+      joined:new Date().toISOString()};
+  }else{
+    profile.username=username;
+    const mc=document.getElementById("loginMinecraft").value.trim();
+    const dc=document.getElementById("loginDiscord").value.trim();
+    if(mc) profile.minecraft=mc;
+    if(dc) profile.discord=dc;
+  }
+  if(!persist()) return;
+  updateProfileUI();
+  closeLogin();
+  notify("Welcome, "+profile.username+"!");
+}
+function logout(){
+  profile=null;
+  persist();
+  document.getElementById("loginBtn").classList.remove("hidden");
+  document.getElementById("userChip").classList.add("hidden");
+  hideDashboard();
+  notify("Logged out of this browser demo.");
+}
+function updateProfileUI(){
+  document.getElementById("loginBtn").classList.add("hidden");
+  document.getElementById("userChip").classList.remove("hidden");
+  document.getElementById("navName").textContent=profile.username;
+  document.getElementById("navAvatar").textContent=profile.username[0].toUpperCase();
+  document.getElementById("profileAvatar").textContent=profile.username[0].toUpperCase();
+  document.getElementById("profileDisplayName").textContent=profile.username;
+  document.getElementById("profileSince").textContent="Local demo profile";
+  document.getElementById("editUsername").value=profile.username;
+  document.getElementById("editMinecraft").value=profile.minecraft||"";
+  document.getElementById("editDiscord").value=profile.discord||"";
+}
+function saveProfile(){
+  if(!profile)return;
+  const name=document.getElementById("editUsername").value.trim();
+  if(name.length<3){notify("Username must contain at least 3 characters.");return}
+  profile.username=name;
+  profile.minecraft=document.getElementById("editMinecraft").value.trim();
+  profile.discord=document.getElementById("editDiscord").value.trim();
+  if(persist()){updateProfileUI();notify(t("saved"))}
+}
+function showDashboard(tab="applications"){
+  if(!profile){notify(t("noAccount"));openLogin();return}
+  document.getElementById("dashboard").style.display="block";
+  switchTab(tab);
+  document.getElementById("dashboard").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function hideDashboard(){
+  document.getElementById("dashboard").style.display="none";
+  document.getElementById("roles").scrollIntoView({behavior:"smooth"});
+}
+function switchTab(tab){
+  ["profile","apply","applications"].forEach(name=>{
+    document.getElementById("panel-"+name).classList.toggle("active",name===tab);
+    document.getElementById("tab-"+name).classList.toggle("active",name===tab);
+  });
+  if(tab==="applications")renderApplications();
+  if(tab==="profile"&&profile)updateProfileUI();
+}
+function beginApply(type){
+  currentType=type;
+  translatePage();
+  if(!profile){notify(t("loginFirst"));openLogin();return}
+  showDashboard("apply");
+  document.getElementById("appName").value=profile.username||"";
+  document.getElementById("appMinecraft").value=profile.minecraft||"";
+  document.getElementById("appDiscord").value=profile.discord||"";
+  document.getElementById("appTimezone").value="";
+  document.getElementById("appHours").value="";
+  document.getElementById("appAge").value="";
+  document.getElementById("honesty").checked=false;
+  renderQuestions();
+  updateProgress();
+}
+function renderQuestions(){
+  const holder=document.getElementById("questions");
+  if(!holder)return;
+  const list=t(currentType==="staff"?"staffQ":"mediaQ");
+  holder.innerHTML="";
+  list.forEach((q,i)=>{
+    const box=document.createElement("div");
+    box.className="question";
+    const label=document.createElement("label");
+    const number=document.createElement("span");
+    number.className="number";
+    number.textContent=String(i+1).padStart(2,"0")+" / ";
+    label.append(number,document.createTextNode(q[0]+" *"));
+    const area=document.createElement("textarea");
+    area.required=true;
+    area.minLength=20;
+    area.maxLength=3000;
+    area.name="q"+i;
+    area.placeholder=q[1];
+    area.setAttribute("aria-label",q[0]);
+    area.addEventListener("input",updateProgress);
+    const hint=document.createElement("small");
+    hint.textContent=lang==="hi"?"कम से कम 20 अक्षर लिखें।":lang==="es"?"Escribe al menos 20 caracteres.":"Write at least 20 characters.";
+    box.append(label,area,hint);
+    holder.append(box);
+  });
+}
+function updateProgress(){
+  const form=document.getElementById("applicationForm");
+  const fields=[...form.querySelectorAll("input[required],select[required],textarea[required]")];
+  const total=fields.length||1;
+  const filled=fields.filter(el=>{
+    if(el.type==="checkbox")return el.checked;
+    return el.value.trim().length>0 && (!el.minLength || el.value.trim().length>=el.minLength);
+  }).length;
+  const percent=Math.round(filled/total*100);
+  document.getElementById("progressText").textContent=percent+"%";
+  document.getElementById("progressBar").style.width=percent+"%";
+}
+document.getElementById("applicationForm").addEventListener("input",updateProgress);
+document.getElementById("applicationForm").addEventListener("change",updateProgress);
 
-    patients.forEach(patient => {
-
-      const firstLetter = patient.name.charAt(0).toUpperCase();
-
-      list.innerHTML += `
-        <div class="patient" onclick="viewPatient(${patient.id})">
-
-          <div class="patient-info">
-
-            <div class="avatar">
-              ${firstLetter}
-            </div>
-
-            <div>
-              <b>${patient.name}</b><br>
-              <small>${patient.age} years • ${patient.gender}</small>
-            </div>
-
-          </div>
-
-          <span>→</span>
-
-        </div>
-      `;
-
-
-      all.innerHTML += `
-        <div class="patient" onclick="viewPatient(${patient.id})">
-
-          <div class="patient-info">
-
-            <div class="avatar">
-              ${firstLetter}
-            </div>
-
-            <div>
-              <b>${patient.name}</b><br>
-              <small>${patient.age} years • ${patient.diagnosis || "No diagnosis"}</small>
-            </div>
-
-          </div>
-
-          <span>View →</span>
-
-        </div>
-      `;
-
+function submitApplication(e){
+  e.preventDefault();
+  if(!profile){notify(t("noAccount"));return}
+  const form=document.getElementById("applicationForm");
+  if(!form.reportValidity())return;
+  const answers=[...form.querySelectorAll(".question textarea")].map(x=>x.value.trim());
+  if(answers.some(a=>a.length<20)){
+    notify("Please provide more detailed answers (at least 20 characters each).");
+    return;
+  }
+  const app={
+    id:Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,7),
+    type:currentType,
+    username:document.getElementById("appName").value.trim(),
+    age:document.getElementById("appAge").value,
+    minecraft:document.getElementById("appMinecraft").value.trim(),
+    discord:document.getElementById("appDiscord").value.trim(),
+    timezone:document.getElementById("appTimezone").value.trim(),
+    hours:document.getElementById("appHours").value,
+    answers,
+    questions:t(currentType==="staff"?"staffQ":"mediaQ").map(q=>q[0]),
+    created:new Date().toISOString(),
+    status:"Submitted"
+  };
+  applications.unshift(app);
+  if(!persist()){applications.shift();return}
+  form.reset();
+  renderApplications();
+  switchTab("applications");
+  notify(t("submitted"));
+}
+function renderApplications(){
+  const holder=document.getElementById("applicationList");
+  if(!holder)return;
+  holder.innerHTML="";
+  if(!applications.length){
+    const empty=document.createElement("div");
+    empty.className="empty";
+    const strong=document.createElement("strong");strong.textContent=t("emptyTitle");
+    const p=document.createElement("div");p.textContent=t("emptyText");
+    empty.append(strong,p);holder.append(empty);return;
+  }
+  applications.forEach(app=>{
+    const item=document.createElement("article");item.className="list-item";
+    const top=document.createElement("div");top.className="list-top";
+    const title=document.createElement("strong");
+    title.textContent=(app.type==="staff"?t("staffTitle"):t("mediaTitle"))+" · "+app.username;
+    const badge=document.createElement("span");badge.className="status";badge.textContent=t("status");
+    top.append(title,badge);
+    const date=document.createElement("p");
+    date.textContent=t("created")+": "+new Date(app.created).toLocaleString();
+    const detail=document.createElement("details");
+    const summary=document.createElement("summary");
+    summary.style.cssText="cursor:pointer;color:var(--green);font-size:12px;margin:12px 0";
+    summary.textContent=lang==="hi"?"जवाब देखें":lang==="es"?"Ver respuestas":"View answers";
+    const body=document.createElement("div");
+    const meta=document.createElement("p");
+    meta.textContent="Minecraft: "+app.minecraft+" · Discord: "+app.discord+" · Timezone: "+app.timezone;
+    body.append(meta);
+    (app.questions||[]).forEach((q,i)=>{
+      const label=document.createElement("p");
+      const strong=document.createElement("strong");strong.textContent=(i+1)+". "+q;
+      const answer=document.createElement("div");answer.style.color="var(--text)";
+      answer.style.whiteSpace="pre-wrap";answer.textContent=app.answers[i]||"";
+      label.append(strong,document.createElement("br"),answer);body.append(label);
     });
+    detail.append(summary,body);
+    const del=document.createElement("button");
+    del.className="secondary danger";del.style.fontSize="11px";del.style.padding="8px 10px";
+    del.textContent=t("deleteBtn");
+    del.onclick=()=>{
+      if(!confirm("Delete this application from this browser?"))return;
+      applications=applications.filter(x=>x.id!==app.id);
+      if(persist()){renderApplications();notify(t("deleted"))}
+    };
+    item.append(top,date,detail,del);holder.append(item);
+  });
+}
 
-
-    document.getElementById("totalPatients").innerText =
-      patients.length;
-
-    document.getElementById("totalReports").innerText =
-      patients.filter(p => p.reports).length;
-
-    document.getElementById("totalMedicines").innerText =
-      patients.filter(p => p.medicines).length;
+// Decorative, lightweight animated particles.
+(function(){
+  const root=document.getElementById("particles");
+  for(let i=0;i<32;i++){
+    const p=document.createElement("i");
+    p.className="particle";
+    p.style.left=(Math.random()*100)+"%";
+    p.style.animationDuration=(9+Math.random()*17)+"s";
+    p.style.animationDelay=(-Math.random()*20)+"s";
+    p.style.opacity=(.15+Math.random()*.5).toFixed(2);
+    const size=(2+Math.random()*3)+"px";
+    p.style.width=size;p.style.height=size;
+    root.append(p);
   }
+})();
 
-
-  function viewPatient(id) {
-
-    const patient = patients.find(p => p.id === id);
-
-    if (!patient) return;
-
-    document.getElementById("detailName").innerText = patient.name;
-    document.getElementById("detailAge").innerText = patient.age;
-    document.getElementById("detailGender").innerText = patient.gender;
-    document.getElementById("detailPhone").innerText = patient.phone || "-";
-
-    document.getElementById("detailDiagnosis").innerText =
-      patient.diagnosis || "No diagnosis";
-
-    document.getElementById("detailMedicines").innerText =
-      patient.medicines || "No medicines";
-
-    document.getElementById("detailReports").innerText =
-      patient.reports || "No reports";
-
-    document.getElementById("detailNotes").innerText =
-      patient.notes || "No notes";
-
-    document.getElementById("patientModal").style.display = "flex";
-  }
-
-
-  function openAddPatient() {
-    document.getElementById("addPatientModal").style.display = "flex";
-  }
-
-
-  function closeModal(id) {
-    document.getElementById(id).style.display = "none";
-  }
-
-
-  function showDashboard() {
-
-    document.getElementById("dashboard").style.display = "block";
-    document.getElementById("patientsPage").style.display = "none";
-
-    document.getElementById("pageTitle").innerText =
-      "Doctor Dashboard";
-  }
-
-
-  function showPatients() {
-
-    document.getElementById("dashboard").style.display = "none";
-    document.getElementById("patientsPage").style.display = "block";
-
-    document.getElementById("pageTitle").innerText =
-      "Patients";
-  }
-
-
-  document.getElementById("patientForm").addEventListener(
-    "submit",
-    function(e) {
-
-      e.preventDefault();
-
-      const newPatient = {
-
-        id: Date.now(),
-
-        name: document.getElementById("name").value,
-
-        age: document.getElementById("age").value,
-
-        gender: document.getElementById("gender").value,
-
-        phone: document.getElementById("phone").value,
-
-        diagnosis: document.getElementById("diagnosis").value,
-
-        medicines: document.getElementById("medicines").value,
-
-        reports: document.getElementById("reports").value,
-
-        notes: document.getElementById("notes").value
-
-      };
-
-
-      patients.push(newPatient);
-
-      saveData();
-
-      renderPatients();
-
-      document.getElementById("patientForm").reset();
-
-      closeModal("addPatientModal");
-
-      alert("Patient saved successfully!");
-
-    }
-  );
-
-
-  // Initial load
-  renderPatients();
-
+translatePage();
+if(profile)updateProfileUI();
 </script>
-
 </body>
 </html>
