@@ -3,801 +3,532 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07120d">
-<title>GUDU MC | Applications Portal</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#06100b">
+<title>GUDU MC | Team Portal</title>
 <style>
 :root{
-  --bg:#060b09;
-  --panel:rgba(15,29,22,.83);
-  --green:#43ff9b;
-  --green2:#14c879;
-  --muted:#92a79a;
-  --line:rgba(100,255,165,.15);
-  --text:#f0fff5;
+  --bg:#050a07;--panel:#0b1510;--panel2:#101f16;
+  --green:#62ffab;--green2:#16c978;--white:#effff5;
+  --muted:#8da899;--line:#244332;--red:#ff8585;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;
-  min-height:100vh;overflow-x:hidden;
+ margin:0;background:var(--bg);color:var(--white);
+ font-family:Inter,system-ui,Segoe UI,sans-serif;min-height:100vh;
 }
 button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
-  outline:2px solid var(--green);outline-offset:3px
+button{cursor:pointer;transition:.2s}
+button:hover{filter:brightness(1.12);transform:translateY(-2px)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+a{color:inherit}
+::selection{background:#62ffab55}
+#fx{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:-2}
+.orb{position:absolute;border-radius:50%;filter:blur(85px);opacity:.13;animation:drift 13s ease-in-out infinite alternate}
+.orb.one{width:400px;height:400px;background:#00ff88;top:-180px;left:-120px}
+.orb.two{width:450px;height:450px;background:#00aaff;right:-200px;top:30%;animation-delay:-5s}
+.orb.three{width:300px;height:300px;background:#1bff82;bottom:-180px;left:30%;animation-delay:-8s}
+@keyframes drift{to{transform:translate(70px,90px) scale(1.2)}}
+.grid-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.16;
+ background-image:linear-gradient(#28513a33 1px,transparent 1px),linear-gradient(90deg,#28513a33 1px,transparent 1px);
+ background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent 80%)}
+header{
+ height:76px;position:sticky;top:0;z-index:30;display:flex;align-items:center;
+ justify-content:space-between;padding:0 max(calc((100% - 1200px)/2),5%);
+ background:#050b08d9;backdrop-filter:blur(22px);border-bottom:1px solid #ffffff0d;gap:14px
 }
-#particles{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
-.particle{
-  position:absolute;bottom:-30px;width:3px;height:3px;
-  background:var(--green);border-radius:50%;opacity:.5;
-  box-shadow:0 0 12px var(--green);
-  animation:floatUp linear infinite;
-}
-@keyframes floatUp{
-  to{transform:translateY(-115vh) translateX(45px);opacity:0}
-}
-body:before{
-  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:
-   radial-gradient(ellipse at 15% 15%,rgba(20,200,121,.13),transparent 40%),
-   radial-gradient(ellipse at 90% 65%,rgba(35,150,95,.10),transparent 40%),
-   linear-gradient(120deg,#060b09,#09150e 55%,#060b09);
-}
-button,.btn{transition:transform .2s,border-color .2s,background .2s}
-button:hover,.btn:hover{transform:translateY(-2px)}
-.nav{
-  height:76px;display:flex;align-items:center;justify-content:space-between;
-  padding:0 6%;border-bottom:1px solid var(--line);
-  background:rgba(5,12,8,.8);backdrop-filter:blur(18px);
-  position:sticky;top:0;z-index:20;gap:15px;
-}
-.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:1px}
-.brand-icon{
-  width:43px;height:43px;border-radius:13px;display:grid;place-items:center;
-  background:linear-gradient(145deg,#59ffad,#078e51);
-  color:#04130b;font-size:20px;box-shadow:0 0 25px #20d67b35;
-}
-.brand small{display:block;font-size:10px;color:var(--muted);letter-spacing:3px;margin-top:3px}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav button,.secondary{
-  color:var(--text);background:#122219;border:1px solid var(--line);
-  border-radius:11px;padding:10px 14px;
-}
-.primary{
-  background:linear-gradient(120deg,#5affad,#19c77a)!important;
-  color:#052013!important;border:0!important;font-weight:850;
-  border-radius:12px;padding:13px 19px;
-  box-shadow:0 5px 24px #28f08b17;
-}
-.danger{color:#ff9c9c!important;border-color:#ff77772c!important}
-.user-chip{display:flex;align-items:center;gap:9px;font-size:13px}
-.avatar{
-  width:36px;height:36px;display:grid;place-items:center;
-  border:1px solid #49f5a054;background:#163a26;
-  border-radius:12px;color:var(--green);font-weight:900;
-}
-.wrap{width:min(1120px,90%);margin:auto}
-.hero{padding:78px 0 45px;text-align:center}
-.eyebrow{
-  display:inline-flex;align-items:center;gap:8px;padding:8px 13px;
-  color:var(--green);border:1px solid var(--line);border-radius:99px;
-  font-size:11px;letter-spacing:2px;text-transform:uppercase;
-  background:#10221880;
-}
-.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}
-h1{
-  font-size:clamp(42px,7vw,82px);line-height:.98;letter-spacing:-4px;
-  margin:25px 0 20px;font-weight:950;
-}
-h1 span{color:var(--green);text-shadow:0 0 38px #3dff9925}
-.hero p{max-width:610px;margin:0 auto;color:var(--muted);line-height:1.8;font-size:15px}
-.hero-actions{display:flex;justify-content:center;gap:12px;margin-top:27px;flex-wrap:wrap}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:35px auto 0;max-width:660px}
-.stat{border:1px solid var(--line);background:#0c1911ad;border-radius:15px;padding:17px}
-.stat strong{font-size:23px;color:var(--green);display:block}
-.stat span{font-size:11px;color:var(--muted)}
-.section-title{margin:48px 0 20px}
-.section-title h2{font-size:26px;margin:0 0 8px;letter-spacing:-1px}
-.section-title p{color:var(--muted);margin:0;font-size:13px;line-height:1.7}
+.logo{display:flex;align-items:center;gap:12px;font-weight:950;letter-spacing:1px}
+.logo-mark{height:43px;width:43px;display:grid;place-items:center;border-radius:13px;
+ color:#03150a;font-size:22px;background:linear-gradient(140deg,#a1ffca,#1bd77c);
+ box-shadow:0 0 30px #3aff8d20;clip-path:polygon(0 0,100% 0,100% 75%,75% 100%,0 100%)}
+.logo small{display:block;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:3px}
+.navlinks{display:flex;align-items:center;gap:24px}
+.navlinks a{font-size:12px;text-decoration:none;color:var(--muted)}
+.navlinks a:hover{color:var(--green)}
+.navright{display:flex;align-items:center;gap:9px}
+.btn{padding:11px 15px;border:1px solid var(--line);border-radius:10px;background:#101c14;color:var(--white);font-size:12px;font-weight:700}
+.btn.primary{background:linear-gradient(110deg,#8affbd,#32e68a);border:0;color:#04170b;box-shadow:0 5px 24px #27ed8b15}
+.btn.outline{border-color:#4ef59a70;color:var(--green);background:#102118}
+.wrap{width:min(1160px,90%);margin:auto}
+.hero{padding:76px 0 55px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:35px;min-height:470px}
+.pill{display:inline-flex;align-items:center;gap:9px;border:1px solid #4cff992a;background:#102219;border-radius:50px;padding:8px 12px;font-size:10px;letter-spacing:1.8px;color:var(--green);text-transform:uppercase}
+.pulse{height:7px;width:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green);animation:pulse 1.5s infinite}
+@keyframes pulse{50%{opacity:.3;transform:scale(.7)}}
+h1{font-size:clamp(46px,6vw,79px);letter-spacing:-4px;line-height:.98;margin:25px 0 19px;font-weight:950}
+h1 span{color:var(--green);text-shadow:0 0 45px #41ff9a20}
+.herotext{font-size:14px;color:#a5b9ab;line-height:1.95;max-width:480px}
+.actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:25px}
+.socials{display:flex;gap:9px;margin-top:25px;flex-wrap:wrap}
+.socials a{font-size:11px;text-decoration:none;padding:9px 12px;border:1px solid #ffffff14;border-radius:9px;color:var(--muted);background:#ffffff04}
+.socials a:hover{color:var(--green);border-color:var(--green)}
+.hero-art{height:360px;position:relative;display:grid;place-items:center}
+.portal{position:absolute;width:280px;height:280px;border:1px solid #53ff9c48;border-radius:50%;
+ box-shadow:0 0 50px #17ff8720,inset 0 0 50px #17ff8710;animation:rotate 18s linear infinite}
+.portal:before,.portal:after{content:"";position:absolute;border:1px solid #43ff9b2d;border-radius:50%;inset:18px}
+.portal:after{inset:-16px;border-style:dashed;opacity:.7}
+@keyframes rotate{to{transform:rotate(360deg)}}
+.core{width:230px;height:230px;border-radius:50%;display:grid;place-items:center;
+ background:radial-gradient(circle at 40% 35%,#1a4830,#0b2014 65%,#06110a);
+ border:1px solid #5bffa45c;box-shadow:0 0 90px #15ff8220;position:relative;z-index:2}
+.core-inner{text-align:center}
+.core-symbol{font-size:90px;line-height:1;color:var(--green);font-weight:1000;text-shadow:0 0 35px #32ff8b50}
+.core-label{font-size:10px;letter-spacing:5px;color:#b1fbd0;margin-top:10px}
+.float-card{position:absolute;padding:12px 15px;background:#0b1711eb;border:1px solid #3d8056;border-radius:12px;box-shadow:0 12px 40px #0006;z-index:4}
+.float-card strong{display:block;color:var(--green);font-size:12px}
+.float-card span{display:block;color:var(--muted);font-size:10px;margin-top:5px}
+.float-card.a{left:0;top:45px}.float-card.b{right:0;top:82px}.float-card.c{left:12px;bottom:39px}.float-card.d{right:3px;bottom:25px}
+.section{padding:25px 0 38px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:22px}
+.kicker{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:10px}
+h2{font-size:29px;letter-spacing:-1px;margin:0}
+.section-head p{font-size:12px;color:var(--muted);line-height:1.8;margin:8px 0 0}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.card{
-  background:linear-gradient(145deg,rgba(17,35,24,.96),rgba(8,17,12,.95));
-  border:1px solid var(--line);border-radius:22px;padding:27px;
-  position:relative;overflow:hidden;
-}
-.card:after{
-  content:"";position:absolute;top:0;left:0;width:70px;height:2px;
-  background:var(--green);box-shadow:0 0 18px var(--green);
-}
-.card-icon{
-  width:53px;height:53px;display:grid;place-items:center;font-size:25px;
-  background:#153725;border:1px solid #50ff9b22;border-radius:16px;
-}
-.card h3{font-size:23px;margin:20px 0 10px}
-.card p{font-size:13px;color:var(--muted);line-height:1.8;min-height:45px}
-.tags{display:flex;gap:7px;flex-wrap:wrap;margin:17px 0 23px}
-.tag{font-size:10px;padding:7px 10px;border-radius:8px;background:#173021;color:#a8edc3}
-.card button{width:100%}
-.dashboard{margin-top:40px;display:none}
-.dash-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.dash-head h2{margin:0 0 7px;font-size:27px}
-.dash-head p{margin:0;color:var(--muted);font-size:13px}
-.dash-grid{display:grid;grid-template-columns:220px 1fr;gap:18px;margin-top:20px}
-.side,.content{
-  background:var(--panel);border:1px solid var(--line);
-  border-radius:18px;padding:16px;
-}
-.side button{width:100%;text-align:left;margin-bottom:8px;background:transparent;border:1px solid transparent;color:var(--muted);padding:13px;border-radius:11px}
-.side button.active,.side button:hover{color:var(--green);background:#173021;border-color:var(--line)}
-.content h3{margin:4px 0 20px}
+.card{position:relative;overflow:hidden;padding:27px;border-radius:20px;background:linear-gradient(145deg,#112219eF,#09120cF2);border:1px solid #36574180;transition:.3s}
+.card:hover{border-color:#64ffa56e;transform:translateY(-4px);box-shadow:0 20px 60px #0004}
+.card:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;filter:blur(65px);opacity:.10;background:var(--green);right:-70px;top:-100px}
+.cardtop{display:flex;align-items:center;justify-content:space-between}
+.iconbox{height:54px;width:54px;display:grid;place-items:center;border:1px solid #52ff9b35;border-radius:16px;background:#163c27;color:var(--green);font-size:24px}
+.role-no{font-size:10px;letter-spacing:2px;color:#688c75}
+.card h3{font-size:24px;margin:22px 0 10px}
+.card p{color:var(--muted);font-size:12px;line-height:1.9;min-height:48px}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin:19px 0 23px}
+.tag{padding:7px 10px;border-radius:8px;background:#153020;color:#a8efc3;font-size:10px;border:1px solid #6bff9c13}
+.card .btn{width:100%;text-align:center}
+.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.feature{border:1px solid #284634;background:#0b1710b8;border-radius:14px;padding:19px 16px}
+.feature .ficon{font-size:20px;color:var(--green);margin-bottom:12px}
+.feature strong{font-size:12px;display:block;margin-bottom:6px}
+.feature p{font-size:11px;color:var(--muted);line-height:1.7;margin:0}
+.quote{padding:25px;border:1px solid #ffffff10;border-radius:18px;background:linear-gradient(100deg,#102219,#09120d);display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:10px}
+.quote strong{font-size:15px}.quote p{font-size:12px;line-height:1.8;color:var(--muted);margin:7px 0 0}
+.quote-symbol{font-size:44px;color:var(--green);opacity:.7}
+#dashboard{display:none;padding:42px 0}
+.dash-title{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.dash-title h2{margin-bottom:8px}
+.dash-title p{margin:0;font-size:12px;color:var(--muted)}
+.dash-layout{display:grid;grid-template-columns:215px 1fr;gap:17px}
+.sidebar,.workspace{border:1px solid var(--line);background:#0a150fdf;border-radius:18px;padding:15px;min-width:0}
+.sidebar button{width:100%;text-align:left;background:transparent;color:var(--muted);border:1px solid transparent;padding:13px;border-radius:10px;margin-bottom:5px;font-size:12px}
+.sidebar button.active,.sidebar button:hover{background:#173523;color:var(--green);border-color:#325a40}
 .panel{display:none}.panel.active{display:block}
-.field{margin-bottom:18px}
-.field label{display:block;font-size:12px;color:#c0d7c8;margin-bottom:9px;font-weight:650}
-.field input,.field textarea,.field select{
-  display:block;width:100%;padding:13px 14px;border-radius:11px;
-  border:1px solid #284333;background:#09140d;color:var(--text);
-  outline:none;min-width:0;
-}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--green)}
-.field textarea{min-height:110px;resize:vertical;line-height:1.65}
-.field small{display:block;color:var(--muted);font-size:11px;line-height:1.6;margin-top:7px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.progress-row{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-bottom:9px}
-.progress{height:5px;background:#1a2c20;border-radius:9px;overflow:hidden;margin-bottom:23px}
-.progress div{height:100%;width:0;background:var(--green);transition:width .3s}
-.question{border-bottom:1px solid var(--line);padding:20px 0}
-.question:first-child{padding-top:0}
-.question label{display:block;font-size:13px;line-height:1.7;font-weight:700;margin-bottom:12px}
-.question .number{color:var(--green);margin-right:8px}
-.question textarea,.question select{
-  width:100%;padding:13px;border:1px solid #284333;background:#09140d;
-  color:var(--text);border-radius:11px;resize:vertical;
-}
-.question textarea{min-height:105px}
-.question small{display:block;margin-top:7px;color:var(--muted);font-size:11px}
-.notice{font-size:12px;color:var(--muted);line-height:1.7;padding:13px;background:#14251a;border-radius:10px;margin:16px 0}
-.list-item{
-  padding:17px;border:1px solid var(--line);background:#0b170f;
-  border-radius:13px;margin-bottom:12px;
-}
-.list-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.list-item p{font-size:12px;color:var(--muted);line-height:1.7}
-.status{font-size:10px;padding:6px 9px;background:#183423;color:var(--green);border-radius:7px}
-.empty{text-align:center;padding:38px 10px;color:var(--muted);line-height:1.8}
-.empty strong{display:block;color:var(--text);margin-bottom:8px}
-footer{margin-top:75px;border-top:1px solid var(--line);padding:30px 5%;text-align:center;color:var(--muted);font-size:11px;line-height:2}
+.panel h3{font-size:21px;margin:5px 0 22px}
+.field{margin-bottom:17px;min-width:0}
+.field label{display:block;font-size:12px;color:#c2d9ca;margin-bottom:8px;font-weight:700}
+.field input,.field select,.field textarea,.question textarea{width:100%;min-width:0;background:#07100a;border:1px solid #2a4834;border-radius:10px;padding:12px;color:var(--white)}
+.field textarea,.question textarea{resize:vertical;min-height:100px;line-height:1.7}
+.field input:focus,.field select:focus,.field textarea:focus,.question textarea:focus{border-color:var(--green);outline:none}
+.field input[type=checkbox]{width:auto;min-width:0}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.progresshead{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-bottom:9px}
+.progress{height:5px;background:#203126;border-radius:9px;overflow:hidden;margin-bottom:23px}
+.progress div{height:100%;width:0;background:linear-gradient(90deg,#1bd77c,#a0ffcb);transition:width .2s}
+.question{padding:18px 0;border-bottom:1px solid #ffffff10}
+.question label{display:block;font-size:13px;font-weight:700;line-height:1.8;margin-bottom:11px}
+.question label span{color:var(--green);font-size:10px;letter-spacing:1px;margin-right:7px}
+.question small{display:block;color:var(--muted);font-size:10px;margin-top:7px;line-height:1.7}
+.notice{padding:13px;background:#13251a;border:1px solid #31583c66;border-radius:10px;color:var(--muted);font-size:11px;line-height:1.8;margin:18px 0}
+.profilebox{display:flex;align-items:center;gap:13px;margin-bottom:25px}
+.bigavatar{width:57px;height:57px;display:grid;place-items:center;border-radius:16px;background:#174329;color:var(--green);font-size:23px;font-weight:900;border:1px solid #52ff9a40}
+.muted{color:var(--muted);font-size:11px}
+.application{padding:17px;border:1px solid var(--line);background:#0c1810;border-radius:13px;margin-bottom:12px}
+.apphead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.status{font-size:10px;color:var(--green);background:#153722;padding:7px 9px;border-radius:7px}
+.application p{font-size:11px;color:var(--muted);line-height:1.8}
+.application details{margin:12px 0;font-size:12px}
+.application summary{color:var(--green);cursor:pointer}
+.answer{white-space:pre-wrap;line-height:1.7;color:#d7e8dc;margin-top:7px}
+.empty{text-align:center;padding:40px 10px;color:var(--muted);font-size:12px;line-height:2}
+.empty strong{display:block;color:var(--white);font-size:16px}
+footer{border-top:1px solid #ffffff10;margin-top:55px;padding:30px 5%;text-align:center;color:var(--muted);font-size:11px;line-height:2}
 footer strong{color:var(--green)}
-.modal-backdrop{
-  position:fixed;inset:0;z-index:100;background:#020704d9;
-  backdrop-filter:blur(12px);display:grid;place-items:center;padding:18px;
-}
-.modal{
-  width:min(430px,100%);padding:29px;background:#0b1710;
-  border:1px solid #43ff9b35;border-radius:22px;
-  box-shadow:0 30px 100px #0009;position:relative;
-}
-.modal h2{margin:15px 0 8px;font-size:27px}
-.modal p{font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:22px}
-.modal .primary{width:100%}
+.modalbg{position:fixed;inset:0;background:#020704dc;backdrop-filter:blur(12px);z-index:100;display:grid;place-items:center;padding:18px}
+.modal{width:min(430px,100%);padding:27px;border:1px solid #4b9462;background:#0a160e;border-radius:21px;box-shadow:0 25px 100px #0009}
+.modal h2{font-size:25px;margin:17px 0 10px}
+.modal p{font-size:12px;line-height:1.8;color:var(--muted);margin-bottom:22px}
+.modal .btn{width:100%;margin-top:8px}
 .hidden{display:none!important}
-.toast{
-  position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);
-  background:#143722;border:1px solid #43ff9b50;color:var(--text);
-  padding:13px 20px;border-radius:12px;font-size:13px;z-index:200;
-  opacity:0;pointer-events:none;transition:.25s;max-width:90%;text-align:center;
+#toast{position:fixed;z-index:150;bottom:24px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:#153824;border:1px solid #62ffab66;padding:13px 19px;border-radius:12px;font-size:12px;max-width:90%;transition:.25s;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:800px){
+ .navlinks{display:none}.hero{grid-template-columns:1fr;padding-top:55px;gap:5px}
+ .hero-art{height:320px;max-width:500px;width:100%;margin:auto}
+ .cards{grid-template-columns:1fr}.feature-grid{grid-template-columns:1fr 1fr}
+ .dash-layout{grid-template-columns:1fr}.sidebar{display:flex;overflow:auto;gap:5px;padding:8px}
+ .sidebar button{width:auto;white-space:nowrap;margin:0;padding:10px}
+ h1{letter-spacing:-2.5px}
 }
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.profile-box{display:flex;align-items:center;gap:14px;margin-bottom:24px}
-.profile-big{width:58px;height:58px;border-radius:17px;display:grid;place-items:center;background:#163a26;color:var(--green);font-size:25px;font-weight:900}
-@media(max-width:700px){
- .nav{padding:0 5%;height:67px}.brand-icon{width:37px;height:37px}
- .brand{font-size:13px}.brand small{font-size:8px}
- .nav-right{gap:6px}.nav button{padding:9px;font-size:11px}
- .user-chip span{display:none}
- .hero{padding:60px 0 28px}h1{letter-spacing:-2px}
- .stats{gap:7px}.stat{padding:12px 5px}.stat strong{font-size:20px}
- .cards{grid-template-columns:1fr}.card{padding:22px}
- .dash-grid{grid-template-columns:1fr}
- .side{display:flex;gap:6px;overflow-x:auto;padding:9px}
- .side button{white-space:nowrap;width:auto;margin:0;font-size:11px;padding:10px}
- .form-grid{grid-template-columns:1fr;gap:0}
- .content{padding:15px}
+@media(max-width:480px){
+ header{padding:0 4%;height:68px}.logo{font-size:12px;gap:8px}.logo-mark{width:36px;height:36px}
+ .logo small{font-size:7px;letter-spacing:2px}.navright{gap:5px}.btn{padding:10px;font-size:10px}
+ .wrap{width:91%}.hero{padding-top:45px}.herotext{font-size:13px}
+ .hero-art{transform:scale(.9);margin:-10px auto;width:110%}
+ h2{font-size:25px}.section-head{align-items:start;flex-direction:column}
+ .feature-grid{gap:8px}.feature{padding:13px}
+ .formgrid{grid-template-columns:1fr;gap:0}
+ .workspace{padding:13px}
 }
 </style>
 </head>
-
 <body>
-<div id="particles"></div>
+<div id="fx"><div class="orb one"></div><div class="orb two"></div><div class="orb three"></div></div>
+<div class="grid-bg"></div>
 
-<header class="nav">
-  <div class="brand">
-    <div class="brand-icon">G</div>
-    <div>GUDU MC<small>APPLICATIONS PORTAL</small></div>
-  </div>
-  <div class="nav-right">
-    <button id="langBtn" type="button" onclick="cycleLanguage()">🌐 EN</button>
-    <button type="button" onclick="showDashboard('applications')" data-i18n="myApps">My Apps</button>
-    <button id="loginBtn" class="primary" type="button" onclick="openLogin()">Login ↗</button>
-    <div id="userChip" class="user-chip hidden">
-      <div id="navAvatar" class="avatar">G</div><span id="navName"></span>
-    </div>
-  </div>
+<header>
+ <a href="#" class="logo" style="text-decoration:none">
+  <div class="logo-mark">G</div><div>GUDU MC<small>TEAM PORTAL</small></div>
+ </a>
+ <nav class="navlinks">
+  <a href="#home" data-i="navHome">Home</a>
+  <a href="#roles" data-i="navRoles">Applications</a>
+  <a href="#features" data-i="navFeatures">Features</a>
+  <a href="#community" data-i="navCommunity">Community</a>
+ </nav>
+ <div class="navright">
+  <button class="btn" onclick="cycleLang()" id="language">🌐 EN</button>
+  <button class="btn primary" id="loginBtn" onclick="openLogin()" data-i="login">Login ↗</button>
+  <button class="btn hidden" id="profileBtn" onclick="openDash('profile')">◉ <span id="navUsername"></span></button>
+ </div>
 </header>
 
 <main class="wrap">
-  <section class="hero">
-    <div class="eyebrow"><span class="dot"></span><span data-i18n="heroEyebrow">YOUR JOURNEY STARTS HERE</span></div>
-    <h1>BUILD THE<br><span>GUDU MC</span><br>LEGACY.</h1>
-    <p data-i18n="heroText">More than a Minecraft server. A community built by dedicated people. Apply to join our team and help shape what comes next.</p>
-    <div class="hero-actions">
-      <button class="primary" onclick="beginApply('staff')" data-i18n="staffApply">Apply for Staff ↗</button>
-      <button class="secondary" onclick="beginApply('media')" data-i18n="mediaApply">Apply for Media ↗</button>
-    </div>
-    <div class="stats">
-      <div class="stat"><strong>02</strong><span data-i18n="roles">APPLICATION TRACKS</span></div>
-      <div class="stat"><strong>24/7</strong><span data-i18n="community">COMMUNITY FIRST</span></div>
-      <div class="stat"><strong>∞</strong><span data-i18n="potential">YOUR POTENTIAL</span></div>
-    </div>
-  </section>
+<section class="hero" id="home">
+ <div>
+  <div class="pill"><span class="pulse"></span><span data-i="eyebrow">THE NEXT GENERATION OF GUDU MC</span></div>
+  <h1>YOUR WORLD.<br>YOUR TEAM.<br><span>YOUR LEGACY.</span></h1>
+  <p class="herotext" data-i="heroText">Every great Minecraft server is built by great people. Bring your ideas, your skills, and your passion. Your journey with GUDU MC starts here.</p>
+  <div class="actions">
+   <button class="btn primary" onclick="startApply('staff')" data-i="staffCTA">Join the Staff Team ↗</button>
+   <button class="btn outline" onclick="startApply('media')" data-i="mediaCTA">Become a Creator ◈</button>
+  </div>
+  <div class="socials">
+   <a href="https://discord.gg/HmHvmCQDX" target="_blank" rel="noopener">◈ Discord Community ↗</a>
+   <a href="#roles">Explore opportunities ↓</a>
+  </div>
+ </div>
+ <div class="hero-art" aria-label="GUDU MC emerald portal artwork">
+  <div class="portal"></div>
+  <div class="core"><div class="core-inner"><div class="core-symbol">G</div><div class="core-label">GUDU MC</div></div></div>
+  <div class="float-card a"><strong>✦ STAFF TEAM</strong><span>Lead with respect</span></div>
+  <div class="float-card b"><strong>◈ MEDIA TEAM</strong><span>Create something epic</span></div>
+  <div class="float-card c"><strong>⌘ COMMUNITY</strong><span>Built together</span></div>
+  <div class="float-card d"><strong>01 / YOUR STORY</strong><span>Starts right now</span></div>
+ </div>
+</section>
 
-  <section id="roles">
-    <div class="section-title">
-      <h2 data-i18n="chooseTitle">Choose your path.</h2>
-      <p data-i18n="chooseText">Find your place in the GUDU MC community.</p>
-    </div>
-    <div class="cards">
-      <article class="card">
-        <div class="card-icon">⚔</div>
-        <div class="eyebrow" style="margin-top:20px">TEAM / 01</div>
-        <h3 data-i18n="staffTitle">Staff Team</h3>
-        <p data-i18n="staffDesc">Help players, handle reports, resolve conflicts and make the server a fair and welcoming place.</p>
-        <div class="tags"><span class="tag">Moderation</span><span class="tag">Responsibility</span><span class="tag">Teamwork</span></div>
-        <button class="primary" onclick="beginApply('staff')" data-i18n="startStaff">Start Staff Application →</button>
-      </article>
-      <article class="card">
-        <div class="card-icon">◈</div>
-        <div class="eyebrow" style="margin-top:20px">CREATOR / 02</div>
-        <h3 data-i18n="mediaTitle">Media Team</h3>
-        <p data-i18n="mediaDesc">Create exciting videos, showcase the server, bring new players and grow the GUDU MC brand.</p>
-        <div class="tags"><span class="tag">YouTube</span><span class="tag">TikTok</span><span class="tag">Creativity</span></div>
-        <button class="primary" onclick="beginApply('media')" data-i18n="startMedia">Start Media Application →</button>
-      </article>
-    </div>
-  </section>
+<section class="section" id="roles">
+ <div class="section-head"><div><div class="kicker">CHOOSE YOUR PATH / 01</div><h2 data-i="roleHeading">Find your place.</h2><p data-i="roleSub">Two teams. One community. Your chance to make a difference.</p></div></div>
+ <div class="cards">
+  <article class="card">
+   <div class="cardtop"><div class="iconbox">⚔</div><span class="role-no">OPPORTUNITY / 001</span></div>
+   <h3 data-i="staffTitle">Staff Team</h3>
+   <p data-i="staffDesc">Protect the community, help players, resolve conflicts and keep gameplay fair. We value maturity, consistency and good judgement.</p>
+   <div class="tags"><span class="tag">MODERATION</span><span class="tag">TEAMWORK</span><span class="tag">TRUST</span></div>
+   <button class="btn primary" onclick="startApply('staff')" data-i="staffButton">Open Staff Application →</button>
+  </article>
+  <article class="card">
+   <div class="cardtop"><div class="iconbox">◈</div><span class="role-no">OPPORTUNITY / 002</span></div>
+   <h3 data-i="mediaTitle">Media Team</h3>
+   <p data-i="mediaDesc">Turn gameplay into stories. Make original videos, capture memorable moments and introduce more players to GUDU MC.</p>
+   <div class="tags"><span class="tag">YOUTUBE</span><span class="tag">TIKTOK</span><span class="tag">CREATIVITY</span></div>
+   <button class="btn primary" onclick="startApply('media')" data-i="mediaButton">Open Media Application →</button>
+  </article>
+ </div>
+</section>
 
-  <section id="dashboard" class="dashboard">
-    <div class="dash-head">
-      <div><h2 data-i18n="dashboardTitle">Your dashboard.</h2><p data-i18n="dashboardText">Manage your profile and applications.</p></div>
-      <button class="secondary" onclick="hideDashboard()" data-i18n="backHome">← Back home</button>
-    </div>
-    <div class="dash-grid">
-      <aside class="side">
-        <button id="tab-profile" onclick="switchTab('profile')" data-i18n="profileTab">◉ Profile</button>
-        <button id="tab-apply" onclick="switchTab('apply')" data-i18n="applyTab">＋ New Application</button>
-        <button id="tab-applications" onclick="switchTab('applications')" data-i18n="appsTab">▤ My Applications</button>
-      </aside>
-      <div class="content">
-        <div id="panel-profile" class="panel">
-          <h3 data-i18n="profileTitle">Your profile</h3>
-          <div class="profile-box">
-            <div id="profileAvatar" class="profile-big">G</div>
-            <div><strong id="profileDisplayName">Player</strong><div style="color:var(--muted);font-size:12px;margin-top:5px" id="profileSince"></div></div>
-          </div>
-          <div class="field"><label data-i18n="usernameLabel">Username</label><input id="editUsername" maxlength="24"></div>
-          <div class="field"><label data-i18n="minecraftLabel">Minecraft Java/Bedrock username</label><input id="editMinecraft" maxlength="24" placeholder="Your Minecraft name"></div>
-          <div class="field"><label data-i18n="discordLabel">Discord username</label><input id="editDiscord" maxlength="50" placeholder="username"></div>
-          <button class="primary" onclick="saveProfile()" data-i18n="saveProfile">Save Profile</button>
-          <button class="secondary danger" onclick="logout()" style="margin-left:8px" data-i18n="logout">Log out</button>
-          <div class="notice" data-i18n="localNotice">This demo stores your profile in this browser. It is not a secure online account.</div>
-        </div>
+<section class="section" id="features">
+ <div class="section-head"><div><div class="kicker">BUILT FOR YOU / 02</div><h2 data-i="featureHeading">Your application HQ.</h2><p data-i="featureSub">Everything you need, in one beautifully designed portal.</p></div></div>
+ <div class="feature-grid">
+  <div class="feature"><div class="ficon">◉</div><strong data-i="f1">Personal Profile</strong><p data-i="fd1">Keep your Minecraft and Discord details in one place.</p></div>
+  <div class="feature"><div class="ficon">▤</div><strong data-i="f2">Application Tracker</strong><p data-i="fd2">Review the applications saved in your browser.</p></div>
+  <div class="feature"><div class="ficon">✧</div><strong data-i="f3">Smart Questions</strong><p data-i="fd3">Scenario-based questions designed for each team.</p></div>
+  <div class="feature"><div class="ficon">◌</div><strong data-i="f4">Your Language</strong><p data-i="fd4">Switch between English, Spanish and Hindi.</p></div>
+ </div>
+</section>
 
-        <div id="panel-apply" class="panel">
-          <h3 id="formTitle">Staff application</h3>
-          <div class="progress-row"><span data-i18n="formProgress">APPLICATION COMPLETION</span><span id="progressText">0%</span></div>
-          <div class="progress"><div id="progressBar"></div></div>
-          <form id="applicationForm" onsubmit="submitApplication(event)">
-            <div class="form-grid">
-              <div class="field"><label data-i18n="appName">Display name *</label><input id="appName" required maxlength="40"></div>
-              <div class="field"><label data-i18n="appAge">Age *</label><input id="appAge" type="number" min="13" max="99" required></div>
-              <div class="field"><label data-i18n="appMinecraft">Minecraft username *</label><input id="appMinecraft" required maxlength="24"></div>
-              <div class="field"><label data-i18n="appDiscord">Discord username *</label><input id="appDiscord" required maxlength="50"></div>
-              <div class="field"><label data-i18n="appTimezone">Timezone *</label><input id="appTimezone" placeholder="e.g. CET / UTC+2" required maxlength="40"></div>
-              <div class="field"><label data-i18n="appHours">Hours available per week *</label><select id="appHours" required><option value="">Choose...</option><option>1–3 hours</option><option>4–7 hours</option><option>8–14 hours</option><option>15+ hours</option></select></div>
-            </div>
-            <div id="questions"></div>
-            <div class="field"><label data-i18n="honestyLabel">Confirmation *</label><label style="font-weight:400;line-height:1.8"><input type="checkbox" id="honesty" required style="width:auto;display:inline;margin-right:8px" data-i18n="honestyText">I confirm my answers are honest and my own.</label></div>
-            <div class="notice" data-i18n="reviewNotice">Take your time. Detailed, honest answers help the team understand your skills. Do not share passwords or other private information.</div>
-            <button type="submit" class="primary" data-i18n="submitApp">Submit Application ↗</button>
-            <button type="button" class="secondary" onclick="switchTab('applications')" data-i18n="cancel">Cancel</button>
-          </form>
-        </div>
+<section class="section" id="community">
+ <div class="quote"><div><div class="kicker">THE GUDU MC MINDSET</div><strong data-i="quote">Great communities aren't built by one player.</strong><p data-i="quoteSub">They're built by people who care, create, and show up for each other.</p></div><div class="quote-symbol">✳</div></div>
+</section>
 
-        <div id="panel-applications" class="panel">
-          <h3 data-i18n="appsTitle">Your applications</h3>
-          <div id="applicationList"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-title" style="margin-top:65px">
-    <h2 data-i18n="rulesTitle">Before you apply.</h2>
-    <p data-i18n="rulesText">Be respectful, answer honestly and use your own words. Applications are not a guarantee of acceptance.</p>
-  </section>
+<section id="dashboard">
+ <div class="dash-title"><div><div class="kicker">YOUR PRIVATE SPACE</div><h2 data-i="dashHeading">Your dashboard.</h2><p data-i="dashSub">Manage your profile and application history.</p></div><button class="btn" onclick="closeDash()" data-i="back">← Back to website</button></div>
+ <div class="dash-layout">
+  <aside class="sidebar">
+   <button id="tab-profile" onclick="tab('profile')" data-i="tabProfile">◉ My Profile</button>
+   <button id="tab-new" onclick="tab('new')" data-i="tabNew">＋ New Application</button>
+   <button id="tab-apps" onclick="tab('apps')" data-i="tabApps">▤ My Applications</button>
+  </aside>
+  <div class="workspace">
+   <section id="panel-profile" class="panel">
+    <h3 data-i="profileHeading">Your profile</h3>
+    <div class="profilebox"><div class="bigavatar" id="avatar">G</div><div><strong id="displayName">Player</strong><div class="muted" style="margin-top:5px">GUDU MC · Browser demo</div></div></div>
+    <div class="field"><label data-i="usernameLabel">Display username</label><input id="editUser" maxlength="24"></div>
+    <div class="field"><label>Minecraft username</label><input id="editMC" maxlength="24"></div>
+    <div class="field"><label>Discord username</label><input id="editDC" maxlength="50"></div>
+    <button class="btn primary" onclick="saveProfile()" data-i="save">Save Profile</button>
+    <button class="btn" onclick="logout()" data-i="logout">Log out</button>
+    <div class="notice" data-i="localWarning">Demo mode: your data stays in this browser. This is not a secure online account.</div>
+   </section>
+   <section id="panel-new" class="panel">
+    <h3 id="formTitle">Staff application</h3>
+    <div class="progresshead"><span data-i="progressLabel">APPLICATION COMPLETION</span><span id="percent">0%</span></div>
+    <div class="progress"><div id="bar"></div></div>
+    <form id="form" onsubmit="submitApp(event)">
+     <div class="formgrid">
+      <div class="field"><label data-i="nameLabel">Display name *</label><input id="appName" maxlength="40" required></div>
+      <div class="field"><label data-i="ageLabel">Age *</label><input id="appAge" type="number" min="13" max="99" required></div>
+      <div class="field"><label>Minecraft username *</label><input id="appMC" maxlength="24" required></div>
+      <div class="field"><label>Discord username *</label><input id="appDC" maxlength="50" required></div>
+      <div class="field"><label data-i="timezone">Timezone *</label><input id="appTZ" maxlength="40" placeholder="CET / UTC+2" required></div>
+      <div class="field"><label data-i="hours">Available hours per week *</label><select id="appHours" required><option value="" data-i="choose">Choose...</option><option>1–3 hours</option><option>4–7 hours</option><option>8–14 hours</option><option>15+ hours</option></select></div>
+     </div>
+     <div id="questions"></div>
+     <div class="field" style="margin-top:20px"><label><input type="checkbox" id="agree" required> <span data-i="agree">I confirm that my answers are honest and written by me.</span></label></div>
+     <div class="notice" data-i="privacy">Do not include passwords, private contact details or other sensitive information. Submitting this demo does not notify server staff.</div>
+     <button class="btn primary" type="submit" data-i="submit">Submit Application ↗</button>
+     <button class="btn" type="button" onclick="tab('apps')" data-i="cancel">Cancel</button>
+    </form>
+   </section>
+   <section id="panel-apps" class="panel">
+    <h3 data-i="appsHeading">My applications</h3>
+    <div id="appList"></div>
+   </section>
+  </div>
+ </div>
+</section>
 </main>
 
-<footer>
-  <strong>GUDU MC</strong> · STAFF & MEDIA PORTAL<br>
-  <span data-i18n="footerText">Made for our community. Keep it fair. Keep it creative.</span><br>
-  <a href="https://discord.gg/HmHvmCQDX" target="_blank" rel="noopener noreferrer" style="color:var(--green);text-decoration:none">Join our Discord ↗</a>
-  <div style="margin-top:12px">© <span id="year"></span> GUDU MC</div>
-</footer>
+<footer><strong>GUDU MC</strong> · APPLICATION PORTAL<br><span data-i="footer">Create. Contribute. Make a difference.</span><br><a href="https://discord.gg/HmHvmCQDX" target="_blank" rel="noopener noreferrer" style="color:var(--green);text-decoration:none">Discord Community ↗</a><br>© <span id="year"></span> GUDU MC</footer>
 
-<div id="loginModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="loginHeading">
-  <div class="modal">
-    <div class="brand-icon">G</div>
-    <h2 id="loginHeading">Welcome to GUDU MC.</h2>
-    <p id="loginDescription">Create your local demo profile or return to your existing profile on this browser.</p>
-    <form onsubmit="login(event)">
-      <div class="field"><label for="loginUsername" data-i18n="loginUsername">Username</label><input id="loginUsername" required minlength="3" maxlength="24" autocomplete="nickname" placeholder="Choose a username"></div>
-      <div class="field"><label for="loginMinecraft" data-i18n="minecraftLabel">Minecraft username</label><input id="loginMinecraft" maxlength="24" placeholder="Minecraft name"></div>
-      <div class="field"><label for="loginDiscord" data-i18n="discordLabel">Discord username</label><input id="loginDiscord" maxlength="50" placeholder="Discord username"></div>
-      <button class="primary" type="submit" data-i18n="continueBtn">Continue →</button>
-      <button class="secondary" type="button" onclick="closeLogin()" style="width:100%;margin-top:10px" data-i18n="closeBtn">Close</button>
-    </form>
-    <div class="notice">Demo profile only. This does not verify your identity or create a secure account.</div>
-  </div>
+<div class="modalbg hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+ <div class="modal">
+  <div class="logo-mark">G</div><h2 id="modalTitle">Welcome to GUDU MC.</h2>
+  <p data-i="modalText">Create a local demo profile to explore the application portal.</p>
+  <form onsubmit="login(event)">
+   <div class="field"><label data-i="usernameLabel">Username</label><input id="loginUser" minlength="3" maxlength="24" required autocomplete="nickname" placeholder="Your username"></div>
+   <div class="field"><label>Minecraft username</label><input id="loginMC" maxlength="24"></div>
+   <div class="field"><label>Discord username</label><input id="loginDC" maxlength="50"></div>
+   <button class="btn primary" type="submit" data-i="continue">Continue →</button>
+   <button class="btn" type="button" onclick="closeLogin()" data-i="close">Close</button>
+  </form>
+  <div class="notice" data-i="localWarning">This demo does not create a secure account or verify identity.</div>
+ </div>
 </div>
-
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-const STORAGE = {
-  profile: "gudumc_demo_profile_v1",
-  apps: "gudumc_demo_apps_v1",
-  lang: "gudumc_demo_lang_v1"
+const KEY="gudumc_ultimate_v1";
+const LANGKEY="gudumc_lang_v1";
+const Q={
+en:{
+staff:[
+["Why do you want to join GUDU MC staff, and what strengths would you bring?","Describe your motivation and give specific examples."],
+["A player reports cheating but provides no clear evidence. How would you investigate fairly?","Explain your steps before making a decision."],
+["Your friend breaks a rule and asks you to ignore it. What would you do?","Show how you would remain impartial."],
+["Two players are arguing and others are joining in. How would you de-escalate the situation?","Explain what you would do first and why."],
+["A senior staff member makes a decision you believe is unfair. How would you handle it?","Describe a respectful process for raising concerns."],
+["You discover that you punished the wrong player. What happens next?","Explain accountability and how you would correct the mistake."],
+["How would you manage staff duties alongside school and personal commitments?","Give a realistic schedule and boundaries."],
+["A player repeatedly ignores warnings but is popular in the community. How would you respond?","Explain consistent rule enforcement and documentation."]
+],
+media:[
+["What kind of Minecraft content do you create, and what makes your style distinctive?","Describe your strengths, format and audience."],
+["Pitch three original video ideas specifically for GUDU MC.","Include a title and short concept for each."],
+["Plan a 30-second promotional video. What happens in the opening, middle and ending?","Explain the hook, visuals and call to action."],
+["Which platforms and editing tools do you use? What experience do you have?","Mention your workflow and experience honestly."],
+["How would you tell whether your content attracts genuine players to the server?","Discuss useful metrics beyond views."],
+["Your video gets very few views. How would you improve your next one?","Explain how you would learn from the results."],
+["A team member disagrees with your creative idea. How would you resolve it?","Describe constructive communication."],
+["Share a public portfolio or channel link if available and explain your best piece of work.","Optional link. Never share login credentials."]
+]},
+es:{
+staff:[
+["¿Por qué quieres unirte al equipo Staff de GUDU MC y qué aportarías?","Explica tu motivación con ejemplos."],
+["Un jugador denuncia trampas sin pruebas claras. ¿Cómo investigarías?","Explica tus pasos para decidir de forma justa."],
+["Un amigo incumple una norma y te pide ignorarlo. ¿Qué harías?","Demuestra imparcialidad."],
+["Dos jugadores discuten y otros se unen. ¿Cómo calmarías la situación?","Explica qué harías primero."],
+["Un superior toma una decisión que consideras injusta. ¿Cómo actuarías?","Describe cómo plantearías tu preocupación."],
+["Descubres que sancionaste al jugador equivocado. ¿Qué harías?","Explica cómo corregirías el error."],
+["¿Cómo equilibrarías las tareas Staff con los estudios y tu tiempo personal?","Propón un horario realista."],
+["Un jugador popular ignora repetidamente las advertencias. ¿Cómo responderías?","Explica cómo aplicarías las normas."]
+],
+media:[
+["¿Qué contenido de Minecraft creas y qué distingue tu estilo?","Describe tus puntos fuertes y tu audiencia."],
+["Propón tres ideas originales de vídeos para GUDU MC.","Incluye un título y una breve descripción."],
+["Planifica un vídeo promocional de 30 segundos.","Explica el inicio, el desarrollo y el final."],
+["¿Qué plataformas y herramientas de edición utilizas?","Describe tu experiencia honestamente."],
+["¿Cómo medirías si tu contenido atrae jugadores reales?","Piensa más allá de las visualizaciones."],
+["Un vídeo tiene pocas visitas. ¿Cómo mejorarías el siguiente?","Explica cómo aprenderías de los resultados."],
+["Un compañero discrepa de tu idea creativa. ¿Cómo lo resolverías?","Describe una comunicación constructiva."],
+["Comparte un portafolio público si tienes y explica tu mejor trabajo.","Enlace opcional. Nunca compartas contraseñas."]
+]},
+hi:{
+staff:[
+["तुम GUDU MC की Staff टीम में क्यों आना चाहते हो और क्या योगदान दोगे?","अपनी प्रेरणा और उदाहरण बताओ।"],
+["कोई खिलाड़ी बिना स्पष्ट सबूत के चीटिंग की रिपोर्ट करे तो जाँच कैसे करोगे?","निष्पक्ष निर्णय लेने के चरण बताओ।"],
+["तुम्हारा दोस्त नियम तोड़े और अनदेखा करने को कहे तो क्या करोगे?","निष्पक्ष रहने का तरीका बताओ।"],
+["दो खिलाड़ी झगड़ रहे हों और दूसरे भी शामिल हो रहे हों तो क्या करोगे?","स्थिति शांत करने का तरीका बताओ।"],
+["सीनियर स्टाफ का फैसला गलत लगे तो कैसे बात करोगे?","सम्मानजनक तरीके से समस्या उठाने का तरीका बताओ।"],
+["अगर गलती से गलत खिलाड़ी को सज़ा दे दो तो क्या करोगे?","गलती सुधारने की प्रक्रिया बताओ।"],
+["पढ़ाई और निजी समय के साथ Staff काम कैसे संभालोगे?","एक वास्तविक समय-सारणी बताओ।"],
+["कोई लोकप्रिय खिलाड़ी बार-बार चेतावनी अनदेखी करे तो क्या करोगे?","नियम लगातार लागू करने का तरीका बताओ।"]
+],
+media:[
+["तुम किस तरह का Minecraft कंटेंट बनाते हो और तुम्हारी शैली अलग कैसे है?","अपनी खासियत और दर्शकों के बारे में बताओ।"],
+["GUDU MC के लिए तीन नए वीडियो आइडिया दो।","हर आइडिया का टाइटल और विवरण दो।"],
+["30 सेकंड का प्रमोशनल वीडियो कैसे बनाओगे?","शुरुआत, मुख्य हिस्सा और अंत बताओ।"],
+["कौन-से प्लेटफॉर्म और एडिटिंग टूल इस्तेमाल करते हो?","अपना अनुभव ईमानदारी से बताओ।"],
+["कैसे पता करोगे कि तुम्हारा कंटेंट नए खिलाड़ियों को ला रहा है?","सिर्फ व्यूज़ से आगे सोचो।"],
+["वीडियो पर कम व्यूज़ आएँ तो अगला कैसे बेहतर बनाओगे?","सीखने का तरीका बताओ।"],
+["टीम में कोई तुम्हारे क्रिएटिव आइडिया से असहमत हो तो क्या करोगे?","रचनात्मक बातचीत का तरीका बताओ।"],
+["अपना सार्वजनिक पोर्टफोलियो या चैनल लिंक दो, यदि उपलब्ध है।","लिंक वैकल्पिक है। पासवर्ड साझा मत करो।"]
+]}
 };
 
-const translations = {
-  en: {
-    myApps:"My Apps",heroEyebrow:"YOUR JOURNEY STARTS HERE",
-    heroText:"More than a Minecraft server. A community built by dedicated people. Apply to join our team and help shape what comes next.",
-    staffApply:"Apply for Staff ↗",mediaApply:"Apply for Media ↗",
-    roles:"APPLICATION TRACKS",community:"COMMUNITY FIRST",potential:"YOUR POTENTIAL",
-    chooseTitle:"Choose your path.",chooseText:"Find your place in the GUDU MC community.",
-    staffTitle:"Staff Team",staffDesc:"Help players, handle reports, resolve conflicts and make the server a fair and welcoming place.",
-    mediaTitle:"Media Team",mediaDesc:"Create exciting videos, showcase the server, bring new players and grow the GUDU MC brand.",
-    startStaff:"Start Staff Application →",startMedia:"Start Media Application →",
-    dashboardTitle:"Your dashboard.",dashboardText:"Manage your profile and applications.",
-    backHome:"← Back home",profileTab:"◉ Profile",applyTab:"＋ New Application",appsTab:"▤ My Applications",
-    profileTitle:"Your profile",usernameLabel:"Username",minecraftLabel:"Minecraft username",
-    discordLabel:"Discord username",saveProfile:"Save Profile",logout:"Log out",
-    localNotice:"This demo stores your profile in this browser. It is not a secure online account.",
-    formProgress:"APPLICATION COMPLETION",appName:"Display name *",appAge:"Age *",
-    appMinecraft:"Minecraft username *",appDiscord:"Discord username *",appTimezone:"Timezone *",
-    appHours:"Hours available per week *",honestyLabel:"Confirmation *",
-    honestyText:"I confirm my answers are honest and my own.",
-    reviewNotice:"Take your time. Detailed, honest answers help the team understand your skills. Do not share passwords or other private information.",
-    submitApp:"Submit Application ↗",cancel:"Cancel",appsTitle:"Your applications",
-    rulesTitle:"Before you apply.",rulesText:"Be respectful, answer honestly and use your own words. Applications are not a guarantee of acceptance.",
-    footerText:"Made for our community. Keep it fair. Keep it creative.",
-    loginUsername:"Username",continueBtn:"Continue →",closeBtn:"Close",
-    staffForm:"Staff application",mediaForm:"Media application",
-    loginFirst:"Please create your demo profile first.",saved:"Profile saved.",
-    submitted:"Application saved in this browser!",emptyTitle:"Nothing here yet.",
-    emptyText:"Your submitted applications will appear here.",
-    noAccount:"Please log in first.",deleted:"Application deleted.",
-    deleteBtn:"Delete local copy",created:"Submitted",status:"Status: Submitted",
-    staffQ:[
-      ["Why do you want to join the GUDU MC staff team, and what would you contribute that other applicants might not?","Explain your motivation and give concrete examples."],
-      ["A player reports another player for cheating, but you have no direct evidence. What steps would you take?","Explain how you would investigate fairly."],
-      ["A close friend breaks a server rule and asks you to ignore it. How would you respond?","Show how you would handle impartiality."],
-      ["Two players are arguing in public chat and other players are joining in. What would you do first, and why?","Describe a calm, proportionate response."],
-      ["A senior staff member makes a decision you believe is unfair. How would you handle the disagreement?","Consider appropriate escalation and evidence."],
-      ["Tell us about a time you received criticism or made a mistake. What did you learn?","A real example or an honest hypothetical is fine."],
-      ["How would you balance school, personal time and staff duties without overpromising?","Give a realistic plan."],
-      ["What would you do if you accidentally punished the wrong player?","Explain accountability and corrective action."]
-    ],
-    mediaQ:[
-      ["What type of Minecraft content do you create, and what makes your style distinctive?","Describe your niche, tone and creative strengths."],
-      ["Pitch three original video ideas that would make players curious about GUDU MC.","Give each idea a title and short concept."],
-      ["How would you create a compelling 30-second video introducing our server?","Describe the opening hook, middle and call to action."],
-      ["Which platforms do you use, and what is your experience with them?","Include links to public work if you have any."],
-      ["How would you measure whether your content is helping the server grow?","Consider useful metrics beyond views."],
-      ["A video performs poorly. How would you learn from it and improve the next one?","Explain your testing and improvement process."],
-      ["How would you handle a disagreement about creative direction or a requested edit?","Show how you would communicate professionally."],
-      ["Share a portfolio or public channel link, if available, and explain which piece best represents your work.","Optional portfolio link; never share account passwords."]
-    ]
-  },
-  es: {
-    myApps:"Mis solicitudes",heroEyebrow:"TU CAMINO EMPIEZA AQUÍ",
-    heroText:"Más que un servidor de Minecraft. Una comunidad creada por personas dedicadas. Solicita unirte al equipo.",
-    staffApply:"Solicitar Staff ↗",mediaApply:"Solicitar Media ↗",
-    roles:"TIPOS DE SOLICITUD",community:"LA COMUNIDAD PRIMERO",potential:"TU POTENCIAL",
-    chooseTitle:"Elige tu camino.",chooseText:"Encuentra tu lugar en la comunidad GUDU MC.",
-    staffTitle:"Equipo Staff",staffDesc:"Ayuda a los jugadores, revisa reportes y crea un entorno justo y acogedor.",
-    mediaTitle:"Equipo Media",mediaDesc:"Crea vídeos, muestra el servidor y ayuda a crecer la comunidad GUDU MC.",
-    startStaff:"Solicitar Staff →",startMedia:"Solicitar Media →",
-    dashboardTitle:"Tu panel.",dashboardText:"Gestiona tu perfil y solicitudes.",
-    backHome:"← Inicio",profileTab:"◉ Perfil",applyTab:"＋ Nueva solicitud",appsTab:"▤ Mis solicitudes",
-    profileTitle:"Tu perfil",usernameLabel:"Nombre de usuario",minecraftLabel:"Usuario de Minecraft",
-    discordLabel:"Usuario de Discord",saveProfile:"Guardar perfil",logout:"Cerrar sesión",
-    localNotice:"Este perfil de demostración se guarda en este navegador. No es una cuenta segura.",
-    formProgress:"PROGRESO DE LA SOLICITUD",appName:"Nombre *",appAge:"Edad *",
-    appMinecraft:"Usuario de Minecraft *",appDiscord:"Usuario de Discord *",appTimezone:"Zona horaria *",
-    appHours:"Horas disponibles por semana *",honestyLabel:"Confirmación *",
-    honestyText:"Confirmo que mis respuestas son sinceras y propias.",
-    reviewNotice:"Responde con calma y sinceridad. No compartas contraseñas ni información privada.",
-    submitApp:"Enviar solicitud ↗",cancel:"Cancelar",appsTitle:"Tus solicitudes",
-    rulesTitle:"Antes de solicitar.",rulesText:"Sé respetuoso y responde con sinceridad. Enviar una solicitud no garantiza la aceptación.",
-    footerText:"Hecho para nuestra comunidad. Justicia y creatividad.",
-    loginUsername:"Nombre de usuario",continueBtn:"Continuar →",closeBtn:"Cerrar",
-    staffForm:"Solicitud Staff",mediaForm:"Solicitud Media",
-    loginFirst:"Crea primero tu perfil de demostración.",saved:"Perfil guardado.",
-    submitted:"¡Solicitud guardada en este navegador!",emptyTitle:"Todavía no hay solicitudes.",
-    emptyText:"Tus solicitudes aparecerán aquí.",noAccount:"Inicia sesión primero.",
-    deleted:"Copia local eliminada.",deleteBtn:"Eliminar copia local",
-    created:"Enviada",status:"Estado: Enviada",
-    staffQ:[
-      ["¿Por qué quieres entrar en el equipo Staff de GUDU MC y qué aportarías?","Explica tu motivación con ejemplos concretos."],
-      ["Un jugador denuncia trampas sin aportar pruebas directas. ¿Qué harías?","Explica cómo investigarías de forma justa."],
-      ["Un amigo cercano incumple las normas y te pide ignorarlo. ¿Cómo responderías?","Explica cómo actuarías con imparcialidad."],
-      ["Dos jugadores discuten en el chat público. ¿Qué harías primero y por qué?","Describe una respuesta calmada y proporcionada."],
-      ["Un superior toma una decisión que consideras injusta. ¿Cómo actuarías?","Considera la comunicación y las pruebas."],
-      ["Cuenta una ocasión en que recibiste críticas o cometiste un error. ¿Qué aprendiste?","Puedes dar un ejemplo real o hipotético sincero."],
-      ["¿Cómo equilibrarías los estudios, tu tiempo personal y las tareas Staff?","Propón un plan realista."],
-      ["¿Qué harías si sancionas por error al jugador equivocado?","Explica cómo asumirías y corregirías el error."]
-    ],
-    mediaQ:[
-      ["¿Qué contenido de Minecraft creas y qué hace especial tu estilo?","Describe tu temática y tus puntos fuertes."],
-      ["Propón tres ideas originales de vídeos para GUDU MC.","Incluye un título y una breve idea."],
-      ["¿Cómo harías un vídeo de 30 segundos para presentar el servidor?","Describe el gancho inicial y el final."],
-      ["¿Qué plataformas utilizas y qué experiencia tienes?","Puedes incluir enlaces públicos a tu trabajo."],
-      ["¿Cómo medirías si tu contenido ayuda a crecer al servidor?","Piensa más allá de las visualizaciones."],
-      ["Un vídeo funciona mal. ¿Cómo mejorarías el siguiente?","Explica tu método de aprendizaje."],
-      ["¿Cómo resolverías un desacuerdo sobre una edición o una idea creativa?","Demuestra comunicación profesional."],
-      ["Comparte un enlace público a tu portafolio, si tienes, y explica tu mejor trabajo.","El enlace es opcional. Nunca compartas contraseñas."]
-    ]
-  },
-  hi: {
-    myApps:"मेरे आवेदन",heroEyebrow:"तुम्हारा सफर यहाँ से शुरू",
-    heroText:"Minecraft सर्वर से बढ़कर एक कम्युनिटी। GUDU MC टीम में शामिल होने और इसे बेहतर बनाने के लिए आवेदन करो।",
-    staffApply:"Staff के लिए आवेदन ↗",mediaApply:"Media के लिए आवेदन ↗",
-    roles:"आवेदन के प्रकार",community:"कम्युनिटी सबसे पहले",potential:"तुम्हारी क्षमता",
-    chooseTitle:"अपना रास्ता चुनो।",chooseText:"GUDU MC कम्युनिटी में अपनी जगह बनाओ।",
-    staffTitle:"Staff टीम",staffDesc:"खिलाड़ियों की मदद करो, रिपोर्ट संभालो और सर्वर को सुरक्षित व निष्पक्ष बनाओ।",
-    mediaTitle:"Media टीम",mediaDesc:"वीडियो बनाओ, सर्वर दिखाओ और GUDU MC को आगे बढ़ाओ।",
-    startStaff:"Staff आवेदन शुरू करो →",startMedia:"Media आवेदन शुरू करो →",
-    dashboardTitle:"तुम्हारा डैशबोर्ड।",dashboardText:"अपनी प्रोफाइल और आवेदन संभालो।",
-    backHome:"← वापस",profileTab:"◉ प्रोफाइल",applyTab:"＋ नया आवेदन",appsTab:"▤ मेरे आवेदन",
-    profileTitle:"तुम्हारी प्रोफाइल",usernameLabel:"यूज़रनेम",minecraftLabel:"Minecraft यूज़रनेम",
-    discordLabel:"Discord यूज़रनेम",saveProfile:"प्रोफाइल सेव करो",logout:"लॉग आउट",
-    localNotice:"यह डेमो प्रोफाइल इसी ब्राउज़र में सेव होती है। यह सुरक्षित ऑनलाइन अकाउंट नहीं है।",
-    formProgress:"आवेदन की प्रगति",appName:"नाम *",appAge:"उम्र *",
-    appMinecraft:"Minecraft यूज़रनेम *",appDiscord:"Discord यूज़रनेम *",appTimezone:"टाइमज़ोन *",
-    appHours:"हर हफ्ते उपलब्ध घंटे *",honestyLabel:"पुष्टि *",
-    honestyText:"मैं पुष्टि करता/करती हूँ कि मेरे जवाब ईमानदार और मेरे अपने हैं।",
-    reviewNotice:"सोचकर और ईमानदारी से जवाब दो। पासवर्ड या निजी जानकारी साझा मत करो।",
-    submitApp:"आवेदन जमा करो ↗",cancel:"रद्द करो",appsTitle:"तुम्हारे आवेदन",
-    rulesTitle:"आवेदन से पहले।",rulesText:"सम्मान से बात करो और अपने शब्दों में ईमानदारी से जवाब दो। आवेदन से चयन की गारंटी नहीं है।",
-    footerText:"हमारी कम्युनिटी के लिए। निष्पक्ष रहो, क्रिएटिव रहो।",
-    loginUsername:"यूज़रनेम",continueBtn:"आगे बढ़ो →",closeBtn:"बंद करो",
-    staffForm:"Staff आवेदन",mediaForm:"Media आवेदन",
-    loginFirst:"पहले अपनी डेमो प्रोफाइल बनाओ।",saved:"प्रोफाइल सेव हो गई।",
-    submitted:"आवेदन इस ब्राउज़र में सेव हो गया!",emptyTitle:"अभी कोई आवेदन नहीं है।",
-    emptyText:"तुम्हारे आवेदन यहाँ दिखेंगे।",noAccount:"पहले लॉगिन करो।",
-    deleted:"लोकल कॉपी हटा दी गई।",deleteBtn:"लोकल कॉपी हटाओ",
-    created:"जमा किया",status:"स्थिति: जमा किया",
-    staffQ:[
-      ["तुम GUDU MC की Staff टीम में क्यों शामिल होना चाहते हो और क्या योगदान दोगे?","अपनी प्रेरणा और ठोस उदाहरण बताओ।"],
-      ["कोई खिलाड़ी बिना सीधे सबूत के चीटिंग की शिकायत करे तो क्या करोगे?","निष्पक्ष जाँच का तरीका बताओ।"],
-      ["तुम्हारा दोस्त नियम तोड़ता है और अनदेखा करने को कहता है। क्या करोगे?","निष्पक्ष रहने का तरीका बताओ।"],
-      ["दो खिलाड़ी पब्लिक चैट में झगड़ रहे हों तो सबसे पहले क्या करोगे?","शांत और उचित प्रतिक्रिया बताओ।"],
-      ["सीनियर स्टाफ का फैसला तुम्हें गलत लगे तो कैसे बात करोगे?","सबूत और सही तरीके से शिकायत करने पर सोचो।"],
-      ["किसी गलती या आलोचना से तुमने क्या सीखा?","असली या ईमानदार काल्पनिक उदाहरण दे सकते हो।"],
-      ["पढ़ाई, निजी समय और Staff काम में संतुलन कैसे रखोगे?","एक वास्तविक योजना बताओ।"],
-      ["अगर गलती से गलत खिलाड़ी को सज़ा दे दो तो क्या करोगे?","गलती स्वीकारने और सुधारने का तरीका बताओ।"]
-    ],
-    mediaQ:[
-      ["तुम किस तरह का Minecraft कंटेंट बनाते हो और तुम्हारी शैली अलग कैसे है?","अपनी खासियत बताओ।"],
-      ["GUDU MC के लिए तीन नए वीडियो आइडिया बताओ।","हर आइडिया का टाइटल और छोटी जानकारी दो।"],
-      ["सर्वर दिखाने वाला 30 सेकंड का वीडियो कैसे बनाओगे?","शुरुआत, मुख्य हिस्सा और अंत बताओ।"],
-      ["कौन-से प्लेटफॉर्म इस्तेमाल करते हो और कितना अनुभव है?","चाहो तो अपने सार्वजनिक काम के लिंक दो।"],
-      ["कैसे पता करोगे कि तुम्हारा कंटेंट सर्वर बढ़ाने में मदद कर रहा है?","सिर्फ व्यूज़ से आगे सोचो।"],
-      ["वीडियो अच्छा न चले तो अगला बेहतर कैसे बनाओगे?","सीखने का तरीका बताओ।"],
-      ["क्रिएटिव आइडिया पर असहमति हो तो कैसे सुलझाओगे?","प्रोफेशनल तरीके से बात करने का तरीका बताओ।"],
-      ["अपने पोर्टफोलियो या चैनल का सार्वजनिक लिंक दो, अगर है, और अपना सबसे अच्छा काम बताओ।","लिंक वैकल्पिक है। पासवर्ड कभी साझा मत करो।"]
-    ]
-  }
+const T={
+en:{navHome:"Home",navRoles:"Applications",navFeatures:"Features",navCommunity:"Community",login:"Login ↗",eyebrow:"THE NEXT GENERATION OF GUDU MC",heroText:"Every great Minecraft server is built by great people. Bring your ideas, your skills, and your passion. Your journey with GUDU MC starts here.",staffCTA:"Join the Staff Team ↗",mediaCTA:"Become a Creator ◈",roleHeading:"Find your place.",roleSub:"Two teams. One community. Your chance to make a difference.",staffTitle:"Staff Team",staffDesc:"Protect the community, help players, resolve conflicts and keep gameplay fair. We value maturity, consistency and good judgement.",mediaTitle:"Media Team",mediaDesc:"Turn gameplay into stories. Make original videos, capture memorable moments and introduce more players to GUDU MC.",staffButton:"Open Staff Application →",mediaButton:"Open Media Application →",featureHeading:"Your application HQ.",featureSub:"Everything you need, in one beautifully designed portal.",f1:"Personal Profile",fd1:"Keep your Minecraft and Discord details in one place.",f2:"Application Tracker",fd2:"Review the applications saved in your browser.",f3:"Smart Questions",fd3:"Scenario-based questions designed for each team.",f4:"Your Language",fd4:"Switch between English, Spanish and Hindi.",quote:"Great communities aren't built by one player.",quoteSub:"They're built by people who care, create, and show up for each other.",dashHeading:"Your dashboard.",dashSub:"Manage your profile and application history.",back:"← Back to website",tabProfile:"◉ My Profile",tabNew:"＋ New Application",tabApps:"▤ My Applications",profileHeading:"Your profile",usernameLabel:"Display username",save:"Save Profile",logout:"Log out",localWarning:"Demo mode: your data stays in this browser. This is not a secure online account.",progressLabel:"APPLICATION COMPLETION",nameLabel:"Display name *",ageLabel:"Age *",timezone:"Timezone *",hours:"Available hours per week *",choose:"Choose...",agree:"I confirm that my answers are honest and written by me.",privacy:"Do not include passwords, private contact details or other sensitive information. Submitting this demo does not notify server staff.",submit:"Submit Application ↗",cancel:"Cancel",appsHeading:"My applications",footer:"Create. Contribute. Make a difference.",modalText:"Create a local demo profile to explore the application portal.",continue:"Continue →",close:"Close",saved:"Profile saved.",welcome:"Welcome, ",needLogin:"Please log in first.",submitted:"Application saved in this browser!",empty:"No applications yet.",emptySub:"Your submitted applications will appear here.",view:"View answers",delete:"Delete local copy",confirmDelete:"Delete this local application?",deleted:"Application deleted.",status:"LOCAL COPY · NOT REVIEWED",staffForm:"Staff application",mediaForm:"Media application",created:"Saved",invalid:"Please write at least 20 characters for each answer."},
+es:{navHome:"Inicio",navRoles:"Solicitudes",navFeatures:"Funciones",navCommunity:"Comunidad",login:"Entrar ↗",eyebrow:"LA NUEVA GENERACIÓN DE GUDU MC",heroText:"Los grandes servidores se construyen con grandes personas. Aporta tus ideas, tus habilidades y tu pasión. Tu camino empieza aquí.",staffCTA:"Unirse a Staff ↗",mediaCTA:"Ser creador ◈",roleHeading:"Encuentra tu lugar.",roleSub:"Dos equipos. Una comunidad.",staffTitle:"Equipo Staff",staffDesc:"Ayuda a los jugadores, resuelve conflictos y mantén el juego justo.",mediaTitle:"Equipo Media",mediaDesc:"Crea vídeos originales y presenta GUDU MC a nuevos jugadores.",staffButton:"Solicitud Staff →",mediaButton:"Solicitud Media →",featureHeading:"Tu centro de solicitudes.",featureSub:"Todo lo que necesitas en un portal.",f1:"Perfil personal",fd1:"Guarda tus datos de Minecraft y Discord.",f2:"Seguimiento",fd2:"Consulta las solicitudes guardadas en tu navegador.",f3:"Preguntas",fd3:"Preguntas específicas para cada equipo.",f4:"Tu idioma",fd4:"Cambia entre inglés, español e hindi.",quote:"Las grandes comunidades se construyen en equipo.",quoteSub:"Con personas que crean, ayudan y colaboran.",dashHeading:"Tu panel.",dashSub:"Gestiona tu perfil y tus solicitudes.",back:"← Volver",tabProfile:"◉ Mi perfil",tabNew:"＋ Nueva solicitud",tabApps:"▤ Mis solicitudes",profileHeading:"Tu perfil",usernameLabel:"Nombre de usuario",save:"Guardar perfil",logout:"Cerrar sesión",localWarning:"Modo demo: los datos permanecen en este navegador. No es una cuenta segura.",progressLabel:"PROGRESO",nameLabel:"Nombre *",ageLabel:"Edad *",timezone:"Zona horaria *",hours:"Horas semanales disponibles *",choose:"Elegir...",agree:"Confirmo que mis respuestas son sinceras y propias.",privacy:"No incluyas contraseñas ni datos privados. El envío de esta demo no avisa al equipo.",submit:"Enviar solicitud ↗",cancel:"Cancelar",appsHeading:"Mis solicitudes",footer:"Crea. Colabora. Marca la diferencia.",modalText:"Crea un perfil demo local para explorar el portal.",continue:"Continuar →",close:"Cerrar",saved:"Perfil guardado.",welcome:"¡Bienvenido, ",needLogin:"Inicia sesión primero.",submitted:"¡Solicitud guardada en este navegador!",empty:"Todavía no hay solicitudes.",emptySub:"Tus solicitudes aparecerán aquí.",view:"Ver respuestas",delete:"Eliminar copia local",confirmDelete:"¿Eliminar esta solicitud local?",deleted:"Solicitud eliminada.",status:"COPIA LOCAL · SIN REVISAR",staffForm:"Solicitud Staff",mediaForm:"Solicitud Media",created:"Guardada",invalid:"Escribe al menos 20 caracteres en cada respuesta."},
+hi:{navHome:"होम",navRoles:"आवेदन",navFeatures:"फीचर्स",navCommunity:"कम्युनिटी",login:"लॉगिन ↗",eyebrow:"GUDU MC की नई पीढ़ी",heroText:"हर शानदार Minecraft सर्वर के पीछे शानदार लोग होते हैं। अपने आइडिया, स्किल्स और जुनून के साथ GUDU MC का हिस्सा बनो।",staffCTA:"Staff टीम जॉइन करो ↗",mediaCTA:"क्रिएटर बनो ◈",roleHeading:"अपनी जगह बनाओ।",roleSub:"दो टीमें। एक कम्युनिटी। बदलाव लाने का मौका।",staffTitle:"Staff टीम",staffDesc:"खिलाड़ियों की मदद करो, विवाद सुलझाओ और गेमप्ले निष्पक्ष रखो।",mediaTitle:"Media टीम",mediaDesc:"वीडियो बनाओ और GUDU MC को नए खिलाड़ियों तक पहुँचाओ।",staffButton:"Staff आवेदन खोलो →",mediaButton:"Media आवेदन खोलो →",featureHeading:"तुम्हारा एप्लिकेशन सेंटर।",featureSub:"सभी जरूरी फीचर्स एक ही पोर्टल में।",f1:"प्रोफाइल",fd1:"Minecraft और Discord जानकारी सेव करो।",f2:"आवेदन ट्रैकर",fd2:"ब्राउज़र में सेव आवेदन देखो।",f3:"स्मार्ट सवाल",fd3:"हर टीम के लिए अलग सवाल।",f4:"अपनी भाषा",fd4:"English, Spanish और Hindi में बदलो।",quote:"शानदार कम्युनिटी अकेला खिलाड़ी नहीं बनाता।",quoteSub:"यह उन लोगों से बनती है जो मिलकर काम करते हैं।",dashHeading:"तुम्हारा डैशबोर्ड।",dashSub:"अपनी प्रोफाइल और आवेदन संभालो।",back:"← वापस",tabProfile:"◉ प्रोफाइल",tabNew:"＋ नया आवेदन",tabApps:"▤ मेरे आवेदन",profileHeading:"तुम्हारी प्रोफाइल",usernameLabel:"यूज़रनेम",save:"प्रोफाइल सेव करो",logout:"लॉग आउट",localWarning:"डेमो मोड: डेटा इसी ब्राउज़र में सेव होता है। यह सुरक्षित ऑनलाइन अकाउंट नहीं है।",progressLabel:"आवेदन की प्रगति",nameLabel:"नाम *",ageLabel:"उम्र *",timezone:"टाइमज़ोन *",hours:"हर हफ्ते उपलब्ध घंटे *",choose:"चुनो...",agree:"मैं पुष्टि करता/करती हूँ कि मेरे जवाब ईमानदार और मेरे अपने हैं।",privacy:"पासवर्ड या निजी जानकारी मत लिखो। इस डेमो से स्टाफ को सूचना नहीं मिलती।",submit:"आवेदन जमा करो ↗",cancel:"रद्द करो",appsHeading:"मेरे आवेदन",footer:"बनाओ। योगदान दो। बदलाव लाओ।",modalText:"पोर्टल इस्तेमाल करने के लिए लोकल डेमो प्रोफाइल बनाओ।",continue:"आगे बढ़ो →",close:"बंद करो",saved:"प्रोफाइल सेव हो गई।",welcome:"स्वागत है, ",needLogin:"पहले लॉगिन करो।",submitted:"आवेदन ब्राउज़र में सेव हो गया!",empty:"अभी कोई आवेदन नहीं है।",emptySub:"तुम्हारे आवेदन यहाँ दिखेंगे।",view:"जवाब देखो",delete:"लोकल कॉपी हटाओ",confirmDelete:"यह आवेदन हटाना है?",deleted:"आवेदन हटा दिया गया।",status:"लोकल कॉपी · समीक्षा नहीं हुई",staffForm:"Staff आवेदन",mediaForm:"Media आवेदन",created:"सेव किया",invalid:"हर जवाब में कम से कम 20 अक्षर लिखो."}
 };
 
-let lang = localStorage.getItem(STORAGE.lang) || "en";
-if(!translations[lang]) lang = "en";
-let profile = readJSON(STORAGE.profile, null);
-let applications = readJSON(STORAGE.apps, []);
-let currentType = "staff";
-let toastTimer;
-
-function readJSON(key, fallback){
-  try{
-    const v = localStorage.getItem(key);
-    return v === null ? fallback : JSON.parse(v);
-  }catch(e){return fallback}
+let lang=localStorage.getItem(LANGKEY)||"en";
+if(!T[lang])lang="en";
+let data=load();
+let type="staff",toastTimer;
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{profile:null,apps:[]}}catch(e){return {profile:null,apps:[]}}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(data));return true}catch(e){notify("Could not save data. Check browser storage.");return false}}
+function tr(k){return T[lang][k]??T.en[k]??k}
+function notify(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),2800)}
+function cycleLang(){lang=({en:"es",es:"hi",hi:"en"})[lang];localStorage.setItem(LANGKEY,lang);translate();notify(lang.toUpperCase())}
+function translate(){
+ document.documentElement.lang=lang;
+ document.querySelectorAll("[data-i]").forEach(el=>{const v=T[lang][el.dataset.i];if(v)el.textContent=v});
+ document.getElementById("language").textContent="🌐 "+lang.toUpperCase();
+ document.getElementById("year").textContent=new Date().getFullYear();
+ document.getElementById("formTitle").textContent=tr(type==="staff"?"staffForm":"mediaForm");
+ renderQuestions();renderApps();
+ if(data.profile)updateUI();
 }
-function persist(){
-  try{
-    localStorage.setItem(STORAGE.profile,JSON.stringify(profile));
-    localStorage.setItem(STORAGE.apps,JSON.stringify(applications));
-    return true;
-  }catch(e){
-    notify("Browser storage unavailable. Check your browser settings.");
-    return false;
-  }
-}
-function t(key){return translations[lang][key] ?? translations.en[key] ?? key}
-
-function translatePage(){
-  document.documentElement.lang = lang;
-  document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const key = el.dataset.i18n;
-    if(translations[lang][key]) el.textContent = translations[lang][key];
-  });
-  document.getElementById("langBtn").textContent = "🌐 " + lang.toUpperCase();
-  document.getElementById("formTitle").textContent = currentType==="staff"?t("staffForm"):t("mediaForm");
-  document.getElementById("year").textContent = new Date().getFullYear();
-  renderQuestions();
-  renderApplications();
-  if(profile) updateProfileUI();
-}
-function cycleLanguage(){
-  const langs=["en","es","hi"];
-  lang=langs[(langs.indexOf(lang)+1)%langs.length];
-  localStorage.setItem(STORAGE.lang,lang);
-  translatePage();
-}
-function notify(message){
-  const el=document.getElementById("toast");
-  el.textContent=message;
-  el.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove("show"),3000);
-}
-function openLogin(){
-  document.getElementById("loginModal").classList.remove("hidden");
-  setTimeout(()=>document.getElementById("loginUsername").focus(),50);
-}
-function closeLogin(){document.getElementById("loginModal").classList.add("hidden")}
-document.getElementById("loginModal").addEventListener("click",e=>{
-  if(e.target.id==="loginModal") closeLogin();
-});
-document.addEventListener("keydown",e=>{
-  if(e.key==="Escape") closeLogin();
-});
-
+function openLogin(){document.getElementById("modal").classList.remove("hidden");setTimeout(()=>document.getElementById("loginUser").focus(),30)}
+function closeLogin(){document.getElementById("modal").classList.add("hidden")}
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeLogin()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLogin()});
 function login(e){
-  e.preventDefault();
-  const username=document.getElementById("loginUsername").value.trim();
-  if(username.length<3){notify("Username must contain at least 3 characters.");return}
-  if(!profile){
-    profile={username,minecraft:document.getElementById("loginMinecraft").value.trim(),
-      discord:document.getElementById("loginDiscord").value.trim(),
-      joined:new Date().toISOString()};
-  }else{
-    profile.username=username;
-    const mc=document.getElementById("loginMinecraft").value.trim();
-    const dc=document.getElementById("loginDiscord").value.trim();
-    if(mc) profile.minecraft=mc;
-    if(dc) profile.discord=dc;
-  }
-  if(!persist()) return;
-  updateProfileUI();
-  closeLogin();
-  notify("Welcome, "+profile.username+"!");
+ e.preventDefault();const username=document.getElementById("loginUser").value.trim();
+ if(username.length<3){notify("Use at least 3 characters.");return}
+ data.profile={username,mc:document.getElementById("loginMC").value.trim(),dc:document.getElementById("loginDC").value.trim()};
+ if(!persist())return;updateUI();closeLogin();notify(tr("welcome")+username+"!");
 }
-function logout(){
-  profile=null;
-  persist();
-  document.getElementById("loginBtn").classList.remove("hidden");
-  document.getElementById("userChip").classList.add("hidden");
-  hideDashboard();
-  notify("Logged out of this browser demo.");
-}
-function updateProfileUI(){
-  document.getElementById("loginBtn").classList.add("hidden");
-  document.getElementById("userChip").classList.remove("hidden");
-  document.getElementById("navName").textContent=profile.username;
-  document.getElementById("navAvatar").textContent=profile.username[0].toUpperCase();
-  document.getElementById("profileAvatar").textContent=profile.username[0].toUpperCase();
-  document.getElementById("profileDisplayName").textContent=profile.username;
-  document.getElementById("profileSince").textContent="Local demo profile";
-  document.getElementById("editUsername").value=profile.username;
-  document.getElementById("editMinecraft").value=profile.minecraft||"";
-  document.getElementById("editDiscord").value=profile.discord||"";
+function updateUI(){
+ document.getElementById("loginBtn").classList.add("hidden");
+ document.getElementById("profileBtn").classList.remove("hidden");
+ document.getElementById("navUsername").textContent=data.profile.username;
+ document.getElementById("avatar").textContent=data.profile.username[0].toUpperCase();
+ document.getElementById("displayName").textContent=data.profile.username;
+ document.getElementById("editUser").value=data.profile.username;
+ document.getElementById("editMC").value=data.profile.mc||"";
+ document.getElementById("editDC").value=data.profile.dc||"";
 }
 function saveProfile(){
-  if(!profile)return;
-  const name=document.getElementById("editUsername").value.trim();
-  if(name.length<3){notify("Username must contain at least 3 characters.");return}
-  profile.username=name;
-  profile.minecraft=document.getElementById("editMinecraft").value.trim();
-  profile.discord=document.getElementById("editDiscord").value.trim();
-  if(persist()){updateProfileUI();notify(t("saved"))}
+ if(!data.profile)return;
+ const username=document.getElementById("editUser").value.trim();
+ if(username.length<3){notify("Use at least 3 characters.");return}
+ data.profile={username,mc:document.getElementById("editMC").value.trim(),dc:document.getElementById("editDC").value.trim()};
+ if(persist()){updateUI();notify(tr("saved"))}
 }
-function showDashboard(tab="applications"){
-  if(!profile){notify(t("noAccount"));openLogin();return}
-  document.getElementById("dashboard").style.display="block";
-  switchTab(tab);
-  document.getElementById("dashboard").scrollIntoView({behavior:"smooth",block:"start"});
+function logout(){
+ data.profile=null;
+ if(!persist())return;
+ document.getElementById("loginBtn").classList.remove("hidden");
+ document.getElementById("profileBtn").classList.add("hidden");
+ closeDash();notify("Logged out of this browser.");
 }
-function hideDashboard(){
-  document.getElementById("dashboard").style.display="none";
-  document.getElementById("roles").scrollIntoView({behavior:"smooth"});
+function openDash(which="apps"){
+ if(!data.profile){notify(tr("needLogin"));openLogin();return}
+ document.getElementById("dashboard").style.display="block";
+ tab(which);document.getElementById("dashboard").scrollIntoView({behavior:"smooth",block:"start"});
 }
-function switchTab(tab){
-  ["profile","apply","applications"].forEach(name=>{
-    document.getElementById("panel-"+name).classList.toggle("active",name===tab);
-    document.getElementById("tab-"+name).classList.toggle("active",name===tab);
-  });
-  if(tab==="applications")renderApplications();
-  if(tab==="profile"&&profile)updateProfileUI();
+function closeDash(){document.getElementById("dashboard").style.display="none";document.getElementById("roles").scrollIntoView({behavior:"smooth"})}
+function tab(which){
+ ["profile","new","apps"].forEach(k=>{
+  document.getElementById("panel-"+k).classList.toggle("active",k===which);
+  document.getElementById("tab-"+k).classList.toggle("active",k===which)
+ });
+ if(which==="profile"&&data.profile)updateUI();
+ if(which==="apps")renderApps();
 }
-function beginApply(type){
-  currentType=type;
-  translatePage();
-  if(!profile){notify(t("loginFirst"));openLogin();return}
-  showDashboard("apply");
-  document.getElementById("appName").value=profile.username||"";
-  document.getElementById("appMinecraft").value=profile.minecraft||"";
-  document.getElementById("appDiscord").value=profile.discord||"";
-  document.getElementById("appTimezone").value="";
-  document.getElementById("appHours").value="";
-  document.getElementById("appAge").value="";
-  document.getElementById("honesty").checked=false;
-  renderQuestions();
-  updateProgress();
+function startApply(which){
+ type=which;translate();
+ if(!data.profile){notify(tr("needLogin"));openLogin();return}
+ openDash("new");
+ document.getElementById("appName").value=data.profile.username;
+ document.getElementById("appMC").value=data.profile.mc||"";
+ document.getElementById("appDC").value=data.profile.dc||"";
+ document.getElementById("appTZ").value="";
+ document.getElementById("appAge").value="";
+ document.getElementById("appHours").value="";
+ document.getElementById("agree").checked=false;
+ document.getElementById("form").reset();
+ document.getElementById("appName").value=data.profile.username;
+ document.getElementById("appMC").value=data.profile.mc||"";
+ document.getElementById("appDC").value=data.profile.dc||"";
+ renderQuestions();progress();
 }
 function renderQuestions(){
-  const holder=document.getElementById("questions");
-  if(!holder)return;
-  const list=t(currentType==="staff"?"staffQ":"mediaQ");
-  holder.innerHTML="";
-  list.forEach((q,i)=>{
-    const box=document.createElement("div");
-    box.className="question";
-    const label=document.createElement("label");
-    const number=document.createElement("span");
-    number.className="number";
-    number.textContent=String(i+1).padStart(2,"0")+" / ";
-    label.append(number,document.createTextNode(q[0]+" *"));
-    const area=document.createElement("textarea");
-    area.required=true;
-    area.minLength=20;
-    area.maxLength=3000;
-    area.name="q"+i;
-    area.placeholder=q[1];
-    area.setAttribute("aria-label",q[0]);
-    area.addEventListener("input",updateProgress);
-    const hint=document.createElement("small");
-    hint.textContent=lang==="hi"?"कम से कम 20 अक्षर लिखें।":lang==="es"?"Escribe al menos 20 caracteres.":"Write at least 20 characters.";
-    box.append(label,area,hint);
-    holder.append(box);
-  });
+ const host=document.getElementById("questions");if(!host)return;
+ host.innerHTML="";
+ (Q[lang][type]||Q.en[type]).forEach((q,i)=>{
+  const box=document.createElement("div");box.className="question";
+  const label=document.createElement("label"),num=document.createElement("span");
+  num.textContent=String(i+1).padStart(2,"0")+" /";
+  label.append(num,document.createTextNode(" "+q[0]+" *"));
+  const area=document.createElement("textarea");area.required=true;area.minLength=20;area.maxLength=3000;area.name="q"+i;area.placeholder=q[1];
+  area.addEventListener("input",progress);
+  const hint=document.createElement("small");
+  hint.textContent=lang==="hi"?"कम से कम 20 अक्षर लिखें।":lang==="es"?"Escribe al menos 20 caracteres.":"Give a thoughtful answer of at least 20 characters.";
+  box.append(label,area,hint);host.append(box);
+ });
 }
-function updateProgress(){
-  const form=document.getElementById("applicationForm");
-  const fields=[...form.querySelectorAll("input[required],select[required],textarea[required]")];
-  const total=fields.length||1;
-  const filled=fields.filter(el=>{
-    if(el.type==="checkbox")return el.checked;
-    return el.value.trim().length>0 && (!el.minLength || el.value.trim().length>=el.minLength);
-  }).length;
-  const percent=Math.round(filled/total*100);
-  document.getElementById("progressText").textContent=percent+"%";
-  document.getElementById("progressBar").style.width=percent+"%";
+function progress(){
+ const fields=[...document.querySelectorAll("#form input[required],#form select[required],#form textarea[required]")];
+ const valid=fields.filter(el=>el.type==="checkbox"?el.checked:el.value.trim().length>0&&(!el.minLength||el.value.trim().length>=el.minLength)).length;
+ const pct=Math.round(valid/Math.max(fields.length,1)*100);
+ document.getElementById("percent").textContent=pct+"%";document.getElementById("bar").style.width=pct+"%";
 }
-document.getElementById("applicationForm").addEventListener("input",updateProgress);
-document.getElementById("applicationForm").addEventListener("change",updateProgress);
-
-function submitApplication(e){
-  e.preventDefault();
-  if(!profile){notify(t("noAccount"));return}
-  const form=document.getElementById("applicationForm");
-  if(!form.reportValidity())return;
-  const answers=[...form.querySelectorAll(".question textarea")].map(x=>x.value.trim());
-  if(answers.some(a=>a.length<20)){
-    notify("Please provide more detailed answers (at least 20 characters each).");
-    return;
-  }
-  const app={
-    id:Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,7),
-    type:currentType,
-    username:document.getElementById("appName").value.trim(),
-    age:document.getElementById("appAge").value,
-    minecraft:document.getElementById("appMinecraft").value.trim(),
-    discord:document.getElementById("appDiscord").value.trim(),
-    timezone:document.getElementById("appTimezone").value.trim(),
-    hours:document.getElementById("appHours").value,
-    answers,
-    questions:t(currentType==="staff"?"staffQ":"mediaQ").map(q=>q[0]),
-    created:new Date().toISOString(),
-    status:"Submitted"
-  };
-  applications.unshift(app);
-  if(!persist()){applications.shift();return}
-  form.reset();
-  renderApplications();
-  switchTab("applications");
-  notify(t("submitted"));
+document.getElementById("form").addEventListener("input",progress);
+document.getElementById("form").addEventListener("change",progress);
+function submitApp(e){
+ e.preventDefault();if(!data.profile){notify(tr("needLogin"));return}
+ const form=document.getElementById("form");if(!form.reportValidity())return;
+ const answers=[...form.querySelectorAll(".question textarea")].map(x=>x.value.trim());
+ if(answers.some(a=>a.length<20)){notify(tr("invalid"));return}
+ const qs=Q[lang][type]||Q.en[type];
+ const app={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),type,username:document.getElementById("appName").value.trim(),age:document.getElementById("appAge").value,mc:document.getElementById("appMC").value.trim(),dc:document.getElementById("appDC").value.trim(),tz:document.getElementById("appTZ").value.trim(),hours:document.getElementById("appHours").value,questions:qs.map(q=>q[0]),answers,date:new Date().toISOString()};
+ data.apps.unshift(app);if(!persist()){data.apps.shift();return}
+ form.reset();renderApps();tab("apps");notify(tr("submitted"));
 }
-function renderApplications(){
-  const holder=document.getElementById("applicationList");
-  if(!holder)return;
-  holder.innerHTML="";
-  if(!applications.length){
-    const empty=document.createElement("div");
-    empty.className="empty";
-    const strong=document.createElement("strong");strong.textContent=t("emptyTitle");
-    const p=document.createElement("div");p.textContent=t("emptyText");
-    empty.append(strong,p);holder.append(empty);return;
-  }
-  applications.forEach(app=>{
-    const item=document.createElement("article");item.className="list-item";
-    const top=document.createElement("div");top.className="list-top";
-    const title=document.createElement("strong");
-    title.textContent=(app.type==="staff"?t("staffTitle"):t("mediaTitle"))+" · "+app.username;
-    const badge=document.createElement("span");badge.className="status";badge.textContent=t("status");
-    top.append(title,badge);
-    const date=document.createElement("p");
-    date.textContent=t("created")+": "+new Date(app.created).toLocaleString();
-    const detail=document.createElement("details");
-    const summary=document.createElement("summary");
-    summary.style.cssText="cursor:pointer;color:var(--green);font-size:12px;margin:12px 0";
-    summary.textContent=lang==="hi"?"जवाब देखें":lang==="es"?"Ver respuestas":"View answers";
-    const body=document.createElement("div");
-    const meta=document.createElement("p");
-    meta.textContent="Minecraft: "+app.minecraft+" · Discord: "+app.discord+" · Timezone: "+app.timezone;
-    body.append(meta);
-    (app.questions||[]).forEach((q,i)=>{
-      const label=document.createElement("p");
-      const strong=document.createElement("strong");strong.textContent=(i+1)+". "+q;
-      const answer=document.createElement("div");answer.style.color="var(--text)";
-      answer.style.whiteSpace="pre-wrap";answer.textContent=app.answers[i]||"";
-      label.append(strong,document.createElement("br"),answer);body.append(label);
-    });
-    detail.append(summary,body);
-    const del=document.createElement("button");
-    del.className="secondary danger";del.style.fontSize="11px";del.style.padding="8px 10px";
-    del.textContent=t("deleteBtn");
-    del.onclick=()=>{
-      if(!confirm("Delete this application from this browser?"))return;
-      applications=applications.filter(x=>x.id!==app.id);
-      if(persist()){renderApplications();notify(t("deleted"))}
-    };
-    item.append(top,date,detail,del);holder.append(item);
-  });
+function renderApps(){
+ const host=document.getElementById("appList");if(!host)return;host.innerHTML="";
+ if(!data.apps.length){const box=document.createElement("div");box.className="empty";const b=document.createElement("strong");b.textContent=tr("empty");const p=document.createElement("div");p.textContent=tr("emptySub");box.append(b,p);host.append(box);return}
+ data.apps.forEach(app=>{
+  const card=document.createElement("article");card.className="application";
+  const head=document.createElement("div");head.className="apphead";
+  const title=document.createElement("strong");title.textContent=(app.type==="staff"?tr("staffTitle"):tr("mediaTitle"))+" · "+app.username;
+  const badge=document.createElement("span");badge.className="status";badge.textContent=tr("status");
+  head.append(title,badge);
+  const date=document.createElement("p");date.textContent=tr("created")+": "+new Date(app.date).toLocaleString();
+  const details=document.createElement("details");const summary=document.createElement("summary");summary.textContent=tr("view");
+  const content=document.createElement("div");
+  const meta=document.createElement("p");meta.textContent="Minecraft: "+app.mc+" · Discord: "+app.dc+" · "+app.tz+" · "+app.hours;content.append(meta);
+  app.questions.forEach((q,i)=>{const p=document.createElement("p");const strong=document.createElement("strong");strong.textContent=(i+1)+". "+q;const answer=document.createElement("div");answer.className="answer";answer.textContent=app.answers[i];p.append(strong,answer);content.append(p)});
+  details.append(summary,content);
+  const del=document.createElement("button");del.className="btn";del.style.marginTop="12px";del.textContent=tr("delete");
+  del.onclick=()=>{if(!confirm(tr("confirmDelete")))return;data.apps=data.apps.filter(x=>x.id!==app.id);if(persist()){renderApps();notify(tr("deleted"))}};
+  card.append(head,date,details,del);host.append(card);
+ });
 }
-
-// Decorative, lightweight animated particles.
-(function(){
-  const root=document.getElementById("particles");
-  for(let i=0;i<32;i++){
-    const p=document.createElement("i");
-    p.className="particle";
-    p.style.left=(Math.random()*100)+"%";
-    p.style.animationDuration=(9+Math.random()*17)+"s";
-    p.style.animationDelay=(-Math.random()*20)+"s";
-    p.style.opacity=(.15+Math.random()*.5).toFixed(2);
-    const size=(2+Math.random()*3)+"px";
-    p.style.width=size;p.style.height=size;
-    root.append(p);
-  }
-})();
-
-translatePage();
-if(profile)updateProfileUI();
+translate();
+if(data.profile)updateUI();
 </script>
 </body>
 </html>
