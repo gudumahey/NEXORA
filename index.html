@@ -21,7 +21,6 @@ nav{padding:20px 5%;display:flex;justify-content:space-between;align-items:cente
 .rank-info{padding:20px}
 .rank-info h3{font-size:24px}.rank-info .price{color:var(--gold);font-weight:700;margin:8px 0}
 .badge{position:absolute;top:16px;left:16px;background:black;padding:6px 12px;border-radius:100px;font-size:12px;border:1px solid #333}
-/* Modal */
 #modal{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
 #modal.active{display:flex}
 .modal-box{background:#151515;border:1px solid #333;border-radius:24px;max-width:1000px;width:100%;display:grid;grid-template-columns:1fr 1.2fr;overflow:hidden}
@@ -36,17 +35,14 @@ nav{padding:20px 5%;display:flex;justify-content:space-between;align-items:cente
 </style>
 </head>
 <body>
-
 <nav>
   <div class="logo">GUDU <span>MC</span></div>
-  <div style="display:flex;gap:12px"><div style="background:#222;padding:8px 16px;border-radius:100px">IP: play.gudu.mc</div></div>
+  <div style="background:#222;padding:8px 16px;border-radius:100px">IP: play.gudu.mc</div>
 </nav>
-
 <div class="hero">
   <h1>CHOOSE YOUR <span>RANK</span></h1>
   <p style="color:#888;margin-top:16px;max-width:600px;margin-inline:auto">Click on any rank to see custom armor kit, features & photo. Best custom backgrounds for GUDU MC.</p>
 </div>
-
 <div class="ranks">
   <div class="rank-card" onclick="openKit('knight')">
     <div class="badge">⭐ STARTER</div>
@@ -64,12 +60,10 @@ nav{padding:20px 5%;display:flex;justify-content:space-between;align-items:cente
     <div class="rank-info"><h3>EMPEROR</h3><div class="price">$29.99</div><p style="color:#888;font-size:14px">Most OP custom armor on server.</p></div>
   </div>
 </div>
-
 <div id="modal" onclick="if(event.target==this)closeKit()">
   <div class="close" onclick="closeKit()">✕</div>
   <div class="modal-box" id="modalBox"></div>
 </div>
-
 <script>
 const kits = {
   knight: {
@@ -112,7 +106,6 @@ const kits = {
     ]
   }
 };
-
 function openKit(id){
   const k = kits[id];
   document.getElementById('modalBox').innerHTML = `
