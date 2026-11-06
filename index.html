@@ -1,156 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUDU MC - Best Indian SMP | Owner gudumahey</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUDU CRAFT - Minecraft Jaisa Game</title>
 <style>
-:root{--gold:#ffcc00;--bg:#050508}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#050508;color:#fff;font-family:'Inter',sans-serif;overflow-x:hidden}
-h1,h2{font-family:'Orbitron',sans-serif}
-
-/* ANIMATED FIGHTING BACKGROUND */
-.video-bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:#000}
-.video-bg video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);min-width:100%;min-height:100%;opacity:0.35;filter:blur(2px)}
-.fight-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:20vw;opacity:0.15}
-.fighter{font-size:120px;animation:fight 1.2s infinite alternate}
-.fighter:nth-child(1){animation-name:fighter1}
-.fighter:nth-child(2){animation-name:fighter2}
-@keyframes fighter1{0%{transform:translateX(-30px) rotate(-10deg)}100%{transform:translateX(30px) rotate(10deg)}}
-@keyframes fighter2{0%{transform:translateX(30px) rotate(10deg)}100%{transform:translateX(-30px) rotate(-10deg)}}
-.clash{position:absolute;font-size:80px;animation:clash 0.3s infinite;color:var(--gold)}
-@keyframes clash{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
-.overlay{position:fixed;inset:0;background:radial-gradient(circle at 50% 0%, rgba(255,204,0,0.15), transparent 60%), linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(5,5,8,1));z-index:-1}
-
-nav{padding:18px 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;backdrop-filter:blur(15px);background:rgba(0,0,0,0.6);border-bottom:1px solid #222;z-index:100}
-.logo{font-weight:900;font-size:28px}.logo span{color:var(--gold)}
-.nav-btns{display:flex;gap:10px}
-.discord-btn{background:#5865F2;color:#fff;padding:10px 18px;border-radius:100px;text-decoration:none;font-weight:700;display:flex;align-items:center;gap:6px}
-.ip-box{background:#111;border:1px solid #222;padding:10px 18px;border-radius:100px}
-
-.hero{text-align:center;padding:100px 5% 30px}
-.hero h1{font-size:clamp(42px,9vw,95px);line-height:0.9}
-.hero h1 span{color:var(--gold);text-shadow:0 0 40px var(--gold)}
-.desc{color:#aaa;max-width:750px;margin:20px auto 0;line-height:1.6;font-size:16px}
-.owner{margin-top:18px;display:inline-block;background:linear-gradient(90deg,#ffcc00,#ff8800);color:#000;padding:6px 14px;border-radius:100px;font-weight:900;font-size:13px}
-
-.ranks{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;padding:40px 5%}
-.rank-card{border:1px solid #222;border-radius:26px;overflow:hidden;cursor:pointer;background:rgba(17,17,17,0.8);backdrop-filter:blur(10px);transition:0.35s;position:relative}
-.rank-card:hover{transform:translateY(-10px) scale(1.02);border-color:var(--gold);box-shadow:0 25px 70px rgba(255,204,0,0.25)}
-.rank-card img{width:100%;height:400px;object-fit:cover}
-.rank-info{padding:20px}
-.badge{position:absolute;top:14px;left:14px;background:#000;padding:6px 12px;border-radius:100px;font-size:11px;border:1px solid #333}
-
-#modal{position:fixed;inset:0;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;z-index:1000;padding:16px}
-#modal.active{display:flex}
-.modal-box{background:#121212;border:1px solid #333;border-radius:26px;max-width:1050px;width:100%;display:grid;grid-template-columns:1fr 1.2fr;overflow:hidden}
-.modal-box img{width:100%;height:100%;object-fit:cover;min-height:540px}
-.modal-content{padding:32px}
-.kit-list{margin:18px 0;list-style:none}
-.kit-list li{padding:11px 0;border-bottom:1px solid #222;display:flex;justify-content:space-between;font-size:14px}
-.kit-list li span:last-child{color:var(--gold);font-weight:700}
-.btn{display:block;background:var(--gold);color:#000;padding:16px;border-radius:100px;font-weight:900;font-family:'Orbitron';text-align:center;text-decoration:none;margin-top:18px}
-.btn2{display:block;background:#5865F2;color:#fff;padding:14px;border-radius:100px;font-weight:700;text-align:center;text-decoration:none;margin-top:10px}
-.close{position:absolute;top:18px;right:18px;background:#000;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:26px;cursor:pointer;z-index:10}
-footer{text-align:center;padding:40px;color:#555;border-top:1px solid #111;margin-top:40px}
-@media(max-width:800px){.modal-box{grid-template-columns:1fr}.modal-box img{height:320px;min-height:auto}.fighter{font-size:60px}}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{overflow:hidden;background:#87ceeb}
+#game{width:100vw;height:100vh;display:block}
+#crosshair{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:28px;pointer-events:none;z-index:10;text-shadow:0 0 5px #fff}
+#top{position:fixed;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;z-index:20;pointer-events:none}
+#top .box{background:rgba(0,0,0,.6);color:#fff;padding:10px 14px;border-radius:12px;font-weight:800;font-size:13px}
+#top .box span{color:#22c55e}
+#hotbar{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:6px;background:rgba(0,0,0,.6);padding:8px;border-radius:14px;z-index:20}
+.slot{width:58px;height:58px;border-radius:10px;background:#333;border:3px solid #555;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;cursor:pointer;font-size:11px;font-weight:800}
+.slot.active{border-color:#fff;transform:scale(1.12);box-shadow:0 0 15px #fff}
+.slot .e{font-size:26px}
+#controls{position:fixed;bottom:90px;right:12px;background:rgba(0,0,0,.6);color:#fff;padding:12px;border-radius:12px;font-size:12px;line-height:1.7;z-index:20}
+#start{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;z-index:100;text-align:center;padding:20px}
+#start h1{font-size:48px;margin-bottom:6px} #start h1 span{color:#22c55e}
+#start p{font-size:14px;color:#ccc;line-height:1.8;max-width:500px}
+#start button{background:#22c55e;color:#fff;border:none;padding:16px 40px;border-radius:14px;font-size:18px;font-weight:900;cursor:pointer;margin-top:20px}
+#start button:hover{background:#16a34a}
+#score{position:fixed;top:60px;left:10px;background:#f59e0b;color:#fff;padding:8px 14px;border-radius:20px;font-weight:900;font-size:13px;z-index:20}
+#msg{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.7);color:#fff;padding:12px 22px;border-radius:20px;font-weight:800;display:none;z-index:30}
+@media(max-width:700px){#controls{display:none} #hotbar{bottom:8px} .slot{width:48px;height:48px} #start h1{font-size:32px}}
 </style>
 </head>
 <body>
-
-<div class="video-bg">
-  <video autoplay muted loop playsinline poster="https://i.imgur.com/8Km9tLL.png">
-    <source src="https://cdn.pixabay.com/video/2020/07/30/45372-438988299_large.mp4" type="video/mp4">
-  </video>
-  <div class="fight-scene">
-    <div class="fighter">⚔️🧱</div>
-    <div class="clash">💥</div>
-    <div class="fighter">🛡️⚔️</div>
-  </div>
+<canvas id="game"></canvas>
+<div id="crosshair">+</div>
+<div id="top">
+  <div class="box">⛏️ GUDU <span>CRAFT</span> | Blocks: <span id="blockCount">0</span></div>
+  <div class="box">❤️ Health: <span>100</span> | 🍖 Hunger: <span>100</span></div>
 </div>
-<div class="overlay"></div>
-
-<nav>
-  <div class="logo">GUDU <span>MC</span></div>
-  <div class="nav-btns">
-    <div class="ip-box">play.gudu.mc</div>
-    <a class="discord-btn" href="https://discord.gg/8vqMhvkZw6" target="_blank">💬 Discord</a>
-  </div>
-</nav>
-
-<div class="hero">
-  <h1>INDIA'S BEST <span>SMP</span></h1>
-  <p class="desc">
-    <b>GUDU MC</b> - 1.21.11 Custom Ranks, Custom Armor, Lifesteal, Economy & PvP. 
-    Join 1000+ players fighting daily. Click any rank below to see your custom kit photo & powers. 
-    New season started! Best ping for India.
-  </p>
-  <div class="owner">👑 OWNER: gudumahey</div>
-  <div style="margin-top:14px;color:#666;font-size:13px">2 Players Fighting Live in Background • Real PvP Action</div>
+<div id="score">🏆 Score: <span id="scoreVal">0</span> | Blocks Todhe: <span id="brokenVal">0</span></div>
+<div id="hotbar"></div>
+<div id="controls">
+  <b>🎮 CONTROLS</b><br>
+  W A S D = Chalna<br>
+  Mouse = Dekhna<br>
+  Space = Jump<br>
+  Left Click = Todo<br>
+  Right Click = Lagao<br>
+  1-6 = Block Badlo<br>
+  Shift = Fast Run
 </div>
+<div id="msg"></div>
 
-<div class="ranks">
-  <div class="rank-card" onclick="openKit('knight')">
-    <div class="badge">⭐ STARTER</div>
-    <img src="knight.png" alt="Knight - GUDU MC">
-    <div class="rank-info"><h3>KNIGHT</h3><div style="color:var(--gold);font-weight:800;margin:6px 0">$4.99 / 400 INR</div><p style="color:#888;font-size:13px">Diamond Crown + Red Cape • Best starter rank for PvP</p></div>
-  </div>
-  <div class="rank-card" onclick="openKit('overlord')">
-    <div class="badge" style="color:#a855f7;border-color:#a855f7">🔥 MOST BOUGHT</div>
-    <img src="overlord.png" alt="Overlord - GUDU MC">
-    <div class="rank-info"><h3>OVERLORD</h3><div style="color:var(--gold);font-weight:800;margin:6px 0">$14.99 / 1200 INR</div><p style="color:#888;font-size:13px">Black Purple Wings + Glowing Eyes • Fly in lobby</p></div>
-  </div>
-  <div class="rank-card" onclick="openKit('emperor')">
-    <div class="badge" style="color:var(--gold);border-color:var(--gold)">👑 GOD RANK</div>
-    <img src="emperor.png" alt="Emperor - GUDU MC">
-    <div class="rank-info"><h3>EMPEROR</h3><div style="color:var(--gold);font-weight:800;margin:6px 0">$29.99 / 2400 INR</div><p style="color:#888;font-size:13px">Golden Throne Armor + Royal Cape • Owner Level Powers</p></div>
-  </div>
+<div id="start">
+  <div style="font-size:70px">⛏️🧱</div>
+  <h1>GUDU <span>CRAFT</span></h1>
+  <p>Minecraft jaisa game!<br><br>
+  <b>W A S D</b> se chalo • <b>Mouse</b> se dekho • <b>Space</b> se Jump<br>
+  <b>Left Click</b> se Block Todo • <b>Right Click</b> se Block Lagao<br>
+  <b>1 se 6</b> dabake Block badlo<br><br>
+  Ek bada world banaya hai - Ghar banao, Tower banao, jo man kare!</p>
+  <button onclick="startGame()">▶️ PLAY KARO</button>
+  <p style="font-size:11px;margin-top:12px">Mobile pe: Left side joystick jaisa - screen pe touch karke ghumo</p>
 </div>
 
-<div id="modal" onclick="if(event.target==this)closeKit()">
-  <div class="close" onclick="closeKit()">✕</div>
-  <div class="modal-box" id="modalBox"></div>
-</div>
-
-<footer>
-  <p><b>GUDU MC</b> • Owner: <span style="color:var(--gold)">gudumahey</span> • Discord: <a href="https://discord.gg/8vqMhvkZw6" style="color:#5865F2">discord.gg/8vqMhvkZw6</a></p>
-  <p style="margin-top:8px">IP: play.gudu.mc • Version: 1.21.11 • Made for Indian Players</p>
-</footer>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-const kits = {
-  knight: {
-    name: "KNIGHT KIT", img: "knight.png", price: "$4.99",
-    desc: "Entry rank for all new warriors. Perfect for PvP beginners who want custom armor look.",
-    features: [["Custom Armor","Diamond + Golden Crown + Red Cape"],["Sword","Sharp 5 Diamond"],["Cooldown","24 Hours"],["Commands","/kit knight, /feed"],["Homes","2 Homes"],["Money","$10,000"]]
-  },
-  overlord: {
-    name: "OVERLORD KIT", img: "overlord.png", price: "$14.99",
-    desc: "Most popular rank. Nether dragon wings with purple glowing eyes - scares enemies in PvP.",
-    features: [["Custom Armor","Netherite + Wings + Purple Glow"],["Sword","Sharp 7 Fire Aspect"],["Cooldown","12 Hours"],["Commands","/fly, /god, /kit overlord"],["Homes","5 Homes"],["Money","$50,000"]]
-  },
-  emperor: {
-    name: "EMPEROR KIT", img: "emperor.png", price: "$29.99",
-    desc: "God rank - Same armor as owner gudumahey. Unlimited powers, royal throne background.",
-    features: [["Custom Armor","Golden Emperor + Royal Cape + Crown"],["Sword","Sharp 10 Unbreakable"],["Cooldown","6 Hours"],["Commands","ALL + /vanish + /ban"],["Homes","Unlimited"],["Money","$250,000"]]
-  }
-};
-function openKit(id){
-  const k=kits[id];
-  document.getElementById('modalBox').innerHTML=`
-    <img src="${k.img}">
-    <div class="modal-content">
-      <h2 style="font-size:34px">${k.name} <span style="color:var(--gold)">${k.price}</span></h2>
-      <p style="color:#aaa;margin-top:10px;line-height:1.5">${k.desc}</p>
-      <ul class="kit-list">${k.features.map(f=>`<li><span>${f[0]}</span><span>${f[1]}</span></li>`).join('')}</ul>
-      <a class="btn" href="https://discord.gg/8vqMhvkZw6" target="_blank">BUY NOW - JOIN DISCORD</a>
-      <a class="btn2" href="https://discord.gg/8vqMhvkZw6" target="_blank">💬 Discord: discord.gg/8vqMhvkZw6</a>
-      <p style="color:#555;font-size:11px;margin-top:10px;text-align:center">Owner: gudumahey • Instant Delivery • 1.21.11 Support</p>
-    </div>`;
-  document.getElementById('modal').classList.add('active');
+var scene, camera, renderer;
+var blocks = [];
+var blockTypes = [
+  {id:0, name:'Grass', color:0x4CAF50, emoji:'🌱'},
+  {id:1, name:'Dirt', color:0x8D6E63, emoji:'🟫'},
+  {id:2, name:'Stone', color:0x9E9E9E, emoji:'🪨'},
+  {id:3, name:'Wood', color:0x795548, emoji:'🪵'},
+  {id:4, name:'Leaves', color:0x2E7D32, emoji:'🌿'},
+  {id:5, name:'Sand', color:0xFFEB8A, emoji:'🏖️'},
+  {id:6, name:'Glass', color:0xB3E5FC, emoji:'🧊'},
+  {id:7, name:'Brick', color:0xC62828, emoji:'🧱'}
+];
+var selected = 0;
+var score = 0, broken = 0;
+var keys = {};
+var velocityY = 0;
+var isJumping = false;
+var playerPos = {x:0, y:3, z:8};
+var yaw = 0, pitch = 0;
+var isLocked = false;
+
+function showMsg(t){
+  var m = document.getElementById('msg');
+  m.innerText = t;
+  m.style.display = 'block';
+  setTimeout(function(){ m.style.display='none'; }, 1200);
 }
-function closeKit(){document.getElementById('modal').classList.remove('active');}
+
+function buildHotbar(){
+  var html = '';
+  for(var i=0;i<blockTypes.length;i++){
+    var b = blockTypes[i];
+    html += '<div class="slot '+(i===selected?'active':'')+'" onclick="selectBlock('+i+')"><span class="e">'+b.emoji+'</span>'+b.name+'<span style="font-size:9px;color:#aaa">'+(i+1)+'</span></div>';
+  }
+  document.getElementById('hotbar').innerHTML = html;
+}
+function selectBlock(i){ selected = i; buildHotbar(); showMsg(blockTypes[i].name + ' select kiya!'); }
+
+function init(){
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x87ceeb);
+  scene.fog = new THREE.Fog(0x87ceeb, 30, 90);
+
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  camera.position.set(playerPos.x, playerPos.y, playerPos.z);
+
+  renderer = new THREE.WebGLRenderer({canvas: document.getElementById('game'), antialias:true});
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+
+  // Light
+  var sun = new THREE.DirectionalLight(0xffffff, 1.1);
+  sun.position.set(20, 40, 20);
+  sun.castShadow = true;
+  scene.add(sun);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+  // Ground - Minecraft jaisa 24x24 world
+  var geo = new THREE.BoxGeometry(1,1,1);
+  for(var x=-12;x<=12;x++){
+    for(var z=-12;z<=12;z++){
+      var h = 0;
+      // Thoda random hill banao
+      if(Math.abs(x)>8 || Math.abs(z)>8) h = 0;
+      else if((x*x+z*z)%7===0) h = 1;
+      // Grass block
+      addBlock(x, 0, z, 0, false);
+      if(h===1) addBlock(x, 1, z, 0, false);
+      // Random trees
+      if((x===5 && z===-3) || (x===-6 && z===5) || (x===8 && z===7)){
+        addBlock(x, 2, z, 3, false);
+        addBlock(x, 3, z, 3, false);
+        addBlock(x, 4, z, 4, false);
+        addBlock(x+1, 4, z, 4, false);
+        addBlock(x-1, 4, z, 4, false);
+        addBlock(x, 4, z+1, 4, false);
+        addBlock(x, 4, z-1, 4, false);
+      }
+      // Random stone / sand patch
+      if(x=== -2 && z=== -2) addBlock(x, 1, z, 2, false);
+      if(x=== 2 && z=== 2) addBlock(x, 1, z, 5, false);
+    }
+  }
+  // Ek ready-made chhota ghar
+  for(var gx=-2; gx<=2; gx++){
+    addBlock(gx, 1, -8, 7, false);
+    addBlock(gx, 2, -8, 7, false);
+    addBlock(gx, 3, -8, 7, false);
+  }
+  addBlock(-2, 1, -7, 3, false); addBlock(-2, 2, -7, 3, false);
+  addBlock(2, 1, -7, 3, false); addBlock(2, 2, -7, 3, false);
+  addBlock(-2, 1, -6, 3, false); addBlock(2, 1, -6, 3, false);
+  addBlock(0, 1, -7, 3, false);
+
+  updateCount();
+  buildHotbar();
+  animate();
+}
+
+function addBlock(x,y,z,type, countIt){
+  // Agar wahan pehle se block hai to mat lagao
+  for(var i=0;i<blocks.length;i++){
+    if(blocks[i].position.x===x && blocks[i].position.y===y && blocks[i].position.z===z) return;
+  }
+  var mat = new THREE.MeshLambertMaterial({color: blockTypes[type].color, transparent: type===6, opacity: type===6 ? 0.6 : 1});
+  var geo = new THREE.BoxGeometry(1,1,1);
+  var mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(x,y,z);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  mesh.userData = {type:type, bx:x, by:y, bz:z};
+  scene.add(mesh);
+  blocks.push(mesh);
+  if(countIt) updateCount();
+}
+function removeBlock(mesh){
+  scene.remove(mesh);
+  var idx = blocks.indexOf(mesh);
+  if(idx!==-1) blocks.splice(idx,1);
+  score += 10; broken++;
+  document.getElementById('scoreVal').innerText = score;
+  document.getElementById('brokenVal').innerText = broken;
+  updateCount();
+}
+function updateCount(){ document.getElementById('blockCount').innerText = blocks.length; }
+
+function startGame(){
+  document.getElementById('start').style.display='none';
+  init();
+  var canvas = document.getElementById('game');
+  canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
+  canvas.requestPointerLock();
+  showMsg('Welcome to GUDU CRAFT! Block todo aur banao!');
+}
+
+document.addEventListener('pointerlockchange', function(){
+  isLocked = document.pointerLockElement === document.getElementById('game');
+});
+document.addEventListener('mousemove', function(e){
+  if(!isLocked) return;
+  yaw -= e.movementX * 0.0025;
+  pitch -= e.movementY * 0.0025;
+  if(pitch>1.5) pitch=1.5;
+  if(pitch<-1.5) pitch=-1.5;
+});
+document.addEventListener('keydown', function(e){
+  keys[e.key.toLowerCase()] = true;
+  if(e.key>='1' && e.key<='8') selectBlock(parseInt(e.key)-1);
+  if(e.code==='Space'){ e.preventDefault(); if(!isJumping){ velocityY = 0.18; isJumping = true; } }
+});
+document.addEventListener('keyup', function(e){ keys[e.key.toLowerCase()] = false; });
+
+document.getElementById('game').addEventListener('mousedown', function(e){
+  if(!isLocked) { this.requestPointerLock(); return; }
+  // Raycast - kis block pe click kiya
+  var ray = new THREE.Raycaster();
+  ray.setFromCamera(new THREE.Vector2(0,0), camera);
+  var hits = ray.intersectObjects(blocks);
+  if(hits.length===0) return;
+  var hit = hits[0];
+  if(e.button===0){
+    // Left - Todo, par ground ka 0 level mat todo
+    if(hit.object.position.y===0 && Math.abs(hit.object.position.x)<13) {
+      showMsg('Ground nahi tootega! Upar wala todo');
+      return;
+    }
+    removeBlock(hit.object);
+    showMsg('Block toda! +10 Score');
+  } else if(e.button===2){
+    // Right - Lagao
+    var n = hit.face.normal;
+    var nx = hit.object.position.x + Math.round(n.x);
+    var ny = hit.object.position.y + Math.round(n.y);
+    var nz = hit.object.position.z + Math.round(n.z);
+    addBlock(nx, ny, nz, selected, true);
+    showMsg(blockTypes[selected].name + ' lagaya!');
+  }
+});
+document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+
+function animate(){
+  requestAnimationFrame(animate);
+  if(!camera) return;
+  var speed = keys['shift'] ? 0.14 : 0.08;
+  var forward = 0, strafe = 0;
+  if(keys['w']) forward = 1;
+  if(keys['s']) forward = -1;
+  if(keys['a']) strafe = -1;
+  if(keys['d']) strafe = 1;
+  var sin = Math.sin(yaw), cos = Math.cos(yaw);
+  playerPos.x += (strafe * cos + forward * sin) * speed;
+  playerPos.z += (-strafe * sin + forward * cos) * speed;
+  // Gravity + Jump
+  velocityY -= 0.008;
+  playerPos.y += velocityY;
+  var groundY = 2.2;
+  // Agar kisi block ke upar hai to uspe khada ho
+  for(var i=0;i<blocks.length;i++){
+    var b = blocks[i];
+    if(Math.abs(b.position.x - playerPos.x)<0.6 && Math.abs(b.position.z - playerPos.z)<0.6){
+      if(playerPos.y < b.position.y+2.2 && playerPos.y > b.position.y) groundY = b.position.y+2.2;
+    }
+  }
+  if(playerPos.y <= groundY){ playerPos.y = groundY; velocityY = 0; isJumping = false; }
+  if(playerPos.y < 1) playerPos.y = 1;
+  camera.position.set(playerPos.x, playerPos.y, playerPos.z);
+  camera.rotation.order = 'YXZ';
+  camera.rotation.y = yaw;
+  camera.rotation.x = pitch;
+  renderer.render(scene, camera);
+}
+window.addEventListener('resize', function(){
+  if(!camera) return;
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+buildHotbar();
 </script>
 </body>
 </html>
