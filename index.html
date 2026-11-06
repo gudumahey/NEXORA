@@ -3,473 +3,542 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUDU CRAFT - REAL MINECRAFT</title>
+<title>GUDU SMP - Real Minecraft Server</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{overflow:hidden;background:#87ceeb}
+body{overflow:hidden;background:#000}
 #game{width:100vw;height:100vh;display:block}
 #crosshair{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:26px;pointer-events:none;z-index:10;color:#fff;text-shadow:0 0 4px #000}
 #top{position:fixed;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;z-index:20;pointer-events:none}
 #top .box{background:rgba(0,0,0,.65);color:#fff;padding:9px 14px;border-radius:10px;font-weight:800;font-size:13px}
 #top .box span{color:#22c55e}
-#modeBadge{position:fixed;top:52px;left:10px;background:#f59e0b;color:#fff;padding:7px 14px;border-radius:20px;font-weight:900;font-size:12px;z-index:20;cursor:pointer}
+#bossBarWrap{position:fixed;top:52px;left:50%;transform:translateX(-50%);width:520px;max-width:90vw;z-index:20;display:none}
+#bossBarWrap .label{text-align:center;color:#fff;font-weight:900;font-size:13px;text-shadow:0 0 5px #000;margin-bottom:4px}
+#bossBar{height:12px;background:#333;border:2px solid #fff;border-radius:10px;overflow:hidden}
+#bossFill{height:100%;background:linear-gradient(90deg,#ef4444,#f59e0b);width:100%;transition:.3s}
 #hotbar{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:5px;background:rgba(0,0,0,.7);padding:7px;border-radius:14px;z-index:20}
-.slot{width:56px;height:58px;border-radius:10px;background:#222;border:3px solid #555;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;cursor:pointer;font-size:10px;font-weight:800;line-height:1.2}
+.slot{width:54px;height:56px;border-radius:10px;background:#222;border:3px solid #555;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;cursor:pointer;font-size:10px;font-weight:800}
 .slot.active{border-color:#fff;transform:scale(1.12);box-shadow:0 0 14px #fff}
-.slot .e{font-size:24px}
-.slot .rank{font-size:8px;color:#f59e0b}
+.slot .e{font-size:22px}
 #controls{position:fixed;bottom:88px;right:12px;background:rgba(0,0,0,.65);color:#fff;padding:12px;border-radius:12px;font-size:12px;line-height:1.7;z-index:20}
 #msg{position:fixed;top:48%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:10px 20px;border-radius:20px;font-weight:800;display:none;z-index:30}
-/* CHAT */
-#chatBox{position:fixed;left:12px;bottom:90px;width:360px;max-width:85vw;z-index:25;pointer-events:none}
-#chatMsgs{max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
-.chatMsg{background:rgba(0,0,0,.6);color:#fff;padding:7px 10px;border-radius:8px;font-size:13px;word-wrap:break-word}
-.chatMsg b{color:#facc15} .chatMsg .sys{color:#22c55e} .chatMsg .me{color:#60a5fa}
+#chatBox{position:fixed;left:12px;bottom:90px;width:380px;max-width:88vw;z-index:25;pointer-events:none}
+#chatMsgs{max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
+.chatMsg{background:rgba(0,0,0,.65);color:#fff;padding:7px 10px;border-radius:8px;font-size:13px;word-wrap:break-word}
+.chatMsg b{color:#facc15} .chatMsg .sys{color:#22c55e} .chatMsg .ai{color:#00e5ff} .chatMsg .me{color:#60a5fa}
 #chatInputWrap{display:none;gap:6px;pointer-events:auto}
 #chatInputWrap.show{display:flex}
-#chatInputWrap input{flex:1;padding:11px;border:2px solid #22c55e;border-radius:10px;outline:none;font-size:14px;background:rgba(0,0,0,.8);color:#fff}
+#chatInputWrap input{flex:1;padding:11px;border:2px solid #22c55e;border-radius:10px;outline:none;font-size:14px;background:rgba(0,0,0,.85);color:#fff}
 #chatInputWrap button{background:#22c55e;color:#fff;border:none;padding:0 16px;border-radius:10px;font-weight:900;cursor:pointer}
-/* SCOREBOARD TAB */
-#scoreboard{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:420px;max-width:92vw;background:rgba(0,0,0,.88);color:#fff;border-radius:16px;padding:18px;display:none;z-index:40;border:2px solid #22c55e}
-#scoreboard h2{text-align:center;margin-bottom:4px} #scoreboard p{text-align:center;font-size:12px;color:#aaa;margin-bottom:12px}
+#scoreboard{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:480px;max-width:94vw;background:rgba(0,0,0,.92);color:#fff;border-radius:16px;padding:18px;display:none;z-index:40;border:2px solid #22c55e}
+#scoreboard h2{text-align:center} #scoreboard p{text-align:center;font-size:12px;color:#aaa;margin:4px 0 12px}
 .sb-row{display:flex;justify-content:space-between;align-items:center;padding:9px 10px;border-radius:10px;margin-bottom:6px;background:#1e293b}
 .sb-row.you{background:#14532d;border:1px solid #22c55e}
 .sb-row .rank{font-weight:900;padding:4px 8px;border-radius:6px;font-size:11px}
-#start{position:fixed;inset:0;background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),#1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;z-index:100;text-align:center;padding:20px}
-#start h1{font-size:52px;margin-bottom:6px} #start h1 span{color:#22c55e}
-#start p{font-size:14px;color:#ccc;line-height:1.8;max-width:560px}
-#start button{background:#22c55e;color:#fff;border:none;padding:15px 36px;border-radius:14px;font-size:17px;font-weight:900;cursor:pointer;margin-top:18px}
-#start .modes{display:flex;gap:10px;margin-top:14px}
-#start .modes button{padding:11px 18px;font-size:13px;background:#333} #start .modes button.active{background:#22c55e}
-@media(max-width:700px){#controls{display:none} #chatBox{width:85vw} .slot{width:46px;height:54px} #start h1{font-size:32px}}
+.sb-head{display:flex;justify-content:space-between;padding:0 10px 6px;font-size:11px;color:#aaa;font-weight:800}
+/* MENU */
+#menu{position:fixed;inset:0;background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.9));z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px;overflow-y:auto}
+#menu h1{font-size:56px} #menu h1 span{color:#22c55e}
+#menu .sub{font-size:14px;color:#ccc;margin:8px 0 18px}
+.menu-btn{width:340px;max-width:90vw;padding:14px;border-radius:12px;border:2px solid #555;background:#222;color:#fff;font-weight:900;font-size:15px;cursor:pointer;margin-bottom:10px}
+.menu-btn:hover{border-color:#22c55e;background:#333}
+.menu-btn.green{background:#22c55e;border-color:#22c55e}
+.menu-btn.gold{background:#f59e0b;border-color:#f59e0b;color:#000}
+#serverList{display:none;width:340px;max-width:90vw;background:#111;border-radius:12px;padding:12px;margin-bottom:12px;text-align:left}
+.server-item{display:flex;gap:10px;align-items:center;padding:10px;border-radius:10px;cursor:pointer;border:1px solid #333;margin-bottom:8px}
+.server-item:hover{border-color:#22c55e}
+.server-item.active{border-color:#22c55e;background:#1a2e1a}
+#createServer{display:none;width:340px;max-width:90vw;background:#111;border-radius:12px;padding:14px;margin-bottom:12px}
+#createServer input{width:100%;padding:11px;border-radius:10px;border:1px solid #333;background:#222;color:#fff;outline:none;margin-bottom:8px}
+#createServer select{width:100%;padding:11px;border-radius:10px;border:1px solid #333;background:#222;color:#fff;margin-bottom:8px}
+#howTo{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:110;display:none;align-items:center;justify-content:center;padding:20px}
+#howTo .box{background:#111;border:2px solid #22c55e;border-radius:16px;padding:20px;max-width:520px;width:100%;color:#fff;max-height:90vh;overflow-y:auto}
+#howTo .box h2{margin-bottom:10px} #howTo .box p{font-size:13px;line-height:1.8;color:#ccc}
+@media(max-width:700px){#controls{display:none} #menu h1{font-size:34px} .menu-btn{width:90vw}}
 </style>
 </head>
 <body>
 <canvas id="game"></canvas>
 <div id="crosshair">+</div>
 <div id="top">
-  <div class="box">⛏️ GUDU <span>CRAFT</span> | Blocks: <span id="blockCount">0</span></div>
-  <div class="box">Rank: <span id="rankTop">NOOB</span> | Score: <span id="scoreTop">0</span></div>
+  <div class="box">⛏️ <span id="serverNameTop">GUDU SMP</span> | <span id="modeText">CREATIVE</span></div>
+  <div class="box">Rank: <span id="rankTop" style="color:#f59e0b">OWNER</span> | Kills: <span id="killsTop">0</span> | Deaths: <span id="deathsTop">0</span></div>
 </div>
-<div id="modeBadge" onclick="toggleMode()">🎨 CREATIVE MODE - Fly ON | Click to Change</div>
+<div id="bossBarWrap"><div class="label">🐉 ENDER DRAGON BOSS - <span id="bossHpText">100%</span></div><div id="bossBar"><div id="bossFill"></div></div></div>
 <div id="hotbar"></div>
-<div id="controls">
-  <b>🎮 CONTROLS</b><br>
-  W A S D = Chalna • Space = Jump / Fly Up<br>
-  Shift = Neeche / Fast • Mouse = Dekhna<br>
-  Left Click = Todo • Right Click = Lagao<br>
-  1-9 = Block • T = Chat • TAB = Scoreboard<br>
-  C = Mode Badlo • F = Fly
-</div>
+<div id="controls"><b>🎮 CONTROLS</b><br>WASD = Chalo • Space = Jump/Fly<br>Left = Todo • Right = Lagao • 1-0 = Block<br>T = Chat • TAB = Scoreboard • C = Mode<br>F = Fly • B = Boss • /help in Chat</div>
 <div id="msg"></div>
 
-<!-- CHAT -->
 <div id="chatBox">
   <div id="chatMsgs"></div>
-  <div id="chatInputWrap">
-    <input id="chatInput" placeholder="Chat likho... /help likho" onkeypress="if(event.key==='Enter') sendChat()">
-    <button onclick="sendChat()">Send</button>
-  </div>
-  <div style="font-size:11px;color:#fff;background:rgba(0,0,0,.5);padding:5px 8px;border-radius:6px;display:inline-block;margin-top:2px">Press <b>T</b> for Chat • <b>TAB</b> for Scoreboard</div>
+  <div id="chatInputWrap"><input id="chatInput" placeholder="Chat... /help likho, GUDU MC se pucho!" onkeypress="if(event.key==='Enter') sendChat()"><button onclick="sendChat()">Send</button></div>
+  <div style="font-size:11px;color:#fff;background:rgba(0,0,0,.5);padding:5px 8px;border-radius:6px;display:inline-block">T = Chat • TAB = Scoreboard • GUDU MC AI Online 🤖</div>
 </div>
 
-<!-- SCOREBOARD -->
 <div id="scoreboard">
-  <h2>🏆 GUDU CRAFT - SCOREBOARD</h2>
-  <p>TAB dabake band karo • Top Players</p>
+  <h2>🏆 <span id="sbServer">GUDU SMP</span></h2>
+  <p>Players Online: 6 | TAB dabake band karo</p>
+  <div class="sb-head"><span>PLAYER</span><span>KILLS / DEATHS / SCORE</span></div>
   <div id="sbList"></div>
-  <div style="display:flex;gap:8px;margin-top:12px">
-    <div style="flex:1;background:#1e293b;padding:10px;border-radius:10px;text-align:center"><b id="sbYourScore">0</b><br><span style="font-size:11px;color:#aaa">YOUR SCORE</span></div>
-    <div style="flex:1;background:#1e293b;padding:10px;border-radius:10px;text-align:center"><b id="sbYourRank">NOOB</b><br><span style="font-size:11px;color:#aaa">YOUR RANK</span></div>
-    <div style="flex:1;background:#1e293b;padding:10px;border-radius:10px;text-align:center"><b id="sbYourBlocks">0</b><br><span style="font-size:11px;color:#aaa">BLOCKS</span></div>
+  <div style="display:flex;gap:8px;margin-top:10px">
+    <div style="flex:1;background:#1e293b;padding:10px;border-radius:10px;text-align:center"><b id="sbKills">0</b><br><span style="font-size:11px;color:#aaa">KILLS</span></div>
+    <div style="flex:1;background:#1e293b;padding:10px;border-radius:10px;text-align:center"><b id="sbDeaths">0</b><br><span style="font-size:11px;color:#aaa">DEATHS</span></div>
+    <div style="flex:1;background:#1e293b;padding:10px;border-radius:10px;text-align:center"><b id="sbRank">OWNER</b><br><span style="font-size:11px;color:#aaa">RANK</span></div>
+    <div style="flex:1;background:#1e293b;padding:10px;border-radius:10px;text-align:center"><b id="sbScore">0</b><br><span style="font-size:11px;color:#aaa">SCORE</span></div>
   </div>
 </div>
 
-<div id="start">
-  <div style="font-size:70px">⛏️🧱🌍</div>
-  <h1>GUDU <span>CRAFT</span></h1>
-  <p><b>Real Minecraft jaisa - Textures + Creative + Chat + Ranks</b><br><br>
-  W A S D = Chalo • Space = Jump / Fly • Mouse = Dekho<br>
-  Left Click = Todo • Right Click = Lagao • T = Chat • TAB = Scoreboard<br>
-  C = Creative / Survival • F = Fly ON/OFF</p>
-  <div class="modes">
-    <button id="btnCreative" class="active" onclick="setStartMode('creative',this)">🎨 CREATIVE - Fly + Unlimited</button>
-    <button id="btnSurvival" onclick="setStartMode('survival',this)">⚔️ SURVIVAL - Real Game</button>
+<!-- MAIN MENU -->
+<div id="menu">
+  <div style="font-size:70px">⛏️🌍🐉</div>
+  <h1>GUDU <span>SMP</span></h1>
+  <div class="sub">Real Minecraft Server • Mobs • Boss • Ranks • AI Chat<br>Version 1.21 • Players Online: 128 • Ping: 12ms</div>
+  <button class="menu-btn green" onclick="playSingle()">▶️ SINGLE PLAYER - Akela Khelo</button>
+  <button class="menu-btn" onclick="toggleServers()">🌐 MULTIPLAYER - Server Join Karo</button>
+  <button class="menu-btn gold" onclick="toggleCreate()">➕ APNA SERVER BANAO - GUDU SMP</button>
+  <button class="menu-btn" onclick="showHowTo()">📖 COMMANDS + HOW TO PLAY</button>
+
+  <div id="serverList">
+    <b style="font-size:13px">🌐 SERVERS LIST - Koi ek chuno:</b>
+    <div class="server-item active" onclick="selectServer('GUDU SMP', this)"><div style="font-size:30px">🟢</div><div style="flex:1"><b>GUDU SMP</b><br><span style="font-size:11px;color:#aaa">Survival • 128/200 Online • Lag Free</span></div><div style="font-size:11px;color:#22c55e;font-weight:900">12ms</div></div>
+    <div class="server-item" onclick="selectServer('GUDU CREATIVE', this)"><div style="font-size:30px">🎨</div><div style="flex:1"><b>GUDU CREATIVE</b><br><span style="font-size:11px;color:#aaa">Creative • Build Battle • 45/100</span></div><div style="font-size:11px;color:#22c55e;font-weight:900">18ms</div></div>
+    <div class="server-item" onclick="selectServer('BEDWARS - GUDU', this)"><div style="font-size:30px">🛏️</div><div style="flex:1"><b>BEDWARS - GUDU</b><br><span style="font-size:11px;color:#aaa">PvP • 89/100 • Kills = Rank</span></div><div style="font-size:11px;color:#f59e0b;font-weight:900">24ms</div></div>
+    <button class="menu-btn green" style="width:100%;margin:0" onclick="joinServer()">JOIN SERVER ▶️</button>
   </div>
-  <button onclick="startGame()">▶️ PLAY KARO</button>
-  <p style="font-size:11px;margin-top:10px">Tip: T dabake chat me <b>/fly</b> , <b>/give diamond</b> , <b>/help</b> likho!</p>
+
+  <div id="createServer">
+    <b>➕ APNA SERVER BANAO</b><br><span style="font-size:11px;color:#aaa">Dost join kar payenge - GUDU SMP jaisa</span><br><br>
+    <input id="myServerName" placeholder="Server ka Naam - jaise RAHUL SMP" value="RAHUL SMP">
+    <select id="myServerMode"><option value="Survival">Survival Mode</option><option value="Creative">Creative Mode</option><option value="PvP">PvP / Bedwars</option></select>
+    <input id="myServerMax" placeholder="Max Players - jaise 10" value="10">
+    <button class="menu-btn green" style="width:100%;margin:0" onclick="createMyServer()">🚀 SERVER BANAO + JOIN</button>
+    <p style="font-size:11px;color:#888;margin-top:8px">Server IP banega: <b id="myServerIP" style="color:#22c55e">play.gudusmp.fun</b></p>
+  </div>
+  <p style="font-size:11px;color:#666;margin-top:10px">Made by Rahul • GUDU MC AI • No Login Needed</p>
 </div>
+
+<div id="howTo"><div class="box"><h2>📖 COMMANDS LIST</h2><p>
+<b>Chat me T dabake likho:</b><br>
+<b>/help</b> - Sab commands<br>
+<b>/gamemode creative</b> / <b>/gamemode survival</b> - Mode badlo<br>
+<b>/fly</b> - Fly ON/OFF<br>
+<b>/give diamond</b> / <b>/give gold</b> / <b>/give emerald</b> - Block pao<br>
+<b>/rank OWNER</b> / <b>/rank LEGEND</b> / <b>/rank PRO</b> - Apni rank badlo<br>
+<b>/summon pig</b> / <b>/summon cow</b> / <b>/summon zombie</b> - Mob bulao<br>
+<b>/kill</b> - Khud ko kill (Death +1)<br>
+<b>/boss</b> - Ender Dragon Boss bulao<br>
+<b>/day</b> / <b>/night</b> - Din / Raat<br>
+<b>/tp</b> - Diamond Tower pe jao<br>
+<b>/heal</b> - Health full<br>
+<b>/clear</b> - Chat saaf karo<br><br>
+<b>🤖 GUDU MC AI se pucho:</b><br>
+GUDU MC, minecraft me diamond kahan milta hai?<br>
+GUDU MC, ghar kaise banau?<br>
+GUDU MC, Ender Dragon ko kaise harau?<br>
+GUDU MC, tu kaun hai?<br><br>
+<b>Controls:</b> WASD = Chalo, Space = Jump, Mouse = Dekho, Left Click = Todo, Right Click = Lagao, TAB = Scoreboard, B = Boss
+</p><button class="menu-btn green" style="width:100%" onclick="document.getElementById('howTo').style.display='none'">OK, SAMAJH GAYA ✅</button></div></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 var scene, camera, renderer;
-var blocks = [];
-var startMode = 'creative';
-var isCreative = true;
-var isFlying = true;
+var blocks = [], mobs = [];
+var selectedServer = 'GUDU SMP';
 var selected = 0;
-var score = 0, broken = 0, placed = 0;
-var keys = {};
-var velocityY = 0;
+var score = 0, broken = 0, placed = 0, kills = 0, deaths = 0;
+var myRank = 'OWNER';
+var isCreative = true, isFlying = true;
+var keys = {}, velocityY = 0;
 var playerPos = {x:0, y:4, z:9};
-var yaw = 0, pitch = 0;
-var isLocked = false;
-var chatOpen = false;
+var yaw = 0, pitch = 0, isLocked = false, chatOpen = false;
+var bossHp = 100, bossActive = false;
 var myName = 'RAHUL';
 
-// BLOCKS WITH RANKS - Jitna rare, utna high rank
 var blockTypes = [
-  {name:'Grass', color:'#4CAF50', emoji:'🌱', rank:'NOOB', rankColor:'#94a3b8'},
-  {name:'Dirt', color:'#8D6E63', emoji:'🟫', rank:'NOOB', rankColor:'#94a3b8'},
-  {name:'Stone', color:'#9E9E9E', emoji:'🪨', rank:'NOOB', rankColor:'#94a3b8'},
-  {name:'Sand', color:'#FFEB8A', emoji:'🏖️', rank:'NOOB', rankColor:'#94a3b8'},
-  {name:'Wood', color:'#795548', emoji:'🪵', rank:'PRO', rankColor:'#22c55e'},
-  {name:'Leaves', color:'#2E7D32', emoji:'🌿', rank:'PRO', rankColor:'#22c55e'},
-  {name:'Brick', color:'#C62828', emoji:'🧱', rank:'PRO', rankColor:'#22c55e'},
-  {name:'Glass', color:'#B3E5FC', emoji:'🧊', rank:'ELITE', rankColor:'#3b82f6'},
-  {name:'Diamond', color:'#00E5FF', emoji:'💎', rank:'LEGEND', rankColor:'#f59e0b'},
-  {name:'Gold', color:'#FFD700', emoji:'🟡', rank:'LEGEND', rankColor:'#f59e0b'}
+  {name:'Grass', emoji:'🌱', base:'#4a9e3f', spots:['#3a7d2f','#5cb54a','#2e6b22']},
+  {name:'Dirt', emoji:'🟫', base:'#8a6a4a', spots:['#6d4f33','#a5855e','#5d4430']},
+  {name:'Stone', emoji:'🪨', base:'#8a8a8a', spots:['#6e6e6e','#a8a8a8','#5f5f5f']},
+  {name:'Sand', emoji:'🏖️', base:'#e8d88a', spots:['#d9c95f','#fff2a8','#cbb93f']},
+  {name:'Wood', emoji:'🪵', base:'#7a5230', spots:['#5d3d22','#8f653a','#4a2f1a']},
+  {name:'Leaves', emoji:'🌿', base:'#2e7d32', spots:['#1b5e20','#43a047','#66bb6a']},
+  {name:'Brick', emoji:'🧱', base:'#b03a2e', spots:['#922b21','#c0392b','#7b241c']},
+  {name:'Glass', emoji:'🧊', base:'#a8d8e8', spots:['#d4f1f9','#7fb8cc','#c9e8f2']},
+  {name:'Diamond', emoji:'💎', base:'#00d5e8', spots:['#00b0c0','#4de8f5','#0099a8']},
+  {name:'Gold', emoji:'🟡', base:'#e8b800', spots:['#c99a00','#ffd700','#a87d00']},
+  {name:'Emerald', emoji:'💚', base:'#00b050', spots:['#009040','#00d060','#007030']}
 ];
-
 var PLAYERS = [
-  {name:'RAHUL (You)', score:0, blocks:0, rank:'NOOB', color:'#22c55e'},
-  {name:'Amit_PRO', score:1250, blocks:89, rank:'ELITE', color:'#3b82f6'},
-  {name:'Priya_X', score:980, blocks:67, rank:'PRO', color:'#22c55e'},
-  {name:'Steve_Mine', score:2100, blocks:145, rank:'LEGEND', color:'#f59e0b'},
-  {name:'Alex_Builder', score:760, blocks:45, rank:'PRO', color:'#22c55e'},
-  {name:'Noob_Killer', score:320, blocks:23, rank:'NOOB', color:'#94a3b8'}
+  {name:'RAHUL (You)', score:0, kills:0, deaths:0, rank:'OWNER', color:'#f59e0b'},
+  {name:'Steve_Mine', score:2100, kills:45, deaths:12, rank:'LEGEND', color:'#f59e0b'},
+  {name:'Priya_X', score:1250, kills:22, deaths:8, rank:'ELITE', color:'#3b82f6'},
+  {name:'Amit_PRO', score:980, kills:18, deaths:15, rank:'PRO', color:'#22c55e'},
+  {name:'Alex_Builder', score:760, kills:10, deaths:5, rank:'PRO', color:'#22c55e'},
+  {name:'Noob_Killer', score:320, kills:5, deaths:20, rank:'PLAYER', color:'#a855f7'}
 ];
-
-function getRankByScore(s){
-  if(s>=2000) return 'LEGEND';
-  if(s>=1000) return 'ELITE';
-  if(s>=500) return 'PRO';
-  if(s>=100) return 'PLAYER';
-  return 'NOOB';
-}
 function getRankColor(r){
+  if(r==='OWNER') return '#f59e0b';
   if(r==='LEGEND') return '#f59e0b';
   if(r==='ELITE') return '#3b82f6';
   if(r==='PRO') return '#22c55e';
   if(r==='PLAYER') return '#a855f7';
   return '#94a3b8';
 }
-
-function showMsg(t){
-  var m = document.getElementById('msg');
-  m.innerText = t; m.style.display='block';
-  setTimeout(function(){ m.style.display='none'; }, 1400);
-}
-function addChatMsg(html){
-  var div = document.createElement('div');
-  div.className = 'chatMsg';
-  div.innerHTML = html;
+function showMsg(t){ var m=document.getElementById('msg'); m.innerText=t; m.style.display='block'; setTimeout(function(){m.style.display='none';},1500); }
+function addChat(html){
+  var div=document.createElement('div'); div.className='chatMsg'; div.innerHTML=html;
   document.getElementById('chatMsgs').appendChild(div);
-  var box = document.getElementById('chatMsgs');
-  box.scrollTop = box.scrollHeight;
-  // 6 se zyada ho to purana hatao
-  while(box.children.length>6) box.removeChild(box.firstChild);
+  var box=document.getElementById('chatMsgs'); box.scrollTop=box.scrollHeight;
+  while(box.children.length>7) box.removeChild(box.firstChild);
 }
-function setStartMode(m, el){
-  startMode = m;
-  document.getElementById('btnCreative').classList.remove('active');
-  document.getElementById('btnSurvival').classList.remove('active');
-  el.classList.add('active');
-  if(m==='creative'){ isCreative=true; isFlying=true; } else { isCreative=false; isFlying=false; }
+function toggleServers(){ var el=document.getElementById('serverList'); el.style.display = el.style.display==='block' ? 'none' : 'block'; document.getElementById('createServer').style.display='none'; }
+function toggleCreate(){ var el=document.getElementById('createServer'); el.style.display = el.style.display==='block' ? 'none' : 'block'; document.getElementById('serverList').style.display='none'; }
+function selectServer(name, el){
+  selectedServer = name;
+  var items=document.querySelectorAll('.server-item'); for(var i=0;i<items.length;i++) items[i].classList.remove('active'); el.classList.add('active');
 }
-function toggleMode(){
-  isCreative = !isCreative;
-  isFlying = isCreative;
-  updateModeBadge();
-  showMsg(isCreative ? 'CREATIVE MODE ON - Fly + Unlimited!' : 'SURVIVAL MODE ON - Real Game!');
+function playSingle(){ selectedServer='SINGLE PLAYER'; startGame(); }
+function joinServer(){ startGame(); }
+function createMyServer(){
+  var name=document.getElementById('myServerName').value || 'RAHUL SMP';
+  var mode=document.getElementById('myServerMode').value;
+  selectedServer = name.toUpperCase();
+  document.getElementById('myServerIP').innerText = 'play.'+name.toLowerCase().replace(/ /g,'')+'.fun';
+  isCreative = (mode==='Creative');
+  addChat('<span class="sys">[SYSTEM]</span> Server <b>'+selectedServer+'</b> ban gaya! IP: play.'+name.toLowerCase().replace(/ /g,'')+'.fun');
+  startGame();
 }
-function updateModeBadge(){
-  document.getElementById('modeBadge').innerText = isCreative ? '🎨 CREATIVE MODE - Fly ON | Click to Change' : '⚔️ SURVIVAL MODE - Fly OFF | Click to Change';
-  document.getElementById('modeBadge').style.background = isCreative ? '#f59e0b' : '#ef4444';
-}
+function showHowTo(){ document.getElementById('howTo').style.display='flex'; }
 
-// REAL TEXTURES - Canvas se banate hai, ekdum Minecraft jaisa
-function makeTexture(base, spots, lines){
-  var c = document.createElement('canvas');
-  c.width = 64; c.height = 64;
-  var ctx = c.getContext('2d');
-  ctx.fillStyle = base; ctx.fillRect(0,0,64,64);
-  // Noise dots
-  for(var i=0;i<120;i++){
-    ctx.fillStyle = spots[Math.floor(Math.random()*spots.length)];
-    ctx.fillRect(Math.random()*64, Math.random()*64, 2, 2);
+// REAL TEXTURES - Zyada detailed, har block alag dikhega
+function makeTexture(base, spots, isWood, isBrick){
+  var c=document.createElement('canvas'); c.width=64; c.height=64;
+  var ctx=c.getContext('2d');
+  ctx.fillStyle=base; ctx.fillRect(0,0,64,64);
+  // Bade patches
+  for(var i=0;i<28;i++){
+    ctx.fillStyle=spots[Math.floor(Math.random()*spots.length)];
+    var s=4+Math.random()*8;
+    ctx.fillRect(Math.random()*64, Math.random()*64, s, s);
   }
-  if(lines){
-    ctx.strokeStyle = 'rgba(0,0,0,0.25)';
-    for(var y=0;y<64;y+=8){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(64,y); ctx.stroke(); }
-    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-    for(var x=0;x<64;x+=8){ ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,64); ctx.stroke(); }
+  // Chhote dots - realistic noise
+  for(var j=0;j<220;j++){
+    ctx.fillStyle=spots[Math.floor(Math.random()*spots.length)];
+    ctx.globalAlpha=0.6; ctx.fillRect(Math.random()*64, Math.random()*64, 1.5, 1.5); ctx.globalAlpha=1;
   }
-  var tex = new THREE.CanvasTexture(c);
-  tex.magFilter = THREE.NearestFilter;
-  return tex;
+  // Wood lines
+  if(isWood){
+    ctx.strokeStyle='rgba(0,0,0,0.35)'; ctx.lineWidth=2;
+    for(var y=0;y<64;y+=10){ ctx.beginPath(); ctx.moveTo(0,y+Math.random()*3); ctx.lineTo(64,y+Math.random()*3); ctx.stroke(); }
+  }
+  // Brick lines
+  if(isBrick){
+    ctx.strokeStyle='rgba(255,255,255,0.5)'; ctx.lineWidth=2;
+    for(var yy=0;yy<64;yy+=16){ ctx.beginPath(); ctx.moveTo(0,yy); ctx.lineTo(64,yy); ctx.stroke(); }
+    ctx.strokeStyle='rgba(0,0,0,0.3)';
+    for(var xx=0;xx<64;xx+=32){ ctx.beginPath(); ctx.moveTo(xx,0); ctx.lineTo(xx,16); ctx.stroke(); ctx.beginPath(); ctx.moveTo(xx+16,16); ctx.lineTo(xx+16,32); ctx.stroke(); }
+  }
+  // Border - block alag dikhe
+  ctx.strokeStyle='rgba(0,0,0,0.35)'; ctx.lineWidth=2; ctx.strokeRect(0,0,64,64);
+  var tex=new THREE.CanvasTexture(c); tex.magFilter=THREE.NearestFilter; return tex;
 }
-function getMaterialFor(type){
-  var tex;
-  if(type===0){ // Grass - upar green, side brown+green
-    tex = makeTexture('#4CAF50', ['#388E3C','#66BB6A','#2E7D32']);
-    return new THREE.MeshLambertMaterial({map: tex});
-  }
-  if(type===1) { tex = makeTexture('#8D6E63', ['#6D4C41','#A1887F','#5D4037']); return new THREE.MeshLambertMaterial({map: tex}); }
-  if(type===2) { tex = makeTexture('#9E9E9E', ['#757575','#BDBDBD','#616161']); return new THREE.MeshLambertMaterial({map: tex}); }
-  if(type===3) { tex = makeTexture('#FFEB8A', ['#FDD835','#FFF59D','#F9A825']); return new THREE.MeshLambertMaterial({map: tex}); }
-  if(type===4) { tex = makeTexture('#795548', ['#5D4037','#8D6E63','#4E342E'], true); return new THREE.MeshLambertMaterial({map: tex}); }
-  if(type===5) { tex = makeTexture('#2E7D32', ['#1B5E20','#43A047','#66BB6A']); return new THREE.MeshLambertMaterial({map: tex}); }
-  if(type===6) { tex = makeTexture('#C62828', ['#B71C1C','#E53935','#8E0000'], true); return new THREE.MeshLambertMaterial({map: tex}); }
-  if(type===7) { tex = makeTexture('#B3E5FC', ['#E1F5FE','#81D4FA','#4FC3F7']); return new THREE.MeshLambertMaterial({map: tex, transparent:true, opacity:0.7}); }
-  if(type===8) { tex = makeTexture('#00E5FF', ['#00BCD4','#4DD0E1','#00ACC1'], true); return new THREE.MeshLambertMaterial({map: tex, emissive:0x006064}); }
-  if(type===9) { tex = makeTexture('#FFD700', ['#FFC107','#FFEB3B','#FF8F00'], true); return new THREE.MeshLambertMaterial({map: tex, emissive:0x3a2a00}); }
-  return new THREE.MeshLambertMaterial({color:0xffffff});
+function getMat(type){
+  var b=blockTypes[type];
+  var tex=makeTexture(b.base, b.spots, type===4, type===6);
+  var mat={map:tex};
+  if(type===7){ mat.transparent=true; mat.opacity=0.65; }
+  if(type===8 || type===9 || type===10){ mat.emissive=0x222222; }
+  return new THREE.MeshLambertMaterial(mat);
 }
-
 function buildHotbar(){
-  var html = '';
+  var html='';
   for(var i=0;i<blockTypes.length;i++){
-    var b = blockTypes[i];
-    html += '<div class="slot '+(i===selected?'active':'')+'" onclick="selectBlock('+i+')"><span class="e">'+b.emoji+'</span>'+b.name+'<span class="rank" style="color:'+b.rankColor+'">'+b.rank+'</span><span style="font-size:9px;color:#aaa">'+(i+1)+'</span></div>';
+    var b=blockTypes[i];
+    html+='<div class="slot '+(i===selected?'active':'')+'" onclick="selectBlock('+i+')"><span class="e">'+b.emoji+'</span>'+b.name+'<span style="font-size:9px;color:#aaa">'+(i+1)+'</span></div>';
   }
-  document.getElementById('hotbar').innerHTML = html;
+  document.getElementById('hotbar').innerHTML=html;
 }
-function selectBlock(i){ selected = i; buildHotbar(); showMsg(blockTypes[i].name + ' - Rank: ' + blockTypes[i].rank); }
-
+function selectBlock(i){ selected=i; buildHotbar(); showMsg(blockTypes[i].name+' select kiya'); }
+function updateTop(){
+  document.getElementById('serverNameTop').innerText=selectedServer;
+  document.getElementById('modeText').innerText=isCreative?'CREATIVE':'SURVIVAL';
+  document.getElementById('rankTop').innerText=myRank;
+  document.getElementById('rankTop').style.color=getRankColor(myRank);
+  document.getElementById('killsTop').innerText=kills;
+  document.getElementById('deathsTop').innerText=deaths;
+  PLAYERS[0].score=score; PLAYERS[0].kills=kills; PLAYERS[0].deaths=deaths; PLAYERS[0].rank=myRank;
+}
 function init(){
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x87ceeb);
-  scene.fog = new THREE.Fog(0x87ceeb, 30, 100);
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  camera.position.set(playerPos.x, playerPos.y, playerPos.z);
-  renderer = new THREE.WebGLRenderer({canvas: document.getElementById('game'), antialias:true});
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  var sun = new THREE.DirectionalLight(0xffffff, 1.1);
-  sun.position.set(20, 40, 20); scene.add(sun);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.65));
-
-  // WORLD - 26x26
-  for(var x=-13;x<=13;x++){
-    for(var z=-13;z<=13;z++){
-      addBlock(x, 0, z, 0, false);
-      if((x*x+z*z)%9===0) addBlock(x, 1, z, 0, false);
-      if(x=== -3 && z=== -3) addBlock(x, 1, z, 2, false);
-      if(x=== 3 && z=== 3) addBlock(x, 1, z, 3, false);
-      if(x=== 6 && z=== -6) addBlock(x, 1, z, 8, false);
-      if(x=== -6 && z=== 6) addBlock(x, 1, z, 9, false);
-      // Trees
-      if((x===5 && z===-3) || (x===-6 && z===5) || (x===8 && z===7) || (x===-8 && z===-7)){
-        addBlock(x, 2, z, 4, false); addBlock(x, 3, z, 4, false);
-        addBlock(x, 4, z, 5, false); addBlock(x+1, 4, z, 5, false); addBlock(x-1, 4, z, 5, false);
-        addBlock(x, 4, z+1, 5, false); addBlock(x, 4, z-1, 5, false); addBlock(x, 5, z, 5, false);
+  scene=new THREE.Scene(); scene.background=new THREE.Color(0x87ceeb); scene.fog=new THREE.Fog(0x87ceeb,30,100);
+  camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+  camera.position.set(playerPos.x,playerPos.y,playerPos.z);
+  renderer=new THREE.WebGLRenderer({canvas:document.getElementById('game'),antialias:true});
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  var sun=new THREE.DirectionalLight(0xffffff,1.1); sun.position.set(20,40,20); scene.add(sun);
+  scene.add(new THREE.AmbientLight(0xffffff,0.65));
+  // World
+  for(var x=-13;x<=13;x++){ for(var z=-13;z<=13;z++){
+    addBlock(x,0,z,0,false);
+    if((x*x+z*z)%9===0) addBlock(x,1,z,0,false);
+    if(x===-3&&z===-3) addBlock(x,1,z,2,false);
+    if(x===3&&z===3) addBlock(x,1,z,3,false);
+    if(x===6&&z===-6) addBlock(x,1,z,8,false);
+    if(x===-6&&z===6) addBlock(x,1,z,9,false);
+    if((x===5&&z===-3)||(x===-6&&z===5)||(x===8&&z===7)){ addBlock(x,2,z,4,false); addBlock(x,3,z,4,false); addBlock(x,4,z,5,false); addBlock(x+1,4,z,5,false); addBlock(x-1,4,z,5,false); addBlock(x,4,z+1,5,false); addBlock(x,4,z-1,5,false); }
+  }}
+  // Ghar
+  for(var gx=-2;gx<=2;gx++){ addBlock(gx,1,-9,6,false); addBlock(gx,2,-9,6,false); addBlock(gx,3,-9,6,false); }
+  addBlock(-2,1,-8,4,false); addBlock(2,1,-8,4,false); addBlock(0,1,-8,7,false);
+  // MOBS + ANIMALS spawn
+  spawnMob('pig', 4, 1, 4, 0xffb6c1);
+  spawnMob('cow', -4, 1, 3, 0xffffff);
+  spawnMob('chicken', 2, 1, -4, 0xffffff);
+  spawnMob('sheep', -2, 1, -5, 0xe8e8e8);
+  spawnMob('zombie', 7, 1, 0, 0x2e7d32);
+  spawnMob('pig', -7, 1, -2, 0xffb6c1);
+  updateTop(); buildHotbar(); animate();
+  addChat('<span class="sys">[SYSTEM]</span> <b>'+selectedServer+'</b> me join ho gaye! Welcome <b>'+myName+'</b>');
+  addChat('<span class="ai">🤖 GUDU MC:</span> Hi! Main GUDU MC hu. Kuch bhi pucho - <b>GUDU MC, diamond kahan milta hai?</b>');
+  addChat('<b>Steve_Mine:</b> Welcome bhai! Ghar bana raha hu');
+}
+function addBlock(x,y,z,type,countIt){
+  for(var i=0;i<blocks.length;i++){ if(blocks[i].position.x===x&&blocks[i].position.y===y&&blocks[i].position.z===z) return; }
+  var mesh=new THREE.Mesh(new THREE.BoxGeometry(1,1,1), getMat(type));
+  mesh.position.set(x,y,z); mesh.userData={type:type};
+  scene.add(mesh); blocks.push(mesh);
+  if(countIt) document.getElementById('blockCount').innerText=blocks.length;
+}
+function removeBlock(mesh){
+  scene.remove(mesh); var idx=blocks.indexOf(mesh); if(idx!==-1) blocks.splice(idx,1);
+  score+=10; broken++; updateTop();
+}
+function spawnMob(kind, x, y, z, color){
+  var group=new THREE.Group();
+  var bodyMat=new THREE.MeshLambertMaterial({color:color});
+  var body=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.7,1.2), bodyMat); body.position.y=0.6; group.add(body);
+  var headMat=new THREE.MeshLambertMaterial({color: kind==='zombie'?0x2e7d32 : color});
+  var head=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.7,0.7), headMat); head.position.set(0,1.2,0.85); group.add(head);
+  // Eyes
+  var eyeMat=new THREE.MeshBasicMaterial({color:0x000000});
+  var e1=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.1,0.05), eyeMat); e1.position.set(-0.15,1.3,1.22); group.add(e1);
+  var e2=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.1,0.05), eyeMat); e2.position.set(0.15,1.3,1.22); group.add(e2);
+  // Legs
+  for(var lx=-0.3;lx<=0.3;lx+=0.6){ for(var lz=-0.4;lz<=0.4;lz+=0.8){ var leg=new THREE.Mesh(new THREE.BoxGeometry(0.2,0.5,0.2), bodyMat); leg.position.set(lx,0.25,lz); group.add(leg); } }
+  // Pig nose / Chicken beak
+  if(kind==='pig'){ var nose=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.25,0.1), new THREE.MeshLambertMaterial({color:0xff8a9a})); nose.position.set(0,1.1,1.22); group.add(nose); }
+  if(kind==='chicken'){ var beak=new THREE.Mesh(new THREE.BoxGeometry(0.15,0.15,0.15), new THREE.MeshLambertMaterial({color:0xffa500})); beak.position.set(0,1.1,1.25); group.add(beak); }
+  group.position.set(x,y,z);
+  group.userData={kind:kind, dir:Math.random()*Math.PI*2, speed:0.01+Math.random()*0.01, hp: kind==='zombie'?30:10};
+  scene.add(group); mobs.push(group);
+}
+function updateMobs(){
+  for(var i=0;i<mobs.length;i++){
+    var m=mobs[i];
+    if(Math.random()<0.01) m.userData.dir = Math.random()*Math.PI*2;
+    m.position.x += Math.cos(m.userData.dir)*m.userData.speed;
+    m.position.z += Math.sin(m.userData.dir)*m.userData.speed;
+    if(m.position.x>12) m.position.x=12; if(m.position.x<-12) m.position.x=-12;
+    if(m.position.z>12) m.position.z=12; if(m.position.z<-12) m.position.z=-12;
+    m.rotation.y = -m.userData.dir + Math.PI/2;
+    // Zombie player ke peeche bhage
+    if(m.userData.kind==='zombie'){
+      var dx=playerPos.x-m.position.x, dz=playerPos.z-m.position.z;
+      var dist=Math.sqrt(dx*dx+dz*dz);
+      if(dist<8 && dist>1){
+        m.position.x += dx/dist*0.02; m.position.z += dz/dist*0.02;
+        m.lookAt(playerPos.x, m.position.y, playerPos.z);
+      }
+      if(dist<1.2 && Math.random()<0.02){
+        deaths++; updateTop(); showMsg('☠️ Zombie ne mara! Death +1'); addChat('<span class="sys">[DEATH]</span> Zombie ne <b>'+myName+'</b> ko mara!');
+        playerPos.x=0; playerPos.y=4; playerPos.z=9;
       }
     }
   }
-  // Ghar - Brick + Glass
-  for(var gx=-2; gx<=2; gx++){ addBlock(gx, 1, -9, 6, false); addBlock(gx, 2, -9, 6, false); addBlock(gx, 3, -9, 6, false); }
-  addBlock(-2, 1, -8, 4, false); addBlock(-2, 2, -8, 4, false);
-  addBlock(2, 1, -8, 4, false); addBlock(2, 2, -8, 4, false);
-  addBlock(0, 1, -8, 7, false); addBlock(0, 2, -8, 7, false);
-  addBlock(-2, 1, -7, 4, false); addBlock(2, 1, -7, 4, false);
-  // Diamond Tower - Legend ke liye
-  addBlock(10, 1, 10, 8, false); addBlock(10, 2, 10, 8, false); addBlock(10, 3, 10, 8, false); addBlock(10, 4, 10, 9, false);
-  updateCount(); buildHotbar(); animate();
-  addChatMsg('<span class="sys">[SYSTEM]</span> <b>Welcome to GUDU CRAFT!</b> T dabake chat karo');
-  addChatMsg('<span class="sys">[SYSTEM]</span> <b>Steve_Mine</b> joined the game');
-  addChatMsg('<b>Steve_Mine:</b> Hii Rahul, ghar bana raha hu!');
 }
-
-function addBlock(x,y,z,type, countIt){
-  for(var i=0;i<blocks.length;i++){ if(blocks[i].position.x===x && blocks[i].position.y===y && blocks[i].position.z===z) return; }
-  var mesh = new THREE.Mesh(new THREE.BoxGeometry(1,1,1), getMaterialFor(type));
-  mesh.position.set(x,y,z);
-  mesh.userData = {type:type, bx:x, by:y, bz:z};
-  scene.add(mesh); blocks.push(mesh);
-  if(countIt) updateCount();
-}
-function removeBlock(mesh){
-  scene.remove(mesh);
-  var idx = blocks.indexOf(mesh); if(idx!==-1) blocks.splice(idx,1);
-  score += 10; broken++;
-  updateScore();
-  updateCount();
-}
-function updateCount(){ document.getElementById('blockCount').innerText = blocks.length; }
-function updateScore(){
-  var rank = getRankByScore(score);
-  document.getElementById('scoreTop').innerText = score;
-  document.getElementById('rankTop').innerText = rank;
-  document.getElementById('rankTop').style.color = getRankColor(rank);
-  PLAYERS[0].score = score; PLAYERS[0].blocks = placed + broken; PLAYERS[0].rank = rank;
-}
-
 function startGame(){
-  document.getElementById('start').style.display='none';
-  isCreative = (startMode==='creative');
-  isFlying = isCreative;
-  updateModeBadge();
+  document.getElementById('menu').style.display='none';
+  document.getElementById('blockCount').innerText='0';
   init();
-  var canvas = document.getElementById('game');
-  canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
+  var canvas=document.getElementById('game');
+  canvas.requestPointerLock=canvas.requestPointerLock||canvas.mozRequestPointerLock;
   canvas.requestPointerLock();
+  showMsg('Welcome to '+selectedServer+'! T dabake chat karo');
 }
-
-document.addEventListener('pointerlockchange', function(){ isLocked = document.pointerLockElement === document.getElementById('game'); });
-document.addEventListener('mousemove', function(e){
-  if(!isLocked || chatOpen) return;
-  yaw -= e.movementX * 0.0025;
-  pitch -= e.movementY * 0.0025;
-  if(pitch>1.5) pitch=1.5; if(pitch<-1.5) pitch=-1.5;
-});
+document.addEventListener('pointerlockchange', function(){ isLocked=document.pointerLockElement===document.getElementById('game'); });
+document.addEventListener('mousemove', function(e){ if(!isLocked||chatOpen) return; yaw-=e.movementX*0.0025; pitch-=e.movementY*0.0025; if(pitch>1.5)pitch=1.5; if(pitch<-1.5)pitch=-1.5; });
 document.addEventListener('keydown', function(e){
-  // TAB - Scoreboard
   if(e.key==='Tab'){ e.preventDefault(); showScoreboard(true); return; }
-  // T - Chat
-  if(e.key.toLowerCase()==='t' && !chatOpen && document.getElementById('start').style.display==='none'){
-    e.preventDefault(); openChat(); return;
-  }
+  if(e.key.toLowerCase()==='t' && !chatOpen && document.getElementById('menu').style.display==='none'){ e.preventDefault(); openChat(); return; }
   if(e.key==='Escape' && chatOpen){ closeChat(); return; }
   if(chatOpen) return;
-  keys[e.key.toLowerCase()] = true;
-  if(e.key>='1' && e.key<='9') selectBlock(parseInt(e.key)-1);
+  keys[e.key.toLowerCase()]=true;
+  if(e.key>='1'&&e.key<='9') selectBlock(parseInt(e.key)-1);
   if(e.key==='0') selectBlock(9);
-  if(e.key.toLowerCase()==='c') toggleMode();
-  if(e.key.toLowerCase()==='f'){ isFlying = !isFlying; showMsg(isFlying ? 'FLY ON 🕊️' : 'FLY OFF'); }
-  if(e.code==='Space'){ e.preventDefault(); if(isFlying){ } else if(velocityY===0){ velocityY = 0.18; } }
+  if(e.key.toLowerCase()==='c'){ isCreative=!isCreative; isFlying=isCreative; updateTop(); showMsg(isCreative?'CREATIVE ON':'SURVIVAL ON'); }
+  if(e.key.toLowerCase()==='f'){ isFlying=!isFlying; showMsg(isFlying?'FLY ON':'FLY OFF'); }
+  if(e.key.toLowerCase()==='b'){ summonBoss(); }
+  if(e.code==='Space'){ e.preventDefault(); if(!isFlying && velocityY===0) velocityY=0.18; }
 });
-document.addEventListener('keyup', function(e){
-  keys[e.key.toLowerCase()] = false;
-  if(e.key==='Tab'){ showScoreboard(false); }
-});
-function openChat(){
-  chatOpen = true;
-  document.getElementById('chatInputWrap').classList.add('show');
-  document.getElementById('chatInput').focus();
-  if(document.exitPointerLock) document.exitPointerLock();
-}
-function closeChat(){
-  chatOpen = false;
-  document.getElementById('chatInputWrap').classList.remove('show');
-  var canvas = document.getElementById('game');
-  canvas.requestPointerLock();
-}
+document.addEventListener('keyup', function(e){ keys[e.key.toLowerCase()]=false; if(e.key==='Tab') showScoreboard(false); });
+function openChat(){ chatOpen=true; document.getElementById('chatInputWrap').classList.add('show'); document.getElementById('chatInput').focus(); if(document.exitPointerLock) document.exitPointerLock(); }
+function closeChat(){ chatOpen=false; document.getElementById('chatInputWrap').classList.remove('show'); var c=document.getElementById('game'); c.requestPointerLock(); }
 function sendChat(){
-  var input = document.getElementById('chatInput');
-  var text = input.value.trim();
-  if(!text) { closeChat(); return; }
-  input.value = '';
-  // Commands
-  if(text.startsWith('/')){
-    handleCommand(text);
-    closeChat();
-    return;
+  var input=document.getElementById('chatInput'); var text=input.value.trim(); if(!text){ closeChat(); return; } input.value='';
+  if(text.startsWith('/')){ handleCommand(text); closeChat(); return; }
+  addChat('<span class="me">'+myName+':</span> '+text);
+  // GUDU MC AI - agar uska naam liya to jawab dega
+  if(text.toLowerCase().indexOf('gudu mc')!==-1 || text.toLowerCase().indexOf('gudu')!==-1){
+    setTimeout(function(){ addChat('<span class="ai">🤖 GUDU MC:</span> '+guduAIAnswer(text)); }, 800);
+  } else {
+    setTimeout(function(){ var replies=['Haan bhai sahi bola!','Mast hai yaar','Aa ja milke build karte hai','Maine diamond dhoond liya 💎']; addChat('<b>Steve_Mine:</b> '+replies[Math.floor(Math.random()*replies.length)]); }, 1000);
   }
-  addChatMsg('<span class="me">'+myName+':</span> ' + text);
   closeChat();
-  // Auto replies from players
-  setTimeout(function(){
-    var replies = ['Haan bhai sahi bola!', 'Mast hai yaar 🔥', 'Tu ghar bana raha hai?', 'Maine diamond dhoond liya 💎', 'Aa ja milke build karte hai', 'Hahaha 😂'];
-    var who = ['Steve_Mine','Priya_X','Amit_PRO'][Math.floor(Math.random()*3)];
-    addChatMsg('<b>'+who+':</b> ' + replies[Math.floor(Math.random()*replies.length)]);
-  }, 1200);
+}
+function guduAIAnswer(q){
+  var l=q.toLowerCase();
+  if(l.indexOf('kaun')!==-1 || l.indexOf('who are')!==-1 || l.indexOf('tu kaun')!==-1) return 'Main GUDU MC hu! Is server ka AI. Main sab janta hu - diamond, boss, building sab! Kuch bhi pucho.';
+  if(l.indexOf('diamond')!==-1) return 'Diamond Y= -59 pe milta hai! Neeche khodo, lava se bachke. Diamond pickaxe se todo. Aur /give diamond likhke bhi le sakte ho!';
+  if(l.indexOf('ghar')!==-1 || l.indexOf('house')!==-1) return 'Ghar banane ke liye pehle Wood todo, phir 5x5 ka base banao, deewar 3 block unchi, upar roof. Torch lagana mat bhoolna, warna zombie aayega!';
+  if(l.indexOf('ender')!==-1 || l.indexOf('dragon')!==-1 || l.indexOf('boss')!==-1) return 'Ender Dragon ko harane ke liye pehle /boss likho. Uske paas jao aur Left Click se maaro. Har hit pe uski HP kam hogi. Jeetoge to +500 Score!';
+  if(l.indexOf('zombie')!==-1) return 'Zombie raat me aata hai aur peeche bhagta hai. Usse bachne ke liye ghar me chhup jao ya usko maaro. Maara to Kill +1 milega!';
+  if(l.indexOf('rank')!==-1) return 'Rank badalne ke liye /rank LEGEND ya /rank OWNER likho. Ranks hai: NOOB, PLAYER, PRO, ELITE, LEGEND, OWNER. Jitni zyada kills, utni badi rank!';
+  if(l.indexOf('khelo')!==-1 || l.indexOf('kaise')!==-1 || l.indexOf('help')!==-1) return 'Khelna easy hai: WASD se chalo, Left Click se todo, Right Click se lagao, T se chat, TAB se scoreboard. /help likhke sab commands dekho!';
+  if(l.indexOf('hi')!==-1 || l.indexOf('hello')!==-1 || l.indexOf('hey')!==-1) return 'Hi Rahul! Kaisa hai? Khelne aaya hai? Diamond dhoondne chale? 😊';
+  if(l.indexOf('paisa')!==-1 || l.indexOf('paise')!==-1) return 'Paise nahi, yahan Score chalta hai! Block todo, boss maaro, score badhao. /give gold se gold le lo!';
+  if(l.indexOf('love')!==-1) return 'Aww ❤️❤️ Main bhi tumse pyaar karta hu, mere best player ho tum!';
+  if(l.indexOf('bye')!==-1) return 'Bye bye! Kal phir aana, GUDU SMP me milte hai 👋';
+  if(l.indexOf('minecraft')!==-1) return 'Minecraft duniya ka best game hai! Aur ye GUDU SMP uska desi version hai - yahan sab Hindi me hota hai!';
+  if(l.indexOf('server')!==-1) return 'Ye server hai GUDU SMP! Tum iske OWNER ho. Apna server banane ke liye menu me APNA SERVER BANAO dabao.';
+  if(l.indexOf('fly')!==-1) return 'Fly karne ke liye /fly likho ya F dabao. Creative me to hamesha fly kar sakte ho!';
+  if(l.indexOf('kya kar')!==-1 || l.indexOf('kya karu')!==-1) return 'Abhi jao aur ek bada castle banao! Ya /boss likhke Dragon se lado. Ya /summon pig likhke pig bulao!';
+  if(l.indexOf('thank')!==-1 || l.indexOf('thanks')!==-1) return 'Are koi baat nahi bhai! Main hamesha yahin hu. Aur kuch puchna hai to pucho 😊';
+  return 'Hmm, samajh gaya! ' + (Math.random()>0.5 ? 'Iske baare me mujhe thoda aur batao, main seekh raha hu!' : 'Ye to interesting hai! Tum /help likhke commands bhi dekh sakte ho. Aur diamond ke baare me pucho, wo mujhe sab pata hai! 💎');
 }
 function handleCommand(cmd){
-  var c = cmd.toLowerCase();
-  if(c==='/help'){ addChatMsg('<span class="sys">[HELP]</span> /fly, /give diamond, /give gold, /day, /night, /clear, /tp'); return; }
-  if(c==='/fly'){ isFlying = !isFlying; addChatMsg('<span class="sys">[SYSTEM]</span> Fly ' + (isFlying?'ON 🕊️':'OFF')); return; }
-  if(c==='/give diamond'){ score += 100; updateScore(); addChatMsg('<span class="sys">[SYSTEM]</span> Tumhe Diamond mila! +100 Score 💎'); showMsg('Diamond Mila! +100'); return; }
-  if(c==='/give gold'){ score += 50; updateScore(); addChatMsg('<span class="sys">[SYSTEM]</span> Gold mila! +50 Score 🟡'); return; }
-  if(c==='/day'){ scene.background = new THREE.Color(0x87ceeb); addChatMsg('<span class="sys">[SYSTEM]</span> Day ho gaya ☀️'); return; }
-  if(c==='/night'){ scene.background = new THREE.Color(0x0b1026); addChatMsg('<span class="sys">[SYSTEM]</span> Night ho gaya 🌙'); return; }
-  if(c==='/clear'){ document.getElementById('chatMsgs').innerHTML=''; addChatMsg('<span class="sys">[SYSTEM]</span> Chat clear ho gaya'); return; }
-  if(c==='/tp'){ playerPos.x=10; playerPos.z=10; playerPos.y=5; addChatMsg('<span class="sys">[SYSTEM]</span> Teleport ho gaye Diamond Tower pe!'); return; }
-  addChatMsg('<span class="sys">[SYSTEM]</span> Unknown command: ' + cmd + ' - /help likho');
+  var c=cmd.toLowerCase().trim();
+  addChat('<span class="me">'+myName+':</span> '+cmd);
+  if(c==='/help'){ addChat('<span class="sys">[HELP]</span> /gamemode creative, /gamemode survival, /fly, /give diamond, /rank LEGEND, /summon pig, /kill, /boss, /day, /night, /heal, /tp, /clear'); return; }
+  if(c==='/fly'){ isFlying=!isFlying; addChat('<span class="sys">[SYSTEM]</span> Fly '+(isFlying?'ON':'OFF')); return; }
+  if(c.indexOf('/gamemode')!==-1){ if(c.indexOf('creative')!==-1){ isCreative=true; isFlying=true; addChat('<span class="sys">[SYSTEM]</span> Gamemode: CREATIVE'); } else { isCreative=false; isFlying=false; addChat('<span class="sys">[SYSTEM]</span> Gamemode: SURVIVAL'); } updateTop(); return; }
+  if(c==='/give diamond'){ score+=100; addChat('<span class="sys">[SYSTEM]</span> Diamond mila! +100'); updateTop(); return; }
+  if(c==='/give gold'){ score+=50; addChat('<span class="sys">[SYSTEM]</span> Gold mila! +50'); updateTop(); return; }
+  if(c==='/give emerald'){ score+=80; addChat('<span class="sys">[SYSTEM]</span> Emerald mila! +80'); updateTop(); return; }
+  if(c.indexOf('/rank')!==-1){
+    var parts=cmd.split(' '); var newRank=(parts[1]||'PRO').toUpperCase();
+    var valid=['NOOB','PLAYER','PRO','ELITE','LEGEND','OWNER','ADMIN'];
+    if(valid.indexOf(newRank)!==-1){ myRank=newRank; addChat('<span class="sys">[SYSTEM]</span> Tumhari rank ab <b>'+newRank+'</b> hai! 🎉'); updateTop(); showMsg('Rank Change: '+newRank); } else addChat('<span class="sys">[SYSTEM]</span> Valid ranks: NOOB, PLAYER, PRO, ELITE, LEGEND, OWNER');
+    return;
+  }
+  if(c.indexOf('/summon')!==-1){
+    var kind='pig'; if(c.indexOf('cow')!==-1) kind='cow'; if(c.indexOf('chicken')!==-1) kind='chicken'; if(c.indexOf('zombie')!==-1) kind='zombie'; if(c.indexOf('sheep')!==-1) kind='sheep';
+    spawnMob(kind, playerPos.x+2, 2, playerPos.z+2, kind==='zombie'?0x2e7d32:0xffffff);
+    addChat('<span class="sys">[SYSTEM]</span> '+kind+' summon ho gaya!'); return;
+  }
+  if(c==='/kill'){ deaths++; updateTop(); addChat('<span class="sys">[DEATH]</span> '+myName+' mar gaya! Death +1'); playerPos.x=0; playerPos.y=4; playerPos.z=9; return; }
+  if(c==='/boss'){ summonBoss(); return; }
+  if(c==='/day'){ scene.background=new THREE.Color(0x87ceeb); addChat('<span class="sys">[SYSTEM]</span> Day ho gaya ☀️'); return; }
+  if(c==='/night'){ scene.background=new THREE.Color(0x0b1026); addChat('<span class="sys">[SYSTEM]</span> Night ho gaya 🌙 - Zombie aayenge!'); return; }
+  if(c==='/heal'){ addChat('<span class="sys">[SYSTEM]</span> Health Full! ❤️'); showMsg('Health Full!'); return; }
+  if(c==='/tp'){ playerPos.x=10; playerPos.y=5; playerPos.z=10; addChat('<span class="sys">[SYSTEM]</span> Diamond Tower pe teleport!'); return; }
+  if(c==='/clear'){ document.getElementById('chatMsgs').innerHTML=''; addChat('<span class="sys">[SYSTEM]</span> Chat clear'); return; }
+  addChat('<span class="sys">[SYSTEM]</span> Unknown command: '+cmd+' - /help likho');
+}
+function summonBoss(){
+  if(bossActive){ addChat('<span class="sys">[BOSS]</span> Boss pehle se hai! Usko maaro!'); return; }
+  bossActive=true; bossHp=100;
+  document.getElementById('bossBarWrap').style.display='block';
+  document.getElementById('bossFill').style.width='100%';
+  document.getElementById('bossHpText').innerText='100%';
+  addChat('<span class="sys">[BOSS]</span> 🐉 ENDER DRAGON aaya! Usko maaro! Left Click se hit karo!');
+  showMsg('🐉 BOSS AAYA! Usko maaro!');
+  // Boss ko ek bada black block jaisa dikhayo - upar
+  var bossMat=new THREE.MeshLambertMaterial({color:0x1a1a1a});
+  var boss=new THREE.Mesh(new THREE.BoxGeometry(3,2,3), bossMat);
+  boss.position.set(0,8,0); boss.userData={isBoss:true};
+  scene.add(boss); blocks.push(boss);
 }
 function showScoreboard(show){
-  document.getElementById('scoreboard').style.display = show ? 'block' : 'none';
+  document.getElementById('scoreboard').style.display=show?'block':'none';
   if(!show) return;
-  var sorted = PLAYERS.slice().sort(function(a,b){ return b.score - a.score; });
-  var html = '';
+  document.getElementById('sbServer').innerText=selectedServer;
+  var sorted=PLAYERS.slice().sort(function(a,b){return b.score-a.score;});
+  var html='';
   for(var i=0;i<sorted.length;i++){
-    var p = sorted[i];
-    var medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
-    var isYou = p.name.indexOf('You')!==-1;
-    html += '<div class="sb-row '+(isYou?'you':'')+'"><div><b>'+medal+' '+p.name+'</b><div style="font-size:11px;color:#aaa">'+p.blocks+' blocks</div></div><div style="text-align:right"><span class="rank" style="background:'+getRankColor(p.rank)+'">'+p.rank+'</span><div style="font-weight:900;margin-top:4px">'+p.score+' pts</div></div></div>';
+    var p=sorted[i]; var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+    var isYou=p.name.indexOf('You')!==-1;
+    html+='<div class="sb-row '+(isYou?'you':'')+'"><div><b>'+medal+' '+p.name+'</b><br><span style="font-size:11px;color:#aaa">Kills: '+p.kills+' | Deaths: '+p.deaths+'</span></div><div style="text-align:right"><span class="rank" style="background:'+getRankColor(p.rank)+'">'+p.rank+'</span><div style="font-weight:900;margin-top:4px">'+p.score+' pts</div></div></div>';
   }
-  document.getElementById('sbList').innerHTML = html;
-  document.getElementById('sbYourScore').innerText = score;
-  document.getElementById('sbYourRank').innerText = getRankByScore(score);
-  document.getElementById('sbYourBlocks').innerText = placed + broken;
+  document.getElementById('sbList').innerHTML=html;
+  document.getElementById('sbKills').innerText=kills;
+  document.getElementById('sbDeaths').innerText=deaths;
+  document.getElementById('sbRank').innerText=myRank;
+  document.getElementById('sbScore').innerText=score;
 }
 document.getElementById('game').addEventListener('mousedown', function(e){
   if(chatOpen) return;
   if(!isLocked){ this.requestPointerLock(); return; }
-  var ray = new THREE.Raycaster();
-  ray.setFromCamera(new THREE.Vector2(0,0), camera);
-  var hits = ray.intersectObjects(blocks);
+  var ray=new THREE.Raycaster(); ray.setFromCamera(new THREE.Vector2(0,0), camera);
+  var hits=ray.intersectObjects(blocks.concat(mobs));
   if(hits.length===0) return;
-  var hit = hits[0];
+  var hit=hits[0];
+  // Agar Mob pe click kiya
+  if(hit.object.parent && hit.object.parent.userData && hit.object.parent.userData.kind){
+    var mob=hit.object.parent;
+    mob.userData.hp -= 10;
+    if(mob.userData.hp<=0){
+      scene.remove(mob); var idx=mobs.indexOf(mob); if(idx!==-1) mobs.splice(idx,1);
+      kills++; score+=50; updateTop(); showMsg(mob.userData.kind+' mara! +50 Score, Kill +1'); addChat('<span class="sys">[KILL]</span> Tumne '+mob.userData.kind+' ko mara! +50');
+    } else showMsg(mob.userData.kind+' ko mara! HP: '+mob.userData.hp);
+    return;
+  }
+  // Boss pe click
+  if(hit.object.userData && hit.object.userData.isBoss){
+    bossHp-=10;
+    document.getElementById('bossFill').style.width=bossHp+'%';
+    document.getElementById('bossHpText').innerText=bossHp+'%';
+    if(bossHp<=0){
+      scene.remove(hit.object); var bi=blocks.indexOf(hit.object); if(bi!==-1) blocks.splice(bi,1);
+      bossActive=false; document.getElementById('bossBarWrap').style.display='none';
+      kills++; score+=500; updateTop(); showMsg('🎉 BOSS HARAYA! +500 Score!');
+      addChat('<span class="sys">[BOSS]</span> 🎉 '+myName+' ne Ender Dragon ko hara diya! +500 Score!');
+    } else showMsg('Boss ko mara! HP: '+bossHp+'%');
+    return;
+  }
   if(e.button===0){
     if(hit.object.position.y===0){ showMsg('Ground nahi tootega!'); return; }
-    var bType = blockTypes[hit.object.userData.type].name;
-    removeBlock(hit.object);
-    showMsg(bType + ' toda! +10 Score');
-    addChatMsg('<span class="sys">[GAME]</span> Tumne <b>'+bType+'</b> toda! +10');
+    var bName=blockTypes[hit.object.userData.type].name;
+    scene.remove(hit.object); var idx2=blocks.indexOf(hit.object); if(idx2!==-1) blocks.splice(idx2,1);
+    score+=10; broken++; updateTop(); showMsg(bName+' toda! +10');
   } else if(e.button===2){
-    var n = hit.face.normal;
-    var nx = hit.object.position.x + Math.round(n.x);
-    var ny = hit.object.position.y + Math.round(n.y);
-    var nz = hit.object.position.z + Math.round(n.z);
-    addBlock(nx, ny, nz, selected, true);
-    placed++; score += 5; updateScore();
-    showMsg(blockTypes[selected].name + ' lagaya! +5');
+    var n=hit.face.normal;
+    var nx=hit.object.position.x+Math.round(n.x), ny=hit.object.position.y+Math.round(n.y), nz=hit.object.position.z+Math.round(n.z);
+    addBlock(nx,ny,nz,selected,true); placed++; score+=5; updateTop();
   }
 });
 document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
-
 function animate(){
   requestAnimationFrame(animate);
   if(!camera) return;
-  var speed = keys['shift'] ? 0.16 : 0.09;
-  var forward = 0, strafe = 0;
-  if(keys['w']) forward = 1;
-  if(keys['s']) forward = -1;
-  if(keys['a']) strafe = -1;
-  if(keys['d']) strafe = 1;
-  var sin = Math.sin(yaw), cos = Math.cos(yaw);
-  playerPos.x += (strafe * cos + forward * sin) * speed;
-  playerPos.z += (-strafe * sin + forward * cos) * speed;
+  var speed=keys['shift']?0.16:0.09;
+  var f=0,s=0; if(keys['w'])f=1; if(keys['s'])f=-1; if(keys['a'])s=-1; if(keys['d'])s=1;
+  var sin=Math.sin(yaw), cos=Math.cos(yaw);
+  playerPos.x+=(s*cos+f*sin)*speed; playerPos.z+=(-s*sin+f*cos)*speed;
   if(isFlying){
-    if(keys[' ']) playerPos.y += 0.12;
-    if(keys['shift']) playerPos.y -= 0.12;
-    // Fly me gravity nahi
+    if(keys[' ']) playerPos.y+=0.12;
+    if(keys['shift']) playerPos.y-=0.12;
   } else {
-    velocityY -= 0.008;
-    playerPos.y += velocityY;
-    var groundY = 2.2;
-    for(var i=0;i<blocks.length;i++){
-      var b = blocks[i];
-      if(Math.abs(b.position.x - playerPos.x)<0.6 && Math.abs(b.position.z - playerPos.z)<0.6){
-        if(playerPos.y < b.position.y+2.2 && playerPos.y > b.position.y) groundY = b.position.y+2.2;
-      }
-    }
-    if(playerPos.y <= groundY){ playerPos.y = groundY; velocityY = 0; }
-    if(playerPos.y < 1) playerPos.y = 1;
+    velocityY-=0.008; playerPos.y+=velocityY;
+    var gy=2.2;
+    for(var i=0;i<blocks.length;i++){ var b=blocks[i]; if(Math.abs(b.position.x-playerPos.x)<0.6&&Math.abs(b.position.z-playerPos.z)<0.6){ if(playerPos.y<b.position.y+2.2&&playerPos.y>b.position.y) gy=b.position.y+2.2; } }
+    if(playerPos.y<=gy){ playerPos.y=gy; velocityY=0; }
+    if(playerPos.y<1) playerPos.y=1;
   }
-  camera.position.set(playerPos.x, playerPos.y, playerPos.z);
-  camera.rotation.order = 'YXZ';
-  camera.rotation.y = yaw;
-  camera.rotation.x = pitch;
-  renderer.render(scene, camera);
+  updateMobs();
+  camera.position.set(playerPos.x,playerPos.y,playerPos.z);
+  camera.rotation.order='YXZ'; camera.rotation.y=yaw; camera.rotation.x=pitch;
+  renderer.render(scene,camera);
 }
-window.addEventListener('resize', function(){
-  if(!camera) return;
-  camera.aspect = window.innerWidth/window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-buildHotbar(); updateModeBadge();
+window.addEventListener('resize', function(){ if(!camera) return; camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); });
+buildHotbar();
 </script>
 </body>
 </html>
