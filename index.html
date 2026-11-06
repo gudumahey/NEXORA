@@ -3,71 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUDU FIRE - Real FF Lobby</title>
+<title>GUDU FIRE - Real FF Lobby + Luck Royale EVO</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#000;overflow:hidden;color:#fff}
 #gameCanvas{width:100vw;height:100vh;display:block;background:#2d5016}
-/* ===== REAL FF LOBBY - PHOTO JAISA ===== */
-#lobby{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;overflow:hidden;
-background:linear-gradient(180deg,#0a0a2e 0%,#1a0a3a 30%,#ff2d55 55%,#ff6b00 75%,#1a1a3a 100%);}
-.lobby-bg{position:absolute;inset:0;background:
-radial-gradient(circle at 20% 80%, rgba(255,0,100,.5) 0%, transparent 40%),
-radial-gradient(circle at 80% 20%, rgba(0,200,255,.4) 0%, transparent 40%),
-linear-gradient(180deg, #0f0f3a 0%, #2a0a4a 40%, #ff2d55 65%, #ff9500 85%, #1a0a2e 100%);
-}
+/* LOBBY */
+#lobby{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(180deg,#0a0a2e 0%,#1a0a3a 30%,#ff2d55 55%,#ff6b00 75%,#1a1a3a 100%)}
+.lobby-bg{position:absolute;inset:0;background:radial-gradient(circle at 20% 80%, rgba(255,0,100,.5) 0%, transparent 40%),radial-gradient(circle at 80% 20%, rgba(0,200,255,.4) 0%, transparent 40%),linear-gradient(180deg,#0f0f3a 0%,#2a0a4a 40%,#ff2d55 65%,#ff9500 85%,#1a0a2e 100%)}
 .city{position:absolute;bottom:90px;left:0;right:0;height:140px;background:linear-gradient(90deg,#ff2d55,#ff9500,#ff2d55);opacity:.35;border-top:3px solid #00e5ff;box-shadow:0 0 30px #00e5ff}
 .city:before{content:'🏙️🌃🎪🎡🏪🏬🎠🎢';position:absolute;top:-28px;left:0;right:0;font-size:36px;letter-spacing:12px;opacity:.9}
 .top-bar{position:relative;z-index:5;display:flex;justify-content:space-between;padding:10px 14px;align-items:center}
 .top-left{display:flex;gap:8px;align-items:center}
 .top-left .pfp{width:42px;height:42px;border-radius:50%;background:#ffcc00;display:flex;align-items:center;justify-content:center;font-size:22px;border:2px solid #fff}
-.top-left b{font-size:13px;line-height:1.2} .top-left span{font-size:11px;color:#ffcc00}
+.top-left b{font-size:13px} .top-left span{font-size:11px;color:#ffcc00}
 .top-right{display:flex;gap:6px;align-items:center}
-.top-right .coin{background:rgba(0,0,0,.7);padding:6px 10px;border-radius:20px;font-size:12px;font-weight:800;border:1px solid #555}
+.top-right .coin{background:rgba(0,0,0,.7);padding:6px 10px;border-radius:20px;font-size:12px;font-weight:800;border:1px solid #555;cursor:pointer}
 .top-right .coin span{color:#ffcc00}
-.top-right .plus{background:#ffcc00;color:#000;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;cursor:pointer}
 .lobby-middle{position:relative;z-index:5;flex:1;display:flex}
-/* LEFT MENU - Photo jaisa */
 .left-menu{width:150px;padding:10px;display:flex;flex-direction:column;gap:8px}
-.left-menu .banner{background:#ff9500;color:#000;padding:8px;border-radius:8px;font-weight:900;font-size:12px;text-align:center;line-height:1.2;box-shadow:0 0 15px #ff9500}
-.left-menu .banner small{font-size:9px}
+.left-menu .banner{background:#ff9500;color:#000;padding:8px;border-radius:8px;font-weight:900;font-size:12px;text-align:center;cursor:pointer}
 .left-btn{background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.3);padding:9px 10px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;display:flex;gap:8px;align-items:center}
-.left-btn.active{background:#ffcc00;color:#000;border-color:#ffcc00}
-.left-btn:hover{background:rgba(255,255,255,.2)}
-/* CENTER PLAYER - SABSE IMPORTANT */
+.left-btn.active{background:#ffcc00;color:#000}
 .center-player{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative;padding-bottom:78px}
 .player-wrap{position:relative;text-align:center;animation:float 3s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .player-big{font-size:220px;line-height:1;filter:drop-shadow(0 0 25px #00e5ff) drop-shadow(0 0 40px #0066ff);position:relative;z-index:2}
 .player-glow{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:260px;height:30px;background:radial-gradient(ellipse,#00e5ff,transparent);border-radius:50%;filter:blur(8px)}
 .player-name{margin-top:2px;background:rgba(0,0,0,.7);padding:6px 16px;border-radius:20px;font-weight:900;font-size:14px;border:1px solid #00e5ff}
-.player-name span{color:#00e5ff}
 .pet{position:absolute;right:-30px;bottom:18px;font-size:72px;filter:drop-shadow(0 0 15px #00e5ff);animation:float 2s ease-in-out infinite;z-index:3}
 .pet-name{position:absolute;right:-22px;bottom:2px;background:#00e5ff;color:#000;font-size:10px;font-weight:900;padding:2px 8px;border-radius:10px}
 .char-switch{display:flex;gap:8px;margin-top:10px;z-index:5}
 .char-switch button{width:48px;height:48px;border-radius:50%;font-size:26px;border:3px solid #555;background:rgba(0,0,0,.7);cursor:pointer}
 .char-switch button.active{border-color:#00e5ff;transform:scale(1.15);box-shadow:0 0 15px #00e5ff}
 .gun-preview{position:absolute;left:8px;bottom:90px;background:rgba(0,0,0,.75);padding:8px 12px;border-radius:12px;border:1px solid #ffcc00;z-index:5}
-.gun-preview b{font-size:12px;color:#ffcc00} .gun-preview p{font-size:11px;color:#ccc}
-/* RIGHT EVENTS - Photo jaisa */
+.gun-preview b{font-size:12px;color:#ffcc00}
 .right-events{width:140px;padding:10px;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
-.right-events .event{width:110px;height:62px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:900;text-align:center;border:2px solid #fff;cursor:pointer;line-height:1.2}
-.right-events .event small{font-size:9px;font-weight:400}
+.right-events .event{width:110px;height:62px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;font-weight:900;text-align:center;border:2px solid #fff;cursor:pointer}
 .right-events .top-icons{display:flex;gap:6px}
 .right-events .top-icons span{background:rgba(0,0,0,.7);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border:1px solid #555}
-/* BOTTOM BAR - Photo jaisa */
 .bottom-bar{position:relative;z-index:10;background:rgba(0,0,0,.85);border-top:2px solid #ffcc00;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .bottom-left{display:flex;gap:6px;flex-wrap:wrap}
 .bottom-left button{background:#222;border:1px solid #555;color:#fff;padding:8px 12px;border-radius:8px;font-size:11px;font-weight:800;cursor:pointer}
 .bottom-left button.active{background:#ffcc00;color:#000}
 .bottom-center{flex:1;text-align:center}
 .bottom-center .mode{background:#ff2d55;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:900;display:inline-block}
-.bottom-center .mode2{font-size:11px;color:#aaa;margin-top:2px}
-.bottom-right{display:flex;gap:8px;align-items:center}
 .mode-select{background:#222;border:1px solid #ffcc00;color:#fff;padding:8px 10px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer}
 .start-big{background:#ffcc00;color:#000;border:none;padding:14px 28px;border-radius:10px;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 0 20px #ffcc00;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-.start-big small{display:block;font-size:10px;font-weight:400}
+/* MODALS - SAARE BUTTONS KE LIYE */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:none;align-items:center;justify-content:center;padding:14px}
+.modal.show{display:flex}
+.modal-box{background:#1a1a2e;border:2px solid #ffcc00;border-radius:16px;width:100%;max-width:580px;max-height:92vh;overflow-y:auto;padding:16px}
+.modal-box h2{font-size:20px;margin-bottom:4px} .modal-box p{font-size:12px;color:#aaa;margin-bottom:12px}
+.close-btn{background:#ff2d55;color:#fff;border:none;padding:8px 16px;border-radius:20px;font-weight:900;cursor:pointer;float:right}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shop-card{background:#222;border-radius:12px;padding:12px;text-align:center;border:2px solid #333;cursor:pointer}
+.shop-card:hover{border-color:#ffcc00}
+.shop-card .emoji{font-size:48px}
+.shop-card b{font-size:13px;display:block;margin:4px 0}
+.shop-card span{font-size:11px;color:#aaa}
+.shop-card .price{color:#ffcc00;font-weight:900;margin-top:6px}
+.shop-card.owned{border-color:#22c55e}
+/* LUCK ROYALE - EVO GUNS */
+.luck-top{display:flex;gap:10px;margin-bottom:12px}
+.luck-top button{flex:1;padding:10px;border-radius:10px;border:2px solid #555;background:#222;color:#fff;font-weight:900;cursor:pointer}
+.luck-top button.active{background:#ffcc00;color:#000;border-color:#ffcc00}
+.wheel-wrap{position:relative;width:280px;height:280px;margin:0 auto}
+.wheel{width:280px;height:280px;border-radius:50%;border:4px solid #ffcc00;position:relative;overflow:hidden;transition:transform 3s cubic-bezier(0.12,0.8,0.1,1);background:conic-gradient(#ff2d55 0deg 45deg,#222 45deg 90deg,#ffcc00 90deg 135deg,#222 135deg 180deg,#00e5ff 180deg 225deg,#222 225deg 270deg,#a855f7 270deg 315deg,#222 315deg 360deg)}
+.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;background:#ffcc00;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;border:3px solid #fff;z-index:2;cursor:pointer}
+.wheel-label{position:absolute;font-size:20px;font-weight:900}
+.spin-btn{background:linear-gradient(90deg,#ff2d55,#ff9500);color:#fff;border:none;padding:14px;border-radius:12px;font-weight:900;font-size:16px;cursor:pointer;width:100%;margin-top:12px}
+.spin-btn:disabled{opacity:.5}
+.evo-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.evo-card{background:#222;border-radius:12px;padding:10px;text-align:center;border:2px solid #333}
+.evo-card.got{border-color:#22c55e;background:#0a2a1a}
+.evo-card .evo-emoji{font-size:44px}
+.evo-card b{font-size:12px}
+.evo-card .lvl{font-size:11px;color:#ffcc00}
 #hud{position:fixed;inset:0;pointer-events:none;z-index:20;display:none}
 #hudTop{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between}
 #hudTop .pill{background:rgba(0,0,0,.7);padding:8px 14px;border-radius:20px;font-weight:800;font-size:13px}
@@ -76,7 +89,7 @@ linear-gradient(180deg, #0f0f3a 0%, #2a0a4a 40%, #ff2d55 65%, #ff9500 85%, #1a0a
 #healthFill{height:100%;background:#22c55e;width:100%;transition:.3s}
 #killFeed{position:absolute;top:50px;left:10px;display:flex;flex-direction:column;gap:4px}
 .killMsg{background:rgba(0,0,0,.6);padding:6px 10px;border-radius:8px;font-size:12px}
-#shootBtn{position:absolute;bottom:150px;right:30px;width:80px;height:80px;border-radius:50%;background:#ff2d55;border:3px solid #fff;font-size:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;font-weight:900}
+#shootBtn{position:absolute;bottom:150px;right:30px;width:80px;height:80px;border-radius:50%;background:#ff2d55;border:3px solid #fff;font-size:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto}
 #jumpBtn{position:absolute;bottom:160px;right:125px;width:56px;height:56px;border-radius:50%;background:#fff;color:#000;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto}
 #weaponHud{position:absolute;bottom:20px;right:16px;background:rgba(0,0,0,.7);padding:10px 14px;border-radius:12px;text-align:right}
 #minimap{position:absolute;top:50px;right:10px;width:130px;height:130px;background:rgba(0,0,0,.6);border:2px solid #fff;border-radius:12px;overflow:hidden}
@@ -86,174 +99,176 @@ linear-gradient(180deg, #0f0f3a 0%, #2a0a4a 40%, #ff2d55 65%, #ff9500 85%, #1a0a
 #booyah{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 #booyah h1{font-size:64px;color:#ffcc00}
 #booyah button{background:#ffcc00;color:#000;border:none;padding:14px 36px;border-radius:12px;font-weight:900;font-size:16px;cursor:pointer;margin-top:12px}
-@media(max-width:700px){.left-menu{width:110px} .left-btn{font-size:11px} .player-big{font-size:150px} .right-events{display:none} .bottom-left{display:none} .start-big{padding:10px 18px;font-size:16px}}
+#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#22c55e;color:#fff;padding:12px 20px;border-radius:20px;font-weight:900;z-index:300;display:none}
+@media(max-width:700px){.left-menu{width:110px} .player-big{font-size:150px} .right-events{display:none} .bottom-left{display:none}}
 </style>
 </head>
 <body>
 <canvas id="gameCanvas"></canvas>
+<div id="toast"></div>
 
-<!-- ===== REAL FF LOBBY - PHOTO JAISA ===== -->
+<!-- LOBBY -->
 <div id="lobby">
-  <div class="lobby-bg"></div>
-  <div class="city"></div>
-
-  <!-- TOP BAR - Photo jaisa -->
+  <div class="lobby-bg"></div><div class="city"></div>
   <div class="top-bar">
-    <div class="top-left">
-      <div class="pfp" id="topPfp">🦸</div>
-      <div><b id="topPlayerName">RAHUL</b><br><span>⭐ Lv 62 • DIAMOND III</span></div>
-      <div style="background:#ff2d55;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900;margin-left:6px">🏆 342 WINS</div>
-    </div>
+    <div class="top-left"><div class="pfp" id="topPfp">🥷</div><div><b id="topPlayerName">RAHUL</b><br><span>⭐ Lv 62 • DIAMOND III</span></div><div style="background:#ff2d55;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:900;margin-left:6px">🏆 342 WINS</div></div>
     <div style="font-size:18px;font-weight:900;letter-spacing:2px">FREE FIRE <span style="color:#ffcc00">🔥</span></div>
     <div class="top-right">
-      <div class="coin">🪙 <span id="lobbyCoins">3,980,000</span></div>
-      <div class="coin">💎 <span id="lobbyDiamonds">1,264</span></div>
-      <div class="plus">+</div>
-      <div class="coin">🎟️ 5</div>
-      <div class="coin">📩</div>
-      <div class="coin">⚙️</div>
+      <div class="coin" onclick="openModal('topupModal')">🪙 <span id="lobbyCoins">3,980,000</span></div>
+      <div class="coin" onclick="openModal('topupModal')">💎 <span id="lobbyDiamonds">1,264</span> <span style="color:#fff">+</span></div>
+      <div class="coin" onclick="openModal('mailModal')">📩 <span style="color:#ff2d55">3</span></div>
+      <div class="coin" onclick="openModal('settingsModal')">⚙️</div>
     </div>
   </div>
-
   <div class="lobby-middle">
-    <!-- LEFT MENU - Photo jaisa -->
     <div class="left-menu">
-      <div class="banner">MAS<br>INFO<br>AQUI<small>NEW EVENT!</small></div>
-      <div class="left-btn active">🛒 TIENDA</div>
-      <div class="left-btn">🎰 LUCK ROYALE</div>
-      <div class="left-btn">🎫 PASE BOOYAH</div>
-      <div class="left-btn">🎯 MISIONES</div>
-      <div class="left-btn">🏆 EVENTOS</div>
-      <div class="left-btn" onclick="alert('Guild: GUDU ARMY - 50 Members!')">👥 GUILD</div>
-      <div class="left-btn" onclick="alert('Friends Online: 12')">👤 FRIENDS (12)</div>
+      <div class="banner" onclick="openModal('eventModal')">MAS INFO<br>AQUI<small>NEW EVENT!</small></div>
+      <div class="left-btn active" onclick="openModal('shopModal')">🛒 TIENDA</div>
+      <div class="left-btn" onclick="openModal('luckModal')">🎰 LUCK ROYALE</div>
+      <div class="left-btn" onclick="openModal('booyahPassModal')">🎫 PASE BOOYAH</div>
+      <div class="left-btn" onclick="openModal('missionModal')">🎯 MISIONES</div>
+      <div class="left-btn" onclick="openModal('eventModal')">🏆 EVENTOS</div>
+      <div class="left-btn" onclick="openModal('guildModal')">👥 GUILD</div>
+      <div class="left-btn" onclick="openModal('friendsModal')">👤 FRIENDS (12)</div>
       <div style="margin-top:auto;background:rgba(0,0,0,.7);padding:8px;border-radius:8px;font-size:11px">👤 <b id="leftPlayerName">RAHUL</b><br><span style="color:#ffcc00">Online • In Lobby</span></div>
     </div>
-
-    <!-- CENTER PLAYER - YEHI MAIN HAI -->
     <div class="center-player">
-      <div class="gun-preview">
-        <b>🔫 <span id="gunPreviewName">M1887 - Lv 7</span></b>
-        <p>Damage: <span id="gunPreviewDmg">95</span> | Skin: <span style="color:#00e5ff">Blue Flame</span></p>
-        <div style="display:flex;gap:4px;margin-top:4px" id="gunMiniList"></div>
-      </div>
-
-      <div class="player-wrap">
-        <div class="player-glow"></div>
-        <!-- PLAYER - Photo jaisa Blue Outfit + Mask -->
-        <div class="player-big" id="playerBig">🥷</div>
-        <div class="pet" id="petEmoji">🐲</div>
-        <div class="pet-name" id="petName">DRAKO • Lv 5</div>
-        <div class="player-name"><span id="centerPlayerName">RAHUL</span> • <span id="centerPlayerRank">DIAMOND III</span> • <span style="color:#ffcc00" id="centerPlayerSkill">⚡ Speed Boost</span></div>
-      </div>
-
+      <div class="gun-preview"><b>🔫 <span id="gunPreviewName">M1887 - Lv 7</span></b><p>Damage: <span id="gunPreviewDmg">95</span> | Skin: <span style="color:#00e5ff" id="gunSkinName">Blue Flame</span></p><div style="display:flex;gap:4px;margin-top:4px" id="gunMiniList"></div></div>
+      <div class="player-wrap"><div class="player-glow"></div><div class="player-big" id="playerBig">🥷</div><div class="pet" id="petEmoji">🐲</div><div class="pet-name" id="petName">DRAKO • Lv 5</div><div class="player-name"><span id="centerPlayerName">RAHUL</span> • <span id="centerPlayerRank">DIAMOND III</span> • <span style="color:#00e5ff" id="centerPlayerSkill">⚡ Speed Boost</span></div></div>
       <div class="char-switch" id="charSwitch"></div>
-      <div style="font-size:11px;color:#fff;background:rgba(0,0,0,.6);padding:4px 10px;border-radius:20px;margin-top:6px">👆 Character badalne ke liye neeche click karo • Pet: Drako 🐲</div>
+      <div style="font-size:11px;color:#fff;background:rgba(0,0,0,.6);padding:4px 10px;border-radius:20px;margin-top:6px">👆 Character badlo • Pet: Drako 🐲 • Gun Skin: <span id="centerGunSkin">Blue Flame</span></div>
     </div>
-
-    <!-- RIGHT EVENTS - Photo jaisa -->
     <div class="right-events">
-      <div class="top-icons"><span>🔔</span><span>💬</span><span>🏆</span></div>
-      <div class="event" style="background:linear-gradient(135deg,#ff2d55,#ff9500)" onclick="alert('Top Up Event!')">💎 TOP UP<br><small>Double Diamond</small></div>
-      <div class="event" style="background:linear-gradient(135deg,#00e5ff,#0066ff)" onclick="alert('Diamond Royale Spin!')">🎰 DIAMOND<br>ROYALE<small>Free Spin</small></div>
-      <div class="event" style="background:linear-gradient(135deg,#a855f7,#ec4899)" onclick="alert('Magic Cube Event!')">🎲 MAGIC<br>CUBE<small>New Skin</small></div>
-      <div class="event" style="background:linear-gradient(135deg,#22c55e,#16a34a)" onclick="alert('Booyah Pass!')">🎫 BOOYAH<br>PASS<small>Season 42</small></div>
-      <div class="event" style="background:#222" onclick="alert('Daily Reward Claimed! +500 Coins')">🎁 DAILY<br>REWARD<small>Claim</small></div>
+      <div class="top-icons"><span onclick="openModal('mailModal')">🔔</span><span onclick="openModal('friendsModal')">💬</span><span onclick="openModal('rankModal')">🏆</span></div>
+      <div class="event" style="background:linear-gradient(135deg,#ff2d55,#ff9500)" onclick="openModal('topupModal')">💎 TOP UP<br><small>Double Diamond</small></div>
+      <div class="event" style="background:linear-gradient(135deg,#00e5ff,#0066ff)" onclick="openModal('luckModal')">🎰 DIAMOND<br>ROYALE<small>Free Spin</small></div>
+      <div class="event" style="background:linear-gradient(135deg,#a855f7,#ec4899)" onclick="openModal('luckModal')">🎲 MAGIC<br>CUBE<small>EVO Guns</small></div>
+      <div class="event" style="background:linear-gradient(135deg,#22c55e,#16a34a)" onclick="openModal('booyahPassModal')">🎫 BOOYAH<br>PASS<small>Season 42</small></div>
+      <div class="event" style="background:#222" onclick="claimDaily()">🎁 DAILY<br>REWARD<small>Claim</small></div>
     </div>
   </div>
-
-  <!-- BOTTOM BAR - Photo jaisa INICIAR -->
   <div class="bottom-bar">
     <div class="bottom-left">
-      <button class="active">🎒 INVENTARIO</button>
-      <button>🔫 ARMAS</button>
-      <button>👕 PRESET</button>
-      <button>✨ ESPECIAL</button>
+      <button onclick="openModal('inventoryModal')">🎒 INVENTARIO</button>
+      <button onclick="openModal('weaponsModal')">🔫 ARMAS</button>
+      <button onclick="openModal('presetModal')">👕 PRESET</button>
+      <button onclick="openModal('petModal')">✨ ESPECIAL</button>
       <button onclick="changePet()">🐲 PET: <span id="petBtnName">DRAKO</span></button>
     </div>
-    <div class="bottom-center">
-      <div class="mode" id="modeLabel">BR-CLASIFICATORIA</div>
-      <div class="mode2"><span id="modeText">Bermuda • Solo • 50 Players</span> • Ping: 12ms • <span style="color:#22c55e">● Online</span></div>
-    </div>
-    <div class="bottom-right">
-      <select class="mode-select" id="modeSelect" onchange="changeModeSelect(this.value)">
-        <option value="Solo">👤 SOLO</option>
-        <option value="Duo">👥 DUO</option>
-        <option value="Squad">👨‍👩‍👧 SQUAD</option>
-      </select>
-      <select class="mode-select" id="mapSelect" onchange="changeMapSelect(this.value)">
-        <option value="Bermuda">🗺️ Bermuda</option>
-        <option value="Purgatory">🗺️ Purgatory</option>
-        <option value="Kalahari">🗺️ Kalahari</option>
-      </select>
-      <button class="start-big" onclick="startMatch()">INICIAR<small>▶️ START MATCH</small></button>
+    <div class="bottom-center"><div class="mode" id="modeLabel">BR-CLASIFICATORIA</div><div style="font-size:11px;color:#aaa"><span id="modeText">Bermuda • Solo • 50 Players</span> • Ping: 12ms</div></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <select class="mode-select" id="modeSelect" onchange="changeModeSelect(this.value)"><option value="Solo">👤 SOLO</option><option value="Duo">👥 DUO</option><option value="Squad">👨‍👩‍👧 SQUAD</option></select>
+      <select class="mode-select" id="mapSelect" onchange="changeMapSelect(this.value)"><option value="Bermuda">🗺️ Bermuda</option><option value="Purgatory">🗺️ Purgatory</option><option value="Kalahari">🗺️ Kalahari</option></select>
+      <button class="start-big" onclick="startMatch()">INICIAR<small>▶️ START</small></button>
     </div>
   </div>
 </div>
+
+<!-- ===== MODALS - SAARE BUTTONS ===== -->
+<!-- SHOP -->
+<div class="modal" id="shopModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('shopModal')">X</button><h2>🛒 TIENDA - SHOP</h2><p>Coins / Diamonds se kharido</p><div class="shop-grid" id="shopGrid"></div></div></div>
+<!-- LUCK ROYALE - EVO GUNS -->
+<div class="modal" id="luckModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('luckModal')">X</button><h2>🎰 LUCK ROYALE - EVO GUNS</h2><p>💎 <span id="luckDiamonds">1,264</span> Diamonds hai • 1 Spin = 19 Diamonds • 10 Spin = 179 Diamonds</p>
+<div class="luck-top"><button class="active" id="tabEvo" onclick="setLuckTab('evo')">🔥 EVO GUNS</button><button id="tabDiamond" onclick="setLuckTab('diamond')">💎 DIAMOND ROYALE</button><button id="tabGold" onclick="setLuckTab('gold')">🪙 GOLD ROYALE</button></div>
+<div class="wheel-wrap"><div class="wheel" id="wheel"><div style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:22px">🔥</div><div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:22px">💎</div><div style="position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:22px">🎯</div><div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:22px">🐲</div></div><div class="wheel-center" onclick="spinLuck(1)">🎯</div></div>
+<p style="text-align:center;margin-top:8px;font-size:13px" id="spinResult">Spin karo aur EVO Gun Skin jeeto!</p>
+<div style="display:flex;gap:8px"><button class="spin-btn" style="background:#222;border:1px solid #ffcc00" onclick="spinLuck(1)">1 SPIN - 19 💎</button><button class="spin-btn" onclick="spinLuck(10)">10 SPIN - 179 💎 (SAVE 11)</button></div>
+<div style="display:flex;gap:8px;margin-top:8px"><button style="flex:1;background:#00e5ff;color:#000;border:none;padding:10px;border-radius:10px;font-weight:900;cursor:pointer" onclick="spinLuck(1)">🎁 FREE SPIN (Daily)</button><button style="flex:1;background:#fff;color:#000;border:none;padding:10px;border-radius:10px;font-weight:900;cursor:pointer" onclick="openModal('topupModal')">+ BUY DIAMONDS</button></div>
+<h3 style="margin-top:14px;font-size:14px">🔥 EVO GUNS COLLECTION</h3>
+<div class="evo-list" id="evoList"></div>
+</div></div>
+<!-- BOOYAH PASS -->
+<div class="modal" id="booyahPassModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('booyahPassModal')">X</button><h2>🎫 PASE BOOYAH - Season 42</h2><p>Level 42 / 100 • Premium Pass = 499 Diamonds</p><div style="background:#222;padding:12px;border-radius:12px"><div style="display:flex;justify-content:space-between;font-size:12px"><span>Progress</span><b>42%</b></div><div style="height:12px;background:#333;border-radius:10px;margin:8px 0;overflow:hidden"><div style="height:100%;width:42%;background:#ffcc00"></div></div><div style="font-size:12px">Rewards: Lv 50 = EVO MP40 Skin, Lv 100 = Legendary Bundle</div></div><button style="width:100%;background:#ffcc00;color:#000;border:none;padding:12px;border-radius:10px;font-weight:900;margin-top:12px;cursor:pointer" onclick="buyBooyahPass()">💎 BUY PREMIUM PASS - 499 Diamonds</button><button style="width:100%;background:#222;color:#fff;border:1px solid #555;padding:12px;border-radius:10px;font-weight:900;margin-top:8px;cursor:pointer" onclick="showToast('Daily Mission Complete! +100 XP')">✅ CLAIM DAILY REWARD</button></div></div>
+<!-- MISSIONS -->
+<div class="modal" id="missionModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('missionModal')">X</button><h2>🎯 MISIONES</h2><p>Daily + Weekly Missions</p><div id="missionList"></div></div></div>
+<!-- EVENTS -->
+<div class="modal" id="eventModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('eventModal')">X</button><h2>🏆 EVENTOS</h2><div style="display:flex;flex-direction:column;gap:10px"><div style="background:linear-gradient(90deg,#ff2d55,#ff9500);padding:14px;border-radius:12px"><b>🔥 DOUBLE XP WEEKEND</b><br><span style="font-size:12px">2x XP + 2x Coins - Aaj hi khelo!</span><br><button style="background:#fff;color:#000;border:none;padding:8px 16px;border-radius:20px;font-weight:900;margin-top:8px;cursor:pointer" onclick="showToast('Event Active! 2x XP ON')">JOIN NOW</button></div><div style="background:linear-gradient(90deg,#00e5ff,#0066ff);padding:14px;border-radius:12px"><b>💎 TOP UP EVENT</b><br><span style="font-size:12px">100 Diamonds Top Up = 100 Free!</span><br><button style="background:#fff;color:#000;border:none;padding:8px 16px;border-radius:20px;font-weight:900;margin-top:8px;cursor:pointer" onclick="openModal('topupModal')">TOP UP</button></div><div style="background:linear-gradient(90deg,#a855f7,#ec4899);padding:14px;border-radius:12px"><b>🎲 EVO GUN EVENT</b><br><span style="font-size:12px">Luck Royale me EVO Guns ka chance 2x!</span><br><button style="background:#fff;color:#000;border:none;padding:8px 16px;border-radius:20px;font-weight:900;margin-top:8px;cursor:pointer" onclick="openModal('luckModal')">SPIN NOW</button></div></div></div></div>
+<!-- GUILD -->
+<div class="modal" id="guildModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('guildModal')">X</button><h2>👥 GUILD - GUDU ARMY</h2><p>Level 8 • 48/50 Members • Rank #12 India</p><div style="background:#222;padding:12px;border-radius:12px;font-size:13px;line-height:1.8">👑 Leader: RAHUL<br>🛡️ Co-Leader: Amit_PRO<br>💬 Guild Chat: Active<br>🏆 Guild War: Saturday 8 PM<br>🎁 Guild Reward: 500 Coins Daily</div><button style="width:100%;background:#22c55e;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:900;margin-top:12px;cursor:pointer" onclick="showToast('Guild Chat Open! Hi Guild!')">💬 GUILD CHAT</button></div></div>
+<!-- FRIENDS -->
+<div class="modal" id="friendsModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('friendsModal')">X</button><h2>👤 FRIENDS - 12 Online</h2><div id="friendsList"></div></div></div>
+<!-- INVENTORY -->
+<div class="modal" id="inventoryModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('inventoryModal')">X</button><h2>🎒 INVENTARIO</h2><p>Tumhare paas jo hai</p><div class="shop-grid" id="inventoryGrid"></div></div></div>
+<!-- WEAPONS -->
+<div class="modal" id="weaponsModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('weaponsModal')">X</button><h2>🔫 ARMAS - Guns + Skins</h2><div id="weaponsList"></div></div></div>
+<!-- PRESET -->
+<div class="modal" id="presetModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('presetModal')">X</button><h2>👕 PRESET - Outfits</h2><div class="shop-grid" id="presetGrid"></div></div></div>
+<!-- PET -->
+<div class="modal" id="petModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('petModal')">X</button><h2>🐲 PETS</h2><div class="shop-grid" id="petGrid"></div></div></div>
+<!-- TOPUP -->
+<div class="modal" id="topupModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('topupModal')">X</button><h2>💎 TOP UP - Diamonds</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="shop-card" onclick="buyDiamonds(100,0)"><div class="emoji">💎</div><b>100 Diamonds</b><span>₹80</span><div class="price">BUY</div></div><div class="shop-card" onclick="buyDiamonds(310,50)"><div class="emoji">💎</div><b>310 + 50 Bonus</b><span>₹240</span><div class="price">BUY</div></div><div class="shop-card" onclick="buyDiamonds(520,100)"><div class="emoji">💎</div><b>520 + 100 Bonus</b><span>₹400</span><div class="price">BEST</div></div><div class="shop-card" onclick="buyDiamonds(1060,300)"><div class="emoji">💎</div><b>1060 + 300 Bonus</b><span>₹800</span><div class="price">MEGA</div></div></div></div></div>
+<!-- MAIL -->
+<div class="modal" id="mailModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('mailModal')">X</button><h2>📩 MAIL - 3 New</h2><div style="display:flex;flex-direction:column;gap:8px"><div style="background:#222;padding:12px;border-radius:10px"><b>🎁 System - Daily Reward</b><br><span style="font-size:12px;color:#aaa">500 Coins + 10 Diamonds - Claim karo</span><br><button style="background:#22c55e;color:#fff;border:none;padding:6px 14px;border-radius:20px;font-weight:800;margin-top:6px;cursor:pointer" onclick="claimMail(1,this)">CLAIM</button></div><div style="background:#222;padding:12px;border-radius:10px"><b>🏆 Event - Booyah Pass</b><br><span style="font-size:12px;color:#aaa">Season 42 Reward Available!</span><br><button style="background:#22c55e;color:#fff;border:none;padding:6px 14px;border-radius:20px;font-weight:800;margin-top:6px;cursor:pointer" onclick="claimMail(2,this)">CLAIM</button></div><div style="background:#222;padding:12px;border-radius:10px"><b>👥 Guild - War Invite</b><br><span style="font-size:12px;color:#aaa">Saturday 8 PM Guild War - Join?</span><br><button style="background:#ffcc00;color:#000;border:none;padding:6px 14px;border-radius:20px;font-weight:800;margin-top:6px;cursor:pointer" onclick="showToast('Guild War Joined!')">JOIN</button></div></div></div></div>
+<!-- SETTINGS -->
+<div class="modal" id="settingsModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('settingsModal')">X</button><h2>⚙️ SETTINGS</h2><div style="display:flex;flex-direction:column;gap:10px;font-size:14px"><label><input type="checkbox" checked> 🔊 Sound ON</label><label><input type="checkbox" checked> 🎵 Music ON</label><label><input type="checkbox"> 📳 Vibration</label><label>Graphics: <select style="background:#222;color:#fff;padding:6px;border-radius:6px"><option>Ultra</option><option>High</option><option>Medium</option></select></label><button style="background:#ff2d55;color:#fff;border:none;padding:12px;border-radius:10px;font-weight:900;cursor:pointer" onclick="showToast('Settings Saved!')">SAVE SETTINGS</button></div></div></div>
+<!-- RANK -->
+<div class="modal" id="rankModal"><div class="modal-box"><button class="close-btn" onclick="closeModal('rankModal')">X</button><h2>🏆 RANK - DIAMOND III</h2><div style="background:#222;padding:14px;border-radius:12px;text-align:center"><div style="font-size:60px">💎</div><b>DIAMOND III</b><br><span style="font-size:12px;color:#aaa">Points: 2,850 / 3,000 to DIAMOND II</span><div style="height:10px;background:#333;border-radius:10px;margin:10px 0;overflow:hidden"><div style="height:100%;width:85%;background:#00e5ff"></div></div><span style="font-size:12px">Wins: 342 • Kills: 1,245 • K/D: 3.64</span></div></div></div>
 
 <!-- HUD -->
 <div id="hud">
-  <div id="hudTop">
-    <div class="pill">👥 Alive: <span id="aliveCount" style="color:#ffcc00">50</span> | 🎯 Kills: <span id="killCount" style="color:#22c55e">0</span></div>
-    <div class="pill">⏱️ <span id="matchTime">00:00</span> | 🗺️ <span id="hudMap">Bermuda</span></div>
-    <div class="pill">💰 <span id="hudCoins">0</span> | 🏆 #<span id="hudRank">50</span></div>
-  </div>
-  <div id="killFeed"></div>
-  <div id="minimap"><canvas id="miniCanvas" width="130" height="130"></canvas></div>
-  <div id="zoneWarn">⚠️ SAFE ZONE CHHOTA HO RAHA HAI!</div>
-  <div id="centerMsg"></div>
-  <div id="healthBar">
-    <div style="font-size:12px;font-weight:900;margin-bottom:4px">❤️ HP: <span id="hpText">200</span> / 200</div>
-    <div class="bar"><div id="healthFill"></div></div>
-    <div style="font-size:11px;margin-top:6px">⚡ Energy: <span id="energyText">100</span>%</div>
-  </div>
-  <div id="weaponHud"><div style="font-size:22px" id="weaponIcon">🔫</div><b id="weaponName">M1887</b><br><span style="font-size:12px;color:#ffcc00">Ammo: ∞ | Damage: <span id="dmgText">95</span></span></div>
-  <div id="jumpBtn" onclick="doJump()">⬆️</div>
-  <div id="shootBtn" onclick="shoot()">🔫</div>
-  <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);padding:8px 14px;border-radius:20px;font-size:11px">WASD Move • Mouse Aim • Click Shoot • Space Jump • G Grenade • H Heal</div>
+  <div id="hudTop"><div class="pill">👥 Alive: <span id="aliveCount" style="color:#ffcc00">50</span> | 🎯 Kills: <span id="killCount" style="color:#22c55e">0</span></div><div class="pill">⏱️ <span id="matchTime">00:00</span> | 🗺️ <span id="hudMap">Bermuda</span></div><div class="pill">💰 <span id="hudCoins">0</span> | 🏆 #<span id="hudRank">50</span></div></div>
+  <div id="killFeed"></div><div id="minimap"><canvas id="miniCanvas" width="130" height="130"></canvas></div><div id="zoneWarn">⚠️ SAFE ZONE CHHOTA HO RAHA HAI!</div><div id="centerMsg"></div>
+  <div id="healthBar"><div style="font-size:12px;font-weight:900">❤️ HP: <span id="hpText">200</span> / 200</div><div class="bar"><div id="healthFill"></div></div></div>
+  <div id="weaponHud"><div style="font-size:22px" id="weaponIcon">🔫</div><b id="weaponName">M1887</b><br><span style="font-size:12px;color:#ffcc00">Skin: <span id="hudSkin">Blue Flame</span> | Damage: <span id="dmgText">95</span></span></div>
+  <div id="jumpBtn" onclick="doJump()">⬆️</div><div id="shootBtn" onclick="shoot()">🔫</div>
 </div>
-
-<div id="booyah">
-  <div style="font-size:90px">🏆</div>
-  <h1>BOOYAH!</h1>
-  <p id="booyahStats">Tum jeet gaye! #1 / 50</p>
-  <p style="color:#ffcc00;font-weight:900">+500 Coins • +100 Diamonds</p>
-  <button onclick="backToLobby()">🏠 LOBBY WAPAS</button>
-  <button onclick="startMatch()" style="background:#fff">🔁 PHIR SE KHELO</button>
-</div>
+<div id="booyah"><div style="font-size:90px">🏆</div><h1>BOOYAH!</h1><p id="booyahStats">Tum jeet gaye!</p><button onclick="backToLobby()">🏠 LOBBY WAPAS</button><button onclick="startMatch()" style="background:#fff">🔁 PHIR SE</button></div>
 
 <script>
 function setText(id, v){ var el=document.getElementById(id); if(el) el.innerText=v; }
 function setHTML(id, v){ var el=document.getElementById(id); if(el) el.innerHTML=v; }
+function showToast(msg){ var t=document.getElementById('toast'); if(!t) return; t.innerText=msg; t.style.display='block'; setTimeout(function(){ t.style.display='none'; }, 2500); }
+function openModal(id){ var m=document.getElementById(id); if(m) m.classList.add('show'); if(id==='luckModal') renderEvo(); if(id==='shopModal') renderShop(); if(id==='inventoryModal') renderInventory(); if(id==='weaponsModal') renderWeapons(); if(id==='presetModal') renderPreset(); if(id==='petModal') renderPets(); if(id==='friendsModal') renderFriends(); if(id==='missionModal') renderMissions(); }
+function closeModal(id){ var m=document.getElementById(id); if(m) m.classList.remove('show'); }
 
 var CHARS=[
-  {name:'RAHUL - HERO', emoji:'🥷', skill:'Speed Boost', desc:'Blue Flame Outfit', hp:200, color:'#00e5ff'},
-  {name:'ADAM', emoji:'👨', skill:'Fast Heal', desc:'Classic Outfit', hp:200, color:'#ffcc00'},
-  {name:'KELLY', emoji:'🏃‍♀️', skill:'Dash', desc:'Runner Outfit', hp:180, color:'#ff2d55'},
-  {name:'HAYATO', emoji:'🥷', skill:'Armor Piercing', desc:'Ninja Outfit', hp:190, color:'#a855f7'},
-  {name:'MOCO', emoji:'👩‍💻', skill:'Tag Enemy', desc:'Hacker Outfit', hp:200, color:'#ec4899'},
-  {name:'DJ ALOK', emoji:'🎧', skill:'Heal Aura', desc:'DJ Outfit', hp:210, color:'#22c55e'},
-  {name:'CHRONO', emoji:'🛡️', skill:'Shield', desc:'Future Outfit', hp:220, color:'#3b82f6'},
-  {name:'CRISTIANO', emoji:'⚽', skill:'Super Speed', desc:'Football Outfit', hp:230, color:'#f97316'}
+  {name:'RAHUL - HERO', emoji:'🥷', skill:'Speed Boost', hp:200, color:'#00e5ff'},
+  {name:'ADAM', emoji:'👨', skill:'Fast Heal', hp:200, color:'#ffcc00'},
+  {name:'KELLY', emoji:'🏃‍♀️', skill:'Dash', hp:180, color:'#ff2d55'},
+  {name:'HAYATO', emoji:'🥷', skill:'Armor Piercing', hp:190, color:'#a855f7'},
+  {name:'MOCO', emoji:'👩‍💻', skill:'Tag Enemy', hp:200, color:'#ec4899'},
+  {name:'DJ ALOK', emoji:'🎧', skill:'Heal Aura', hp:210, color:'#22c55e'},
+  {name:'CHRONO', emoji:'🛡️', skill:'Shield', hp:220, color:'#3b82f6'},
+  {name:'CRISTIANO', emoji:'⚽', skill:'Super Speed', hp:230, color:'#f97316'}
 ];
 var PETS=[
-  {name:'DRAKO', emoji:'🐲', skill:'Dragon Fire'},
-  {name:'BOOYAH DOG', emoji:'🐶', skill:'Loot Finder'},
-  {name:'PANTHER', emoji:'🐆', skill:'Speed'},
-  {name:'FALCON', emoji:'🦅', skill:'Vision'}
+  {name:'DRAKO', emoji:'🐲', skill:'Dragon Fire', owned:true},
+  {name:'BOOYAH DOG', emoji:'🐶', skill:'Loot Finder', owned:true},
+  {name:'PANTHER', emoji:'🐆', skill:'Speed', owned:false, price:500},
+  {name:'FALCON', emoji:'🦅', skill:'Vision', owned:false, price:800}
+];
+// EVO GUNS - REAL FF JAISA
+var EVO_GUNS=[
+  {name:'MP40 - Predatory Cobra', emoji:'🐍', gun:'MP40', skin:'Cobra', dmg:35, lvl:1, maxLvl:7, owned:false, rarity:'LEGENDARY', color:'#ff2d55'},
+  {name:'AK47 - Blue Flame Draco', emoji:'🐉', gun:'AK-47', skin:'Blue Flame', dmg:52, lvl:3, maxLvl:7, owned:true, rarity:'EVO', color:'#00e5ff'},
+  {name:'M1887 - One Punch Man', emoji:'👊', gun:'M1887', skin:'One Punch', dmg:105, lvl:1, maxLvl:7, owned:false, rarity:'EVO', color:'#ffcc00'},
+  {name:'M4A1 - Infernal Draco', emoji:'🔥', gun:'M4A1', skin:'Infernal', dmg:44, lvl:1, maxLvl:7, owned:false, rarity:'LEGENDARY', color:'#ff6b00'},
+  {name:'AWM - Duke Swallowtail', emoji:'🦋', gun:'AWM', skin:'Duke', dmg:165, lvl:1, maxLvl:7, owned:false, rarity:'EVO', color:'#a855f7'},
+  {name:'Desert Eagle - Golden', emoji:'🦅', gun:'Desert Eagle', skin:'Golden', dmg:80, lvl:2, maxLvl:7, owned:true, rarity:'LEGENDARY', color:'#ffd700'},
+  {name:'MP5 - Platinum Divinity', emoji:'💎', gun:'MP5', skin:'Platinum', dmg:38, lvl:1, maxLvl:7, owned:false, rarity:'EVO', color:'#e8e8e8'},
+  {name:'SCAR - Megalodon Alpha', emoji:'🦈', gun:'SCAR', skin:'Megalodon', dmg:48, lvl:1, maxLvl:7, owned:false, rarity:'EVO', color:'#00ff88'}
 ];
 var GUNS=[
-  {name:'M1887', emoji:'🔫', dmg:95, desc:'Shotgun'},
-  {name:'AK-47', emoji:'🔫', dmg:45, desc:'Assault'},
-  {name:'M4A1', emoji:'🔫', dmg:38, desc:'Stable'},
-  {name:'AWM Sniper', emoji:'🎯', dmg:150, desc:'Sniper'},
-  {name:'MP40', emoji:'🔫', dmg:32, desc:'SMG'},
-  {name:'Desert Eagle', emoji:'🔫', dmg:70, desc:'Pistol'}
+  {name:'M1887', emoji:'🔫', dmg:95},
+  {name:'AK-47', emoji:'🔫', dmg:45},
+  {name:'M4A1', emoji:'🔫', dmg:38},
+  {name:'AWM Sniper', emoji:'🎯', dmg:150},
+  {name:'MP40', emoji:'🔫', dmg:32},
+  {name:'Desert Eagle', emoji:'🔫', dmg:70}
 ];
-var selectedChar=0, selectedPet=0, selectedGun=0, selectedMode='Solo', selectedMap='Bermuda';
+var SHOP_ITEMS=[
+  {name:'Cobra Bundle', emoji:'🐍', price:999, type:'diamond', desc:'MP40 Cobra Outfit'},
+  {name:'Blue Flame Bundle', emoji:'🔥', price:1299, type:'diamond', desc:'AK Blue Flame'},
+  {name:'Hip Hop Bundle', emoji:'🎧', price:799, type:'diamond', desc:'Rare Outfit'},
+  {name:'Drako Pet', emoji:'🐲', price:499, type:'diamond', desc:'Pet - Dragon Fire'},
+  {name:'Emote - Dance', emoji:'💃', price:199, type:'diamond', desc:'Booyah Dance'},
+  {name:'Parachute Skin', emoji:'🪂', price:299, type:'diamond', desc:'Fire Parachute'}
+];
+var selectedChar=0, selectedPet=0, selectedGun=0, selectedMode='Solo', selectedMap='Bermuda', selectedSkin='Blue Flame';
 var coins=3980000, diamonds=1264;
+var luckTab='evo', spinning=false;
 
 function renderLobby(){
-  // Center Player - Photo jaisa
   setText('playerBig', CHARS[selectedChar].emoji);
   setText('topPfp', CHARS[selectedChar].emoji);
   setText('topPlayerName', CHARS[selectedChar].name.split(' - ')[0]);
@@ -263,50 +278,166 @@ function renderLobby(){
   setText('petEmoji', PETS[selectedPet].emoji);
   setText('petName', PETS[selectedPet].name+' • Lv 5');
   setText('petBtnName', PETS[selectedPet].name);
+  var evoSkin = EVO_GUNS.find(function(g){ return g.owned; });
+  if(evoSkin) selectedSkin = evoSkin.skin;
   setText('gunPreviewName', GUNS[selectedGun].name+' - Lv 7');
   setText('gunPreviewDmg', GUNS[selectedGun].dmg);
+  setText('gunSkinName', selectedSkin);
+  setText('centerGunSkin', selectedSkin);
   setText('modeText', selectedMap+' • '+selectedMode+' • 50 Players');
   setText('lobbyCoins', coins.toLocaleString('en-IN'));
   setText('lobbyDiamonds', diamonds.toLocaleString('en-IN'));
-  // Char switch buttons
-  var ch='';
-  for(var i=0;i<CHARS.length;i++){ ch+='<button class="'+(i===selectedChar?'active':'')+'" onclick="selectChar('+i+')" title="'+CHARS[i].name+'">'+CHARS[i].emoji+'</button>'; }
-  setHTML('charSwitch', ch);
-  // Gun mini list
-  var gh='';
-  for(var j=0;j<GUNS.length;j++){ gh+='<button onclick="selectGun('+j+')" style="background:'+(j===selectedGun?'#ffcc00':'#222')+';color:'+(j===selectedGun?'#000':'#fff')+';border:1px solid #555;padding:4px 8px;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer">'+GUNS[j].name+'</button>'; }
-  setHTML('gunMiniList', gh);
-  // Player glow color change
-  var pb=document.getElementById('playerBig');
-  if(pb) pb.style.filter='drop-shadow(0 0 25px '+CHARS[selectedChar].color+') drop-shadow(0 0 40px #0066ff)';
+  setText('luckDiamonds', diamonds.toLocaleString('en-IN'));
+  var ch=''; for(var i=0;i<CHARS.length;i++){ ch+='<button class="'+(i===selectedChar?'active':'')+'" onclick="selectChar('+i+')">'+CHARS[i].emoji+'</button>'; } setHTML('charSwitch', ch);
+  var gh=''; for(var j=0;j<GUNS.length;j++){ gh+='<button onclick="selectGun('+j+')" style="background:'+(j===selectedGun?'#ffcc00':'#222')+';color:'+(j===selectedGun?'#000':'#fff')+';border:1px solid #555;padding:4px 8px;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer">'+GUNS[j].name+'</button>'; } setHTML('gunMiniList', gh);
+  var pb=document.getElementById('playerBig'); if(pb) pb.style.filter='drop-shadow(0 0 25px '+CHARS[selectedChar].color+') drop-shadow(0 0 40px #0066ff)';
 }
-function selectChar(i){ selectedChar=i; renderLobby(); }
+function selectChar(i){ selectedChar=i; renderLobby(); showToast(CHARS[i].name+' Select Kiya!'); }
 function selectGun(i){ selectedGun=i; renderLobby(); }
-function changePet(){ selectedPet=(selectedPet+1)%PETS.length; renderLobby(); }
+function changePet(){ selectedPet=(selectedPet+1)%PETS.length; renderLobby(); showToast('Pet: '+PETS[selectedPet].name); }
 function changeModeSelect(v){ selectedMode=v; renderLobby(); }
 function changeMapSelect(v){ selectedMap=v; renderLobby(); }
+function claimDaily(){ coins+=500; diamonds+=10; renderLobby(); showToast('🎁 Daily Reward: +500 Coins +10 Diamonds!'); }
+function claimMail(id, btn){ coins+=500; diamonds+=10; renderLobby(); if(btn){ btn.innerText='CLAIMED ✅'; btn.disabled=true; } showToast('Mail Claimed! +500 Coins +10 Diamonds'); }
+function buyDiamonds(amount, bonus){ diamonds+=amount+bonus; renderLobby(); showToast('💎 '+(amount+bonus)+' Diamonds Mil Gaye!'); closeModal('topupModal'); }
+function buyBooyahPass(){ if(diamonds<499){ showToast('❌ Diamonds Kam Hai! Top Up Karo'); openModal('topupModal'); return; } diamonds-=499; renderLobby(); showToast('🎫 Booyah Pass Premium Activated!'); closeModal('booyahPassModal'); }
 
-// GAME - Same as before, Top Down BR
+function renderShop(){
+  var html='';
+  for(var i=0;i<SHOP_ITEMS.length;i++){ var s=SHOP_ITEMS[i]; html+='<div class="shop-card" onclick="buyShop('+i+')"><div class="emoji">'+s.emoji+'</div><b>'+s.name+'</b><span>'+s.desc+'</span><div class="price">💎 '+s.price+' Diamonds</div></div>'; }
+  setHTML('shopGrid', html);
+}
+function buyShop(i){
+  var s=SHOP_ITEMS[i];
+  if(diamonds<s.price){ showToast('❌ Diamonds Kam Hai!'); openModal('topupModal'); return; }
+  diamonds-=s.price; renderLobby(); showToast('✅ '+s.name+' Kharid Liya! Inventory me hai');
+}
+function renderEvo(){
+  var html='';
+  for(var i=0;i<EVO_GUNS.length;i++){
+    var g=EVO_GUNS[i];
+    html+='<div class="evo-card '+(g.owned?'got':'')+'"><div class="evo-emoji">'+g.emoji+'</div><b>'+g.name+'</b><br><span style="font-size:11px;color:'+g.color+'">'+g.rarity+'</span><br><span class="lvl">Lv '+g.lvl+'/'+g.maxLvl+' | Damage: '+g.dmg+'</span><br>'+(g.owned?'<button style="background:#22c55e;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-weight:800;margin-top:6px;cursor:pointer" onclick="equipEvo('+i+')">EQUIP ✅</button>':'<span style="font-size:11px;color:#aaa">Luck Royale se pao</span>')+'</div>';
+  }
+  setHTML('evoList', html);
+}
+function equipEvo(i){
+  var g=EVO_GUNS[i]; selectedSkin=g.skin; selectedGun=GUNS.findIndex(function(x){ return x.name===g.gun; }); if(selectedGun===-1) selectedGun=0;
+  renderLobby(); showToast('🔥 '+g.name+' Equip Ho Gaya! Damage: '+g.dmg); closeModal('luckModal');
+}
+function setLuckTab(tab){
+  luckTab=tab;
+  var tabs=['evo','diamond','gold'];
+  for(var i=0;i<tabs.length;i++){ var el=document.getElementById('tab'+tabs[i].charAt(0).toUpperCase()+tabs[i].slice(1)); if(el) el.classList.remove('active'); }
+  var activeEl=document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)); if(activeEl) activeEl.classList.add('active');
+  renderEvo();
+  if(tab==='diamond') showToast('💎 Diamond Royale - 1 Spin = 19 Diamonds');
+  if(tab==='gold') showToast('🪙 Gold Royale - 1 Spin = 1000 Coins');
+}
+function spinLuck(count){
+  if(spinning) return;
+  var cost = count===1 ? 19 : 179;
+  if(luckTab==='gold') cost=0;
+  if(diamonds<cost){ showToast('❌ Diamonds Kam Hai! Top Up Karo'); openModal('topupModal'); return; }
+  if(luckTab!=='gold') diamonds-=cost;
+  else { if(coins<1000){ showToast('❌ Coins Kam Hai'); return; } coins-=1000; }
+  spinning=true;
+  var wheel=document.getElementById('wheel');
+  var deg=360*5 + Math.floor(Math.random()*360);
+  if(wheel) wheel.style.transform='rotate('+deg+'deg)';
+  setText('spinResult','🎰 Spinning... Ruko!');
+  setTimeout(function(){
+    spinning=false;
+    // Random EVO Gun ya reward
+    var rewards=['MP40 - Predatory Cobra','AK47 - Blue Flame Draco','M1887 - One Punch Man','M4A1 - Infernal Draco','AWM - Duke Swallowtail','100 Diamonds','500 Coins','Emote - Dance'];
+    var reward=rewards[Math.floor(Math.random()*rewards.length)];
+    var isEvo = reward.indexOf(' - ')!==-1 && (reward.indexOf('MP40')!==-1 || reward.indexOf('AK47')!==-1 || reward.indexOf('M1887')!==-1 || reward.indexOf('M4A1')!==-1 || reward.indexOf('AWM')!==-1);
+    if(isEvo){
+      // EVO gun owned kar do
+      for(var i=0;i<EVO_GUNS.length;i++){
+        if(EVO_GUNS[i].name===reward || EVO_GUNS[i].name.indexOf(reward.split(' - ')[0])!==-1){
+          if(!EVO_GUNS[i].owned){ EVO_GUNS[i].owned=true; EVO_GUNS[i].lvl=1; }
+          break;
+        }
+      }
+      setText('spinResult','🎉 JACKPOT! Tumhe mila: '+reward+' 🔥🔥');
+      showToast('🎉 EVO GUN MILI: '+reward);
+      // Confetti jaisa
+      alert('🎉🎉 BOOYAH! Tumhe EVO Gun Mili!\n\n'+reward+'\n\nAb ye tumhare paas hai! EQUIP karke khelo!');
+    } else if(reward==='100 Diamonds'){ diamonds+=100; setText('spinResult','🎉 Tumhe mila: 100 Diamonds!'); showToast('💎 100 Diamonds Mile!'); }
+    else if(reward==='500 Coins'){ coins+=500; setText('spinResult','🎉 Tumhe mila: 500 Coins!'); showToast('🪙 500 Coins Mile!'); }
+    else { setText('spinResult','🎉 Tumhe mila: '+reward); showToast('🎉 '+reward+' Mila!'); }
+    renderLobby(); renderEvo();
+    if(wheel) wheel.style.transform='rotate(0deg)';
+  }, 3200);
+}
+function renderInventory(){
+  var html='';
+  for(var i=0;i<EVO_GUNS.length;i++){ if(EVO_GUNS[i].owned){ html+='<div class="shop-card owned"><div class="emoji">'+EVO_GUNS[i].emoji+'</div><b>'+EVO_GUNS[i].name+'</b><span>'+EVO_GUNS[i].rarity+' • Lv '+EVO_GUNS[i].lvl+'</span><div class="price" style="color:#22c55e">OWNED ✅</div></div>'; } }
+  html+='<div class="shop-card owned"><div class="emoji">🥷</div><b>'+CHARS[selectedChar].name+'</b><span>Character</span><div class="price" style="color:#22c55e">EQUIPPED</div></div>';
+  html+='<div class="shop-card owned"><div class="emoji">'+PETS[selectedPet].emoji+'</div><b>'+PETS[selectedPet].name+'</b><span>Pet</span><div class="price" style="color:#22c55e">EQUIPPED</div></div>';
+  if(html==='') html='<p style="color:#aaa">Kuch nahi hai - Luck Royale se EVO Guns jeeto!</p>';
+  setHTML('inventoryGrid', html);
+}
+function renderWeapons(){
+  var html='';
+  for(var i=0;i<EVO_GUNS.length;i++){ var g=EVO_GUNS[i]; html+='<div style="background:#222;padding:12px;border-radius:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;border:1px solid '+(g.owned?'#22c55e':'#333')+'"><div><b>'+g.emoji+' '+g.name+'</b><br><span style="font-size:11px;color:#aaa">'+g.rarity+' • Damage: '+g.dmg+' • Lv '+g.lvl+'</span></div>'+(g.owned?'<button style="background:#22c55e;color:#fff;border:none;padding:8px 14px;border-radius:20px;font-weight:800;cursor:pointer" onclick="equipEvo('+i+')">EQUIP</button>':'<button style="background:#ffcc00;color:#000;border:none;padding:8px 14px;border-radius:20px;font-weight:800;cursor:pointer" onclick="openModal(\'luckModal\')">GET IN LUCK ROYALE</button>')+'</div>'; }
+  setHTML('weaponsList', html);
+}
+function renderPreset(){
+  var html='';
+  for(var i=0;i<CHARS.length;i++){ html+='<div class="shop-card '+(i===selectedChar?'owned':'')+'" onclick="selectChar('+i+');closeModal(\'presetModal\')"><div class="emoji">'+CHARS[i].emoji+'</div><b>'+CHARS[i].name+'</b><span>'+CHARS[i].skill+'</span><div class="price">'+(i===selectedChar?'EQUIPPED':'SELECT')+'</div></div>'; }
+  setHTML('presetGrid', html);
+}
+function renderPets(){
+  var html='';
+  for(var i=0;i<PETS.length;i++){ var p=PETS[i]; html+='<div class="shop-card '+(p.owned?'owned':'')+'"><div class="emoji">'+p.emoji+'</div><b>'+p.name+'</b><span>'+p.skill+'</span><div class="price">'+(p.owned?'<button style="background:#22c55e;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-weight:800;cursor:pointer" onclick="selectPet('+i+')">SELECT</button>':'💎 '+p.price+' <button style="background:#ffcc00;color:#000;border:none;padding:6px 12px;border-radius:20px;font-weight:800;cursor:pointer" onclick="buyPet('+i+')">BUY</button>')+'</div></div>'; }
+  setHTML('petGrid', html);
+}
+function selectPet(i){ selectedPet=i; renderLobby(); renderPets(); showToast('Pet: '+PETS[i].name); closeModal('petModal'); }
+function buyPet(i){ if(diamonds<PETS[i].price){ showToast('Diamonds Kam Hai!'); return; } diamonds-=PETS[i].price; PETS[i].owned=true; renderLobby(); renderPets(); showToast('Pet Kharid Liya: '+PETS[i].name); }
+function renderFriends(){
+  var friends=['Amit_PRO - Online','Priya_X - In Game','Steve_Mine - Online','Alex_Builder - Offline','Noob_Killer - Online','Sneha - In Lobby','Rohit_Bhai - Online','Neha - Offline'];
+  var html='';
+  for(var i=0;i<friends.length;i++){ var f=friends[i]; var online=f.indexOf('Online')!==-1||f.indexOf('In')!==-1; html+='<div style="background:#222;padding:10px;border-radius:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><div><b>'+f+'</b></div><button style="background:'+(online?'#22c55e':'#555')+';color:#fff;border:none;padding:6px 12px;border-radius:20px;font-weight:800;cursor:pointer" onclick="showToast(\'Invite Bheja: '+f.split(' - ')[0]+'\')">INVITE</button></div>'; }
+  setHTML('friendsList', html);
+}
+function renderMissions(){
+  var missions=[
+    {name:'5 Kills Karo', reward:'100 Coins', done:3, total:5},
+    {name:'2 Matches Khelo', reward:'50 Diamonds', done:1, total:2},
+    {name:'Luck Royale 1 Spin', reward:'Emote', done:0, total:1},
+    {name:'Booyah Karo', reward:'500 Coins', done:0, total:1}
+  ];
+  var html='';
+  for(var i=0;i<missions.length;i++){ var m=missions[i]; var pct=m.done/m.total*100; html+='<div style="background:#222;padding:12px;border-radius:10px;margin-bottom:8px"><b>'+m.name+'</b> - 🎁 '+m.reward+'<br><div style="height:8px;background:#333;border-radius:10px;margin:6px 0;overflow:hidden"><div style="height:100%;width:'+pct+'%;background:#ffcc00"></div></div><span style="font-size:12px">'+m.done+'/'+m.total+'</span> '+(m.done>=m.total?'<button style="background:#22c55e;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-weight:800;float:right;cursor:pointer" onclick="showToast(\'Reward Claimed: '+m.reward+'\')">CLAIM</button>':'')+'</div>'; }
+  setHTML('missionList', html);
+}
+
+// GAME - Top Down BR
 var canvas=document.getElementById('gameCanvas');
 var ctx=canvas.getContext('2d');
 var gameRunning=false, player, enemies=[], bullets=[], loots=[], grenades=[];
 var keys={}, mouseX=0, mouseY=0, matchStart=0, alive=50, kills=0, playerCoins=0;
 var zone={x:1000,y:1000,r:900}, zoneTimer=0, cam={x:0,y:0};
-
 function startMatch(){
+  closeModal('luckModal'); closeModal('shopModal');
   document.getElementById('lobby').style.display='none';
   var bo=document.getElementById('booyah'); if(bo) bo.style.display='none';
   var hud=document.getElementById('hud'); if(hud) hud.style.display='block';
   canvas.width=window.innerWidth; canvas.height=window.innerHeight;
-  player={x:1000,y:1000,hp:CHARS[selectedChar].hp,maxHp:CHARS[selectedChar].hp,armor:100,speed:3.2,angle:0,alive:true,energy:100};
+  // EVO Gun ka damage use karo agar equipped hai
+  var gunDmg=GUNS[selectedGun].dmg;
+  var evoEquipped=EVO_GUNS.find(function(g){ return g.owned && g.skin===selectedSkin; });
+  if(evoEquipped) gunDmg=evoEquipped.dmg;
+  player={x:1000,y:1000,hp:CHARS[selectedChar].hp,maxHp:CHARS[selectedChar].hp,armor:100,speed:3.2,angle:0,alive:true,energy:100,gunDmg:gunDmg};
   enemies=[]; bullets=[]; loots=[]; grenades=[]; kills=0; alive=50; playerCoins=0; matchStart=Date.now(); zone={x:1000,y:1000,r:900};
   var names=['Noob_Killer','ProPlayer','HeadHunter','SniperKing','BooyahBoy','KillerQueen','DarkLord','GhostRider','ToxicBoy','Legend99','FreeFireKing','DesiGamer','CarryMinati','TotalGaming','LokeshGamer','GyanGaming','Rahul_OP','Priya_X','Amit_PRO','Steve_Mine','Alex_Builder','Moco_Fan','Chrono_OP','Alok_Fan','Hayato_OP','Kelly_Run','Adam_OP','DJ_Boy','SquadKing','DuoMaster','SoloKing','RushBhai','CampMaster','Lootera','PochinkiKing','BermudaKing','SniperGirl','QueenOP','KingKong','BeastBoy','HunterX','WarriorOP','ShadowX','ViperOP','FalconX','EagleEye','TigerOP','LionKing','PantherX'];
   for(var i=0;i<49;i++){ enemies.push({x:200+Math.random()*1600, y:200+Math.random()*1600, hp:200, maxHp:200, name:names[i]||('Player'+i), alive:true, speed:1.2+Math.random()*1, angle:Math.random()*Math.PI*2, shootCooldown:Math.random()*100, emoji:['👨','👩','🥷','🧑','👱','👴'][Math.floor(Math.random()*6)]}); }
   for(var j=0;j<40;j++){ loots.push({x:200+Math.random()*1600, y:200+Math.random()*1600, type:['💊','🛡️','🔫','🧃','💣'][Math.floor(Math.random()*5)]}); }
   gameRunning=true;
   showCenter('🪂 LANDING IN '+selectedMap+'...', 1800);
-  setTimeout(function(){ showCenter('🔥 '+selectedMode+' - 50 PLAYERS!', 1500); }, 1900);
-  addKillFeed('🪂 Tum '+selectedMap+' me utre! Pet: '+PETS[selectedPet].name);
+  setTimeout(function(){ showCenter('🔥 '+selectedMode+' - EVO: '+selectedSkin, 1500); }, 1900);
+  addKillFeed('🪂 Tum '+selectedMap+' me utre! Gun: '+GUNS[selectedGun].name+' - '+selectedSkin);
   updateHUD(); gameLoop();
 }
 function showCenter(txt, ms){ var el=document.getElementById('centerMsg'); if(!el) return; el.innerText=txt; el.style.display='block'; setTimeout(function(){ el.style.display='none'; }, ms||1500); }
@@ -314,18 +445,18 @@ function addKillFeed(txt){ var feed=document.getElementById('killFeed'); if(!fee
 function updateHUD(){
   setText('aliveCount', alive); setText('killCount', kills); setText('hpText', Math.max(0, Math.round(player.hp))); setText('hudCoins', playerCoins); setText('hudRank', alive); setText('hudMap', selectedMap);
   var hf=document.getElementById('healthFill'); if(hf) hf.style.width=(player.hp/player.maxHp*100)+'%';
-  setText('energyText', Math.round(player.energy)); setText('weaponName', GUNS[selectedGun].name); setText('weaponIcon', GUNS[selectedGun].emoji); setText('dmgText', GUNS[selectedGun].dmg);
+  setText('energyText', Math.round(player.energy)); setText('weaponName', GUNS[selectedGun].name); setText('weaponIcon', GUNS[selectedGun].emoji); setText('dmgText', player.gunDmg||GUNS[selectedGun].dmg); setText('hudSkin', selectedSkin);
   var elapsed=Math.floor((Date.now()-matchStart)/1000); var mm=String(Math.floor(elapsed/60)).padStart(2,'0'), ss=String(elapsed%60).padStart(2,'0'); setText('matchTime', mm+':'+ss);
 }
 function doJump(){ if(!gameRunning) return; player.y-=30; showCenter('⬆️ JUMP!', 400); }
 function shoot(){
   if(!gameRunning || !player.alive) return;
-  var gun=GUNS[selectedGun]; var dx=mouseX-canvas.width/2, dy=mouseY-canvas.height/2; var ang=Math.atan2(dy,dx);
-  bullets.push({x:player.x, y:player.y, vx:Math.cos(ang)*12, vy:Math.sin(ang)*12, dmg:gun.dmg, from:'player', life:60});
+  var dx=mouseX-canvas.width/2, dy=mouseY-canvas.height/2; var ang=Math.atan2(dy,dx);
+  bullets.push({x:player.x, y:player.y, vx:Math.cos(ang)*12, vy:Math.sin(ang)*12, dmg:player.gunDmg||GUNS[selectedGun].dmg, from:'player', life:60});
   player.energy=Math.max(0, player.energy-1); updateHUD();
 }
-function throwGrenade(){ if(!gameRunning) return; grenades.push({x:player.x, y:player.y, vx:(Math.random()-0.5)*4, vy:(Math.random()-0.5)*4, timer:60}); addKillFeed('💣 Grenade phenka!'); }
-function heal(){ if(player.hp<player.maxHp){ player.hp=Math.min(player.maxHp, player.hp+50); addKillFeed('💊 Heal! +50 HP'); updateHUD(); } }
+function throwGrenade(){ if(!gameRunning) return; grenades.push({x:player.x, y:player.y, vx:(Math.random()-0.5)*4, vy:(Math.random()-0.5)*4, timer:60}); addKillFeed('💣 Grenade!'); }
+function heal(){ if(player.hp<player.maxHp){ player.hp=Math.min(player.maxHp, player.hp+50); addKillFeed('💊 Heal! +50'); updateHUD(); } }
 document.addEventListener('keydown', function(e){
   keys[e.key.toLowerCase()]=true;
   if(e.key.toLowerCase()==='g') throwGrenade();
@@ -351,7 +482,7 @@ function gameLoop(){
     if(Math.random()<0.002){ var victim=enemies[Math.floor(Math.random()*enemies.length)]; if(victim && victim.alive && victim!==en){ victim.hp-=50; if(victim.hp<=0){ victim.alive=false; alive--; addKillFeed('💀 '+en.name+' ne '+victim.name+' ko mara!'); } } }
   }
   for(var b=bullets.length-1;b>=0;b--){ var bul=bullets[b]; bul.x+=bul.vx; bul.y+=bul.vy; bul.life--; if(bul.life<=0){ bullets.splice(b,1); continue; } if(bul.from==='player'){ for(var e=0;e<enemies.length;e++){ var en2=enemies[e]; if(!en2.alive) continue; var ddx=en2.x-bul.x, ddy=en2.y-bul.y; if(Math.sqrt(ddx*ddx+ddy*ddy)<22){ en2.hp-=bul.dmg; bullets.splice(b,1); if(en2.hp<=0){ en2.alive=false; alive--; kills++; playerCoins+=100; addKillFeed('🎯 Tumne '+en2.name+' ko mara!'); showCenter('🎯 KILL! '+en2.name, 900); } break; } } } }
-  for(var l=loots.length-1;l>=0;l--){ var loot=loots[l]; var ldx=loot.x-player.x, ldy=loot.y-player.y; if(Math.sqrt(ldx*ldx+ldy*ldy)<26){ if(loot.type==='💊'){ player.hp=Math.min(player.maxHp, player.hp+40); addKillFeed('💊 Medkit! +40 HP'); } if(loot.type==='🛡️'){ player.armor=Math.min(100, player.armor+30); addKillFeed('🛡️ Armor!'); } if(loot.type==='🔫'){ playerCoins+=50; addKillFeed('🔫 Gun loot! +50'); } if(loot.type==='🧃'){ player.energy=100; addKillFeed('🧃 Energy Full!'); } if(loot.type==='💣'){ throwGrenade(); } loots.splice(l,1); } }
+  for(var l=loots.length-1;l>=0;l--){ var loot=loots[l]; var ldx=loot.x-player.x, ldy=loot.y-player.y; if(Math.sqrt(ldx*ldx+ldy*ldy)<26){ if(loot.type==='💊'){ player.hp=Math.min(player.maxHp, player.hp+40); addKillFeed('💊 Medkit! +40'); } if(loot.type==='🛡️'){ player.armor=Math.min(100, player.armor+30); addKillFeed('🛡️ Armor!'); } if(loot.type==='🔫'){ playerCoins+=50; addKillFeed('🔫 Loot! +50'); } if(loot.type==='🧃'){ player.energy=100; addKillFeed('🧃 Energy Full!'); } if(loot.type==='💣'){ throwGrenade(); } loots.splice(l,1); } }
   for(var g=grenades.length-1;g>=0;g--){ var gr=grenades[g]; gr.x+=gr.vx; gr.y+=gr.vy; gr.timer--; if(gr.timer<=0){ for(var ee=0;ee<enemies.length;ee++){ var en3=enemies[ee]; if(!en3.alive) continue; var gdx=en3.x-gr.x, gdy=en3.y-gr.y; if(Math.sqrt(gdx*gdx+gdy*gdy)<90){ en3.hp-=80; if(en3.hp<=0){ en3.alive=false; alive--; kills++; addKillFeed('💣 Grenade se '+en3.name+' mara!'); } } } grenades.splice(g,1); } }
   zoneTimer++; if(zoneTimer%600===0 && zone.r>150){ zone.r-=120; var zw=document.getElementById('zoneWarn'); if(zw){ zw.style.display='block'; setTimeout(function(){ zw.style.display='none'; }, 3000); } addKillFeed('⚠️ Safe Zone chhota!'); }
   var zdx=player.x-zone.x, zdy=player.y-zone.y; if(Math.sqrt(zdx*zdx+zdy*zdy)>zone.r){ player.hp-=0.3; if(player.hp<=0){ player.hp=0; player.alive=false; gameOver(false); return; } }
@@ -375,7 +506,7 @@ function draw(){
 }
 function gameOver(won){
   gameRunning=false;
-  if(won){ coins+=500; diamonds+=100; setText('booyahStats','Tum jeet gaye! #1 / 50 • Kills: '+kills); var bo=document.getElementById('booyah'); if(bo) bo.style.display='flex'; }
+  if(won){ coins+=500; diamonds+=100; setText('booyahStats','Tum jeet gaye! #1 / 50 • Kills: '+kills+' • EVO: '+selectedSkin); var bo=document.getElementById('booyah'); if(bo) bo.style.display='flex'; }
   else { showCenter('💀 ELIMINATED! Rank #'+alive+' • Kills: '+kills, 2500); setTimeout(function(){ var bo2=document.getElementById('booyah'); if(bo2){ bo2.style.display='flex'; var h=bo2.querySelector('h1'); if(h) h.innerText='💀 GAME OVER'; setText('booyahStats','Rank #'+alive+' • Kills: '+kills); } }, 2600); }
 }
 function backToLobby(){ gameRunning=false; var bo=document.getElementById('booyah'); if(bo) bo.style.display='none'; var hud=document.getElementById('hud'); if(hud) hud.style.display='none'; var lob=document.getElementById('lobby'); if(lob) lob.style.display='flex'; renderLobby(); }
