@@ -3,513 +3,429 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUDU SMP - FIXED ERROR</title>
+<title>GUDU FIRE - Free Fire Copy</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{overflow:hidden;background:#000}
-#game{width:100vw;height:100vh;display:block}
-#crosshair{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:26px;pointer-events:none;z-index:10;color:#fff;text-shadow:0 0 4px #000}
-#top{position:fixed;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;z-index:20;pointer-events:none}
-#top .box{background:rgba(0,0,0,.65);color:#fff;padding:9px 14px;border-radius:10px;font-weight:800;font-size:13px}
-#top .box span{color:#22c55e}
-#bossBarWrap{position:fixed;top:52px;left:50%;transform:translateX(-50%);width:520px;max-width:90vw;z-index:20;display:none}
-#bossBarWrap .label{text-align:center;color:#fff;font-weight:900;font-size:13px;text-shadow:0 0 5px #000;margin-bottom:4px}
-#bossBar{height:12px;background:#333;border:2px solid #fff;border-radius:10px;overflow:hidden}
-#bossFill{height:100%;background:linear-gradient(90deg,#ef4444,#f59e0b);width:100%;transition:.3s}
-#sideScoreboard{position:fixed;top:70px;right:12px;width:230px;z-index:20;pointer-events:none;display:none}
-#sideScoreboard .logoBox{background:rgba(0,0,0,.75);border:2px solid #f59e0b;border-radius:12px;padding:10px;text-align:center;margin-bottom:6px}
-#sideScoreboard .logoBox h1{font-size:28px;letter-spacing:1px;color:#f59e0b;text-shadow:2px 2px 0 #7c2d12,0 0 10px #f59e0b;line-height:1}
-#sideScoreboard .logoBox h1 span{font-size:12px;display:block;color:#ef4444;letter-spacing:4px;margin-top:2px}
-#sideScoreboard .infoBox{background:rgba(0,0,0,.72);border-radius:12px;padding:12px;color:#fff;font-size:13px;line-height:1.9;border:1px solid rgba(255,255,255,.2)}
-#sideScoreboard .infoBox .row{display:flex;justify-content:space-between}
-#sideScoreboard .infoBox .row b{color:#facc15}
-#sideScoreboard .infoBox .rankBox{background:#fff;color:#000;padding:1px 8px;border-radius:4px;font-weight:900;font-size:12px}
-#sideScoreboard .infoBox hr{border:none;border-top:1px solid rgba(255,255,255,.2);margin:6px 0}
-#sideScoreboard .footer{background:rgba(0,0,0,.72);border-radius:12px;padding:8px;text-align:center;margin-top:6px;color:#fff;font-size:11px;line-height:1.6}
-#sideScoreboard .footer b{color:#facc15}
-#hotbar{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:5px;background:rgba(0,0,0,.7);padding:7px;border-radius:14px;z-index:20}
-.slot{width:52px;height:56px;border-radius:10px;background:#222;border:3px solid #555;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;cursor:pointer;font-size:10px;font-weight:800}
-.slot.active{border-color:#fff;transform:scale(1.12);box-shadow:0 0 14px #fff}
-.slot .e{font-size:22px}
-#controls{position:fixed;bottom:88px;right:12px;background:rgba(0,0,0,.65);color:#fff;padding:12px;border-radius:12px;font-size:12px;line-height:1.7;z-index:20}
-#msg{position:fixed;top:48%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.75);color:#fff;padding:10px 20px;border-radius:20px;font-weight:800;display:none;z-index:30}
-#chatBox{position:fixed;left:12px;bottom:90px;width:380px;max-width:88vw;z-index:25;pointer-events:none}
-#chatMsgs{max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin-bottom:6px}
-.chatMsg{background:rgba(0,0,0,.65);color:#fff;padding:7px 10px;border-radius:8px;font-size:13px;word-wrap:break-word}
-.chatMsg b{color:#facc15} .chatMsg .sys{color:#22c55e} .chatMsg .ai{color:#00e5ff} .chatMsg .me{color:#60a5fa}
-#chatInputWrap{display:none;gap:6px;pointer-events:auto}
-#chatInputWrap.show{display:flex}
-#chatInputWrap input{flex:1;padding:11px;border:2px solid #22c55e;border-radius:10px;outline:none;font-size:14px;background:rgba(0,0,0,.85);color:#fff}
-#chatInputWrap button{background:#22c55e;color:#fff;border:none;padding:0 16px;border-radius:10px;font-weight:900;cursor:pointer}
-#bigScoreboard{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:480px;max-width:94vw;background:rgba(0,0,0,.92);color:#fff;border-radius:16px;padding:18px;display:none;z-index:40;border:2px solid #22c55e}
-#menu{position:fixed;inset:0;background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.9));z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px;overflow-y:auto}
-#menu h1{font-size:56px} #menu h1 span{color:#22c55e}
-#menu .sub{font-size:14px;color:#ccc;margin:8px 0 18px}
-.menu-btn{width:340px;max-width:90vw;padding:14px;border-radius:12px;border:2px solid #555;background:#222;color:#fff;font-weight:900;font-size:15px;cursor:pointer;margin-bottom:10px}
-.menu-btn:hover{border-color:#22c55e;background:#333}
-.menu-btn.green{background:#22c55e;border-color:#22c55e}
-.menu-btn.gold{background:#f59e0b;border-color:#f59e0b;color:#000}
-#serverList{display:none;width:340px;max-width:90vw;background:#111;border-radius:12px;padding:12px;margin-bottom:12px;text-align:left}
-.server-item{display:flex;gap:10px;align-items:center;padding:10px;border-radius:10px;cursor:pointer;border:1px solid #333;margin-bottom:8px}
-.server-item:hover{border-color:#22c55e} .server-item.active{border-color:#22c55e;background:#1a2e1a}
-#createServer{display:none;width:340px;max-width:90vw;background:#111;border-radius:12px;padding:14px;margin-bottom:12px}
-#createServer input{width:100%;padding:11px;border-radius:10px;border:1px solid #333;background:#222;color:#fff;outline:none;margin-bottom:8px}
-#createServer select{width:100%;padding:11px;border-radius:10px;border:1px solid #333;background:#222;color:#fff;margin-bottom:8px}
-#howTo{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:110;display:none;align-items:center;justify-content:center;padding:20px}
-#howTo .box{background:#111;border:2px solid #22c55e;border-radius:16px;padding:20px;max-width:560px;width:100%;color:#fff;max-height:90vh;overflow-y:auto}
-@media(max-width:700px){#controls{display:none} #menu h1{font-size:32px} .menu-btn{width:90vw} #sideScoreboard{width:190px;top:60px}}
+body{background:#000;overflow:hidden;color:#fff}
+#gameCanvas{width:100vw;height:100vh;display:block;background:#2d5016}
+/* LOBBY */
+#lobby{position:fixed;inset:0;background:linear-gradient(135deg,#0f0f0f,#1a1a2e,#16213e);z-index:100;display:flex;flex-direction:column;overflow-y:auto}
+.lobby-top{display:flex;justify-content:space-between;padding:12px 16px;align-items:center}
+.lobby-top .logo{font-size:28px;font-weight:900} .lobby-top .logo span{color:#ffcc00}
+.lobby-top .coins{background:#222;padding:8px 14px;border-radius:20px;font-weight:800;font-size:13px}
+.lobby-top .coins span{color:#ffcc00}
+.lobby-main{flex:1;display:flex;gap:16px;padding:10px 16px}
+.char-box{flex:1;background:rgba(255,255,255,.08);border-radius:16px;padding:16px;text-align:center;border:2px solid #ffcc00}
+.char-box .big{font-size:110px}
+.char-box h2{font-size:22px;margin:6px 0} .char-box p{font-size:12px;color:#aaa;line-height:1.6}
+.char-select{display:flex;gap:8px;justify-content:center;margin:12px 0;flex-wrap:wrap}
+.char-select button{width:52px;height:52px;border-radius:50%;font-size:26px;border:3px solid #555;background:#333;cursor:pointer}
+.char-select button.active{border-color:#ffcc00;transform:scale(1.15)}
+.gun-box{width:320px;background:rgba(255,255,255,.08);border-radius:16px;padding:14px}
+.gun-box h3{font-size:14px;margin-bottom:10px}
+.gun-item{display:flex;gap:10px;align-items:center;background:#222;padding:10px;border-radius:10px;margin-bottom:8px;cursor:pointer;border:2px solid transparent}
+.gun-item.active{border-color:#ffcc00;background:#333}
+.gun-item .icon{font-size:28px} .gun-item b{font-size:13px;display:block} .gun-item span{font-size:11px;color:#aaa}
+.mode-row{display:flex;gap:8px;margin:12px 0}
+.mode-row button{flex:1;padding:10px;border-radius:10px;border:2px solid #555;background:#222;color:#fff;font-weight:800;cursor:pointer;font-size:12px}
+.mode-row button.active{background:#ffcc00;color:#000;border-color:#ffcc00}
+.start-btn{background:#ffcc00;color:#000;border:none;width:100%;padding:16px;border-radius:14px;font-size:18px;font-weight:900;cursor:pointer;margin-top:8px}
+.start-btn:hover{background:#ffd633}
+.event-box{background:#ff2d55;padding:10px;border-radius:10px;font-size:12px;font-weight:800;text-align:center;margin-top:10px}
+#hud{position:fixed;inset:0;pointer-events:none;z-index:20;display:none}
+#hudTop{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between}
+#hudTop .pill{background:rgba(0,0,0,.7);padding:8px 14px;border-radius:20px;font-weight:800;font-size:13px}
+#healthBar{position:absolute;bottom:20px;left:16px;width:220px}
+#healthBar .bar{height:14px;background:#333;border-radius:10px;overflow:hidden;border:1px solid #fff}
+#healthFill{height:100%;background:#22c55e;width:100%;transition:.3s}
+#armorBar{height:8px;background:#333;border-radius:10px;overflow:hidden;margin-top:4px}
+#armorFill{height:100%;background:#3b82f6;width:100%}
+#killFeed{position:absolute;top:50px;left:10px;display:flex;flex-direction:column;gap:4px}
+.killMsg{background:rgba(0,0,0,.6);padding:6px 10px;border-radius:8px;font-size:12px}
+#joystick{position:absolute;bottom:30px;right:20px;width:120px;height:120px;background:rgba(255,255,255,.15);border-radius:50%;border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center}
+#shootBtn{position:absolute;bottom:150px;right:30px;width:80px;height:80px;border-radius:50%;background:#ff2d55;border:3px solid #fff;font-size:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto;font-weight:900}
+#jumpBtn{position:absolute;bottom:160px;right:125px;width:56px;height:56px;border-radius:50%;background:#fff;color:#000;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;pointer-events:auto}
+#weaponHud{position:absolute;bottom:20px;right:16px;background:rgba(0,0,0,.7);padding:10px 14px;border-radius:12px;text-align:right}
+#minimap{position:absolute;top:50px;right:10px;width:130px;height:130px;background:rgba(0,0,0,.6);border:2px solid #fff;border-radius:12px;overflow:hidden}
+#minimap canvas{width:100%;height:100%}
+#zoneWarn{position:absolute;top:80px;left:50%;transform:translateX(-50%);background:#ff2d55;padding:10px 18px;border-radius:20px;font-weight:900;display:none}
+#centerMsg{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);font-size:42px;font-weight:900;text-shadow:0 0 20px #ffcc00;display:none;text-align:center}
+#booyah{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+#booyah h1{font-size:64px;color:#ffcc00} #booyah p{font-size:16px;margin:10px 0}
+#booyah button{background:#ffcc00;color:#000;border:none;padding:14px 36px;border-radius:12px;font-weight:900;font-size:16px;cursor:pointer;margin-top:12px}
+#controlsInfo{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);padding:8px 14px;border-radius:20px;font-size:11px;white-space:nowrap}
+@media(max-width:700px){.lobby-main{flex-direction:column} .gun-box{width:100%} .char-box .big{font-size:80px} #controlsInfo{display:none}}
 </style>
 </head>
 <body>
-<canvas id="game"></canvas>
-<div id="crosshair">+</div>
+<canvas id="gameCanvas"></canvas>
 
-<div id="top">
-  <div class="box">⛏️ <span id="serverNameTop">GUDU SMP</span> | <span id="modeText">CREATIVE</span> | Blocks: <span id="blockCount">0</span></div>
-  <div class="box">Rank: <span id="rankTop" style="color:#f59e0b">OWNER</span> | Kills: <span id="killsTop">0</span> | Deaths: <span id="deathsTop">0</span></div>
-</div>
-
-<div id="bossBarWrap"><div class="label">🐉 ENDER DRAGON BOSS - <span id="bossHpText">100%</span></div><div id="bossBar"><div id="bossFill"></div></div></div>
-
-<div id="sideScoreboard">
-  <div class="logoBox"><h1 id="sbLogoName">GUDU SMP<span>TOWNY</span></h1></div>
-  <div class="infoBox">
-    <div class="row"><span>👤 AD:</span><b>RAHUL</b></div>
-    <div class="row"><span>🛡️ RÜTBE:</span><span class="rankBox" id="sbRankBox">OWNER</span></div>
-    <div class="row"><span>💰 PARA:</span><b id="sbPara">0</b></div>
-    <div style="height:6px"></div>
-    <div class="row"><span>🏠 KASABA:</span><b id="sbKasaba">Gudu Town</b></div>
-    <div class="row"><span>🌍 ULUS:</span><b id="sbUlus">Gudu Nation</b></div>
-    <div class="row"><span>💎 KASABA ALTINI:</span><b id="sbKasabaGold">1,250</b></div>
-    <div class="row"><span>💎 ULUS ALTINI:</span><b id="sbUlusGold">5,400</b></div>
-    <hr>
-    <div class="row"><span>⚔️ KILLS:</span><b id="sbKills">0</b></div>
-    <div class="row"><span>☠️ DEATHS:</span><b id="sbDeaths">0</b></div>
-    <div class="row"><span>🏆 SCORE:</span><b id="sbScore">0</b></div>
-    <hr>
-    <div class="row"><span>🟢 ÇEVRİMİÇİ:</span><b id="sbOnline">151 (402)</b></div>
-    <div class="row"><span>🗳️ OY PARTİSİ:</span><b id="sbVote">10 / 50</b></div>
+<!-- LOBBY - FREE FIRE JAISA -->
+<div id="lobby">
+  <div class="lobby-top">
+    <div class="logo">🔥 GUDU <span>FIRE</span></div>
+    <div class="coins">💰 <span id="lobbyCoins">12,500</span> &nbsp; 💎 <span id="lobbyDiamonds">850</span> &nbsp; 🎟️ <span>5</span></div>
   </div>
-  <div class="footer"><span id="sbDate">04/06/2025 23:30:59</span><br><b id="sbWebsite">WWW.GUDUSMP.NET</b></div>
-</div>
-
-<div id="hotbar"></div>
-<div id="controls"><b>🎮 CONTROLS - FIXED ✅</b><br>W = Aage ✅ • S = Peeche ✅<br>A = Left • D = Right<br>Space = Jump/Fly • Mouse = Dekho<br>Left = Todo • Right = Lagao<br>T = Chat • TAB = Scoreboard • C = Mode</div>
-<div id="msg"></div>
-
-<div id="chatBox">
-  <div id="chatMsgs"></div>
-  <div id="chatInputWrap"><input id="chatInput" placeholder="Chat... /help likho!" onkeypress="if(event.key==='Enter') sendChat()"><button onclick="sendChat()">Send</button></div>
-  <div style="font-size:11px;color:#fff;background:rgba(0,0,0,.5);padding:5px 8px;border-radius:6px;display:inline-block">T = Chat • TAB = Scoreboard • GUDU MC AI 🤖</div>
-</div>
-
-<div id="bigScoreboard">
-  <h2 style="text-align:center">🏆 <span id="sbServerBig">GUDU SMP</span> - TOP PLAYERS</h2>
-  <p style="text-align:center;font-size:12px;color:#aaa;margin:6px 0 12px">TAB dabake band karo</p>
-  <div id="sbList"></div>
-  <button onclick="document.getElementById('bigScoreboard').style.display='none'" style="width:100%;background:#22c55e;color:#fff;padding:12px;border:none;border-radius:10px;font-weight:900;cursor:pointer;margin-top:10px">CLOSE</button>
-</div>
-
-<div id="menu">
-  <div style="font-size:70px">⛏️🌍🐉</div>
-  <h1>GUDU <span>SMP</span></h1>
-  <div class="sub">✅ Error Fixed • ✅ Controls Fixed • ✅ Black Screen Fixed<br>Version 2.1 • 20+ Ranks • MELONYA Scoreboard</div>
-  <button class="menu-btn green" onclick="playSingle()">▶️ SINGLE PLAYER</button>
-  <button class="menu-btn" onclick="toggleServers()">🌐 MULTIPLAYER - Server Join Karo</button>
-  <button class="menu-btn gold" onclick="toggleCreate()">➕ APNA SERVER BANAO</button>
-  <button class="menu-btn" onclick="showHowTo()">📖 COMMANDS + RANKS</button>
-  <div id="serverList">
-    <b>🌐 SERVERS:</b>
-    <div class="server-item active" onclick="selectServer('GUDU SMP', this)"><div style="font-size:30px">🟢</div><div style="flex:1"><b>GUDU SMP</b><br><span style="font-size:11px;color:#aaa">Survival • 151/402 Online</span></div><div style="font-size:11px;color:#22c55e;font-weight:900">12ms</div></div>
-    <div class="server-item" onclick="selectServer('MELONYA', this)"><div style="font-size:30px">🍈</div><div style="flex:1"><b>MELONYA</b><br><span style="font-size:11px;color:#aaa">Towny • 151/402 Online</span></div><div style="font-size:11px;color:#22c55e;font-weight:900">15ms</div></div>
-    <div class="server-item" onclick="selectServer('GUDU CREATIVE', this)"><div style="font-size:30px">🎨</div><div style="flex:1"><b>GUDU CREATIVE</b><br><span style="font-size:11px;color:#aaa">Creative • 45/100</span></div><div style="font-size:11px;color:#22c55e;font-weight:900">18ms</div></div>
-    <button class="menu-btn green" style="width:100%;margin:0" onclick="joinServer()">JOIN SERVER ▶️</button>
-  </div>
-  <div id="createServer">
-    <b>➕ APNA SERVER BANAO</b><br><span style="font-size:11px;color:#aaa">Scoreboard pe tera naam aayega!</span><br><br>
-    <input id="myServerName" placeholder="Server ka Naam - jaise RAHUL SMP" value="RAHUL SMP">
-    <input id="myTownName" placeholder="Kasaba / Town ka Naam" value="Gudu Town">
-    <select id="myServerMode"><option value="Survival">Survival Mode</option><option value="Creative">Creative Mode</option><option value="PvP">PvP / Bedwars</option></select>
-    <button class="menu-btn green" style="width:100%;margin:0" onclick="createMyServer()">🚀 SERVER BANAO + JOIN</button>
-    <p style="font-size:11px;color:#888;margin-top:8px">Scoreboard Logo: <b id="previewLogo" style="color:#f59e0b">RAHUL SMP</b></p>
+  <div class="lobby-main">
+    <div class="char-box">
+      <div style="font-size:11px;color:#ffcc00;font-weight:900">⭐ SEASON 42 • DIAMOND III</div>
+      <div class="big" id="charBig">🦸</div>
+      <h2 id="charName">RAHUL - HERO</h2>
+      <p id="charDesc">Skill: <b style="color:#ffcc00">Speed Boost</b> - 10 sec ke liye 30% tez bhago<br>HP: 200 | Speed: 90 | Armor: 80</p>
+      <div class="char-select" id="charSelect"></div>
+      <div style="display:flex;gap:8px;justify-content:center">
+        <button onclick="buyCharacter()" style="background:#222;color:#fff;border:1px solid #555;padding:10px 18px;border-radius:20px;font-weight:800;cursor:pointer">👕 SKIN</button>
+        <button onclick="alert('Emote Shop - Jaldi aayega!')" style="background:#222;color:#fff;border:1px solid #555;padding:10px 18px;border-radius:20px;font-weight:800;cursor:pointer">💃 EMOTE</button>
+        <button onclick="alert('Pet: Booyah Dog - Active! 🐶')" style="background:#222;color:#fff;border:1px solid #555;padding:10px 18px;border-radius:20px;font-weight:800;cursor:pointer">🐶 PET</button>
+      </div>
+      <div style="margin-top:14px;background:#111;padding:10px;border-radius:10px;font-size:12px;text-align:left">
+        <b>🏆 TERA STATS:</b><br>Matches: 342 | Wins: 89 | Kills: 1,245 | K/D: 3.64<br>Rank: <span style="color:#ffcc00;font-weight:900">DIAMOND III</span> | Level: 62
+      </div>
+    </div>
+    <div class="gun-box">
+      <h3>🔫 GUN SELECT KARO</h3>
+      <div id="gunList"></div>
+      <div class="mode-row" id="modeRow">
+        <button class="active" onclick="setMode('Solo',this)">👤 SOLO</button>
+        <button onclick="setMode('Duo',this)">👥 DUO</button>
+        <button onclick="setMode('Squad',this)">👨‍👩‍👧 SQUAD</button>
+      </div>
+      <div style="background:#111;padding:10px;border-radius:10px;font-size:12px">
+        <b>🗺️ MAP:</b> <span id="mapName">Bermuda</span> &nbsp; <button onclick="changeMap()" style="background:#ffcc00;border:none;padding:4px 10px;border-radius:10px;font-weight:800;cursor:pointer">Change</button><br>
+        <span style="color:#aaa">Players: 50 • Safe Zone: ON • Loot: HIGH</span>
+      </div>
+      <button class="start-btn" onclick="startMatch()">▶️ START MATCH - BOOYAH!</button>
+      <div class="event-box">🎁 EVENT: Daily Spin - FREE DIAMOND! • 2x XP Weekend!</div>
+      <div style="font-size:11px;color:#888;margin-top:8px;text-align:center">WASD = Move • Mouse = Aim • Click = Shoot • Space = Jump<br>Mobile: Joystick se move, Button se shoot</div>
+    </div>
   </div>
 </div>
 
-<div id="howTo"><div class="box"><h2>📖 COMMANDS + 20 RANKS</h2><p>
-<b>RANKS:</b> NOOB, PLAYER, VIP, VIP+, MVP, MVP+, PRO, ELITE, MASTER, LEGEND, HERO, TITAN, GOD, YOUTUBER, HELPER, MOD, ADMIN, CO-OWNER, OWNER, HALK<br><br>
-<b>Rank badlo:</b> /rank LEGEND, /rank OWNER, /rank HALK, /rank GOD<br><br>
-<b>Commands:</b> /help, /gamemode creative/survival, /fly, /give diamond/gold/emerald, /rank, /summon pig/cow/zombie, /kill, /boss, /day, /night, /heal, /tp, /money, /town, /clear<br><br>
-<b>Controls FIXED:</b> W = Aage, S = Peeche
-</p><button class="menu-btn green" style="width:100%" onclick="document.getElementById('howTo').style.display='none'">OK ✅</button></div></div>
+<!-- HUD -->
+<div id="hud">
+  <div id="hudTop">
+    <div class="pill">👥 Alive: <span id="aliveCount" style="color:#ffcc00">50</span> | 🎯 Kills: <span id="killCount" style="color:#22c55e">0</span></div>
+    <div class="pill">⏱️ <span id="matchTime">00:00</span> | 🗺️ <span id="hudMap">Bermuda</span></div>
+    <div class="pill">💰 <span id="hudCoins">0</span> | 🏆 Rank #<span id="hudRank">50</span></div>
+  </div>
+  <div id="killFeed"></div>
+  <div id="minimap"><canvas id="miniCanvas" width="130" height="130"></canvas></div>
+  <div id="zoneWarn">⚠️ SAFE ZONE CHHOTA HO RAHA HAI! BHAGO!</div>
+  <div id="centerMsg"></div>
+  <div id="healthBar">
+    <div style="font-size:12px;font-weight:900;margin-bottom:4px">❤️ HP: <span id="hpText">200</span> / 200</div>
+    <div class="bar"><div id="healthFill"></div></div>
+    <div style="font-size:11px;margin-top:4px">🛡️ ARMOR</div>
+    <div id="armorBar"><div id="armorFill"></div></div>
+    <div style="font-size:11px;margin-top:6px">⚡ Energy: <span id="energyText">100</span>%</div>
+  </div>
+  <div id="weaponHud">
+    <div style="font-size:22px" id="weaponIcon">🔫</div>
+    <b id="weaponName">M1887</b><br>
+    <span style="font-size:12px;color:#ffcc00">Ammo: <span id="ammoText">∞</span> | Damage: <span id="dmgText">95</span></span>
+  </div>
+  <div id="joystick">🕹️<br>DRAG TO<br>MOVE</div>
+  <div id="jumpBtn" onclick="doJump()">⬆️</div>
+  <div id="shootBtn" onclick="shoot()">🔫</div>
+  <div id="controlsInfo">WASD Move • Mouse Aim • Click Shoot • Space Jump • R Reload • G Grenade • H Heal</div>
+</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<div id="booyah">
+  <div style="font-size:90px">🏆</div>
+  <h1>BOOYAH!</h1>
+  <p id="booyahStats">Tum jeet gaye! #1 / 50</p>
+  <p style="color:#ffcc00;font-weight:900">+500 Coins • +100 Diamonds • +200 XP</p>
+  <button onclick="backToLobby()">🏠 LOBBY WAPAS</button>
+  <button onclick="startMatch()" style="background:#fff">🔁 PHIR SE KHELO</button>
+</div>
+
 <script>
-// ✅ ERROR FIX - SAFE FUNCTION: Agar element nahi mila to error nahi dega
-function setText(id, val){
-  var el = document.getElementById(id);
-  if(el){ el.innerText = val; }
-  return el;
-}
-function setHTML(id, val){
-  var el = document.getElementById(id);
-  if(el){ el.innerHTML = val; }
-  return el;
-}
-function showEl(id, show){
-  var el = document.getElementById(id);
-  if(el){ el.style.display = show ? 'block' : 'none'; }
-}
+function setText(id, v){ var el=document.getElementById(id); if(el) el.innerText=v; }
+function setHTML(id, v){ var el=document.getElementById(id); if(el) el.innerHTML=v; }
 
-var scene=null, camera=null, renderer=null, gameStarted=false;
-var blocks=[], mobs=[];
-var selectedServer='GUDU SMP', myTown='Gudu Town';
-var selected=0;
-var score=0, broken=0, placed=0, kills=0, deaths=0, money=0;
-var myRank='OWNER';
-var isCreative=true, isFlying=true;
-var keys={}, velocityY=0;
-var playerPos={x:0,y:4,z:9};
-var yaw=0, pitch=0, isLocked=false, chatOpen=false;
-var bossHp=100, bossActive=false;
-var myName='RAHUL';
-
-var blockTypes=[
-  {name:'Grass', emoji:'🌱', base:'#4a9e3f', spots:['#3a7d2f','#5cb54a','#2e6b22']},
-  {name:'Dirt', emoji:'🟫', base:'#8a6a4a', spots:['#6d4f33','#a5855e','#5d4430']},
-  {name:'Stone', emoji:'🪨', base:'#8a8a8a', spots:['#6e6e6e','#a8a8a8','#5f5f5f']},
-  {name:'Sand', emoji:'🏖️', base:'#e8d88a', spots:['#d9c95f','#fff2a8','#cbb93f']},
-  {name:'Wood', emoji:'🪵', base:'#7a5230', spots:['#5d3d22','#8f653a','#4a2f1a']},
-  {name:'Leaves', emoji:'🌿', base:'#2e7d32', spots:['#1b5e20','#43a047','#66bb6a']},
-  {name:'Brick', emoji:'🧱', base:'#b03a2e', spots:['#922b21','#c0392b','#7b241c']},
-  {name:'Glass', emoji:'🧊', base:'#a8d8e8', spots:['#d4f1f9','#7fb8cc','#c9e8f2']},
-  {name:'Diamond', emoji:'💎', base:'#00d5e8', spots:['#00b0c0','#4de8f5','#0099a8']},
-  {name:'Gold', emoji:'🟡', base:'#e8b800', spots:['#c99a00','#ffd700','#a87d00']},
-  {name:'Emerald', emoji:'💚', base:'#00b050', spots:['#009040','#00d060','#007030']}
+var CHARS=[
+  {name:'RAHUL - HERO', emoji:'🦸', skill:'Speed Boost', desc:'Skill: Speed Boost - 10 sec ke liye 30% tez bhago', hp:200},
+  {name:'ADAM', emoji:'👨', skill:'Healing', desc:'Skill: Fast Heal - 2x jaldi heal hota hai', hp:200},
+  {name:'KELLY', emoji:'🏃‍♀️', skill:'Dash', desc:'Skill: Dash - Sprint me 20% tez', hp:180},
+  {name:'HAYATO', emoji:'🥷', skill:'Armor Piercing', desc:'Skill: Damage 15% zyada jab HP kam ho', hp:190},
+  {name:'MOCO', emoji:'👩‍💻', skill:'Tag Enemy', desc:'Skill: Enemy ko 5 sec tak map pe dikhao', hp:200},
+  {name:'DJ ALOK', emoji:'🎧', skill:'Heal Aura', desc:'Skill: Aas paas sabko heal karo', hp:210},
+  {name:'CHRONO', emoji:'🛡️', skill:'Shield', desc:'Skill: Shield banao, damage block karo', hp:220},
+  {name:'CRISTIANO', emoji:'⚽', skill:'Super Speed', desc:'Skill: Ronaldo jaisa speed + shield', hp:230}
 ];
-var RANKS=[
-  {name:'NOOB', color:'#94a3b8'},{name:'PLAYER', color:'#a855f7'},{name:'VIP', color:'#22c55e'},{name:'VIP+', color:'#16a34a'},{name:'MVP', color:'#3b82f6'},{name:'MVP+', color:'#2563eb'},{name:'PRO', color:'#22c55e'},{name:'ELITE', color:'#3b82f6'},{name:'MASTER', color:'#f97316'},{name:'LEGEND', color:'#f59e0b'},{name:'HERO', color:'#ef4444'},{name:'TITAN', color:'#8b5cf6'},{name:'GOD', color:'#eab308'},{name:'YOUTUBER', color:'#ef4444'},{name:'HELPER', color:'#06b6d4'},{name:'MOD', color:'#0ea5e9'},{name:'ADMIN', color:'#f43f5e'},{name:'CO-OWNER', color:'#f59e0b'},{name:'OWNER', color:'#f59e0b'},{name:'HALK', color:'#ffffff'}
+var GUNS=[
+  {name:'M1887', emoji:'🔫', dmg:95, range:120, color:'#ff2d55', desc:'Shotgun - Ek goli me khatam'},
+  {name:'AK-47', emoji:'🔫', dmg:45, range:280, color:'#ffcc00', desc:'Assault - Sabse popular'},
+  {name:'M4A1', emoji:'🔫', dmg:38, range:260, color:'#22c55e', desc:'Stable - No Recoil'},
+  {name:'AWM Sniper', emoji:'🎯', dmg:150, range:500, color:'#3b82f6', desc:'Ek goli - Headshot = Dead'},
+  {name:'MP40', emoji:'🔫', dmg:32, range:180, color:'#a855f7', desc:'SMG - Fast Fire'},
+  {name:'Desert Eagle', emoji:'🔫', dmg:70, range:200, color:'#f97316', desc:'Pistol - High Damage'}
 ];
-function getRankColor(r){ for(var i=0;i<RANKS.length;i++){ if(RANKS[i].name===r) return RANKS[i].color; } return '#fff'; }
-var PLAYERS=[
-  {name:'RAHUL (You)', score:0, kills:0, deaths:0, rank:'OWNER'},
-  {name:'Steve_Mine', score:2100, kills:45, deaths:12, rank:'LEGEND'},
-  {name:'Priya_X', score:1250, kills:22, deaths:8, rank:'ELITE'},
-  {name:'Amit_PRO', score:980, kills:18, deaths:15, rank:'MVP+'},
-  {name:'Alex_Builder', score:760, kills:10, deaths:5, rank:'PRO'},
-  {name:'iBetaAmo', score:540, kills:8, deaths:10, rank:'HALK'}
-];
-function showMsg(t){ var m=document.getElementById('msg'); if(!m) return; m.innerText=t; m.style.display='block'; setTimeout(function(){m.style.display='none';},1500); }
-function addChat(html){ var box=document.getElementById('chatMsgs'); if(!box) return; var div=document.createElement('div'); div.className='chatMsg'; div.innerHTML=html; box.appendChild(div); box.scrollTop=box.scrollHeight; while(box.children.length>7) box.removeChild(box.firstChild); }
-function toggleServers(){ var el=document.getElementById('serverList'); if(!el) return; el.style.display=el.style.display==='block'?'none':'block'; var c=document.getElementById('createServer'); if(c) c.style.display='none'; }
-function toggleCreate(){ var el=document.getElementById('createServer'); if(!el) return; el.style.display=el.style.display==='block'?'none':'block'; var s=document.getElementById('serverList'); if(s) s.style.display='none'; }
-function selectServer(name, el){ selectedServer=name; var items=document.querySelectorAll('.server-item'); for(var i=0;i<items.length;i++) items[i].classList.remove('active'); if(el) el.classList.add('active'); if(name==='MELONYA'){ myTown='Melonya Town'; } else { myTown='Gudu Town'; } }
-function playSingle(){ selectedServer='SINGLE PLAYER'; myTown='Gudu Town'; startGame(); }
-function joinServer(){ startGame(); }
-function createMyServer(){
-  var nameEl=document.getElementById('myServerName');
-  var townEl=document.getElementById('myTownName');
-  var modeEl=document.getElementById('myServerMode');
-  var name = nameEl ? (nameEl.value.trim() || 'RAHUL SMP') : 'RAHUL SMP';
-  var town = townEl ? (townEl.value.trim() || 'Gudu Town') : 'Gudu Town';
-  var mode = modeEl ? modeEl.value : 'Survival';
-  selectedServer=name.toUpperCase();
-  myTown=town;
-  isCreative=(mode==='Creative');
-  isFlying=isCreative;
-  setText('previewLogo', selectedServer);
-  startGame();
-}
-function showHowTo(){ var h=document.getElementById('howTo'); if(h) h.style.display='flex'; }
-var nameInput=document.getElementById('myServerName');
-if(nameInput){ nameInput.addEventListener('input', function(){ setText('previewLogo', this.value.toUpperCase() || 'RAHUL SMP'); }); }
+var MAPS=['Bermuda','Purgatory','Kalahari','Bermuda Max'];
+var selectedChar=0, selectedGun=0, selectedMode='Solo', selectedMap='Bermuda';
+var coins=12500, diamonds=850;
 
-function makeTexture(base, spots, isWood, isBrick){
-  var c=document.createElement('canvas'); c.width=64; c.height=64; var ctx=c.getContext('2d');
-  ctx.fillStyle=base; ctx.fillRect(0,0,64,64);
-  for(var i=0;i<30;i++){ ctx.fillStyle=spots[Math.floor(Math.random()*spots.length)]; var s=4+Math.random()*8; ctx.fillRect(Math.random()*64,Math.random()*64,s,s); }
-  for(var j=0;j<220;j++){ ctx.fillStyle=spots[Math.floor(Math.random()*spots.length)]; ctx.globalAlpha=0.6; ctx.fillRect(Math.random()*64,Math.random()*64,1.5,1.5); ctx.globalAlpha=1; }
-  if(isWood){ ctx.strokeStyle='rgba(0,0,0,0.35)'; ctx.lineWidth=2; for(var y=0;y<64;y+=10){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(64,y); ctx.stroke(); } }
-  if(isBrick){ ctx.strokeStyle='rgba(255,255,255,0.5)'; ctx.lineWidth=2; for(var yy=0;yy<64;yy+=16){ ctx.beginPath(); ctx.moveTo(0,yy); ctx.lineTo(64,yy); ctx.stroke(); } }
-  ctx.strokeStyle='rgba(0,0,0,0.35)'; ctx.lineWidth=2; ctx.strokeRect(0,0,64,64);
-  var tex=new THREE.CanvasTexture(c); tex.magFilter=THREE.NearestFilter; return tex;
-}
-function getMat(type){ var b=blockTypes[type]; var tex=makeTexture(b.base,b.spots,type===4,type===6); var mat={map:tex}; if(type===7){ mat.transparent=true; mat.opacity=0.65; } return new THREE.MeshLambertMaterial(mat); }
-function buildHotbar(){ var hb=document.getElementById('hotbar'); if(!hb) return; var html=''; for(var i=0;i<blockTypes.length;i++){ var b=blockTypes[i]; html+='<div class="slot '+(i===selected?'active':'')+'" onclick="selectBlock('+i+')"><span class="e">'+b.emoji+'</span>'+b.name+'<span style="font-size:9px;color:#aaa">'+(i+1)+'</span></div>'; } hb.innerHTML=html; }
-function selectBlock(i){ selected=i; buildHotbar(); showMsg(blockTypes[i].name+' select kiya'); }
-
-function updateScoreboardUI(){
-  setHTML('sbLogoName', selectedServer + '<span>TOWNY</span>');
-  var rankBox=document.getElementById('sbRankBox');
-  if(rankBox){ rankBox.innerText=myRank; rankBox.style.background=getRankColor(myRank); rankBox.style.color=myRank==='HALK' ? '#000' : '#fff'; }
-  setText('sbPara', money.toLocaleString('en-IN'));
-  setText('sbKasaba', myTown);
-  setText('sbUlus', selectedServer + ' Nation');
-  setText('sbKasabaGold', (1250 + placed).toLocaleString('en-IN'));
-  setText('sbUlusGold', (5400 + score).toLocaleString('en-IN'));
-  setText('sbKills', kills);
-  setText('sbDeaths', deaths);
-  setText('sbScore', score);
-  setText('sbOnline', (140 + Math.floor(Math.random()*20)) + ' (402)');
-  setText('sbVote', '10 / 50');
-  var now=new Date();
-  var dd=String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0')+'/'+now.getFullYear()+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');
-  setText('sbDate', dd);
-  setText('sbWebsite', 'WWW.'+selectedServer.replace(/ /g,'')+'.NET');
-  setText('serverNameTop', selectedServer);
-  setText('modeText', isCreative?'CREATIVE':'SURVIVAL');
-  var rt=document.getElementById('rankTop');
-  if(rt){ rt.innerText=myRank; rt.style.color=getRankColor(myRank); }
-  setText('killsTop', kills);
-  setText('deathsTop', deaths);
-  setText('blockCount', blocks.length);
-  setText('sbServerBig', selectedServer);
-  PLAYERS[0].score=score; PLAYERS[0].kills=kills; PLAYERS[0].deaths=deaths; PLAYERS[0].rank=myRank;
-}
-setInterval(function(){ if(gameStarted) updateScoreboardUI(); }, 1000);
-
-function init(){
-  if(gameStarted && scene){ while(scene.children.length>0){ scene.remove(scene.children[0]); } blocks=[]; mobs=[]; }
-  scene=new THREE.Scene(); scene.background=new THREE.Color(0x87ceeb); scene.fog=new THREE.Fog(0x87ceeb,30,100);
-  camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
-  camera.position.set(playerPos.x,playerPos.y,playerPos.z);
-  if(!renderer){ renderer=new THREE.WebGLRenderer({canvas:document.getElementById('game'),antialias:true}); renderer.setSize(window.innerWidth,window.innerHeight); }
-  else { renderer.setSize(window.innerWidth,window.innerHeight); }
-  var sun=new THREE.DirectionalLight(0xffffff,1.1); sun.position.set(20,40,20); scene.add(sun);
-  scene.add(new THREE.AmbientLight(0xffffff,0.65));
-  for(var x=-13;x<=13;x++){ for(var z=-13;z<=13;z++){
-    addBlock(x,0,z,0,false);
-    if((x*x+z*z)%9===0) addBlock(x,1,z,0,false);
-    if(x===-3&&z===-3) addBlock(x,1,z,2,false);
-    if(x===3&&z===3) addBlock(x,1,z,3,false);
-    if(x===6&&z===-6) addBlock(x,1,z,8,false);
-    if(x===-6&&z===6) addBlock(x,1,z,9,false);
-    if((x===5&&z===-3)||(x===-6&&z===5)||(x===8&&z===7)){ addBlock(x,2,z,4,false); addBlock(x,3,z,4,false); addBlock(x,4,z,5,false); addBlock(x+1,4,z,5,false); addBlock(x-1,4,z,5,false); addBlock(x,4,z+1,5,false); addBlock(x,4,z-1,5,false); }
-  }}
-  for(var gx=-2;gx<=2;gx++){ addBlock(gx,1,-9,6,false); addBlock(gx,2,-9,6,false); addBlock(gx,3,-9,6,false); }
-  addBlock(-2,1,-8,4,false); addBlock(2,1,-8,4,false); addBlock(0,1,-8,7,false);
-  spawnMob('pig',4,1,4,0xffb6c1);
-  spawnMob('cow',-4,1,3,0xffffff);
-  spawnMob('chicken',2,1,-4,0xffffff);
-  spawnMob('sheep',-2,1,-5,0xe8e8e8);
-  spawnMob('zombie',7,1,0,0x2e7d32);
-  spawnMob('pig',-7,1,-2,0xffb6c1);
-  setText('blockCount', blocks.length);
-  buildHotbar();
-  updateScoreboardUI();
-  addChat('<span class="sys">[SYSTEM]</span> <b>'+selectedServer+'</b> me join ho gaye! Welcome <b>'+myName+'</b>');
-  addChat('<span class="ai">🤖 GUDU MC:</span> Hi! Error fix ho gaya! Ab game chalega ✅');
-  if(!gameStarted){ gameStarted=true; animate(); }
-}
-function addBlock(x,y,z,type,countIt){
-  for(var i=0;i<blocks.length;i++){ if(blocks[i].position.x===x&&blocks[i].position.y===y&&blocks[i].position.z===z) return; }
-  var mesh=new THREE.Mesh(new THREE.BoxGeometry(1,1,1), getMat(type));
-  mesh.position.set(x,y,z); mesh.userData={type:type};
-  scene.add(mesh); blocks.push(mesh);
-  if(countIt) setText('blockCount', blocks.length);
-}
-function spawnMob(kind,x,y,z,color){
-  var group=new THREE.Group();
-  var bodyMat=new THREE.MeshLambertMaterial({color:color});
-  var body=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.7,1.2), bodyMat); body.position.y=0.6; group.add(body);
-  var head=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.7,0.7), new THREE.MeshLambertMaterial({color:kind==='zombie'?0x2e7d32:color})); head.position.set(0,1.2,0.85); group.add(head);
-  var eyeMat=new THREE.MeshBasicMaterial({color:0x000000});
-  var e1=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.1,0.05), eyeMat); e1.position.set(-0.15,1.3,1.22); group.add(e1);
-  var e2=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.1,0.05), eyeMat); e2.position.set(0.15,1.3,1.22); group.add(e2);
-  for(var lx=-0.3;lx<=0.3;lx+=0.6){ for(var lz=-0.4;lz<=0.4;lz+=0.8){ var leg=new THREE.Mesh(new THREE.BoxGeometry(0.2,0.5,0.2), bodyMat); leg.position.set(lx,0.25,lz); group.add(leg); } }
-  if(kind==='pig'){ var nose=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.25,0.1), new THREE.MeshLambertMaterial({color:0xff8a9a})); nose.position.set(0,1.1,1.22); group.add(nose); }
-  group.position.set(x,y,z);
-  group.userData={kind:kind, dir:Math.random()*Math.PI*2, speed:0.01+Math.random()*0.01, hp:kind==='zombie'?30:10};
-  scene.add(group); mobs.push(group);
-}
-function updateMobs(){
-  for(var i=0;i<mobs.length;i++){
-    var m=mobs[i];
-    if(Math.random()<0.01) m.userData.dir=Math.random()*Math.PI*2;
-    m.position.x+=Math.cos(m.userData.dir)*m.userData.speed;
-    m.position.z+=Math.sin(m.userData.dir)*m.userData.speed;
-    if(m.position.x>12) m.position.x=12; if(m.position.x<-12) m.position.x=-12;
-    if(m.position.z>12) m.position.z=12; if(m.position.z<-12) m.position.z=-12;
-    m.rotation.y=-m.userData.dir+Math.PI/2;
-    if(m.userData.kind==='zombie'){
-      var dx=playerPos.x-m.position.x, dz=playerPos.z-m.position.z;
-      var dist=Math.sqrt(dx*dx+dz*dz);
-      if(dist<8&&dist>1){ m.position.x+=dx/dist*0.02; m.position.z+=dz/dist*0.02; m.lookAt(playerPos.x,m.position.y,playerPos.z); }
-      if(dist<1.2&&Math.random()<0.02){ deaths++; updateScoreboardUI(); showMsg('☠️ Zombie ne mara! Death +1'); addChat('<span class="sys">[DEATH]</span> Zombie ne '+myName+' ko mara!'); playerPos.x=0; playerPos.y=4; playerPos.z=9; }
-    }
-  }
-}
-function startGame(){
-  var menu=document.getElementById('menu');
-  if(menu) menu.style.display='none';
-  var sb=document.getElementById('sideScoreboard');
-  if(sb) sb.style.display='block';
-  setTimeout(function(){
-    try{
-      init();
-      var canvas=document.getElementById('game');
-      if(canvas){
-        canvas.requestPointerLock=canvas.requestPointerLock||canvas.mozRequestPointerLock;
-        if(canvas.requestPointerLock) canvas.requestPointerLock();
-      }
-      showMsg('Welcome to '+selectedServer+'! W = Aage ✅');
-    }catch(err){
-      // ✅ Ab error aayega to bhi alert me saaf dikhega, game nahi rukega
-      console.log('Game Error:', err);
-      alert('Game load me error: '+err.message);
-      if(menu) menu.style.display='flex';
-    }
-  }, 100);
-}
-document.addEventListener('pointerlockchange', function(){ isLocked=document.pointerLockElement===document.getElementById('game'); });
-document.addEventListener('mousemove', function(e){ if(!isLocked||chatOpen) return; yaw-=e.movementX*0.0025; pitch-=e.movementY*0.0025; if(pitch>1.5)pitch=1.5; if(pitch<-1.5)pitch=-1.5; });
-document.addEventListener('keydown', function(e){
-  if(e.key==='Tab'){ e.preventDefault(); showScoreboard(true); return; }
-  var menu=document.getElementById('menu');
-  var menuHidden = !menu || menu.style.display==='none';
-  if(e.key.toLowerCase()==='t' && !chatOpen && menuHidden){ e.preventDefault(); openChat(); return; }
-  if(e.key==='Escape' && chatOpen){ closeChat(); return; }
-  if(chatOpen) return;
-  keys[e.key.toLowerCase()]=true;
-  if(e.key>='1'&&e.key<='9') selectBlock(parseInt(e.key)-1);
-  if(e.key==='0') selectBlock(9);
-  if(e.key.toLowerCase()==='c'){ isCreative=!isCreative; isFlying=isCreative; updateScoreboardUI(); showMsg(isCreative?'CREATIVE ON':'SURVIVAL ON'); }
-  if(e.key.toLowerCase()==='f'){ isFlying=!isFlying; showMsg(isFlying?'FLY ON':'FLY OFF'); }
-  if(e.key.toLowerCase()==='b'){ summonBoss(); }
-  if(e.code==='Space'){ e.preventDefault(); if(!isFlying && velocityY===0) velocityY=0.18; }
-});
-document.addEventListener('keyup', function(e){ keys[e.key.toLowerCase()]=false; if(e.key==='Tab') showScoreboard(false); });
-function openChat(){ chatOpen=true; var w=document.getElementById('chatInputWrap'); if(w) w.classList.add('show'); var inp=document.getElementById('chatInput'); if(inp) inp.focus(); if(document.exitPointerLock) document.exitPointerLock(); }
-function closeChat(){ chatOpen=false; var w=document.getElementById('chatInputWrap'); if(w) w.classList.remove('show'); var c=document.getElementById('game'); if(c && c.requestPointerLock) c.requestPointerLock(); }
-function sendChat(){
-  var input=document.getElementById('chatInput'); if(!input) return; var text=input.value.trim(); if(!text){ closeChat(); return; } input.value='';
-  if(text.startsWith('/')){ handleCommand(text); closeChat(); return; }
-  addChat('<span class="me">'+myName+':</span> '+text);
-  if(text.toLowerCase().indexOf('gudu mc')!==-1 || text.toLowerCase().indexOf('gudu')!==-1){ setTimeout(function(){ addChat('<span class="ai">🤖 GUDU MC:</span> '+guduAIAnswer(text)); }, 800); }
-  else { setTimeout(function(){ addChat('<b>Steve_Mine:</b> Haan bhai sahi bola!'); }, 1000); }
-  closeChat();
-}
-function guduAIAnswer(q){
-  var l=q.toLowerCase();
-  if(l.indexOf('kaun')!==-1) return 'Main GUDU MC hu! Is server ka AI.';
-  if(l.indexOf('diamond')!==-1) return 'Diamond Y= -59 pe milta hai! /give diamond se bhi le sakte ho!';
-  if(l.indexOf('ghar')!==-1) return 'Ghar ke liye Wood todo, 5x5 base, 3 unchi deewar, roof lagao!';
-  if(l.indexOf('ender')!==-1||l.indexOf('dragon')!==-1||l.indexOf('boss')!==-1) return 'Ender Dragon ke liye /boss likho, Left Click se maaro. +500 Score!';
-  if(l.indexOf('rank')!==-1) return 'Rank badlo: /rank LEGEND, /rank OWNER, /rank HALK - 20 ranks hai!';
-  if(l.indexOf('hi')!==-1||l.indexOf('hello')!==-1) return 'Hi Rahul! Kaisa hai? 😊';
-  if(l.indexOf('server')!==-1) return 'Ye server hai '+selectedServer+'! Tum iske OWNER ho.';
-  if(l.indexOf('fly')!==-1) return 'Fly ke liye /fly ya F dabao!';
-  if(l.indexOf('bye')!==-1) return 'Bye bye! Kal phir aana 👋';
-  return 'Hmm samajh gaya! /help likhke commands dekho! 💎';
-}
-function handleCommand(cmd){
-  var c=cmd.toLowerCase().trim();
-  addChat('<span class="me">'+myName+':</span> '+cmd);
-  if(c==='/help'){ addChat('<span class="sys">[HELP]</span> /gamemode, /fly, /give, /rank, /summon, /kill, /boss, /day, /night, /heal, /tp, /money, /town, /clear'); return; }
-  if(c==='/fly'){ isFlying=!isFlying; addChat('<span class="sys">[SYSTEM]</span> Fly '+(isFlying?'ON':'OFF')); return; }
-  if(c.indexOf('/gamemode')!==-1){ if(c.indexOf('creative')!==-1){ isCreative=true; isFlying=true; addChat('<span class="sys">[SYSTEM]</span> Gamemode: CREATIVE'); } else { isCreative=false; isFlying=false; addChat('<span class="sys">[SYSTEM]</span> Gamemode: SURVIVAL'); } updateScoreboardUI(); return; }
-  if(c==='/give diamond'){ score+=100; money+=500; addChat('<span class="sys">[SYSTEM]</span> Diamond mila! +100'); updateScoreboardUI(); return; }
-  if(c==='/give gold'){ score+=50; money+=200; addChat('<span class="sys">[SYSTEM]</span> Gold mila! +50'); updateScoreboardUI(); return; }
-  if(c==='/give emerald'){ score+=80; money+=300; addChat('<span class="sys">[SYSTEM]</span> Emerald mila! +80'); updateScoreboardUI(); return; }
-  if(c==='/money'){ money+=1000; addChat('<span class="sys">[SYSTEM]</span> +1000 Para! Total: '+money); updateScoreboardUI(); return; }
-  if(c.indexOf('/town')!==-1){ var parts=cmd.split(' '); if(parts[1]){ myTown=parts.slice(1).join(' '); addChat('<span class="sys">[SYSTEM]</span> Kasaba: '+myTown); updateScoreboardUI(); } return; }
-  if(c.indexOf('/rank')!==-1){
-    var parts=cmd.split(' '); var newRank=(parts[1]||'PRO').toUpperCase();
-    var found=false; for(var i=0;i<RANKS.length;i++){ if(RANKS[i].name===newRank) found=true; }
-    if(found){ myRank=newRank; addChat('<span class="sys">[SYSTEM]</span> Rank ab <b>'+newRank+'</b> hai!'); updateScoreboardUI(); showMsg('Rank: '+newRank); } else addChat('<span class="sys">[SYSTEM]</span> Valid: NOOB PLAYER VIP MVP PRO ELITE LEGEND HERO GOD OWNER HALK');
-    return;
-  }
-  if(c.indexOf('/summon')!==-1){ var kind='pig'; if(c.indexOf('cow')!==-1) kind='cow'; if(c.indexOf('chicken')!==-1) kind='chicken'; if(c.indexOf('zombie')!==-1) kind='zombie'; if(c.indexOf('sheep')!==-1) kind='sheep'; spawnMob(kind, playerPos.x+2, 2, playerPos.z+2, kind==='zombie'?0x2e7d32:0xffffff); addChat('<span class="sys">[SYSTEM]</span> '+kind+' summon ho gaya!'); return; }
-  if(c==='/kill'){ deaths++; updateScoreboardUI(); addChat('<span class="sys">[DEATH]</span> '+myName+' mar gaya!'); playerPos.x=0; playerPos.y=4; playerPos.z=9; return; }
-  if(c==='/boss'){ summonBoss(); return; }
-  if(c==='/day'){ if(scene) scene.background=new THREE.Color(0x87ceeb); addChat('<span class="sys">[SYSTEM]</span> Day ☀️'); return; }
-  if(c==='/night'){ if(scene) scene.background=new THREE.Color(0x0b1026); addChat('<span class="sys">[SYSTEM]</span> Night 🌙'); return; }
-  if(c==='/heal'){ addChat('<span class="sys">[SYSTEM]</span> Health Full ❤️'); return; }
-  if(c==='/tp'){ playerPos.x=10; playerPos.y=5; playerPos.z=10; addChat('<span class="sys">[SYSTEM]</span> Diamond Tower pe!'); return; }
-  if(c==='/clear'){ var box=document.getElementById('chatMsgs'); if(box) box.innerHTML=''; return; }
-  addChat('<span class="sys">[SYSTEM]</span> Unknown: '+cmd+' - /help likho');
-}
-function summonBoss(){
-  if(bossActive){ addChat('<span class="sys">[BOSS]</span> Boss pehle se hai!'); return; }
-  bossActive=true; bossHp=100;
-  var wrap=document.getElementById('bossBarWrap'); if(wrap) wrap.style.display='block';
-  var fill=document.getElementById('bossFill'); if(fill) fill.style.width='100%';
-  setText('bossHpText','100%');
-  addChat('<span class="sys">[BOSS]</span> 🐉 ENDER DRAGON aaya!');
-  if(!scene) return;
-  var boss=new THREE.Mesh(new THREE.BoxGeometry(3,2,3), new THREE.MeshLambertMaterial({color:0x1a1a1a}));
-  boss.position.set(0,8,0); boss.userData={isBoss:true}; scene.add(boss); blocks.push(boss);
-}
-function showScoreboard(show){
-  var sb=document.getElementById('bigScoreboard'); if(!sb) return;
-  sb.style.display=show?'block':'none';
-  if(!show) return;
-  var sorted=PLAYERS.slice().sort(function(a,b){return b.score-a.score;});
+function renderLobby(){
   var html='';
-  for(var i=0;i<sorted.length;i++){ var p=sorted[i]; var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.'; var isYou=p.name.indexOf('You')!==-1; html+='<div style="display:flex;justify-content:space-between;padding:9px;background:'+(isYou?'#14532d':'#1e293b')+';border-radius:10px;margin-bottom:6px"><div><b>'+medal+' '+p.name+'</b><br><span style="font-size:11px;color:#aaa">Kills: '+p.kills+' | Deaths: '+p.deaths+'</span></div><div style="text-align:right"><span style="background:'+getRankColor(p.rank)+';padding:3px 8px;border-radius:6px;font-size:11px;font-weight:900">'+p.rank+'</span><div style="font-weight:900;margin-top:4px">'+p.score+' pts</div></div></div>'; }
-  setHTML('sbList', html);
+  for(var i=0;i<CHARS.length;i++){
+    html+='<button class="'+(i===selectedChar?'active':'')+'" onclick="selectChar('+i+')">'+CHARS[i].emoji+'</button>';
+  }
+  setHTML('charSelect', html);
+  setText('charBig', CHARS[selectedChar].emoji);
+  setText('charName', CHARS[selectedChar].name);
+  setHTML('charDesc', CHARS[selectedChar].desc+'<br>HP: '+CHARS[selectedChar].hp+' | Speed: 90 | Armor: 80');
+  var ghtml='';
+  for(var j=0;j<GUNS.length;j++){
+    var g=GUNS[j];
+    ghtml+='<div class="gun-item '+(j===selectedGun?'active':'')+'" onclick="selectGun('+j+')"><div class="icon">'+g.emoji+'</div><div style="flex:1"><b>'+g.name+' - Damage: '+g.dmg+'</b><span>'+g.desc+'</span></div><div style="color:'+g.color+';font-weight:900">★</div></div>';
+  }
+  setHTML('gunList', ghtml);
+  setText('mapName', selectedMap);
+  setText('lobbyCoins', coins.toLocaleString('en-IN'));
+  setText('lobbyDiamonds', diamonds);
 }
-document.getElementById('game').addEventListener('mousedown', function(e){
-  if(chatOpen) return;
-  if(!isLocked){ this.requestPointerLock(); return; }
-  if(!scene || !camera) return;
-  var ray=new THREE.Raycaster(); ray.setFromCamera(new THREE.Vector2(0,0), camera);
-  var hits=ray.intersectObjects(blocks.concat(mobs));
-  if(hits.length===0) return;
-  var hit=hits[0];
-  if(hit.object.parent && hit.object.parent.userData && hit.object.parent.userData.kind){
-    var mob=hit.object.parent; mob.userData.hp-=10;
-    if(mob.userData.hp<=0){ scene.remove(mob); var idx=mobs.indexOf(mob); if(idx!==-1) mobs.splice(idx,1); kills++; score+=50; money+=100; updateScoreboardUI(); showMsg(mob.userData.kind+' mara! +50'); }
-    else showMsg(mob.userData.kind+' HP: '+mob.userData.hp);
-    return;
+function selectChar(i){ selectedChar=i; renderLobby(); }
+function selectGun(i){ selectedGun=i; renderLobby(); }
+function buyCharacter(){ alert('Skin kharidi! 🎉 - 500 Coins'); coins-=500; renderLobby(); }
+function setMode(m, el){ selectedMode=m; var btns=document.querySelectorAll('#modeRow button'); for(var i=0;i<btns.length;i++) btns[i].classList.remove('active'); if(el) el.classList.add('active'); }
+function changeMap(){ var idx=MAPS.indexOf(selectedMap); selectedMap=MAPS[(idx+1)%MAPS.length]; renderLobby(); }
+
+// GAME - Top Down Battle Royale
+var canvas=document.getElementById('gameCanvas');
+var ctx=canvas.getContext('2d');
+var gameRunning=false, player, enemies=[], bullets=[], loots=[], grenades=[];
+var keys={}, mouseX=0, mouseY=0, matchStart=0, alive=50, kills=0, playerCoins=0;
+var zone={x:1000,y:1000,r:900}, zoneTimer=0;
+var cam={x:0,y:0};
+
+function startMatch(){
+  document.getElementById('lobby').style.display='none';
+  var bo=document.getElementById('booyah'); if(bo) bo.style.display='none';
+  var hud=document.getElementById('hud'); if(hud) hud.style.display='block';
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  player={x:1000,y:1000,hp:CHARS[selectedChar].hp,maxHp:CHARS[selectedChar].hp,armor:100,speed:3.2,angle:0,alive:true,energy:100};
+  enemies=[]; bullets=[]; loots=[]; grenades=[]; kills=0; alive=50; playerCoins=0; matchStart=Date.now(); zone={x:1000,y:1000,r:900};
+  // 49 Enemies spawn - Free Fire jaisa
+  var names=['Noob_Killer','ProPlayer','HeadHunter','SniperKing','BooyahBoy','KillerQueen','DarkLord','GhostRider','ToxicBoy','Legend99','FreeFireKing','DesiGamer','CarryMinati','TotalGaming','LokeshGamer','GyanGaming','Rahul_OP','Priya_X','Amit_PRO','Steve_Mine','Alex_Builder','Moco_Fan','Chrono_OP','Alok_Fan','Hayato_OP','Kelly_Run','Adam_OP','DJ_Boy','SquadKing','DuoMaster','SoloKing','RushBhai','CampMaster','Lootera','PochinkiKing','BermudaKing','SniperGirl','QueenOP','KingKong','BeastBoy','HunterX','WarriorOP','ShadowX','ViperOP','FalconX','EagleEye','TigerOP','LionKing','PantherX'];
+  for(var i=0;i<49;i++){
+    enemies.push({x:200+Math.random()*1600, y:200+Math.random()*1600, hp:200, maxHp:200, name:names[i]||('Player'+i), alive:true, speed:1.2+Math.random()*1, angle:Math.random()*Math.PI*2, shootCooldown:Math.random()*100, emoji:['👨','👩','🥷','🧑','👱','👴'][Math.floor(Math.random()*6)]});
   }
-  if(hit.object.userData && hit.object.userData.isBoss){
-    bossHp-=10;
-    var fill=document.getElementById('bossFill'); if(fill) fill.style.width=bossHp+'%';
-    setText('bossHpText', bossHp+'%');
-    if(bossHp<=0){ scene.remove(hit.object); var bi=blocks.indexOf(hit.object); if(bi!==-1) blocks.splice(bi,1); bossActive=false; var wrap=document.getElementById('bossBarWrap'); if(wrap) wrap.style.display='none'; kills++; score+=500; money+=1000; updateScoreboardUI(); showMsg('🎉 BOSS HARAYA! +500'); addChat('<span class="sys">[BOSS]</span> 🎉 '+myName+' ne Dragon haraya!'); }
-    else showMsg('Boss HP: '+bossHp+'%');
-    return;
-  }
-  if(e.button===0){
-    if(hit.object.position.y===0){ showMsg('Ground nahi tootega!'); return; }
-    var bName = (hit.object.userData.type!==undefined) ? blockTypes[hit.object.userData.type].name : 'Block';
-    scene.remove(hit.object); var idx2=blocks.indexOf(hit.object); if(idx2!==-1) blocks.splice(idx2,1);
-    score+=10; broken++; money+=10; updateScoreboardUI(); showMsg(bName+' toda! +10');
-  } else if(e.button===2){
-    var n=hit.face.normal; var nx=hit.object.position.x+Math.round(n.x), ny=hit.object.position.y+Math.round(n.y), nz=hit.object.position.z+Math.round(n.z);
-    addBlock(nx,ny,nz,selected,true); placed++; score+=5; updateScoreboardUI();
-  }
+  // Loot - Guns, Medkit, Armor
+  for(var j=0;j<40;j++){ loots.push({x:200+Math.random()*1600, y:200+Math.random()*1600, type:['💊','🛡️','🔫','🧃','💣'][Math.floor(Math.random()*5)]}); }
+  gameRunning=true;
+  showCenter('🪂 LANDING IN '+selectedMap+'...', 1800);
+  setTimeout(function(){ showCenter('🔥 '+selectedMode+' MODE - 50 PLAYERS!', 1500); }, 1900);
+  addKillFeed('🪂 Tum '+selectedMap+' me utre!');
+  updateHUD();
+  gameLoop();
+}
+function showCenter(txt, ms){
+  var el=document.getElementById('centerMsg'); if(!el) return;
+  el.innerText=txt; el.style.display='block';
+  setTimeout(function(){ el.style.display='none'; }, ms||1500);
+}
+function addKillFeed(txt){
+  var feed=document.getElementById('killFeed'); if(!feed) return;
+  var div=document.createElement('div'); div.className='killMsg'; div.innerText=txt; feed.appendChild(div);
+  while(feed.children.length>4) feed.removeChild(feed.firstChild);
+  setTimeout(function(){ if(div.parentNode) div.parentNode.removeChild(div); }, 4000);
+}
+function updateHUD(){
+  setText('aliveCount', alive);
+  setText('killCount', kills);
+  setText('hpText', Math.max(0, Math.round(player.hp)));
+  setText('hudCoins', playerCoins);
+  setText('hudRank', alive);
+  setText('hudMap', selectedMap);
+  var hf=document.getElementById('healthFill'); if(hf) hf.style.width=(player.hp/player.maxHp*100)+'%';
+  var af=document.getElementById('armorFill'); if(af) af.style.width=player.armor+'%';
+  setText('energyText', Math.round(player.energy));
+  setText('weaponName', GUNS[selectedGun].name);
+  setText('weaponIcon', GUNS[selectedGun].emoji);
+  setText('dmgText', GUNS[selectedGun].dmg);
+  var elapsed=Math.floor((Date.now()-matchStart)/1000);
+  var mm=String(Math.floor(elapsed/60)).padStart(2,'0'), ss=String(elapsed%60).padStart(2,'0');
+  setText('matchTime', mm+':'+ss);
+}
+function doJump(){ if(!gameRunning) return; player.y-=30; showCenter('⬆️ JUMP!', 400); }
+function shoot(){
+  if(!gameRunning || !player.alive) return;
+  var gun=GUNS[selectedGun];
+  var dx=mouseX - canvas.width/2, dy=mouseY - canvas.height/2;
+  var ang=Math.atan2(dy,dx);
+  bullets.push({x:player.x, y:player.y, vx:Math.cos(ang)*12, vy:Math.sin(ang)*12, dmg:gun.dmg, from:'player', life:60});
+  // Muzzle flash
+  player.energy=Math.max(0, player.energy-1);
+  updateHUD();
+}
+function throwGrenade(){
+  if(!gameRunning) return;
+  grenades.push({x:player.x, y:player.y, vx:(Math.random()-0.5)*4, vy:(Math.random()-0.5)*4, timer:60});
+  addKillFeed('💣 Grenade phenka!');
+}
+function heal(){
+  if(player.hp<player.maxHp){ player.hp=Math.min(player.maxHp, player.hp+50); addKillFeed('💊 Heal kiya! +50 HP'); updateHUD(); }
+}
+
+document.addEventListener('keydown', function(e){
+  keys[e.key.toLowerCase()]=true;
+  if(e.key.toLowerCase()==='r'){ addKillFeed('🔫 Reload...'); }
+  if(e.key.toLowerCase()==='g'){ throwGrenade(); }
+  if(e.key.toLowerCase()==='h'){ heal(); }
+  if(e.code==='Space'){ e.preventDefault(); doJump(); }
 });
-document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
-function animate(){
-  requestAnimationFrame(animate);
-  if(!camera || !gameStarted || !renderer) return;
-  var speed=keys['shift']?0.16:0.09;
-  var fwd=0, str=0;
-  if(keys['w']) fwd=1;
-  if(keys['s']) fwd=-1;
-  if(keys['a']) str=-1;
-  if(keys['d']) str=1;
-  var sin=Math.sin(yaw), cos=Math.cos(yaw);
-  playerPos.x += (-sin*fwd + cos*str) * speed;
-  playerPos.z += (-cos*fwd - sin*str) * speed;
-  if(isFlying){
-    if(keys[' ']) playerPos.y+=0.12;
-    if(keys['shift']) playerPos.y-=0.12;
-  } else {
-    velocityY-=0.008; playerPos.y+=velocityY;
-    var gy=2.2;
-    for(var i=0;i<blocks.length;i++){ var b=blocks[i]; if(Math.abs(b.position.x-playerPos.x)<0.6&&Math.abs(b.position.z-playerPos.z)<0.6){ if(playerPos.y<b.position.y+2.2&&playerPos.y>b.position.y) gy=b.position.y+2.2; } }
-    if(playerPos.y<=gy){ playerPos.y=gy; velocityY=0; }
-    if(playerPos.y<1) playerPos.y=1;
+document.addEventListener('keyup', function(e){ keys[e.key.toLowerCase()]=false; });
+canvas.addEventListener('mousemove', function(e){ mouseX=e.clientX; mouseY=e.clientY; });
+canvas.addEventListener('click', function(e){ mouseX=e.clientX; mouseY=e.clientY; shoot(); });
+document.getElementById('shootBtn').addEventListener('touchstart', function(e){ e.preventDefault(); shoot(); });
+
+function gameLoop(){
+  if(!gameRunning) return;
+  requestAnimationFrame(gameLoop);
+  // Player Move - WASD FIXED: W=Aage (Up), S=Peeche (Down)
+  var mx=0, my=0;
+  if(keys['w']) my=-1;
+  if(keys['s']) my=1;
+  if(keys['a']) mx=-1;
+  if(keys['d']) mx=1;
+  player.x+=mx*player.speed; player.y+=my*player.speed;
+  player.x=Math.max(0,Math.min(2000,player.x)); player.y=Math.max(0,Math.min(2000,player.y));
+  player.angle=Math.atan2(mouseY-canvas.height/2, mouseX-canvas.width/2);
+  // Camera follow
+  cam.x=player.x-canvas.width/2; cam.y=player.y-canvas.height/2;
+  // Enemies AI - Player ke paas aayenge, shoot karenge
+  for(var i=0;i<enemies.length;i++){
+    var en=enemies[i]; if(!en.alive) continue;
+    var dx=player.x-en.x, dy=player.y-en.y; var dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<350 && dist>80){
+      en.x+=dx/dist*en.speed; en.y+=dy/dist*en.speed;
+      en.shootCooldown--;
+      if(en.shootCooldown<=0 && dist<300){
+        en.shootCooldown=80+Math.random()*80;
+        // Enemy shoot player
+        if(Math.random()<0.4){
+          var dmg=8+Math.random()*12;
+          if(player.armor>0){ player.armor=Math.max(0,player.armor-dmg*0.5); player.hp-=dmg*0.5; }
+          else player.hp-=dmg;
+          if(player.hp<=0){ player.hp=0; player.alive=false; gameOver(false); return; }
+        }
+        addKillFeed('⚠️ '+en.name+' ne tumpe fire kiya!');
+      }
+    } else if(Math.random()<0.01){ en.angle=Math.random()*Math.PI*2; en.x+=Math.cos(en.angle)*10; en.y+=Math.sin(en.angle)*10; }
+    // Enemies aapas me ladenge - Alive kam hoga
+    if(Math.random()<0.002){
+      var victim=enemies[Math.floor(Math.random()*enemies.length)];
+      if(victim && victim.alive && victim!==en){ victim.hp-=50; if(victim.hp<=0){ victim.alive=false; alive--; addKillFeed('💀 '+en.name+' ne '+victim.name+' ko mara!'); } }
+    }
   }
-  updateMobs();
-  camera.position.set(playerPos.x,playerPos.y,playerPos.z);
-  camera.rotation.order='YXZ'; camera.rotation.y=yaw; camera.rotation.x=pitch;
-  renderer.render(scene,camera);
+  // Bullets
+  for(var b=bullets.length-1;b>=0;b--){
+    var bul=bullets[b]; bul.x+=bul.vx; bul.y+=bul.vy; bul.life--;
+    if(bul.life<=0){ bullets.splice(b,1); continue; }
+    if(bul.from==='player'){
+      for(var e=0;e<enemies.length;e++){
+        var en2=enemies[e]; if(!en2.alive) continue;
+        var ddx=en2.x-bul.x, ddy=en2.y-bul.y;
+        if(Math.sqrt(ddx*ddx+ddy*ddy)<22){
+          en2.hp-=bul.dmg; bullets.splice(b,1);
+          if(en2.hp<=0){ en2.alive=false; alive--; kills++; playerCoins+=100; addKillFeed('🎯 Tumne '+en2.name+' ko mara! +100 Coins'); showCenter('🎯 KILL! '+en2.name, 900); }
+          break;
+        }
+      }
+    }
+  }
+  // Loot pickup
+  for(var l=loots.length-1;l>=0;l--){
+    var loot=loots[l];
+    var ldx=loot.x-player.x, ldy=loot.y-player.y;
+    if(Math.sqrt(ldx*ldx+ldy*ldy)<26){
+      if(loot.type==='💊'){ player.hp=Math.min(player.maxHp, player.hp+40); addKillFeed('💊 Medkit mila! +40 HP'); }
+      if(loot.type==='🛡️'){ player.armor=Math.min(100, player.armor+30); addKillFeed('🛡️ Armor mila!'); }
+      if(loot.type==='🔫'){ playerCoins+=50; addKillFeed('🔫 Gun loot! +50 Coins'); }
+      if(loot.type==='🧃'){ player.energy=100; addKillFeed('🧃 Energy Drink! Full Energy'); }
+      if(loot.type==='💣'){ throwGrenade(); }
+      loots.splice(l,1);
+    }
+  }
+  // Grenades
+  for(var g=grenades.length-1;g>=0;g--){
+    var gr=grenades[g]; gr.x+=gr.vx; gr.y+=gr.vy; gr.timer--;
+    if(gr.timer<=0){
+      for(var ee=0;ee<enemies.length;ee++){ var en3=enemies[ee]; if(!en3.alive) continue; var gdx=en3.x-gr.x, gdy=en3.y-gr.y; if(Math.sqrt(gdx*gdx+gdy*gdy)<90){ en3.hp-=80; if(en3.hp<=0){ en3.alive=false; alive--; kills++; addKillFeed('💣 Grenade se '+en3.name+' mara!'); } } }
+      grenades.splice(g,1);
+    }
+  }
+  // Safe Zone shrink - Free Fire jaisa
+  zoneTimer++;
+  if(zoneTimer%600===0 && zone.r>150){
+    zone.r-=120;
+    var zw=document.getElementById('zoneWarn'); if(zw){ zw.style.display='block'; setTimeout(function(){ zw.style.display='none'; }, 3000); }
+    addKillFeed('⚠️ Safe Zone chhota ho raha hai!');
+  }
+  var zdx=player.x-zone.x, zdy=player.y-zone.y;
+  if(Math.sqrt(zdx*zdx+zdy*zdy)>zone.r){
+    player.hp-=0.3;
+    if(player.hp<=0){ player.hp=0; player.alive=false; gameOver(false); return; }
+  }
+  // Win check
+  if(alive<=1){ gameOver(true); return; }
+  if(Math.random()<0.005){ alive=Math.max(1, alive-1); }
+  updateHUD();
+  draw();
 }
-window.addEventListener('resize', function(){ if(!camera || !renderer) return; camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); });
-buildHotbar();
+function draw(){
+  ctx.fillStyle='#2d5016'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  // Grass texture - dots
+  ctx.fillStyle='rgba(0,0,0,0.1)';
+  for(var i=0;i<60;i++){ var gx=(i*137)%2000 - cam.x; var gy=(i*211)%2000 - cam.y; if(gx>-20&&gx<canvas.width+20&&gy>-20&&gy<canvas.height+20){ ctx.fillRect(gx,gy,8,8); } }
+  // Safe Zone circle
+  ctx.strokeStyle='rgba(255,255,255,0.9)'; ctx.lineWidth=3; ctx.setLineDash([10,10]);
+  ctx.beginPath(); ctx.arc(zone.x-cam.x, zone.y-cam.y, zone.r, 0, Math.PI*2); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='rgba(255,0,0,0.08)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  // Loot
+  for(var l=0;l<loots.length;l++){ var loot=loots[l]; var lx=loot.x-cam.x, ly=loot.y-cam.y; if(lx>-30&&lx<canvas.width+30&&ly>-30&&ly<canvas.height+30){ ctx.font='24px Arial'; ctx.fillText(loot.type, lx, ly); } }
+  // Enemies
+  for(var e=0;e<enemies.length;e++){ var en=enemies[e]; if(!en.alive) continue; var ex=en.x-cam.x, ey=en.y-cam.y; if(ex<-40||ex>canvas.width+40||ey<-40||ey>canvas.height+40) continue; ctx.font='32px Arial'; ctx.fillText(en.emoji, ex-16, ey+10); ctx.fillStyle='#fff'; ctx.font='11px Arial'; ctx.fillText(en.name, ex-22, ey-22); ctx.fillStyle='#333'; ctx.fillRect(ex-20, ey-16, 40, 5); ctx.fillStyle='#ff2d55'; ctx.fillRect(ex-20, ey-16, 40*en.hp/en.maxHp, 5); }
+  // Bullets
+  ctx.fillStyle='#ffcc00';
+  for(var b=0;b<bullets.length;b++){ var bul=bullets[b]; ctx.beginPath(); ctx.arc(bul.x-cam.x, bul.y-cam.y, 4, 0, Math.PI*2); ctx.fill(); }
+  // Grenades
+  for(var g=0;g<grenades.length;g++){ var gr=grenades[g]; ctx.font='20px Arial'; ctx.fillText('💣', gr.x-cam.x, gr.y-cam.y); }
+  // Player - Center me
+  var px=canvas.width/2, py=canvas.height/2;
+  ctx.save(); ctx.translate(px,py); ctx.rotate(player.angle); ctx.font='36px Arial'; ctx.fillText('🦸', -18, 12); ctx.restore();
+  ctx.fillStyle='#fff'; ctx.font='bold 12px Arial'; ctx.fillText('YOU - '+CHARS[selectedChar].name, px-40, py-30);
+  // Aim line
+  ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(mouseX,mouseY); ctx.stroke();
+  // Crosshair
+  ctx.strokeStyle='#ffcc00'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(mouseX,mouseY,12,0,Math.PI*2); ctx.stroke();
+  // Minimap
+  var mini=document.getElementById('miniCanvas');
+  if(mini){ var mctx=mini.getContext('2d'); mctx.fillStyle='#2d5016'; mctx.fillRect(0,0,130,130); mctx.strokeStyle='#fff'; mctx.beginPath(); mctx.arc(zone.x/2000*130, zone.y/2000*130, zone.r/2000*130, 0, Math.PI*2); mctx.stroke(); mctx.fillStyle='#ffcc00'; mctx.fillRect(player.x/2000*130-3, player.y/2000*130-3, 6, 6); mctx.fillStyle='#ff2d55'; for(var me=0;me<enemies.length;me++){ if(enemies[me].alive) mctx.fillRect(enemies[me].x/2000*130-2, enemies[me].y/2000*130-2, 4, 4); } }
+}
+function gameOver(won){
+  gameRunning=false;
+  if(won){
+    coins+=500; diamonds+=100;
+    setText('booyahStats', 'Tum jeet gaye! #1 / 50 • Kills: '+kills+' • Coins: +500');
+    var bo=document.getElementById('booyah'); if(bo){ bo.style.display='flex'; }
+    showCenter('🏆 BOOYAH!', 2000);
+  } else {
+    showCenter('💀 ELIMINATED! Rank #'+alive+' • Kills: '+kills, 2500);
+    setTimeout(function(){
+      var bo2=document.getElementById('booyah'); if(bo2){ bo2.style.display='flex'; var h=bo2.querySelector('h1'); if(h) h.innerText='💀 GAME OVER'; setText('booyahStats','Rank #'+alive+' • Kills: '+kills+' • Coins: +'+playerCoins); var btn=bo2.querySelectorAll('button'); if(btn[0]) btn[0].innerText='🏠 LOBBY WAPAS'; }
+    }, 2600);
+  }
+}
+function backToLobby(){
+  gameRunning=false;
+  var bo=document.getElementById('booyah'); if(bo) bo.style.display='none';
+  var hud=document.getElementById('hud'); if(hud) hud.style.display='none';
+  var lob=document.getElementById('lobby'); if(lob) lob.style.display='flex';
+  renderLobby();
+}
+window.addEventListener('resize', function(){ if(gameRunning){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; } });
+renderLobby();
 </script>
 </body>
 </html>
