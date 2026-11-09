@@ -3,160 +3,206 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAISTAR CLASSROOM - 50 Students</title>
+<title>RAISTAR CLASSROOM - Custom Background</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#f1f5f9;color:#111}
+/* ===== CUSTOM BACKGROUND - MAST WALA ===== */
+body{
+  background:#0f172a;
+  background-image:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+  color:#111;
+  transition:background 0.5s ease;
+  min-height:100vh;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:rgba(0,0,0,0.15);
+  pointer-events:none;z-index:0;
+}
+#app, #login{position:relative;z-index:1}
 #app{display:none}
-.top{background:#1e293b;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+/* GLASS EFFECT - Cards transparent mast lagenge */
+.card, .att-stat, .stat, .book-card, .att-row{
+  background:rgba(255,255,255,0.92) !important;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.6) !important;
+}
+.nav{
+  background:rgba(255,255,255,0.92) !important;
+  backdrop-filter:blur(12px);
+}
+.top{background:rgba(15,23,42,0.92);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}
 .top b{font-size:18px} .top b span{color:#22c55e}
 .top button{background:#22c55e;color:#fff;border:none;padding:8px 14px;border-radius:20px;font-weight:800;cursor:pointer;font-size:12px}
-.nav{background:#fff;display:flex;gap:6px;padding:10px;overflow-x:auto;position:sticky;top:52px;z-index:9;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.nav{display:flex;gap:6px;padding:10px;overflow-x:auto;position:sticky;top:52px;z-index:9;box-shadow:0 2px 10px rgba(0,0,0,.08)}
 .nav button{white-space:nowrap;background:#f1f5f9;border:1px solid #ddd;padding:9px 16px;border-radius:20px;font-weight:800;cursor:pointer;font-size:13px}
 .nav button.active{background:#1e293b;color:#fff}
 .page{display:none;padding:16px;max-width:1000px;margin:0 auto}
 .page.active{display:block}
-.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.card{border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 8px 30px rgba(0,0,0,.15)}
 .card h3{margin-bottom:8px} .card p{font-size:13px;color:#555;line-height:1.6}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-.book-card{background:#fff;border-radius:14px;padding:14px;cursor:pointer;border:2px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.book-card:hover{border-color:#22c55e}
+.book-card{border-radius:14px;padding:14px;cursor:pointer;border:2px solid transparent;box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.book-card:hover{border-color:#22c55e;transform:translateY(-2px)}
 .book-card .icon{font-size:42px}
 .btn{background:#22c55e;color:#fff;border:none;padding:10px 18px;border-radius:10px;font-weight:900;cursor:pointer}
-.btn.blue{background:#3b82f6} .btn.orange{background:#f59e0b} .btn.red{background:#ef4444} .btn.small{padding:6px 12px;font-size:12px}
+.btn.blue{background:#3b82f6} .btn.orange{background:#f59e0b} .btn.red{background:#ef4444} .btn.small{padding:6px 12px;font-size:12px} .btn.purple{background:#a855f7}
 input,select{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;outline:none;margin-bottom:8px;font-size:14px}
-/* --- NAYA ATTENDANCE DESIGN --- */
-.att-header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#1e293b;color:#fff;padding:14px;border-radius:12px;margin-bottom:12px}
-.att-header b{font-size:16px} .att-header span{font-size:12px;color:#cbd5e1}
+/* ===== BACKGROUND PICKER ===== */
+.bg-picker{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.bg-option{width:58px;height:58px;border-radius:14px;cursor:pointer;border:3px solid transparent;position:relative;overflow:hidden;flex-shrink:0;transition:all .2s}
+.bg-option:hover{transform:scale(1.1)}
+.bg-option.active{border-color:#22c55e;transform:scale(1.08);box-shadow:0 4px 15px rgba(34,197,94,.5)}
+.bg-option span{position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:16px}
+.bg-label{font-size:11px;color:#666;margin-top:4px;text-align:center}
+.bg-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.color-input{width:50px !important;height:42px !important;padding:2px !important;cursor:pointer;border-radius:10px}
+.upload-btn{background:#a855f7;color:#fff;padding:10px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:12px;border:none}
+.att-header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(30,41,59,.95);color:#fff;padding:14px;border-radius:12px;margin-bottom:12px}
 .att-stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.att-stat{flex:1;min-width:110px;background:#fff;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);border-top:4px solid #22c55e}
+.att-stat{flex:1;min-width:110px;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);border-top:4px solid #22c55e}
 .att-stat.red{border-color:#ef4444} .att-stat.orange{border-color:#f59e0b} .att-stat.blue{border-color:#3b82f6}
 .att-stat b{font-size:20px;display:block} .att-stat span{font-size:11px;color:#666}
-.att-row{display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid #eee;gap:10px;background:#fff}
-.att-row:nth-child(even){background:#f8fafc}
+.att-row{display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid #eee;gap:10px}
 .att-row b{font-size:13px} .att-row span{font-size:11px;color:#666}
 .att-btns{display:flex;gap:6px;flex-wrap:wrap}
 .att-btns button{padding:7px 12px;border-radius:20px;border:1px solid #ddd;background:#fff;font-weight:800;cursor:pointer;font-size:12px}
-.att-btns button.present.active{background:#22c55e;color:#fff;border-color:#22c55e}
-.att-btns button.absent.active{background:#ef4444;color:#fff;border-color:#ef4444}
-.att-btns button.late.active{background:#f59e0b;color:#fff;border-color:#f59e0b}
-.penalty-box{text-align:right;min-width:110px}
-.penalty-box b{font-size:13px}
+.att-btns button.present.active{background:#22c55e;color:#fff}
+.att-btns button.absent.active{background:#ef4444;color:#fff}
+.att-btns button.late.active{background:#f59e0b;color:#fff}
+.penalty-box{text-align:right;min-width:120px}
 .penalty-high{color:#ef4444} .penalty-low{color:#22c55e} .penalty-mid{color:#f59e0b}
 .progress{height:6px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin-top:6px}
 .progress div{height:100%;background:#22c55e}
-/* TOTAL ROW - SABSE AKHIR ME */
 .total-row{background:#1e293b !important;color:#fff;border-radius:12px;padding:16px;margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.total-row b{font-size:14px;color:#fff} .total-row span{font-size:12px;color:#cbd5e1}
 .total-row .t-box{text-align:center;background:#334155;padding:10px 14px;border-radius:10px;min-width:90px}
-.total-row .t-box b{font-size:18px;display:block;color:#fff} .total-row .t-box span{color:#cbd5e1}
+.total-row .t-box b{font-size:18px;display:block;color:#fff} .total-row .t-box span{color:#cbd5e1;font-size:11px}
 .chapter{background:#f8fafc;border-radius:10px;padding:12px;margin-bottom:8px;cursor:pointer;border:1px solid #e2e8f0}
 .quiz-opt{display:block;width:100%;text-align:left;background:#f8fafc;border:1px solid #ddd;padding:12px;border-radius:10px;margin-bottom:8px;cursor:pointer}
-.quiz-opt.correct{background:#dcfce7;border-color:#22c55e}
-.quiz-opt.wrong{background:#fee2e2;border-color:#ef4444}
-.chat-box{height:340px;overflow-y:auto;background:#f8fafc;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.quiz-opt.correct{background:#dcfce7} .quiz-opt.wrong{background:#fee2e2}
+.chat-box{height:340px;overflow-y:auto;background:rgba(248,250,252,.9);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
 .msg{background:#fff;padding:10px 12px;border-radius:12px;max-width:85%;font-size:13px;line-height:1.5}
-.msg.me{background:#dcfce7;align-self:flex-end}
-.msg.ai{background:#dbeafe;align-self:flex-start;border-left:3px solid #3b82f6}
-.msg.teacher{background:#fef3c7;border-left:3px solid #f59e0b}
-#login{position:fixed;inset:0;background:linear-gradient(135deg,#1e293b,#0f172a);display:flex;align-items:center;justify-content:center;padding:16px;z-index:100}
-.login-box{background:#fff;border-radius:20px;padding:24px;width:100%;max-width:380px;text-align:center}
+.msg.me{background:#dcfce7;align-self:flex-end} .msg.ai{background:#dbeafe;border-left:3px solid #3b82f6} .msg.teacher{background:#fef3c7;border-left:3px solid #f59e0b}
+#login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;z-index:100}
+.login-box{background:rgba(255,255,255,.95);border-radius:20px;padding:24px;width:100%;max-width:380px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.3);backdrop-filter:blur(15px)}
 .login-box h1{font-size:28px} .login-box h1 span{color:#22c55e}
-.stat-row{display:flex;gap:10px}
-.stat{flex:1;background:#fff;border-radius:12px;padding:14px;text-align:center}
-.stat b{font-size:22px;display:block} .stat span{font-size:11px;color:#666}
+.stat-row{display:flex;gap:10px} .stat{flex:1;border-radius:12px;padding:14px;text-align:center} .stat b{font-size:22px;display:block} .stat span{font-size:11px;color:#666}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:20px;font-size:13px;font-weight:800;z-index:999;display:none;box-shadow:0 4px 20px rgba(0,0,0,.3);text-align:center;max-width:90%}
 @media(max-width:600px){.stat-row{flex-direction:column} .att-row{flex-direction:column;align-items:flex-start} .penalty-box{text-align:left}}
 </style>
 </head>
 <body>
-<div id="login"><div class="login-box"><div style="font-size:60px">📚</div><h1>RAISTAR <span>CLASSROOM</span></h1><p>50 Students • Attendance • Books • Exams • AI Teacher<br>By raistar12262010</p><input id="loginName" placeholder="Tera Naam" value="raistar12262010"><input id="loginRoll" placeholder="Roll No 1-50" value="12" type="number"><select id="loginRole"><option value="Student">👦 Student Hu</option><option value="Teacher">👨‍🏫 Teacher Hu</option></select><select id="loginClass"><option>Class 10 - A</option><option>Class 10 - B</option><option>Class 9 - A</option></select><button class="btn" style="width:100%;padding:14px;font-size:16px" onclick="doLogin()">🚀 CLASSROOM ME JAO</button></div></div>
+<div id="toast"></div>
+<div id="login"><div class="login-box"><div style="font-size:60px">📚</div><h1>RAISTAR <span>CLASSROOM</span></h1><p>50 Students • Real-Time Attendance • Custom Background • AI<br>By raistar12262010</p><input id="loginName" value="raistar12262010"><input id="loginRoll" value="12" type="number"><select id="loginRole"><option value="Student">👦 Student Hu</option><option value="Teacher">👨‍🏫 Teacher Hu</option></select><select id="loginClass"><option>Class 10 - A</option><option>Class 10 - B</option></select><button class="btn" style="width:100%;padding:14px;font-size:16px" onclick="doLogin()">🚀 CLASSROOM ME JAO</button><p style="font-size:11px;color:#888;margin-top:10px">Andar jaake 🎨 Background badal sakte ho!</p></div></div>
 <div id="app">
-<div class="top"><div><b>📚 RAISTAR <span>CLASSROOM</span></b><br><span style="font-size:11px;color:#aaa" id="topInfo"></span></div><div style="display:flex;gap:8px"><button onclick="showPage('ai')">🤖 AI SE PUCHO</button><button onclick="logout()" style="background:#ef4444">Logout</button></div></div>
-<div class="nav"><button class="active" onclick="showPage('home',this)">🏠 Home</button><button onclick="showPage('attendance',this)">✅ Attendance (50)</button><button onclick="showPage('books',this)">📚 Books</button><button onclick="showPage('exams',this)">📝 Exams</button><button onclick="showPage('chat',this)">💬 Teacher Chat</button><button onclick="showPage('ai',this)">🤖 AI Teacher</button><button onclick="showPage('results',this)">🏆 Results</button></div>
+<div class="top"><div><b>📚 RAISTAR <span>CLASSROOM</span></b><br><span style="font-size:11px;color:#aaa" id="topInfo"></span></div><div style="display:flex;gap:8px"><button onclick="showPage('bg')">🎨 BG</button><button onclick="showPage('ai')">🤖 AI</button><button onclick="logout()" style="background:#ef4444">Logout</button></div></div>
+<div class="nav"><button class="active" onclick="showPage('home',this)">🏠 Home</button><button onclick="showPage('attendance',this)">✅ Attendance (50)</button><button onclick="showPage('books',this)">📚 Books</button><button onclick="showPage('exams',this)">📝 Exams</button><button onclick="showPage('chat',this)">💬 Chat</button><button onclick="showPage('ai',this)">🤖 AI Teacher</button><button onclick="showPage('bg',this)">🎨 Background</button><button onclick="showPage('results',this)">🏆 Results</button></div>
 
-<div class="page active" id="page-home"><div class="stat-row"><div class="stat"><b id="statPresent">42</b><span>✅ Aaj Present</span></div><div class="stat"><b>6</b><span>📚 Books</span></div><div class="stat"><b>48</b><span>📖 Chapters</span></div><div class="stat"><b id="statScore">85%</b><span>🏆 Tera Score</span></div></div><div class="card"><h3>👋 Namaste, <span id="homeName">raistar12262010</span>!</h3><p>Aaj ka kaam: <b>Science Ch-3</b> padho, <b>Maths Exam</b> do, aur Attendance lagao.</p><button class="btn" onclick="showPage('books')">📚 Padhna Shuru Karo →</button> <button class="btn blue" onclick="showPage('exams')">📝 Exam Do →</button></div><div class="card"><h3>📢 Announcement</h3><p>📌 <b>Sir:</b> Kal Science ka test hai.<br>📌 <b>Mam:</b> Hindi homework - Ch 5 summary.<br>📌 <b>Rule:</b> 1 Absent = -1% | 1 Late = -0.5% - Dhyaan rakhna!</p></div><div class="card"><h3>🏆 Top 5 Students</h3><p id="topStudents"></p></div></div>
+<div class="page active" id="page-home"><div class="stat-row"><div class="stat"><b id="statPresent">42</b><span>✅ Aaj Present</span></div><div class="stat"><b>6</b><span>📚 Books</span></div><div class="stat"><b>48</b><span>📖 Chapters</span></div><div class="stat"><b id="statScore">85%</b><span>🏆 Tera Score</span></div></div><div class="card"><h3>👋 Namaste, <span id="homeName">raistar12262010</span>!</h3><p>⚡ <b>REAL-TIME:</b> Absent = -1% TURANT, Late = -0.5% TURANT<br>🎨 <b>NEW:</b> Background badal sakte ho - neeche Background button dabao!</p><button class="btn" onclick="showPage('attendance')">✅ Attendance →</button> <button class="btn purple" onclick="showPage('bg')">🎨 Background Badlo →</button></div><div class="card"><h3>🎨 Aaj Ka Background - <span id="currentBgName">Purple Galaxy</span></h3><div class="bg-picker" id="homeBgPicker"></div><p style="margin-top:8px">Kisi pe bhi click karo - turant badal jayega!</p></div><div class="card"><h3>🏆 Top 5</h3><p id="topStudents"></p></div></div>
 
-<!-- ===== ATTENDANCE - NAYA SYSTEM ===== -->
+<!-- ===== BACKGROUND PAGE - MAST WALA ===== -->
+<div class="page" id="page-bg">
+<div class="card"><h3>🎨 Custom Background - Apna Style Chuno!</h3><p>Jo pasand aaye uspe click karo - turant poori website ka background badal jayega. Ye save bhi rahega!</p>
+<div class="bg-picker" id="bgPicker"></div>
+<div class="bg-row"><span style="font-size:13px;font-weight:800">🎨 Apna Color:</span><input type="color" id="customColor" class="color-input" value="#667eea" onchange="setCustomColor(this.value)"><input type="color" id="customColor2" class="color-input" value="#764ba2" onchange="setCustomColor2()"><button class="btn small" onclick="applyCustomGradient()">✨ Apply Gradient</button><button class="btn small" style="background:#111" onclick="setBg('dark','Dark Mode')">🌑 Dark</button></div>
+<div class="bg-row"><span style="font-size:13px;font-weight:800">🖼️ Apni Photo:</span><label class="upload-btn" for="bgUpload">📸 Photo Upload Karo</label><input type="file" id="bgUpload" accept="image/*" style="display:none" onchange="uploadBg(event)"><button class="btn small red" onclick="resetBg()">🔄 Reset</button></div>
+<p style="margin-top:10px;font-size:12px;color:#888">Tip: Apni photo lagane se classroom ekdum personal lagega! Photo phone me hi rehti hai, kahi upload nahi hoti.</p>
+</div>
+<div class="card"><h3>👀 Preview - Aise Dikhega</h3><p>Upar wale background me ye card kaisa lagega - dekho, glass jaisa lag raha hai na? ✨</p><button class="btn" onclick="showPage('home')">🏠 Home Pe Jao Aur Dekho</button></div>
+</div>
+
 <div class="page" id="page-attendance">
-<div class="att-header"><div><b>✅ Attendance - <span id="attDate"></span> - Day <span id="dayCount">1</span></b><br><span>1 Absent = -1% &nbsp;|&nbsp; 1 Late = -0.5% &nbsp;|&nbsp; Present = 0%</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn small" onclick="markAll('Present')">✅ Sab Present</button><button class="btn small blue" onclick="nextDay()">📅 NEXT DAY →</button><button class="btn small red" onclick="resetAttendance()">🔄 Reset</button></div></div>
-<div class="att-stats"><div class="att-stat"><b id="attCount">0</b><span>✅ Present Aaj</span></div><div class="att-stat red"><b id="attAbsent">0</b><span>❌ Absent Aaj</span></div><div class="att-stat orange"><b id="attLate">0</b><span>⏰ Late Aaj</span></div><div class="att-stat blue"><b id="totalPenaltyAll">0%</b><span>📉 Total Penalty Sabka</span></div></div>
-<div class="card"><input id="attSearch" placeholder="🔍 Naam se dhoondo..." oninput="renderAttendance()"><div id="attList"></div>
-<!-- TOTAL ROW - AKHIR ME -->
-<div class="total-row" id="totalRow"></div>
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn small blue" onclick="saveAttendance()">💾 SAVE ATTENDANCE</button><button class="btn small orange" onclick="showPage('results')">📊 Results Dekho</button></div>
-</div></div>
-
-<div class="page" id="page-books"><div class="card"><h3>📚 Books</h3><p>Book pe click karo → Chapters → Full Explanation</p><input id="bookSearch" placeholder="🔍 Book dhoondo..." oninput="renderBooks()"></div><div class="grid" id="booksGrid"></div><div class="card" id="chapterBox" style="display:none"><h3 id="chapterTitle"></h3><div id="chapterList"></div></div><div class="card" id="readBox" style="display:none"><h3 id="readTitle"></h3><div id="readContent" style="font-size:14px;line-height:1.8"></div><br><button class="btn" onclick="document.getElementById('readBox').style.display='none'">⬅️ Wapas</button> <button class="btn blue" onclick="startExamFromChapter()">📝 Exam Do</button> <button class="btn orange" onclick="askAIChapter()">🤖 AI Se Puchho</button></div></div>
-<div class="page" id="page-exams"><div class="card"><h3>📝 Exams</h3><p>Exam select karo → Turant Result + AI Explanation</p></div><div class="grid" id="examGrid"></div><div class="card" id="quizBox" style="display:none"><h3 id="quizTitle"></h3><p id="quizProgress"></p><div id="quizQ"></div><div id="quizOpts"></div><button class="btn" id="quizNext" onclick="nextQuiz()" style="display:none">Next →</button></div><div class="card" id="quizResult" style="display:none"><h3>🏆 Result</h3><p id="quizResultText"></p><button class="btn" onclick="document.getElementById('quizResult').style.display='none'">OK</button></div></div>
+<div class="att-header"><div><b>✅ Attendance - <span id="attDate"></span> - Day <span id="dayCount">1</span> ⚡ LIVE</b><br><span>Absent = -1% TURANT | Late = -0.5% TURANT</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn small" onclick="markAll('Present')">✅ Sab Present</button><button class="btn small blue" onclick="nextDay()">📅 NEXT DAY →</button><button class="btn small red" onclick="resetAttendance()">🔄 Reset</button></div></div>
+<div class="att-stats"><div class="att-stat"><b id="attCount">0</b><span>✅ Present Aaj</span></div><div class="att-stat red"><b id="attAbsent">0</b><span>❌ Absent Aaj</span></div><div class="att-stat orange"><b id="attLate">0</b><span>⏰ Late Aaj</span></div><div class="att-stat blue"><b id="totalPenaltyAll">0%</b><span>📉 Total Penalty LIVE</span></div></div>
+<div class="card"><input id="attSearch" placeholder="🔍 Naam se dhoondo..." oninput="renderAttendance()"><div id="attList"></div><div class="total-row" id="totalRow"></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn small blue" onclick="saveAttendance()">💾 SAVE</button><button class="btn small orange" onclick="showPage('results')">📊 Results</button></div></div></div>
+<div class="page" id="page-books"><div class="card"><h3>📚 Books</h3><input id="bookSearch" placeholder="🔍 Book dhoondo..." oninput="renderBooks()"></div><div class="grid" id="booksGrid"></div><div class="card" id="chapterBox" style="display:none"><h3 id="chapterTitle"></h3><div id="chapterList"></div></div><div class="card" id="readBox" style="display:none"><h3 id="readTitle"></h3><div id="readContent" style="font-size:14px;line-height:1.8"></div><br><button class="btn" onclick="document.getElementById('readBox').style.display='none'">⬅️ Wapas</button> <button class="btn blue" onclick="startExamFromChapter()">📝 Exam Do</button> <button class="btn orange" onclick="askAIChapter()">🤖 AI Se Puchho</button></div></div>
+<div class="page" id="page-exams"><div class="card"><h3>📝 Exams</h3></div><div class="grid" id="examGrid"></div><div class="card" id="quizBox" style="display:none"><h3 id="quizTitle"></h3><p id="quizProgress"></p><div id="quizQ"></div><div id="quizOpts"></div><button class="btn" id="quizNext" onclick="nextQuiz()" style="display:none">Next →</button></div><div class="card" id="quizResult" style="display:none"><h3>🏆 Result</h3><p id="quizResultText"></p><button class="btn" onclick="document.getElementById('quizResult').style.display='none'">OK</button></div></div>
 <div class="page" id="page-chat"><div class="card"><h3>💬 Teacher Chat</h3><div class="chat-box" id="chatBox"></div><div style="display:flex;gap:8px"><input id="chatInput" placeholder="Message likho..." onkeypress="if(event.key==='Enter') sendChat()"><button class="btn" onclick="sendChat()">Send</button></div></div></div>
 <div class="page" id="page-ai"><div class="card"><h3>🤖 AI TEACHER</h3><div class="chat-box" id="aiBox"></div><div style="display:flex;gap:8px"><input id="aiInput" placeholder="Kuch bhi puchho..." onkeypress="if(event.key==='Enter') askAI()"><button class="btn" onclick="askAI()">Ask AI 🤖</button></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn small" onclick="quickAI('Photosynthesis kya hai?')">Photosynthesis?</button><button class="btn small blue" onclick="quickAI('Pythagoras theorem samjhao')">Pythagoras</button><button class="btn small orange" onclick="quickAI('Kal exam hai, kaise padhu?')">Exam Tips</button></div></div></div>
-<div class="page" id="page-results"><div class="card"><h3>🏆 Results - Penalty Ke Saath</h3><p>Final Score = Original Score - Penalty. 1 Absent = -1%, 1 Late = -0.5%</p><div id="resultsList"></div></div></div>
+<div class="page" id="page-results"><div class="card"><h3>🏆 Results - LIVE Penalty</h3><div id="resultsList"></div></div></div>
 </div>
 <script>
-var myName='raistar12262010',myRoll=12,myRole='Student',currentDay=1;
+var myName='raistar12262010',myRoll=12,myRole='Student',currentDay=1,currentBg='galaxy';
+// ===== BACKGROUNDS - MAST WALE =====
+var BGS=[
+{id:'galaxy',name:'Purple Galaxy',emoji:'🌌',css:'linear-gradient(135deg,#667eea 0%,#764ba2 100%)'},
+{id:'space',name:'Space Stars',emoji:'🚀',css:'linear-gradient(135deg,#0f0c29,#302b63,#24243e)'},
+{id:'classroom',name:'Classroom',emoji:'🏫',img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&q=80'},
+{id:'nature',name:'Nature',emoji:'🌿',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80'},
+{id:'ocean',name:'Ocean',emoji:'🌊',img:'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&q=80'},
+{id:'sunset',name:'Sunset Fire',emoji:'🔥',img:'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1200&q=80'},
+{id:'neon',name:'Neon Night',emoji:'💜',css:'linear-gradient(135deg,#ff006e,#8338ec,#3a86ff)'},
+{id:'pink',name:'Pink Dream',emoji:'🌸',css:'linear-gradient(135deg,#ff9a9e 0%,#fecfef 50%,#fecfef 100%)'},
+{id:'dark',name:'Dark Mode',emoji:'🖤',css:'linear-gradient(135deg,#111827,#1f2937)'},
+{id:'green',name:'Green Forest',emoji:'🌲',css:'linear-gradient(135deg,#11998e,#38ef7d)'}
+];
+function renderBgPicker(){
+  var html='';
+  for(var i=0;i<BGS.length;i++){ var b=BGS[i]; var style=b.img ? 'background-image:url('+b.img+');background-size:cover;background-position:center' : 'background:'+b.css; html+='<div style="text-align:center"><div class="bg-option '+(currentBg===b.id?'active':'')+'" style="'+style+'" onclick="setBg(\''+b.id+'\')"><span>'+b.emoji+'</span></div><div class="bg-label">'+b.name+'</div></div>'; }
+  var el=document.getElementById('bgPicker'); if(el) el.innerHTML=html;
+  var el2=document.getElementById('homeBgPicker'); if(el2) el2.innerHTML=html;
+}
+function setBg(id){
+  var b=null; for(var i=0;i<BGS.length;i++) if(BGS[i].id===id) b=BGS[i];
+  if(!b) return; currentBg=id;
+  if(b.img){ document.body.style.backgroundImage='url('+b.img+')'; document.body.style.backgroundSize='cover'; }
+  else { document.body.style.backgroundImage='none'; document.body.style.background=b.css; document.body.style.backgroundSize='cover'; }
+  var n=document.getElementById('currentBgName'); if(n) n.innerText=b.name;
+  try{ localStorage.setItem('raistar_bg',id); }catch(e){}
+  renderBgPicker();
+  showToast('🎨 Background badal gaya - '+b.emoji+' '+b.name);
+}
+function setCustomColor(c){ document.body.style.backgroundImage='none'; document.body.style.background=c; currentBg='custom'; renderBgPicker(); showToast('🎨 Tera color lag gaya!'); }
+function setCustomColor2(){ var c1=document.getElementById('customColor').value; var c2=document.getElementById('customColor2').value; applyCustomGradient(); }
+function applyCustomGradient(){ var c1=document.getElementById('customColor').value; var c2=document.getElementById('customColor2').value; document.body.style.backgroundImage='none'; document.body.style.background='linear-gradient(135deg,'+c1+','+c2+')'; currentBg='custom'; renderBgPicker(); showToast('✨ Mast gradient ban gaya!'); }
+function uploadBg(e){ var file=e.target.files[0]; if(!file) return; var reader=new FileReader(); reader.onload=function(ev){ document.body.style.backgroundImage='url('+ev.target.result+')'; document.body.style.backgroundSize='cover'; document.body.style.backgroundPosition='center'; currentBg='upload'; renderBgPicker(); showToast('🖼️ Teri photo background ban gayi! Mast lag raha hai!'); }; reader.readAsDataURL(file); }
+function resetBg(){ setBg('galaxy'); }
 var names=['Aarav','Priya','Rahul','Sneha','Amit','Neha','Vikram','Ananya','Rohan','Ishita','Arjun','Pooja','Karan','Riya','Manish','Divya','Aditya','Kavita','Suresh','Meera','Raj','Simran','Vikas','Anjali','Nikhil','Pooja','Deepak','Sonu','Monu','Ritu','Gaurav','Nisha','Sanjay','Komal','Yash','Tanvi','Mohit','Shreya','Ajay','Preeti','Ravi','Sakshi','Varun','Asha','Nitin','Pooja2','Kunal','Ritu2','Aman','Sharma'];
-var students=[]; for(var i=0;i<50;i++){ var n=i===11?'raistar12262010':(names[i%names.length]+' '+(i+1)); students.push({roll:i+1,name:n,att:'Present',score:60+Math.floor(Math.random()*35),presentDays:18+Math.floor(Math.random()*5),absentCount:Math.floor(Math.random()*3),lateCount:Math.floor(Math.random()*4)}); }
+var students=[]; for(var i=0;i<50;i++){ var n=i===11?'raistar12262010':(names[i%names.length]+' '+(i+1)); students.push({roll:i+1,name:n,att:'Present',score:60+Math.floor(Math.random()*35),presentDays:0,absentCount:0,lateCount:0}); }
 function getPenalty(s){ return (s.absentCount*1 + s.lateCount*0.5); }
 function getFinalScore(s){ return Math.max(0, Math.round(s.score - getPenalty(s))); }
 function getAttendancePer(s){ var total=s.presentDays+s.absentCount+s.lateCount; if(total===0) return 100; return Math.round(s.presentDays/total*100); }
 var BOOKS=[{id:'science',name:'Science',icon:'🔬',chapters:['Ch 1 - Chemical Reactions','Ch 2 - Acids, Bases & Salts','Ch 3 - Metals & Non-Metals','Ch 4 - Electricity','Ch 5 - Light','Ch 6 - Human Eye','Ch 7 - Photosynthesis','Ch 8 - Heredity']},{id:'maths',name:'Maths',icon:'📐',chapters:['Ch 1 - Real Numbers','Ch 2 - Polynomials','Ch 3 - Linear Equations','Ch 4 - Quadratic Equations','Ch 5 - Triangles','Ch 6 - Trigonometry','Ch 7 - Circles','Ch 8 - Probability']},{id:'hindi',name:'Hindi',icon:'📖',chapters:['Ch 1 - Surdas ke Pad','Ch 2 - Ram Lakshman','Ch 3 - Dev','Ch 4 - Prasad','Ch 5 - Nibandh','Ch 6 - Vyakaran','Ch 7 - Patra Lekhan','Ch 8 - Muhavare']},{id:'english',name:'English',icon:'📘',chapters:['Ch 1 - Dust of Snow','Ch 2 - Fire and Ice','Ch 3 - A Letter to God','Ch 4 - Nelson Mandela','Ch 5 - Two Stories','Ch 6 - Grammar','Ch 7 - Writing','Ch 8 - Literature']},{id:'sst',name:'Social Science',icon:'🌍',chapters:['Ch 1 - Nationalism','Ch 2 - Resources','Ch 3 - Power Sharing','Ch 4 - Democracy','Ch 5 - Globalisation','Ch 6 - Consumer Rights','Ch 7 - Agriculture','Ch 8 - Manufacturing']},{id:'computer',name:'Computer',icon:'💻',chapters:['Ch 1 - Internet Basics','Ch 2 - HTML','Ch 3 - Python','Ch 4 - MS Excel','Ch 5 - Cyber Safety','Ch 6 - AI Introduction','Ch 7 - Data','Ch 8 - Project']}];
 var EXAMS=[{id:'science',name:'Science - Ch 1-3',icon:'🔬'},{id:'maths',name:'Maths - Triangles',icon:'📐'},{id:'hindi',name:'Hindi - Vyakaran',icon:'📖'},{id:'english',name:'English - Grammar',icon:'📘'},{id:'sst',name:'SST - Nationalism',icon:'🌍'},{id:'computer',name:'Computer - Python',icon:'💻'}];
-var QUIZ={science:[{q:'Photosynthesis me kaunsi gas nikalti hai?',o:['Oxygen','Carbon Dioxide','Nitrogen','Hydrogen'],a:0,exp:'Plants CO2 lete hai aur Oxygen chhodte hai.'},{q:'H2SO4 kya hai?',o:['Hydrochloric Acid','Sulphuric Acid','Nitric Acid','Acetic Acid'],a:1,exp:'H2SO4 = Sulphuric Acid.'},{q:'Metal ka example?',o:['Wood','Plastic','Iron','Rubber'],a:2,exp:'Iron metal hai.'},{q:'Current ki unit?',o:['Watt','Volt','Ohm','Ampere'],a:3,exp:'Current ki unit Ampere hai.'},{q:'Light ki speed?',o:['300 km/s','3,00,000 km/s','150 km/s','1000 km/s'],a:1,exp:'Light 3 lakh km/sec se chalti hai.'}],maths:[{q:'3-4-5 triangle kya hai?',o:['Right Triangle','Equilateral','Isosceles','Scalene'],a:0,exp:'3-4-5 Pythagoras triplet hai.'},{q:'(a+b)^2 = ?',o:['a^2+b^2','a^2+2ab+b^2','a^2-2ab+b^2','a+b'],a:1,exp:'(a+b)^2 = a^2+2ab+b^2'},{q:'Circle ka area?',o:['2πr','πr^2','πd','r^2'],a:1,exp:'Area = πr^2'}],hindi:[{q:'Surdas kis bhakti ke kavi?',o:['Krishna Bhakti','Ram Bhakti','Shiv Bhakti','Nirgun'],a:0,exp:'Surdas Krishna bhakt the.'},{q:'Aankh ka tara matlab?',o:['Dushman','Bahut Pyara','Andha','Chalak'],a:1,exp:'Aankh ka tara = Bahut pyara.'}],english:[{q:'Dust of Snow ke poet?',o:['Robert Frost','Shakespeare','Wordsworth','Keats'],a:0,exp:'Robert Frost ne likhi.'},{q:'Synonym of Happy?',o:['Sad','Joyful','Angry','Tired'],a:1,exp:'Happy = Joyful.'}],sst:[{q:'Nationalism kab shuru?',o:['1857','1915','1947','1900'],a:0,exp:'1857 ki kranti se badha.'},{q:'Democracy me power kiske paas?',o:['King','People','Army','Rich'],a:1,exp:'Democracy = People ka rule.'}],computer:[{q:'HTML ka full form?',o:['Hyper Text Markup Language','High Text','Home Tool','Hyper Tool'],a:0,exp:'HTML = Hyper Text Markup Language'},{q:'Python kisne banaya?',o:['Guido van Rossum','Bill Gates','Steve Jobs','Elon Musk'],a:0,exp:'Guido ne 1991 me banaya.'}]};
+var QUIZ={science:[{q:'Photosynthesis me kaunsi gas nikalti hai?',o:['Oxygen','Carbon Dioxide','Nitrogen','Hydrogen'],a:0,exp:'Plants CO2 lete hai aur Oxygen chhodte hai.'},{q:'H2SO4 kya hai?',o:['Hydrochloric Acid','Sulphuric Acid','Nitric Acid','Acetic Acid'],a:1,exp:'H2SO4 = Sulphuric Acid.'},{q:'Metal ka example?',o:['Wood','Plastic','Iron','Rubber'],a:2,exp:'Iron metal hai.'}],maths:[{q:'3-4-5 triangle kya hai?',o:['Right Triangle','Equilateral','Isosceles','Scalene'],a:0,exp:'3-4-5 Pythagoras triplet hai.'},{q:'(a+b)^2 = ?',o:['a^2+b^2','a^2+2ab+b^2','a^2-2ab+b^2','a+b'],a:1,exp:'(a+b)^2 = a^2+2ab+b^2'}],hindi:[{q:'Surdas kis bhakti ke kavi?',o:['Krishna Bhakti','Ram Bhakti','Shiv Bhakti','Nirgun'],a:0,exp:'Surdas Krishna bhakt the.'}],english:[{q:'Dust of Snow ke poet?',o:['Robert Frost','Shakespeare','Wordsworth','Keats'],a:0,exp:'Robert Frost ne likhi.'}],sst:[{q:'Nationalism kab shuru?',o:['1857','1915','1947','1900'],a:0,exp:'1857 ki kranti se badha.'}],computer:[{q:'HTML ka full form?',o:['Hyper Text Markup Language','High Text','Home Tool','Hyper Tool'],a:0,exp:'HTML = Hyper Text Markup Language'}]};
 var currentBook=null,currentChapter=null,quizData=null,quizIndex=0,quizScore=0;
 function setText(id,v){var e=document.getElementById(id);if(e)e.innerText=v} function setHTML(id,v){var e=document.getElementById(id);if(e)e.innerHTML=v}
-function doLogin(){myName=document.getElementById('loginName').value.trim()||'raistar12262010';myRoll=parseInt(document.getElementById('loginRoll').value)||12;myRole=document.getElementById('loginRole').value;var cls=document.getElementById('loginClass').value;document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setText('topInfo',myName+' • '+cls+' • Roll '+myRoll+' • '+myRole);setText('homeName',myName);setText('attDate',new Date().toLocaleDateString('hi-IN'));renderAll();addAIMsg('Namaste '+myName+'! 🙏 Main tumhara AI Teacher hu.');addChatMsg('Teacher Sir','teacher','Welcome '+myName+'! Yaad rakhna - 1 Absent = -1%, 1 Late = -0.5% 📚');}
+function showToast(msg){var t=document.getElementById('toast'); t.innerText=msg; t.style.display='block'; setTimeout(function(){t.style.display='none';},2200);}
+function doLogin(){myName=document.getElementById('loginName').value.trim()||'raistar12262010';myRoll=parseInt(document.getElementById('loginRoll').value)||12;myRole=document.getElementById('loginRole').value;var cls=document.getElementById('loginClass').value;document.getElementById('login').style.display='none';document.getElementById('app').style.display='block';setText('topInfo',myName+' • '+cls+' • Roll '+myRoll+' • '+myRole);setText('homeName',myName);setText('attDate',new Date().toLocaleDateString('hi-IN'));renderAll();renderBgPicker();try{var saved=localStorage.getItem('raistar_bg'); if(saved) setBg(saved);}catch(e){} addAIMsg('Namaste '+myName+'! 🙏');addChatMsg('Teacher Sir','teacher','Welcome '+myName+'! Background badalna hai to 🎨 dabao!');}
 function logout(){document.getElementById('app').style.display='none';document.getElementById('login').style.display='flex';}
-function showPage(id,btn){var pages=document.querySelectorAll('.page');for(var i=0;i<pages.length;i++)pages[i].classList.remove('active');var p=document.getElementById('page-'+id);if(p)p.classList.add('active');var nb=document.querySelectorAll('.nav button');for(var j=0;j<nb.length;j++)nb[j].classList.remove('active');if(btn)btn.classList.add('active');if(id==='results')renderResults();}
-function renderAll(){renderAttendance();renderBooks();renderExams();renderTop();}
-function renderTop(){var s=students.slice().sort(function(a,b){return getFinalScore(b)-getFinalScore(a)});var h='';for(var i=0;i<5;i++)h+=(i+1)+'. '+s[i].name+' - '+getFinalScore(s[i])+'% (Penalty -'+getPenalty(s[i])+'%) '+(s[i].name===myName?'⭐ YOU':'')+'<br>';setHTML('topStudents',h);}
-// ===== NAYA ATTENDANCE + PENALTY LOGIC =====
-function renderAttendance(){
-  var q=(document.getElementById('attSearch').value||'').toLowerCase();
-  var html='',pr=0,ab=0,la=0,totalPenalty=0,totalAbsentAll=0,totalLateAll=0,totalPresentDays=0;
-  for(var i=0;i<students.length;i++){
-    var s=students[i]; var pen=getPenalty(s); totalPenalty+=pen; totalAbsentAll+=s.absentCount; totalLateAll+=s.lateCount; totalPresentDays+=s.presentDays;
-    if(s.att==='Present') pr++; if(s.att==='Absent') ab++; if(s.att==='Late') la++;
-    if(q && s.name.toLowerCase().indexOf(q)===-1) continue;
-    var penClass = pen>=5 ? 'penalty-high' : pen>=2 ? 'penalty-mid' : 'penalty-low';
-    var attPer = getAttendancePer(s);
-    html+='<div class="att-row"><div><b>'+s.roll+'. '+s.name+'</b><br><span>Score: '+s.score+'% → Final: <b>'+getFinalScore(s)+'%</b> • Attendance: '+attPer+'%</span><div class="progress"><div style="width:'+attPer+'%;background:'+(attPer>=85?'#22c55e':attPer>=70?'#f59e0b':'#ef4444')+'"></div></div></div><div class="att-btns"><button class="present '+(s.att==='Present'?'active':'')+'" onclick="setAtt('+s.roll+',\'Present\')">✅ Present</button><button class="absent '+(s.att==='Absent'?'active':'')+'" onclick="setAtt('+s.roll+',\'Absent\')">❌ Absent</button><button class="late '+(s.att==='Late'?'active':'')+'" onclick="setAtt('+s.roll+',\'Late\')">⏰ Late</button></div><div class="penalty-box"><span>❌ Absent: <b>'+s.absentCount+'</b> • ⏰ Late: <b>'+s.lateCount+'</b></span><br><b class="'+penClass+'">📉 Penalty: -'+pen.toFixed(1)+'%</b><br><span>Final: '+getFinalScore(s)+'%</span></div></div>';
-  }
-  setHTML('attList',html);
-  setText('attCount',pr); setText('attAbsent',ab); setText('attLate',la);
-  setText('totalPenaltyAll','-'+totalPenalty.toFixed(1)+'%'); setText('statPresent',pr);
-  // TOTAL ROW - AKHIR ME
-  setHTML('totalRow','<div><b>📊 TOTAL - 50 Bachhe</b><br><span>Day '+currentDay+' • Roz ka hisab</span></div><div class="t-box"><b>'+pr+'</b><span>✅ Present Aaj</span></div><div class="t-box"><b>'+ab+'</b><span>❌ Absent Aaj</span></div><div class="t-box"><b>'+la+'</b><span>⏰ Late Aaj</span></div><div class="t-box"><b>'+totalAbsentAll+'</b><span>Total Absent (-1% each)</span></div><div class="t-box"><b>'+totalLateAll+'</b><span>Total Late (-0.5% each)</span></div><div class="t-box" style="background:#ef4444"><b>-'+totalPenalty.toFixed(1)+'%</b><span>Total Penalty</span></div>');
-}
-function setAtt(r,v){for(var i=0;i<students.length;i++)if(students[i].roll===r)students[i].att=v;renderAttendance();}
-function markAll(v){for(var i=0;i<students.length;i++)students[i].att=v;renderAttendance();}
-function nextDay(){
-  // Aaj ki attendance ko total me jodo - Roz ka plus hoga
-  var abToday=0, laToday=0;
-  for(var i=0;i<students.length;i++){ var s=students[i]; if(s.att==='Absent'){ s.absentCount++; abToday++; } if(s.att==='Late'){ s.lateCount++; laToday++; } if(s.att==='Present'){ s.presentDays++; } s.att='Present'; }
-  currentDay++; setText('dayCount',currentDay);
-  alert('📅 Day '+currentDay+' Shuru! Kal ka hisab add ho gaya:\n❌ Absent: '+abToday+' bachhe (+1% penalty each)\n⏰ Late: '+laToday+' bachhe (+0.5% penalty each)\nAb naye din ki attendance lagao!');
-  renderAttendance();
-}
-function resetAttendance(){ if(!confirm('Sab attendance reset kar du?')) return; for(var i=0;i<students.length;i++){ students[i].absentCount=0; students[i].lateCount=0; students[i].att='Present'; } currentDay=1; setText('dayCount',1); renderAttendance(); }
-function saveAttendance(){ alert('✅ Attendance Save Ho Gayi!\nPresent: '+document.getElementById('attCount').innerText+' / 50\nTotal Penalty: '+document.getElementById('totalPenaltyAll').innerText+'\n1 Absent = -1%, 1 Late = -0.5%'); showPage('results'); }
-function renderBooks(){var q=(document.getElementById('bookSearch').value||'').toLowerCase();var html='';for(var i=0;i<BOOKS.length;i++){var b=BOOKS[i];if(q&&b.name.toLowerCase().indexOf(q)===-1)continue;html+='<div class="book-card" onclick="openBook(\''+b.id+'\')"><div class="icon">'+b.icon+'</div><b>'+b.name+'</b><br><span>'+b.chapters.length+' Chapters</span><br><span style="color:#22c55e;font-weight:800">📖 Open Karo →</span></div>';}setHTML('booksGrid',html);}
-function openBook(id){for(var i=0;i<BOOKS.length;i++)if(BOOKS[i].id===id)currentBook=BOOKS[i];setText('chapterTitle',currentBook.icon+' '+currentBook.name+' - Chapters');var html='';for(var j=0;j<currentBook.chapters.length;j++)html+='<div class="chapter" onclick="openChapter('+j+')"><b>'+currentBook.chapters[j]+'</b><br><span>📖 Full Explanation • 🤖 AI Help</span></div>';setHTML('chapterList',html);document.getElementById('chapterBox').style.display='block';document.getElementById('chapterBox').scrollIntoView({behavior:'smooth'});}
-function openChapter(idx){currentChapter=currentBook.chapters[idx];setText('readTitle',currentBook.icon+' '+currentChapter);var topic=currentChapter.replace('Ch '+(idx+1)+' - ','');setHTML('readContent','<b>📌 Kya Seekhoge?</b><br>'+topic+' - Exam ke liye bahut important hai.<br><br><b>1. Introduction:</b> '+topic+' daily life me kaise kaam aata hai.<br><br><b>2. Main Concept:</b> Definition yaad karo, phir example dekho.<br><br><b>3. Exam Me Kaise Likhe:</b> 2 Marks: Definition + Example, 5 Marks: Full Detail + Diagram<br><br><b>🎯 Kaise Yaad Kare?</b> Padho → Likhke yaad karo → AI se puchho → Exam do!');document.getElementById('readBox').style.display='block';document.getElementById('readBox').scrollIntoView({behavior:'smooth'});}
+function showPage(id,btn){var pages=document.querySelectorAll('.page');for(var i=0;i<pages.length;i++)pages[i].classList.remove('active');var p=document.getElementById('page-'+id);if(p)p.classList.add('active');var nb=document.querySelectorAll('.nav button');for(var j=0;j<nb.length;j++)nb[j].classList.remove('active');if(btn)btn.classList.add('active');if(id==='results')renderResults();if(id==='bg')renderBgPicker();}
+function renderAll(){renderAttendance();renderBooks();renderExams();renderTop();renderBgPicker();}
+function renderTop(){var s=students.slice().sort(function(a,b){return getFinalScore(b)-getFinalScore(a)});var h='';for(var i=0;i<5;i++)h+=(i+1)+'. '+s[i].name+' - '+getFinalScore(s[i])+'% (Penalty -'+getPenalty(s[i]).toFixed(1)+'%) '+(s[i].name===myName?'⭐ YOU':'')+'<br>';setHTML('topStudents',h);}
+function renderAttendance(){var q=(document.getElementById('attSearch').value||'').toLowerCase();var html='',pr=0,ab=0,la=0,totalPenalty=0,totalAbsentAll=0,totalLateAll=0;for(var i=0;i<students.length;i++){var s=students[i];var pen=getPenalty(s);totalPenalty+=pen;totalAbsentAll+=s.absentCount;totalLateAll+=s.lateCount;if(s.att==='Present')pr++;if(s.att==='Absent')ab++;if(s.att==='Late')la++;if(q&&s.name.toLowerCase().indexOf(q)===-1)continue;var penClass=pen>=5?'penalty-high':pen>=2?'penalty-mid':'penalty-low';var attPer=getAttendancePer(s);html+='<div class="att-row"><div><b>'+s.roll+'. '+s.name+'</b><br><span>Score: '+s.score+'% → Final: <b>'+getFinalScore(s)+'%</b></span><div class="progress"><div style="width:'+attPer+'%"></div></div></div><div class="att-btns"><button class="present '+(s.att==='Present'?'active':'')+'" onclick="setAtt('+s.roll+',\'Present\')">✅ Present</button><button class="absent '+(s.att==='Absent'?'active':'')+'" onclick="setAtt('+s.roll+',\'Absent\')">❌ Absent</button><button class="late '+(s.att==='Late'?'active':'')+'" onclick="setAtt('+s.roll+',\'Late\')">⏰ Late</button></div><div class="penalty-box"><span>❌ '+s.absentCount+' • ⏰ '+s.lateCount+'</span><br><b class="'+penClass+'">📉 -'+pen.toFixed(1)+'% LIVE</b></div></div>';}setHTML('attList',html);setText('attCount',pr);setText('attAbsent',ab);setText('attLate',la);setText('totalPenaltyAll','-'+totalPenalty.toFixed(1)+'%');setText('statPresent',pr);setHTML('totalRow','<div><b>📊 TOTAL - 50 Bachhe ⚡ LIVE</b></div><div class="t-box"><b>'+pr+'</b><span>✅ Present</span></div><div class="t-box"><b>'+ab+'</b><span>❌ Absent</span></div><div class="t-box"><b>'+la+'</b><span>⏰ Late</span></div><div class="t-box"><b>'+totalAbsentAll+'</b><span>Total Absent</span></div><div class="t-box"><b>'+totalLateAll+'</b><span>Total Late</span></div><div class="t-box" style="background:#ef4444"><b>-'+totalPenalty.toFixed(1)+'%</b><span>Total Penalty</span></div>');}
+function setAtt(roll,val){for(var i=0;i<students.length;i++){var s=students[i];if(s.roll===roll){var old=s.att;if(old===val)return;if(old==='Absent')s.absentCount--;if(old==='Late')s.lateCount--;if(old==='Present'&&s.presentDays>0)s.presentDays--;if(val==='Absent')s.absentCount++;if(val==='Late')s.lateCount++;if(val==='Present')s.presentDays++;s.att=val;renderAttendance();renderTop();if(val==='Absent')showToast('❌ '+s.name+' Absent → -1% | Total: -'+getPenalty(s).toFixed(1)+'%');if(val==='Late')showToast('⏰ '+s.name+' Late → -0.5% | Total: -'+getPenalty(s).toFixed(1)+'%');if(val==='Present')showToast('✅ '+s.name+' Present → Penalty hat gaya!');return;}}}
+function markAll(v){for(var i=0;i<students.length;i++){var s=students[i];if(s.att===v)continue;if(s.att==='Absent')s.absentCount--;if(s.att==='Late')s.lateCount--;if(v==='Absent')s.absentCount++;if(v==='Late')s.lateCount++;s.att=v;}renderAttendance();showToast('⚡ Sab update ho gaya!');}
+function nextDay(){for(var i=0;i<students.length;i++)students[i].att='Present';currentDay++;setText('dayCount',currentDay);alert('📅 Day '+currentDay+' Shuru!');renderAttendance();}
+function resetAttendance(){if(!confirm('Sab 0 kar du?'))return;for(var i=0;i<students.length;i++){students[i].absentCount=0;students[i].lateCount=0;students[i].presentDays=0;students[i].att='Present';}currentDay=1;setText('dayCount',1);renderAttendance();}
+function saveAttendance(){alert('✅ SAVE Ho Gaya!');showPage('results');}
+function renderBooks(){var q=(document.getElementById('bookSearch').value||'').toLowerCase();var html='';for(var i=0;i<BOOKS.length;i++){var b=BOOKS[i];if(q&&b.name.toLowerCase().indexOf(q)===-1)continue;html+='<div class="book-card" onclick="openBook(\''+b.id+'\')"><div class="icon">'+b.icon+'</div><b>'+b.name+'</b><br><span>'+b.chapters.length+' Chapters</span></div>';}setHTML('booksGrid',html);}
+function openBook(id){for(var i=0;i<BOOKS.length;i++)if(BOOKS[i].id===id)currentBook=BOOKS[i];setText('chapterTitle',currentBook.icon+' '+currentBook.name);var html='';for(var j=0;j<currentBook.chapters.length;j++)html+='<div class="chapter" onclick="openChapter('+j+')"><b>'+currentBook.chapters[j]+'</b></div>';setHTML('chapterList',html);document.getElementById('chapterBox').style.display='block';}
+function openChapter(idx){currentChapter=currentBook.chapters[idx];setText('readTitle',currentBook.icon+' '+currentChapter);setHTML('readContent','<b>📌 Kya Seekhoge?</b><br>'+currentChapter+' - Exam ke liye important hai.<br><br><b>Exam Me:</b> Definition + Example + Diagram = Full Marks!');document.getElementById('readBox').style.display='block';}
 function startExamFromChapter(){if(currentBook)startExam(currentBook.id);}
 function askAIChapter(){showPage('ai');setTimeout(function(){var inp=document.getElementById('aiInput');if(inp){inp.value=currentChapter+' easy me samjhao';askAI();}},300);}
-function renderExams(){var html='';for(var i=0;i<EXAMS.length;i++){var e=EXAMS[i];html+='<div class="book-card" onclick="startExam(\''+e.id+'\')"><div class="icon">'+e.icon+'</div><b>'+e.name+'</b><br><span>Turant Result</span><br><span style="color:#3b82f6;font-weight:800">📝 Exam Do →</span></div>';}setHTML('examGrid',html);}
-function startExam(id){quizData=QUIZ[id]||QUIZ['science'];quizIndex=0;quizScore=0;setText('quizTitle','📝 Exam - '+id.toUpperCase());document.getElementById('quizBox').style.display='block';document.getElementById('quizResult').style.display='none';showQuiz();document.getElementById('quizBox').scrollIntoView({behavior:'smooth'});}
-function showQuiz(){var q=quizData[quizIndex];setText('quizProgress','Question '+(quizIndex+1)+' / '+quizData.length+' • Score: '+quizScore);setHTML('quizQ','<b style="font-size:16px">'+q.q+'</b>');var html='';for(var i=0;i<q.o.length;i++)html+='<button class="quiz-opt" onclick="answerQuiz('+i+',this)">'+String.fromCharCode(65+i)+'. '+q.o[i]+'</button>';setHTML('quizOpts',html);document.getElementById('quizNext').style.display='none';}
-function answerQuiz(idx,btn){var q=quizData[quizIndex];var opts=document.querySelectorAll('.quiz-opt');for(var i=0;i<opts.length;i++)opts[i].disabled=true;if(idx===q.a){btn.classList.add('correct');quizScore++;}else{btn.classList.add('wrong');opts[q.a].classList.add('correct');}var div=document.createElement('div');div.style.cssText='background:#dbeafe;padding:12px;border-radius:10px;margin-top:10px;font-size:13px';div.innerHTML='<b>🤖 AI Explanation:</b> '+q.exp;document.getElementById('quizOpts').appendChild(div);document.getElementById('quizNext').style.display='block';document.getElementById('quizNext').innerText=quizIndex===quizData.length-1?'Result Dekho 🏆':'Next →';}
-function nextQuiz(){quizIndex++;if(quizIndex>=quizData.length){document.getElementById('quizBox').style.display='none';document.getElementById('quizResult').style.display='block';var pct=Math.round(quizScore/quizData.length*100);setHTML('quizResultText','<b>'+myName+'</b> - Score: <b>'+quizScore+'/'+quizData.length+' ('+pct+'%)</b><br>'+(pct>=80?'🏆 Excellent!':'📚 AI se dobara samajh le!'));for(var i=0;i<students.length;i++)if(students[i].name===myName)students[i].score=pct;return;}showQuiz();}
+function renderExams(){var html='';for(var i=0;i<EXAMS.length;i++){var e=EXAMS[i];html+='<div class="book-card" onclick="startExam(\''+e.id+'\')"><div class="icon">'+e.icon+'</div><b>'+e.name+'</b></div>';}setHTML('examGrid',html);}
+function startExam(id){quizData=QUIZ[id]||QUIZ['science'];quizIndex=0;quizScore=0;setText('quizTitle','📝 Exam - '+id.toUpperCase());document.getElementById('quizBox').style.display='block';document.getElementById('quizResult').style.display='none';showQuiz();}
+function showQuiz(){var q=quizData[quizIndex];setText('quizProgress','Question '+(quizIndex+1)+' / '+quizData.length);setHTML('quizQ','<b>'+q.q+'</b>');var html='';for(var i=0;i<q.o.length;i++)html+='<button class="quiz-opt" onclick="answerQuiz('+i+',this)">'+String.fromCharCode(65+i)+'. '+q.o[i]+'</button>';setHTML('quizOpts',html);document.getElementById('quizNext').style.display='none';}
+function answerQuiz(idx,btn){var q=quizData[quizIndex];var opts=document.querySelectorAll('.quiz-opt');for(var i=0;i<opts.length;i++)opts[i].disabled=true;if(idx===q.a){btn.classList.add('correct');quizScore++;}else{btn.classList.add('wrong');opts[q.a].classList.add('correct');}var div=document.createElement('div');div.style.cssText='background:#dbeafe;padding:12px;border-radius:10px;margin-top:10px;font-size:13px';div.innerHTML='<b>🤖 AI:</b> '+q.exp;document.getElementById('quizOpts').appendChild(div);document.getElementById('quizNext').style.display='block';document.getElementById('quizNext').innerText=quizIndex===quizData.length-1?'Result Dekho 🏆':'Next →';}
+function nextQuiz(){quizIndex++;if(quizIndex>=quizData.length){document.getElementById('quizBox').style.display='none';document.getElementById('quizResult').style.display='block';var pct=Math.round(quizScore/quizData.length*100);setHTML('quizResultText','<b>'+myName+'</b> - Score: '+quizScore+'/'+quizData.length+' ('+pct+'%)');for(var i=0;i<students.length;i++)if(students[i].name===myName)students[i].score=pct;return;}showQuiz();}
 function addChatMsg(name,who,text){var box=document.getElementById('chatBox');var div=document.createElement('div');div.className='msg '+(who==='me'?'me':who==='teacher'?'teacher':'');div.innerHTML='<b>'+name+'</b><br>'+text;box.appendChild(div);box.scrollTop=box.scrollHeight;}
 function sendChat(){var inp=document.getElementById('chatInput');var t=inp.value.trim();if(!t)return;inp.value='';addChatMsg(myName,'me',t);setTimeout(function(){addChatMsg('Teacher Sir','teacher','Achha sawal hai '+myName+'! 👍');},1000);}
 function addAIMsg(text){var box=document.getElementById('aiBox');var div=document.createElement('div');div.className='msg ai';div.innerHTML='<b>🤖 AI TEACHER</b><br>'+text;box.appendChild(div);box.scrollTop=box.scrollHeight;}
 function addUserMsg(text){var box=document.getElementById('aiBox');var div=document.createElement('div');div.className='msg me';div.innerHTML='<b>'+myName+'</b><br>'+text;box.appendChild(div);box.scrollTop=box.scrollHeight;}
 function askAI(){var inp=document.getElementById('aiInput');var q=inp.value.trim();if(!q)return;inp.value='';addUserMsg(q);setTimeout(function(){addAIMsg(aiAnswer(q));},800);}
 function quickAI(q){document.getElementById('aiInput').value=q;askAI();}
-function aiAnswer(q){var l=q.toLowerCase();if(l.indexOf('photosynthesis')!==-1)return '<b>Photosynthesis 🌱</b><br>CO2 + H2O + Sunlight → Glucose + Oxygen';if(l.indexOf('pythagoras')!==-1)return '<b>Pythagoras 📐</b><br>Hypo² = Base² + Perp² | 3-4-5 yaad kar lo!';if(l.indexOf('exam')!==-1||l.indexOf('padh')!==-1)return '<b>Exam Tips 🏆</b><br>25 Min Padhai + 5 Min Break, Likhke yaad karo!';return '<b>'+q+'</b> - Achha sawal hai! Pehle Definition, phir Example, phir Diagram!';}
-function renderResults(){var html='';var sorted=students.slice().sort(function(a,b){return getFinalScore(b)-getFinalScore(a)});for(var i=0;i<sorted.length;i++){var s=sorted[i];var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';html+='<div class="att-row"><div><b>'+medal+' '+s.name+'</b><br><span>Roll '+s.roll+' • Absent: '+s.absentCount+' ( -'+(s.absentCount*1)+'% ) • Late: '+s.lateCount+' ( -'+(s.lateCount*0.5)+'% ) • Penalty: -'+getPenalty(s).toFixed(1)+'%</span></div><div style="text-align:right"><b>'+s.score+'% → '+getFinalScore(s)+'%</b><br><span>'+(getFinalScore(s)>=85?'🏆 Topper':getFinalScore(s)>=60?'👍 Good':'📚 Need Practice')+'</span></div></div>';}setHTML('resultsList',html);}
+function aiAnswer(q){var l=q.toLowerCase();if(l.indexOf('photosynthesis')!==-1)return '<b>Photosynthesis 🌱</b><br>CO2 + H2O + Sunlight → Glucose + Oxygen';if(l.indexOf('pythagoras')!==-1)return '<b>Pythagoras 📐</b><br>Hypo² = Base² + Perp²';return '<b>'+q+'</b> - Achha sawal hai! Pehle Definition, phir Example!';}
+function renderResults(){var html='';var sorted=students.slice().sort(function(a,b){return getFinalScore(b)-getFinalScore(a)});for(var i=0;i<sorted.length;i++){var s=sorted[i];var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';html+='<div class="att-row"><div><b>'+medal+' '+s.name+'</b><br><span>Absent: '+s.absentCount+' • Late: '+s.lateCount+' • Penalty: -'+getPenalty(s).toFixed(1)+'%</span></div><div><b>'+s.score+'% → '+getFinalScore(s)+'%</b></div></div>';}setHTML('resultsList',html);}
+renderBgPicker();
 </script>
 </body>
 </html>
