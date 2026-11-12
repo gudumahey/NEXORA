@@ -3,231 +3,309 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAISTAR BOOKS LIBRARY - 12 Books, 120 Chapters</title>
+<title>RAISTAR iEDUCA - Learn Like a Pro</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:linear-gradient(135deg,#667eea,#764ba2);background-attachment:fixed;background-size:cover;color:#111;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;background:rgba(0,0,0,.15);pointer-events:none;z-index:0}
-.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:16px}
-.top{background:rgba(15,23,42,.95);color:#fff;padding:14px 16px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;backdrop-filter:blur(12px);position:sticky;top:10px;z-index:20}
-.top b{font-size:19px} .top b span{color:#22c55e}
-.top button{background:#22c55e;color:#fff;border:none;padding:9px 16px;border-radius:20px;font-weight:800;cursor:pointer;font-size:12px}
-.card{background:rgba(255,255,255,.95);border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:0 10px 30px rgba(0,0,0,.2);backdrop-filter:blur(12px)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f6f7fb;color:#111;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.topbar{background:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.topbar .logo{font-size:22px;font-weight:900} .topbar .logo span{color:#7c3aed} .topbar .logo small{display:block;font-size:11px;color:#888;font-weight:400;letter-spacing:1px}
+.topbar input{width:380px;max-width:45vw;padding:11px 16px;border:1px solid #e5e7eb;border-radius:30px;background:#f3f4f6;outline:none;font-size:14px}
+.topbar button{border:none;padding:10px 18px;border-radius:30px;font-weight:800;cursor:pointer;font-size:13px}
+.btn-p{background:#7c3aed;color:#fff} .btn-w{background:#f3f4f6}
+.hero{max-width:1200px;margin:18px auto;padding:0 18px;display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.hero-main{background:linear-gradient(135deg,#7c3aed,#4f46e5 55%,#06b6d4);color:#fff;border-radius:22px;padding:28px;position:relative;overflow:hidden}
+.hero-main h1{font-size:32px;line-height:1.15} .hero-main p{opacity:.9;margin:12px 0 18px;line-height:1.6;font-size:14px}
+.hero-main .pill{display:inline-block;background:rgba(255,255,255,.22);padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-right:6px}
+.hero-main button{border:none;padding:12px 20px;border-radius:30px;font-weight:900;cursor:pointer;margin-right:8px}
+.hero-side{display:grid;gap:12px}
+.hero-card{background:#fff;border-radius:18px;padding:16px;display:flex;gap:12px;align-items:center;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.hero-card .ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.hero-card b{font-size:15px} .hero-card span{font-size:12px;color:#666}
+.wrap{max-width:1200px;margin:0 auto;padding:0 18px 30px}
+.cat-row{display:flex;gap:8px;overflow-x:auto;padding:6px 0 14px;scrollbar-width:none}
+.cat-row button{white-space:nowrap;border:1px solid #e5e7eb;background:#fff;padding:9px 16px;border-radius:30px;font-weight:700;cursor:pointer;font-size:13px}
+.cat-row button.active{background:#111;color:#fff}
+.sec-head{display:flex;justify-content:space-between;align-items:center;margin:14px 0 12px}
+.sec-head h3{font-size:19px} .sec-head span{font-size:13px;color:#7c3aed;font-weight:800;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:16px}
+.book{ background:#fff;border-radius:20px;overflow:hidden;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.06);transition:all .2s;border:1px solid #f1f1f1}
+.book:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.book-top{height:118px;padding:16px;color:#fff;display:flex;justify-content:space-between;align-items:flex-start;position:relative}
+.book-top .emoji{font-size:44px}
+.book-top .fav{ background:rgba(255,255,255,.25);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer}
+.book-body{padding:14px}
+.book-body b{font-size:16px} .book-body p{font-size:12px;color:#666;line-height:1.6;margin:6px 0 10px;min-height:38px}
+.meta{display:flex;justify-content:space-between;font-size:11px;color:#888;font-weight:700}
+.progress{height:6px;background:#eee;border-radius:10px;overflow:hidden;margin:10px 0 6px}
+.progress div{height:100%;border-radius:10px}
+.card{background:#fff;border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 4px 16px rgba(0,0,0,.05)}
 .card h3{margin-bottom:8px} .card p{font-size:13px;color:#555;line-height:1.7}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.book-card{background:#fff;border-radius:16px;padding:16px;cursor:pointer;border:3px solid transparent;box-shadow:0 6px 20px rgba(0,0,0,.1);transition:all .2s}
-.book-card:hover{transform:translateY(-4px);border-color:#22c55e;box-shadow:0 12px 30px rgba(34,197,94,.3)}
-.book-card .icon{font-size:50px} .book-card b{font-size:16px} .book-card span{font-size:12px;color:#666;line-height:1.5}
-.btn{background:#22c55e;color:#fff;border:none;padding:11px 20px;border-radius:10px;font-weight:900;cursor:pointer}
-.btn.blue{background:#3b82f6} .btn.orange{background:#f59e0b} .btn.purple{background:#a855f7} .btn.black{background:#111} .btn.small{padding:7px 14px;font-size:12px}
-input,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;outline:none;margin-bottom:10px;font-size:14px}
-.chapter{background:#f8fafc;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;border:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.chapter:hover{border-color:#22c55e;background:#f0fdf4}
+.btn{background:#7c3aed;color:#fff;border:none;padding:11px 20px;border-radius:30px;font-weight:800;cursor:pointer}
+.btn.green{background:#16a34a} .btn.blue{background:#2563eb} .btn.orange{background:#ea580c} .btn.black{background:#111} .btn.small{padding:7px 14px;font-size:12px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:12px;outline:none;margin-bottom:10px;font-size:14px}
+.chapter{background:#f8fafc;border:1px solid #eef2f7;border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.chapter:hover{border-color:#7c3aed;background:#f5f3ff}
 .chapter b{font-size:14px} .chapter span{font-size:11px;color:#666}
-.chapter .go{background:#22c55e;color:#fff;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800;white-space:nowrap}
-.read-content{font-size:15px;line-height:1.9;color:#1e293b}
-.read-content h4{margin:16px 0 8px;font-size:17px;color:#111;border-left:4px solid #22c55e;padding-left:10px}
-.read-content .box{background:#f0fdf4;border:1px solid #bbf7d0;padding:14px;border-radius:12px;margin:12px 0}
-.read-content .box.blue{background:#eff6ff;border-color:#bfdbfe}
-.read-content .box.orange{background:#fffbeb;border-color:#fde68a}
-.read-content .box.pink{background:#fdf2f8;border-color:#fbcfe8}
-.read-content table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
-.read-content table td,.read-content table th{border:1px solid #ddd;padding:8px;text-align:left}
-.read-content table th{background:#1e293b;color:#fff}
-.chat-box{height:380px;overflow-y:auto;background:#f8fafc;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
-.msg{background:#fff;padding:12px 14px;border-radius:14px;max-width:90%;font-size:14px;line-height:1.7;box-shadow:0 2px 6px rgba(0,0,0,.05)}
-.msg.me{background:#dcfce7;align-self:flex-end}
-.msg.ai{background:#dbeafe;align-self:flex-start;border-left:4px solid #3b82f6}
-.msg.ai b{color:#1e40af}
-.tag{display:inline-block;background:#e0e7ff;color:#3730a3;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:800;margin-right:4px}
-.progress{height:8px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin-top:8px}
-.progress div{height:100%;background:#22c55e}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:20px;font-size:13px;font-weight:800;z-index:999;display:none}
-@media(max-width:600px){.chapter{flex-direction:column;align-items:flex-start}}
+.chapter .go{background:#111;color:#fff;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800;white-space:nowrap}
+.read-wrap{max-width:820px;margin:0 auto}
+.read-content{font-size:15.5px;line-height:1.9;color:#1f2937}
+.read-content h4{margin:22px 0 10px;font-size:18px;border-left:5px solid #7c3aed;padding-left:12px}
+.read-content .box{border-radius:14px;padding:16px;margin:14px 0;line-height:1.8}
+.read-content .box.green{background:#f0fdf4;border:1px solid #bbf7d0}
+.read-content .box.blue{background:#eff6ff;border:1px solid #bfdbfe}
+.read-content .box.orange{background:#fffbeb;border:1px solid #fde68a}
+.read-content .box.purple{background:#f5f3ff;border:1px solid #ddd6fe}
+.read-content table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+.read-content table td,.read-content table th{border:1px solid #e5e7eb;padding:10px;text-align:left}
+.read-content table th{background:#111;color:#fff}
+.read-content code{background:#111;color:#a7f3d0;padding:12px 14px;border-radius:12px;display:block;white-space:pre-wrap;margin:10px 0;font-size:13px;line-height:1.7}
+.chat-box{height:380px;overflow-y:auto;background:#f8fafc;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+.msg{background:#fff;padding:12px 14px;border-radius:14px;max-width:90%;font-size:14px;line-height:1.7;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+.msg.me{background:#dcfce7;align-self:flex-end} .msg.ai{background:#e0e7ff;border-left:4px solid #7c3aed}
+.tag{display:inline-block;background:#ede9fe;color:#5b21b6;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;margin-right:4px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;border-radius:30px;font-size:13px;font-weight:800;z-index:99;display:none}
+@media(max-width:700px){.hero{grid-template-columns:1fr} .topbar input{display:none} .hero-main h1{font-size:26px}}
 </style>
 </head>
 <body>
 <div id="toast"></div>
-<div class="wrap">
-<div class="top"><div><b>📚 RAISTAR <span>BOOKS LIBRARY</span></b><br><span style="font-size:11px;color:#aaa">12 Books • 120 Chapters • Full Teoria • AI Teacher Meri Tarah</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button onclick="window.location.href='index.html'">🏠 Classroom</button><button onclick="showSection('ai')" style="background:#3b82f6">🤖 AI Se Puchho</button></div></div>
+<div class="topbar"><div class="logo">📚 RAISTAR <span>iEDUCA</span><small>LEARN • PRACTICE • TOP</small></div><input id="topSearch" placeholder="🔍 Search karo... Photosynthesis, Pythagoras, HTML, Tenses" oninput="doTopSearch(this.value)"><div style="display:flex;gap:8px"><button class="btn-w" onclick="window.location.href='index.html'">🏠 Classroom</button><button class="btn-p" onclick="showSection('ai')">🤖 AI Teacher</button></div></div>
 
-<!-- HOME / BOOKS LIST -->
-<div id="sec-books">
-<div class="card"><h3>📚 Sari Books - Ek Jagah!</h3><p>Book pe click karo → Chapters dikhenge → Chapter pe click karo → <b>Puri Teoria (800+ words)</b> + Examples + Formulas + Exam Questions + AI Help milega!</p><input id="bookSearch" placeholder="🔍 Book ya Chapter dhoondo... jaise Photosynthesis, Pythagoras, HTML" oninput="renderBooks()"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"><button class="btn small" onclick="filterBook('all')">Sab</button><button class="btn small blue" onclick="filterBook('Science')">Science</button><button class="btn small orange" onclick="filterBook('Maths')">Maths</button><button class="btn small purple" onclick="filterBook('Computer')">Computer</button><button class="btn small black" onclick="showSection('ai')">🤖 AI</button></div><p style="margin-top:10px"><b>Progress:</b> <span id="readProgressText">0 / 120 Chapters Padhe</span></p><div class="progress"><div id="readProgressBar" style="width:0%"></div></div></div>
+<!-- HOME -->
+<div id="sec-home">
+<div class="hero"><div class="hero-main"><span class="pill">✨ NEW • 150 CHAPTERS</span> <span class="pill">🏆 TOPPER METHOD</span><h1>Sikho Easy Me,<br>Top Karo Exam Me! 🚀</h1><p>Har chapter me <b>Full Teoria + Examples + Formulas + Diagram + Exam Questions</b> - Bilkul iEduca jaisa, par tumhari language me - Hinglish me!</p><button style="background:#fff;color:#7c3aed" onclick="document.getElementById('booksGrid').scrollIntoView({behavior:'smooth'})">📚 Padhna Shuru Karo →</button><button style="background:rgba(255,255,255,.2);color:#fff" onclick="showSection('ai')">🤖 AI Se Puchho</button><p style="font-size:12px;margin-top:14px">⭐ 4.9 Rating • 👦 50 Students • 📖 <span id="heroProgress">0 / 150 Chapters</span></p></div><div class="hero-side"><div class="hero-card"><div class="ic" style="background:#f0fdf4">📖</div><div><b>Continue Reading</b><br><span id="continueText">Abhi kuch nahi padha - Shuru karo!</span><br><button class="btn small green" style="margin-top:6px" onclick="continueReading()">▶️ Continue →</button></div></div><div class="hero-card"><div class="ic" style="background:#eff6ff">🤖</div><div><b>AI Teacher - Meri Tarah</b><br><span>Koi bhi doubt? AI detail me samjhayega!</span><br><button class="btn small blue" style="margin-top:6px" onclick="showSection('ai')">Ask AI →</button></div></div><div class="hero-card"><div class="ic" style="background:#fffbeb">🏆</div><div><b>Aaj Ka Target</b><br><span>2 Chapters padho + 1 Exam do = Topper!</span></div></div></div></div>
+<div class="wrap">
+<div class="cat-row" id="catRow"></div>
+<div class="sec-head"><h3>📚 Sari Books - Popular</h3><span onclick="filterCat('all')">View All →</span></div>
 <div class="grid" id="booksGrid"></div>
 <div class="card" id="chapterBox" style="display:none"><h3 id="chapterTitle"></h3><p id="chapterDesc"></p><div id="chapterList"></div></div>
+<div class="sec-head"><h3>🔥 Trending Chapters - Sabse Zyada Padhe Ja Rahe Hai</h3></div>
+<div class="grid" id="trendingGrid"></div>
+<div class="card"><h3>💡 Kaise Padhe? - Topper Method</h3><p><b>1.</b> Book chuno → <b>2.</b> Chapter padho (15 min) → <b>3.</b> Notes likho → <b>4.</b> AI se doubt puchho → <b>5.</b> Quiz do → <b>6.</b> ✅ Mark karo. Bas! Tum topper ban jaoge!</p></div>
+</div>
 </div>
 
-<!-- READING -->
-<div id="sec-read" style="display:none">
-<div class="card"><button class="btn small black" onclick="backToBooks()">⬅️ Sab Books</button> <button class="btn small" onclick="backToChapters()">⬅️ Chapters</button><h3 id="readTitle" style="margin-top:12px"></h3><p><span id="readMeta"></span></p><div class="read-content" id="readContent"></div><br><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="markRead()">✅ Padha Hua Mark Karo</button><button class="btn blue" onclick="askAIChapter()">🤖 AI Se Is Chapter Ke Baare Me Puchho</button><button class="btn orange" onclick="nextChapter()">Next Chapter →</button><button class="btn purple" onclick="makeNotes()">📝 Notes Banao</button></div><div id="notesBox" style="display:none;margin-top:12px"><textarea id="notesInput" rows="4" placeholder="Apne notes yaha likho..."></textarea><button class="btn small" onclick="saveNotes()">💾 Notes Save Karo</button></div></div>
-<div class="card"><h3>❓ Is Chapter Ke Exam Questions</h3><div id="examQs"></div></div>
-</div>
+<!-- READ -->
+<div id="sec-read" style="display:none"><div class="wrap"><div class="read-wrap"><div class="card"><button class="btn small black" onclick="showSection('home')">⬅️ Sab Books</button> <button class="btn small" onclick="backToChapters()">⬅️ Chapters</button><h3 id="readTitle" style="margin-top:14px"></h3><p><span id="readMeta"></span></p><div class="read-content" id="readContent"></div><br><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn green" onclick="markRead()">✅ Padha Hua Mark Karo</button><button class="btn blue" onclick="askAIChapter()">🤖 AI Se Puchho</button><button class="btn orange" onclick="nextChapter()">Next Chapter →</button><button class="btn black" onclick="toggleNotes()">📝 Notes</button></div><div id="notesBox" style="display:none;margin-top:12px"><textarea id="notesInput" rows="4" placeholder="Apne notes yaha likho..."></textarea><button class="btn small" onclick="saveNotes()">💾 Save Notes</button></div></div><div class="card"><h3>❓ Exam Questions - Is Chapter Se</h3><div id="examQs"></div></div><div class="card"><h3>🎯 Quick Quiz - 1 Min Me Check Karo</h3><div id="quickQuiz"></div></div></div></div></div>
 
-<!-- AI - MERI TARAH WALA -->
-<div id="sec-ai" style="display:none">
-<div class="card"><h3>🤖 AI TEACHER - Bilkul Meri Tarah!</h3><p>Ab ye AI chhota nahi hai! Ye <b>har subject</b> ka jawab dega - detail me, example ke saath, Hinglish me, jaise main samjhata hu! Try karo: <b>"Photosynthesis kya hai detail me"</b> ya <b>"Pythagoras samjhao"</b> ya <b>"HTML kaise sikhe"</b></p><div class="chat-box" id="aiBox"></div><div style="display:flex;gap:8px"><input id="aiInput" placeholder="Kuch bhi puchho... jaise - Light kya hai? Trigonometry kaise yaad kare?" onkeypress="if(event.key==='Enter') askAI()"><button class="btn" onclick="askAI()">Ask AI 🤖</button></div><div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap"><button class="btn small" onclick="quickAI('Photosynthesis kya hai detail me samjhao')">🌱 Photosynthesis</button><button class="btn small blue" onclick="quickAI('Pythagoras theorem samjhao example ke saath')">📐 Pythagoras</button><button class="btn small orange" onclick="quickAI('Light kya hai? Reflection samjhao')">💡 Light</button><button class="btn small purple" onclick="quickAI('HTML kya hai? Kaise banate hai website?')">💻 HTML</button><button class="btn small" onclick="quickAI('Trigonometry ke formulas yaad kaise kare?')">📐 Trigonometry</button><button class="btn small" onclick="quickAI('Kal exam hai, kaise padhu top karne ke liye?')">🏆 Exam Tips</button><button class="btn small" onclick="quickAI('Hindi me nibandh kaise likhe?')">📖 Nibandh</button><button class="btn small" onclick="quickAI('Acids aur Bases me kya farak hai?')">🧪 Acids</button></div></div>
-<div class="card"><h3>💡 AI Kya-Kya Kar Sakta Hai?</h3><p>✅ Kisi bhi chapter ko <b>easy me</b> samjha sakta hai<br>✅ <b>Notes</b> bana sakta hai - "Iska notes banao" bolo<br>✅ <b>Exam Questions</b> bana sakta hai - "Mere liye 5 questions banao" bolo<br>✅ <b>Formula</b> yaad kara sakta hai<br>✅ <b>Hindi, English, Maths, Science, SST, Computer</b> - sab aata hai!</p></div>
-</div>
+<!-- AI -->
+<div id="sec-ai" style="display:none"><div class="wrap"><div class="card"><h3>🤖 AI TEACHER - Bilkul Meri Tarah!</h3><p>Har subject ka jawab - detail me, example ke saath, Hinglish me!</p><div class="chat-box" id="aiBox"></div><div style="display:flex;gap:8px"><input id="aiInput" placeholder="Kuch bhi puchho... Photosynthesis kya hai detail me?" onkeypress="if(event.key==='Enter') askAI()"><button class="btn" onclick="askAI()">Ask AI 🤖</button></div><div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap"><button class="btn small" onclick="quickAI('Photosynthesis kya hai detail me samjhao')">🌱 Photosynthesis</button><button class="btn small blue" onclick="quickAI('Pythagoras theorem samjhao example ke saath')">📐 Pythagoras</button><button class="btn small orange" onclick="quickAI('Light kya hai? Reflection samjhao')">💡 Light</button><button class="btn small" style="background:#111" onclick="quickAI('HTML kya hai? Kaise banate hai website?')">💻 HTML</button><button class="btn small green" onclick="quickAI('Trigonometry ke formulas yaad kaise kare?')">📐 Trigonometry</button><button class="btn small blue" onclick="quickAI('Kal exam hai, kaise padhu top karne ke liye?')">🏆 Exam Tips</button></div></div></div></div>
 
-</div>
 <script>
-var currentBook=null, currentChapterIdx=0, readChapters=new Set();
-try{ var saved=localStorage.getItem('raistar_read'); if(saved) readChapters=new Set(JSON.parse(saved)); }catch(e){}
 var BOOKS=[
-{id:'science',name:'Science',icon:'🔬',cat:'Science',desc:'Physics, Chemistry, Biology - Sab kuch detail me',color:'#22c55e',chapters:['Chemical Reactions','Acids Bases & Salts','Metals & Non-Metals','Electricity','Light - Reflection & Refraction','Human Eye','Photosynthesis','Heredity & Evolution','Carbon & Compounds','Periodic Table']},
-{id:'maths',name:'Maths',icon:'📐',cat:'Maths',desc:'Formulas, Theorems, Tricks - 100/100 laane ke liye',color:'#3b82f6',chapters:['Real Numbers','Polynomials','Linear Equations','Quadratic Equations','Triangles','Trigonometry','Circles','Probability','Statistics','Surface Areas & Volumes']},
-{id:'physics',name:'Physics',icon:'⚡',cat:'Science',desc:'Light, Electricity, Motion - Easy language me',color:'#f59e0b',chapters:['Motion','Force & Laws','Gravitation','Work & Energy','Sound','Light','Electricity','Magnetism','Sources of Energy','Optics']},
-{id:'chemistry',name:'Chemistry',icon:'🧪',cat:'Science',desc:'Reactions, Acids, Metals - Lab wali feeling',color:'#ef4444',chapters:['Matter','Atoms & Molecules','Structure of Atom','Chemical Bonding','Acids Bases Salts','Metals & Non-Metals','Carbon Compounds','Periodic Classification','Chemical Reactions','Electrochemistry']},
-{id:'biology',name:'Biology',icon:'🌱',cat:'Science',desc:'Plants, Human Body, Heredity - Diagram ke saath',color:'#10b981',chapters:['Life Processes','Control & Coordination','Reproduction','Heredity','Photosynthesis','Human Heart','Brain & Nervous System','Excretion','Hormones','Ecosystem']},
-{id:'hindi',name:'Hindi',icon:'📖',cat:'Hindi',desc:'Vyakaran, Nibandh, Kahaniyan - Full marks ke liye',color:'#f97316',chapters:['Surdas ke Pad','Ram Lakshman Parshuram','Dev','Jayshankar Prasad','Nibandh Lekhan','Vyakaran','Patra Lekhan','Muhavare','Samas','Sandhi']},
-{id:'english',name:'English',icon:'📘',cat:'English',desc:'Grammar, Writing, Literature - Fluent banne ke liye',color:'#a855f7',chapters:['Dust of Snow','Fire and Ice','A Letter to God','Nelson Mandela','Two Stories','Grammar - Tenses','Writing Skills','Literature','Comprehension','Vocabulary']},
-{id:'sst',name:'Social Science',icon:'🌍',cat:'SST',desc:'History, Geography, Civics, Economics - Story jaisa',color:'#06b6d4',chapters:['Nationalism in India','Resources','Power Sharing','Democracy','Globalisation','Consumer Rights','Agriculture','Manufacturing','Money & Credit','Political Parties']},
-{id:'computer',name:'Computer',icon:'💻',cat:'Computer',desc:'HTML, Python, AI, Internet - Future ki skill',color:'#6366f1',chapters:['Internet Basics','HTML - Website Banana','Python - Coding','MS Excel','Cyber Safety','AI Introduction','Data & Database','Scratch','MS Word','Project - Website']},
-{id:'history',name:'History',icon:'🏛️',cat:'SST',desc:'1857 se lekar Aaj tak - Kahaniyan',color:'#92400e',chapters:['1857 Revolt','Nationalism','Freedom Movement','Gandhi Ji','Independence','Mughal Empire','British Rule','World War','Indian Constitution','Modern India']},
-{id:'geography',name:'Geography',icon:'🗺️',cat:'SST',desc:'Nadi, Pahad, Mausam - Map ke saath',color:'#059669',chapters:['Resources','Water Resources','Agriculture','Minerals','Manufacturing','Climate','Rivers','Mountains','Population','Transport']},
-{id:'english-grammar',name:'English Grammar Pro',icon:'✍️',cat:'English',desc:'Tenses, Voice, Narration - Sabse easy',color:'#db2777',chapters:['Tenses','Active Passive','Direct Indirect','Prepositions','Articles','Modals','Conditionals','Reported Speech','Error Correction','Writing - Letter & Essay']}
+{id:'science',name:'Science',icon:'🔬',cat:'Science',color:'linear-gradient(135deg,#16a34a,#059669)',desc:'Physics + Chemistry + Biology - Sab kuch ek jagah, easy language me',chapters:['Chemical Reactions','Acids Bases & Salts','Metals & Non-Metals','Electricity','Light - Reflection','Human Eye','Photosynthesis','Heredity & Evolution','Carbon Compounds','Periodic Table']},
+{id:'maths',name:'Maths',icon:'📐',cat:'Maths',color:'linear-gradient(135deg,#2563eb,#1d4ed8)',desc:'Formulas + Theorems + Tricks - 100/100 laane ke liye',chapters:['Real Numbers','Polynomials','Linear Equations','Quadratic Equations','Triangles','Trigonometry','Circles','Probability','Statistics','Surface Areas']},
+{id:'physics',name:'Physics',icon:'⚡',cat:'Science',color:'linear-gradient(135deg,#ea580c,#f97316)',desc:'Motion, Force, Light, Electricity - Daily life se jodke',chapters:['Motion','Force & Laws','Gravitation','Work & Energy','Sound','Light','Electricity','Magnetism','Sources of Energy','Optics']},
+{id:'chemistry',name:'Chemistry',icon:'🧪',cat:'Science',color:'linear-gradient(135deg,#dc2626,#ef4444)',desc:'Reactions, Acids, Metals - Lab wali feeling, bina lab ke',chapters:['Matter','Atoms & Molecules','Structure of Atom','Chemical Bonding','Acids Bases Salts','Metals & Non-Metals','Carbon Compounds','Periodic Classification','Chemical Reactions','Electrochemistry']},
+{id:'biology',name:'Biology',icon:'🌱',cat:'Science',color:'linear-gradient(135deg,#059669,#10b981)',desc:'Human Body, Plants, Heredity - Diagram ke saath',chapters:['Life Processes','Control & Coordination','Reproduction','Heredity','Photosynthesis','Human Heart','Brain & Nervous System','Excretion','Hormones','Ecosystem']},
+{id:'hindi',name:'Hindi',icon:'📖',cat:'Hindi',color:'linear-gradient(135deg,#ea580c,#f59e0b)',desc:'Vyakaran, Nibandh, Kahaniyan - Full marks ke liye',chapters:['Surdas ke Pad','Ram Lakshman','Dev','Jayshankar Prasad','Nibandh Lekhan','Vyakaran','Patra Lekhan','Muhavare','Samas','Sandhi']},
+{id:'english',name:'English',icon:'📘',cat:'English',color:'linear-gradient(135deg,#7c3aed,#a855f7)',desc:'Grammar, Writing, Literature - Fluent banne ke liye',chapters:['Dust of Snow','Fire and Ice','A Letter to God','Nelson Mandela','Two Stories','Grammar - Tenses','Writing Skills','Literature','Comprehension','Vocabulary']},
+{id:'sst',name:'Social Science',icon:'🌍',cat:'SST',color:'linear-gradient(135deg,#0891b2,#06b6d4)',desc:'History, Geography, Civics, Economics - Story jaisa',chapters:['Nationalism in India','Resources','Power Sharing','Democracy','Globalisation','Consumer Rights','Agriculture','Manufacturing','Money & Credit','Political Parties']},
+{id:'computer',name:'Computer',icon:'💻',cat:'Computer',color:'linear-gradient(135deg,#4f46e5,#6366f1)',desc:'HTML, Python, AI - Future ki skill, aaj se sikho',chapters:['Internet Basics','HTML - Website Banana','Python - Coding','MS Excel','Cyber Safety','AI Introduction','Data & Database','Scratch','MS Word','Project - Website']},
+{id:'history',name:'History',icon:'🏛️',cat:'SST',color:'linear-gradient(135deg,#92400e,#b45309)',desc:'1857 se Aaj Tak - Kahaniyan jo yaad rahengi',chapters:['1857 Revolt','Nationalism','Freedom Movement','Gandhi Ji','Independence','Mughal Empire','British Rule','World War','Indian Constitution','Modern India']},
+{id:'geography',name:'Geography',icon:'🗺️',cat:'SST',color:'linear-gradient(135deg,#047857,#059669)',desc:'Nadi, Pahad, Mausam - Map ke saath samjho',chapters:['Resources','Water Resources','Agriculture','Minerals','Manufacturing','Climate','Rivers','Mountains','Population','Transport']},
+{id:'grammar',name:'English Grammar Pro',icon:'✍️',cat:'English',color:'linear-gradient(135deg,#db2777,#ec4899)',desc:'Tenses, Voice, Narration - Sabse easy tarika',chapters:['Tenses','Active Passive','Direct Indirect','Prepositions','Articles','Modals','Conditionals','Reported Speech','Error Correction','Writing - Letter & Essay']},
+{id:'art',name:'Art & Creativity',icon:'🎨',cat:'Life Skills',color:'linear-gradient(135deg,#db2777,#f472b6)',desc:'Drawing, Colors, Creativity - Apni soch ko dikhao',chapters:['Drawing Basics','Colors & Shades','Sketching','Painting','Design','Cartoon Banana','Craft','Photography Basics','Poster Banana','Exhibition']},
+{id:'sports',name:'Sports & Health',icon:'⚽',cat:'Life Skills',color:'linear-gradient(135deg,#16a34a,#22c55e)',desc:'Cricket, Football, Health - Fit raho, top karo',chapters:['Cricket Basics','Football','Health & Fitness','Yoga','Diet','Discipline','Team Work','Sports Rules','Injury Care','Champion Mindset']},
+{id:'lifeskills',name:'Life Skills',icon:'🌟',cat:'Life Skills',color:'linear-gradient(135deg,#7c3aed,#ec4899)',desc:'Confidence, Time Management, Communication - Real life me kaam aayega',chapters:['Confidence','Time Management','Communication','Public Speaking','Money Management','Goal Setting','Friendship','Emotional Control','Leadership','Success Habits']}
 ];
-var currentFilter='all';
+var CATS=['all','Science','Maths','Hindi','English','SST','Computer','Life Skills'];
+var currentFilter='all', currentBook=null, currentChapterIdx=0, lastRead=null;
+var readChapters=new Set(); try{var s=localStorage.getItem('raistar_read2'); if(s) readChapters=new Set(JSON.parse(s));}catch(e){}
+var favs=new Set(); try{var f=localStorage.getItem('raistar_fav'); if(f) favs=new Set(JSON.parse(f));}catch(e){}
 function showToast(m){var t=document.getElementById('toast');t.innerText=m;t.style.display='block';setTimeout(function(){t.style.display='none'},2500);}
-function showSection(id){
-  document.getElementById('sec-books').style.display = id==='books'?'block':'none';
-  document.getElementById('sec-read').style.display = id==='read'?'block':'none';
-  document.getElementById('sec-ai').style.display = id==='ai'?'block':'none';
-  if(id==='ai' && document.getElementById('aiBox').innerHTML==='') addAIMsg('Namaste! 🙏 Main tumhara AI Teacher hu - bilkul us wale assistant jaisa jo tumhe samjhata hai!<br><br>Main kya kar sakta hu?<br>✅ Koi bhi chapter <b>detail me</b> samjha sakta hu<br>✅ <b>Notes</b> bana sakta hu<br>✅ <b>Exam Questions</b> de sakta hu<br>✅ <b>Formula</b> yaad kara sakta hu<br><br>Try karo - neeche likho: <b>"Photosynthesis kya hai detail me"</b>');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function filterBook(cat){ currentFilter=cat; renderBooks(); }
+function showSection(id){document.getElementById('sec-home').style.display=id==='home'?'block':'none';document.getElementById('sec-read').style.display=id==='read'?'block':'none';document.getElementById('sec-ai').style.display=id==='ai'?'block':'none';if(id==='ai'&&document.getElementById('aiBox').innerHTML==='') addAIMsg('Namaste! 🙏 Main tumhara AI Teacher hu - bilkul us assistant jaisa!<br><br>Main kya kar sakta hu?<br>✅ Koi bhi chapter detail me samjha sakta hu<br>✅ Notes bana sakta hu<br>✅ Exam Questions de sakta hu<br><br>Try karo: <b>"Photosynthesis kya hai detail me"</b>');window.scrollTo({top:0,behavior:'smooth'});}
+function renderCats(){var h='';for(var i=0;i<CATS.length;i++){var c=CATS[i];h+='<button class="'+(currentFilter===c?'active':'')+'" onclick="filterCat(\''+c+'\')">'+(c==='all'?'✨ Sab':'')+' '+c+'</button>';}document.getElementById('catRow').innerHTML=h;}
+function filterCat(c){currentFilter=c;renderCats();renderBooks();}
+function doTopSearch(v){var q=v.toLowerCase().trim();if(!q) {renderBooks();return;}for(var i=0;i<BOOKS.length;i++){for(var j=0;j<BOOKS[i].chapters.length;j++){if(BOOKS[i].chapters[j].toLowerCase().includes(q)){openBook(BOOKS[i].id);setTimeout(function(){},200);showToast('🔍 Mil gaya! Neeche chapters me dekho');document.getElementById('chapterBox').scrollIntoView({behavior:'smooth'});return;}}}renderBooks();}
+function toggleFav(id,ev){ev.stopPropagation();if(favs.has(id))favs.delete(id);else favs.add(id);try{localStorage.setItem('raistar_fav',JSON.stringify([...favs]));}catch(e){}renderBooks();showToast(favs.has(id)?'⭐ Favourite me add ho gaya!':'❌ Favourite se hat gaya');}
 function renderBooks(){
-  var q=(document.getElementById('bookSearch').value||'').toLowerCase();
   var html='';
-  for(var i=0;i<BOOKS.length;i++){ var b=BOOKS[i];
-    if(currentFilter!=='all' && b.cat!==currentFilter && b.name!==currentFilter) continue;
-    if(q && b.name.toLowerCase().indexOf(q)===-1 && b.desc.toLowerCase().indexOf(q)===-1){
-      // chapter me bhi dhoondo
-      var found=false; for(var k=0;k<b.chapters.length;k++) if(b.chapters[k].toLowerCase().indexOf(q)!==-1) found=true;
-      if(!found) continue;
-    }
-    var readCount=0; for(var j=0;j<b.chapters.length;j++) if(readChapters.has(b.id+'-'+j)) readCount++;
-    html+='<div class="book-card" onclick="openBook(\''+b.id+'\')"><div class="icon">'+b.icon+'</div><b>'+b.name+'</b><br><span>'+b.desc+'</span><br><span style="color:'+b.color+';font-weight:800">'+b.chapters.length+' Chapters • '+readCount+' Padhe</span><div class="progress"><div style="width:'+Math.round(readCount/b.chapters.length*100)+'%;background:'+b.color+'"></div></div><br><span style="color:#22c55e;font-weight:800">📖 Open Karo →</span></div>';
+  for(var i=0;i<BOOKS.length;i++){var b=BOOKS[i];if(currentFilter!=='all'&&b.cat!==currentFilter)continue;var rc=0;for(var j=0;j<b.chapters.length;j++)if(readChapters.has(b.id+'-'+j))rc++;var pct=Math.round(rc/b.chapters.length*100);
+  html+='<div class="book" onclick="openBook(\''+b.id+'\')"><div class="book-top" style="background:'+b.color+'"><div><div class="emoji">'+b.icon+'</div><div style="font-size:11px;opacity:.9;margin-top:8px">'+b.cat+' • '+b.chapters.length+' Chapters</div></div><div class="fav" onclick="toggleFav(\''+b.id+'\',event)">'+(favs.has(b.id)?'❤️':'🤍')+'</div></div><div class="book-body"><b>'+b.name+'</b><p>'+b.desc+'</p><div class="meta"><span>⭐ 4.9 • 👦 50 Students</span><span>'+rc+'/'+b.chapters.length+' Padhe</span></div><div class="progress"><div style="width:'+pct+'%;background:'+b.color.split(',')[0].replace('linear-gradient(135deg,','')+'"></div></div><div style="font-size:12px;color:#7c3aed;font-weight:800">📖 Open Karo →</div></div></div>';
   }
-  document.getElementById('booksGrid').innerHTML=html||'<p>Koi book nahi mili. Search badal ke dekho.</p>';
-  updateProgress();
+  document.getElementById('booksGrid').innerHTML=html;
+  // Trending
+  var trending=[{b:'science',c:6,t:'Photosynthesis'},{b:'maths',c:5,t:'Trigonometry'},{b:'computer',c:1,t:'HTML - Website Banana'},{b:'hindi',c:4,t:'Nibandh Lekhan'}];
+  var th='';for(var k=0;k<trending.length;k++){var tr=trending[k];var bb=null;for(var ii=0;ii<BOOKS.length;ii++)if(BOOKS[ii].id===tr.b)bb=BOOKS[ii];th+='<div class="book" onclick="openBook(\''+tr.b+'\');setTimeout(function(){},100)"><div class="book-top" style="background:'+bb.color+'"><div><div class="emoji">🔥</div><div style="font-size:11px;opacity:.9;margin-top:8px">TRENDING #'+(k+1)+'</div></div></div><div class="book-body"><b>'+tr.t+'</b><p>'+bb.name+' - Sabse zyada padha ja raha hai. Abhi padho!</p><div style="font-size:12px;color:#7c3aed;font-weight:800">📖 Padho →</div></div></div>';}
+  document.getElementById('trendingGrid').innerHTML=th;
+  var total=0;for(var x=0;x<BOOKS.length;x++)total+=BOOKS[x].chapters.length;
+  document.getElementById('heroProgress').innerText=readChapters.size+' / '+total+' Chapters';
+  if(lastRead){document.getElementById('continueText').innerText=lastRead.book+' - '+lastRead.chapter;}else if(readChapters.size>0){document.getElementById('continueText').innerText=readChapters.size+' chapters padh liye - Lage raho!';}
 }
-function updateProgress(){
-  var total=0; for(var i=0;i<BOOKS.length;i++) total+=BOOKS[i].chapters.length;
-  document.getElementById('readProgressText').innerText=readChapters.size+' / '+total+' Chapters Padhe';
-  document.getElementById('readProgressBar').style.width=Math.round(readChapters.size/total*100)+'%';
-}
-function openBook(id){
-  for(var i=0;i<BOOKS.length;i++) if(BOOKS[i].id===id) currentBook=BOOKS[i];
-  document.getElementById('chapterTitle').innerText=currentBook.icon+' '+currentBook.name+' - '+currentBook.chapters.length+' Chapters';
-  document.getElementById('chapterDesc').innerText=currentBook.desc;
-  var html='';
-  for(var j=0;j<currentBook.chapters.length;j++){
-    var isRead=readChapters.has(currentBook.id+'-'+j);
-    html+='<div class="chapter" onclick="openChapter('+j+')"><div><b>Ch '+(j+1)+' - '+currentBook.chapters[j]+'</b><br><span>📖 Full Teoria • 📝 Notes • ❓ Exam Qs • 🤖 AI Help • '+(isRead?'✅ Padha Hua':'⏳ Nahi Padha')+'</span></div><div class="go">'+(isRead?'✅ Padha':'📖 Padho →')+'</div></div>';
-  }
-  document.getElementById('chapterList').innerHTML=html;
-  document.getElementById('chapterBox').style.display='block';
-  document.getElementById('chapterBox').scrollIntoView({behavior:'smooth'});
-}
-function backToBooks(){ showSection('books'); document.getElementById('chapterBox').style.display='none'; }
-function backToChapters(){ showSection('books'); document.getElementById('chapterBox').style.display='block'; document.getElementById('chapterBox').scrollIntoView({behavior:'smooth'}); }
+function openBook(id){for(var i=0;i<BOOKS.length;i++)if(BOOKS[i].id===id)currentBook=BOOKS[i];document.getElementById('chapterTitle').innerText=currentBook.icon+' '+currentBook.name+' - '+currentBook.chapters.length+' Chapters';document.getElementById('chapterDesc').innerText=currentBook.desc;var html='';for(var j=0;j<currentBook.chapters.length;j++){var isRead=readChapters.has(currentBook.id+'-'+j);html+='<div class="chapter" onclick="openChapter('+j+')"><div><b>Ch '+(j+1)+' - '+currentBook.chapters[j]+'</b><br><span>📖 Full Teoria (800+ words) • 📝 Notes • ❓ Exam Qs • 🤖 AI • '+(isRead?'✅ Padha':'⏳ Nahi Padha')+'</span></div><div class="go">'+(isRead?'✅ Padha':'📖 Padho →')+'</div></div>';}document.getElementById('chapterList').innerHTML=html;document.getElementById('chapterBox').style.display='block';document.getElementById('chapterBox').scrollIntoView({behavior:'smooth'});}
+function backToChapters(){showSection('home');document.getElementById('chapterBox').style.display='block';document.getElementById('chapterBox').scrollIntoView({behavior:'smooth'});}
+function continueReading(){if(lastRead){for(var i=0;i<BOOKS.length;i++)if(BOOKS[i].name===lastRead.book)currentBook=BOOKS[i];openChapter(lastRead.idx);}else{showToast('Pehle koi chapter kholo!');}}
 function openChapter(idx){
-  currentChapterIdx=idx;
-  var topic=currentBook.chapters[idx];
+  currentChapterIdx=idx;var topic=currentBook.chapters[idx];lastRead={book:currentBook.name,chapter:topic,idx:idx};
   document.getElementById('readTitle').innerText=currentBook.icon+' Ch '+(idx+1)+' - '+topic;
-  document.getElementById('readMeta').innerHTML='<span class="tag">'+currentBook.name+'</span> <span class="tag">⏱️ 15 Min</span> <span class="tag">📖 Teoria</span> <span class="tag">❓ 5 Exam Qs</span> <span class="tag">🤖 AI Available</span>';
-  document.getElementById('readContent').innerHTML=generateTheory(currentBook, topic, idx);
-  // Exam Questions
-  var eqs='<p><b>Q1.</b> '+topic+' ki definition likho. (2 Marks)</p><p><b>Q2.</b> '+topic+' ke 2 examples daily life se do. (3 Marks)</p><p><b>Q3.</b> '+topic+' ka diagram banao aur label karo. (3 Marks)</p><p><b>Q4.</b> '+topic+' aur usse judi dusri cheez me kya farak hai? (2 Marks)</p><p><b>Q5.</b> '+topic+' exam me kaise likhe jisse full marks mile? (5 Marks - Long Answer)</p><p style="margin-top:10px;color:#22c55e"><b>Tip:</b> AI se bolo - "Mere liye '+topic+' ke 5 questions banao" - wo naye questions de dega!</p>';
-  document.getElementById('examQs').innerHTML=eqs;
+  document.getElementById('readMeta').innerHTML='<span class="tag">'+currentBook.name+'</span> <span class="tag">⏱️ 15 Min</span> <span class="tag">📖 Full Teoria</span> <span class="tag">❓ 5 Exam Qs</span>';
+  document.getElementById('readContent').innerHTML=getTheory(currentBook,topic,idx);
+  document.getElementById('examQs').innerHTML='<p><b>Q1.</b> '+topic+' ki definition likho. (2 Marks)</p><p><b>Q2.</b> '+topic+' ke 2 examples daily life se do. (3 Marks)</p><p><b>Q3.</b> '+topic+' ka diagram banao aur label karo. (3 Marks)</p><p><b>Q4.</b> '+topic+' aur usse judi cheez me farak kya hai? (2 Marks)</p><p><b>Q5.</b> '+topic+' ko 5 lines me samjhao - Long Answer (5 Marks)</p><p style="color:#7c3aed;margin-top:8px"><b>Tip:</b> AI se bolo - "Mere liye '+topic+' ke 5 questions banao"</p>';
+  document.getElementById('quickQuiz').innerHTML='<p><b>Q.</b> '+topic+' ka sabse important point kya hai?</p><button class="btn small" onclick="showToast(\'✅ Sahi! Tumne padh liya!\')">A. Definition + Example</button> <button class="btn small black" onclick="showToast(\'❌ Galat! Dobara padho - Definition + Example + Diagram\')">B. Sirf Ratta Marna</button>';
   document.getElementById('notesBox').style.display='none';
   showSection('read');
 }
-function nextChapter(){
-  if(currentChapterIdx < currentBook.chapters.length-1){ openChapter(currentChapterIdx+1); }
-  else { showToast('🏆 Ye book khatam! Dusri book try karo!'); showSection('books'); }
-}
-function markRead(){
-  readChapters.add(currentBook.id+'-'+currentChapterIdx);
-  try{ localStorage.setItem('raistar_read', JSON.stringify([...readChapters])); }catch(e){}
-  showToast('✅ Padha hua mark ho gaya! Progress badh gaya!');
-  updateProgress(); renderBooks();
-}
-function makeNotes(){ document.getElementById('notesBox').style.display='block'; }
-function saveNotes(){ var t=document.getElementById('notesInput').value; if(!t) return showToast('Pehle kuch likho!'); try{ localStorage.setItem('note_'+currentBook.id+'_'+currentChapterIdx, t); }catch(e){} showToast('💾 Notes save ho gaye!'); document.getElementById('notesBox').style.display='none'; }
-// ===== BADI TEORIA GENERATOR - Har chapter ke liye detail =====
-function generateTheory(book, topic, idx){
-  var t = topic;
+function nextChapter(){if(currentChapterIdx<currentBook.chapters.length-1)openChapter(currentChapterIdx+1);else{showToast('🏆 Book khatam! Dusri book try karo!');showSection('home');}}
+function markRead(){readChapters.add(currentBook.id+'-'+currentChapterIdx);try{localStorage.setItem('raistar_read2',JSON.stringify([...readChapters]));}catch(e){}showToast('✅ Padha hua mark ho gaya! Progress badh gaya!');renderBooks();renderCats();}
+function toggleNotes(){var e=document.getElementById('notesBox');e.style.display=e.style.display==='none'?'block':'none';}
+function saveNotes(){var t=document.getElementById('notesInput').value;if(!t)return showToast('Pehle kuch likho!');try{localStorage.setItem('note_'+currentBook.id+'_'+currentChapterIdx,t);}catch(e){}showToast('💾 Notes save ho gaye!');document.getElementById('notesBox').style.display='none';}
+// ===== REAL TEORIA - HAR CHAPTER KE LIYE DETAIL =====
+function getTheory(book,topic,idx){
+  var key=topic.toLowerCase();
+  if(key.includes('photosynthesis')) return `
+  <h4>📌 1. Photosynthesis Kya Hai? - Bilkul Easy Me</h4>
+  <p>Plants apna khana khud banate hai. Tum khana khate ho, plants khana <b>banate</b> hai. Isliye plants ko <b>Producers</b> kehte hai. Ye process jisse plants khana banate hai, usko <b>Photosynthesis</b> kehte hai.</p>
+  <p><b>Photo</b> = Light (Roshni) + <b>Synthesis</b> = Banana. Matlab <b>Roshni se Banana!</b></p>
+  <div class="box green"><b>🎯 Formula - Isko Yaad Kar Lo, Exam Me Aayega Hi Aayega:</b><br><b>CO2 + H2O + Sunlight → Glucose + Oxygen</b><br>Carbon Dioxide + Paani + Suraj ki Roshni = Glucose (Khana) + Oxygen (Jo hum saans lete hai)</div>
+  <h4>🔬 2. Kaha Hota Hai? - Leaf Ke Andar</h4>
+  <p>Leaf me chhote-chhote <b>Chloroplast</b> hote hai. Chloroplast me <b>Chlorophyll</b> hota hai - jo leaf ko green color deta hai. Chlorophyll hi sunlight ko pakadta hai, jaise solar panel sunlight pakadta hai!</p>
+  <p><b>Leaf ke parts:</b><br>• <b>Stomata:</b> Chhote chhed - jaha se CO2 andar aati hai, Oxygen bahar jati hai.<br>• <b>Veins:</b> Paani ko leaf tak pahunchati hai.<br>• <b>Chloroplast:</b> Jaha Photosynthesis hota hai.</p>
+  <h4>⚙️ 3. 2 Parts - Step By Step</h4>
+  <p><b>Part 1 - Light Reaction (Din Me):</b><br>Sunlight aati hai → Paani tootta hai (H2O → H + O) → Oxygen bahar nikalti hai (jo hum saans lete hai) → Energy banti hai.</p>
+  <p><b>Part 2 - Dark Reaction (Calvin Cycle):</b><br>CO2 + Energy → Glucose banta hai. Ye raat me bhi chal sakta hai, isliye isko Dark Reaction kehte hai.</p>
+  <table><tr><th>Cheez</th><th>Kaha Se Aati Hai?</th><th>Kya Banti Hai?</th></tr><tr><td>CO2</td><td>Hawa se - Stomata se</td><td>Glucose ka part</td></tr><tr><td>Paani</td><td>Roots se - Zameen se</td><td>Oxygen + Hydrogen</td></tr><tr><td>Sunlight</td><td>Suraj se</td><td>Energy</td></tr><tr><td>Glucose</td><td>Banta hai</td><td>Plant ka khana</td></tr><tr><td>Oxygen</td><td>Banta hai</td><td>Hum saans lete hai</td></tr></table>
+  <h4>🌍 4. Real Life - 5 Examples</h4>
+  <div class="box blue"><b>1. Ghar Ka Tulsi:</b> Tulsi ka paudha din me Oxygen deta hai, isliye ghar me lagate hai.<br><b>2. Jungle:</b> Jungle ko <b>Earth ke Lungs</b> kehte hai - kyuki waha sabse zyada Photosynthesis hota hai.<br><b>3. Khet:</b> Kisan fasal isliye ugata hai kyuki plants sunlight se khana banake bade hote hai.<br><b>4. Aquarium:</b> Paani ke plants bhi Photosynthesis karte hai - machhli ko Oxygen dete hai.<br><b>5. Tum:</b> Tum jo saans lete ho, wo Oxygen plants ne hi banayi hai!</div>
+  <h4>📝 5. Exam Me Kaise Likhe? - 5 Marks Ke Liye</h4>
+  <div class="box orange"><b>Introduction (1 line):</b> Photosynthesis wo process hai jisse plants apna khana banate hai.<br><b>Formula:</b> CO2 + H2O + Sunlight → Glucose + Oxygen<br><b>Diagram:</b> Leaf ka diagram banao - Stomata, Chloroplast, Veins label karo.<br><b>2 Points:</b> Light Reaction + Dark Reaction<br><b>Conclusion:</b> Isliye plants hamare liye zaroori hai - bina plants ke hum saans nahi le sakte.</div>
+  <h4>❌ 6. Common Mistakes</h4><p>❌ Formula ulta likhna - CO2 pehle, Oxygen baad me.<br>❌ Chlorophyll aur Chloroplast ko ek samajhna - Chlorophyll = Pigment, Chloroplast = Jagah.<br>✅ Diagram banana mat bhoolna!</p>
+  <div class="box purple"><b>🏆 Yaad Karne Ka Tarika:</b> <b>"CO2 Paani Suraj = Glucose Oxygen"</b> - Isko 5 baar bolo, yaad ho jayega!</div>`;
+  if(key.includes('pythagoras')||key.includes('triangles')||key.includes('triangle')) return `
+  <h4>📌 1. Pythagoras Kya Hai?</h4>
+  <p>Right Triangle (jisme ek kona 90° hota hai) me ye formula lagta hai. Pythagoras ek Greek mathematician tha, usne 2500 saal pehle ye theorem diya tha, aur aaj bhi exam me aata hai!</p>
+  <div class="box green"><b>🎯 Formula:</b><br><b>Hypotenuse² = Base² + Perpendicular²</b><br><b>c² = a² + b²</b></div>
+  <h4>📐 2. Kaun Kya Hai? - Samjho</h4>
+  <p>• <b>Hypotenuse (c):</b> Sabse lambi side, 90° ke saamne wali.<br>• <b>Base (b):</b> Neeche wali side.<br>• <b>Perpendicular (a):</b> Khadi wali side.</p>
+  <h4>✍️ 3. Solved Examples - Step By Step</h4>
+  <div class="box blue"><b>Example 1:</b> Base = 3, Perp = 4, Hypo = ?<br>Step 1: c² = 3² + 4²<br>Step 2: c² = 9 + 16 = 25<br>Step 3: c = √25 = <b>5</b><br><br><b>Example 2:</b> Hypo = 13, Base = 5, Perp = ?<br>Step 1: 13² = 5² + a² → 169 = 25 + a²<br>Step 2: a² = 169 - 25 = 144<br>Step 3: a = √144 = <b>12</b><br><br><b>Example 3:</b> Hypo = 10, Perp = 6, Base = ?<br>b² = 100 - 36 = 64 → b = <b>8</b></div>
+  <h4>🔥 4. Topper Trick - Triplets Yaad Kar Lo</h4>
+  <p><b>3-4-5, 5-12-13, 6-8-10, 9-12-15, 8-15-17</b><br>Exam me inme se hi ek aayega! Agar question me 3 aur 4 dikhe, to answer direct 5 likh do, calculate karne ki zaroorat nahi!</p>
+  <h4>🏠 5. Real Life</h4>
+  <p>• <b>Seedhi (Ladder):</b> Deewar pe seedhi lagate ho - Deewar = Perp, Zameen = Base, Seedhi = Hypo.<br>• <b>Cricket Ground:</b> Ball ki doori nikalne ke liye.<br>• <b>Building:</b> Engineer building ki height nikalne ke liye Pythagoras use karte hai.</p>
+  <h4>📝 6. Exam Me Kaise Likhe?</h4>
+  <div class="box orange"><b>2 Marks:</b> Formula + 1 Example<br><b>5 Marks:</b> Statement + Diagram + Proof + Example + Conclusion<br><b>Diagram:</b> Right triangle banao, 90° mark karo, teeno sides ko a,b,c naam do.</div>`;
+  if(key.includes('html')) return `
+  <h4>📌 1. HTML Kya Hai?</h4>
+  <p>HTML = <b>Hyper Text Markup Language</b>. Ye website ki <b>haddi (Skeleton)</b> hai. Bina HTML ke website nahi ban sakti. Tum jo ye classroom dekh rahe ho, wo bhi HTML se hi bana hai!</p>
+  <h4>💻 2. Basic Structure - Ye Yaad Kar Lo</h4>
+  <code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Meri Website&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, Mera Naam Raistar Hai!&lt;/h1&gt;
+    &lt;p&gt;Ye meri pehli website hai!&lt;/p&gt;
+    &lt;button&gt;Click Karo&lt;/button&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code>
+  <h4>🏷️ 3. Important Tags - Sabse Zyada Use Hone Wale</h4>
+  <table><tr><th>Tag</th><th>Kya Karta Hai?</th><th>Example</th></tr><tr><td>&lt;h1&gt; - &lt;h6&gt;</td><td>Heading - Bada se Chhota</td><td>&lt;h1&gt;Mera Naam&lt;/h1&gt;</td></tr><tr><td>&lt;p&gt;</td><td>Paragraph - Likhne ke liye</td><td>&lt;p&gt;Hello&lt;/p&gt;</td></tr><tr><td>&lt;img&gt;</td><td>Photo lagane ke liye</td><td>&lt;img src="photo.jpg"&gt;</td></tr><tr><td>&lt;a&gt;</td><td>Link lagane ke liye</td><td>&lt;a href="google.com"&gt;Google&lt;/a&gt;</td></tr><tr><td>&lt;button&gt;</td><td>Button banane ke liye</td><td>&lt;button&gt;Click&lt;/button&gt;</td></tr><tr><td>&lt;div&gt;</td><td>Box banane ke liye</td><td>&lt;div&gt;...&lt;/div&gt;</td></tr></table>
+  <h4>🎯 4. Practice - Abhi Karo!</h4>
+  <div class="box green"><b>Step 1:</b> Notepad kholo.<br><b>Step 2:</b> Upar wala code copy karke paste karo.<br><b>Step 3:</b> File ko <b>meri-website.html</b> naam se save karo.<br><b>Step 4:</b> Double click karo - tumhari website ban gayi! 🎉</div>
+  <h4>🚀 5. Aage Kya Sikhe?</h4>
+  <p><b>HTML</b> ke baad <b>CSS</b> sikho - usse website sundar banti hai (color, design). Phir <b>JavaScript</b> sikho - usse website chalti hai (button dabane pe kuch hota hai). Teenon aagaye to tum full website bana sakte ho!</p>
+  <h4>📝 6. Exam Me Kaise Likhe?</h4>
+  <div class="box orange"><b>2 Marks:</b> HTML ka full form + 1 tag<br><b>5 Marks:</b> Definition + Structure + 3 Tags + Example Code</div>`;
+  if(key.includes('trigonometry')) return `
+  <h4>📌 1. Trigonometry Kya Hai?</h4>
+  <p>Trigonometry me triangle ke <b>angles aur sides</b> ka relation padhte hai. Sin, Cos, Tan - ye teeno sabse important hai. Isse building ki height, nadi ki chaudai - sab nikal sakte hai bina naape!</p>
+  <div class="box green"><b>🔥 Sabse Aasan Trick - Pandit Badri Prasad:</b><br><b>Pandit Badri Prasad, Har Har Bole</b><br>Pandit = Perpendicular, Badri = Base, Har = Hypotenuse</div>
+  <h4>📐 2. Formulas</h4>
+  <p>• <b>Sin θ = Perpendicular / Hypotenuse</b> (P/H)<br>• <b>Cos θ = Base / Hypotenuse</b> (B/H)<br>• <b>Tan θ = Perpendicular / Base</b> (P/B)<br><br><b>Yaad Karo:</b> Sin = P/H, Cos = B/H, Tan = P/B - Isko 5 baar likho!</p>
+  <h4>📊 3. Table - Isko Yaad Kar Lo (Exam Me Aayega Hi)</h4>
+  <table><tr><th>Angle</th><th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th></tr><tr><td><b>Sin</b></td><td>0</td><td>1/2</td><td>1/√2</td><td>√3/2</td><td>1</td></tr><tr><td><b>Cos</b></td><td>1</td><td>√3/2</td><td>1/√2</td><td>1/2</td><td>0</td></tr><tr><td><b>Tan</b></td><td>0</td><td>1/√3</td><td>1</td><td>√3</td><td>∞</td></tr></table>
+  <p><b>Tip:</b> Sin ka ulta Cos hota hai! Sin 0° = 0, Cos 0° = 1. Bas ye yaad rakho, table ban jayega!</p>
+  <h4>✍️ 4. Example</h4>
+  <div class="box blue"><b>Q.</b> Agar Sin θ = 1/2, to θ = ?<br><b>Ans:</b> Table me dekho - Sin 30° = 1/2, isliye θ = <b>30°</b></div>
+  <h4>📝 5. Exam Tip</h4>
+  <div class="box orange">Table ko copy me 10 baar likho - haath se yaad ho jayega. Exam me table dekhke 5 marks ke questions direct ho jayenge!</div>`;
+  if(key.includes('light')||key.includes('reflection')) return `
+  <h4>📌 1. Light Kya Hai?</h4>
+  <p>Light ek energy hai jo hame dekhne me madad karti hai. Light <b>seedhi line</b> me chalti hai. Iski speed <b>3,00,000 km/sec</b> hai - duniya ki sabse tez cheez! Suraj ki roshni ko dharti tak aane me 8 minute lagte hai.</p>
+  <h4>🪞 2. Reflection - Mirror Wala</h4>
+  <p>Light jab mirror pe girti hai aur wapas aa jati hai - isko <b>Reflection</b> kehte hai.</p>
+  <div class="box green"><b>Law of Reflection:</b><br>Angle of Incidence = Angle of Reflection<br>Matlab jitne angle se light aayi, utne hi angle se wapas jayegi.</div>
+  <p><b>Example:</b> Mirror me apna chehra dekhna, paani me apna reflection.</p>
+  <h4>💧 3. Refraction - Paani Wala</h4>
+  <p>Light jab ek medium se dusre medium me jati hai (hawa se paani me), to uski disha badal jati hai - isko <b>Refraction</b> kehte hai.</p>
+  <p><b>Example:</b> Paani me pencil teda dikhta hai, talab uthla dikhta hai par hota gehra hai, tara timtimata hua dikhta hai.</p>
+  <h4>🪞 4. Mirror Ke Types</h4>
+  <table><tr><th>Mirror</th><th>Kaisa Hai?</th><th>Kaha Use Hota Hai?</th></tr><tr><td>Plane Mirror</td><td>Seedha</td><td>Ghar ka mirror</td></tr><tr><td>Concave Mirror</td><td>Andar dhansa hua</td><td>Torch, Headlight, Shaving Mirror</td></tr><tr><td>Convex Mirror</td><td>Bahar ubhra hua</td><td>Gaadi ka side mirror, Road pe mod pe</td></tr></table>
+  <h4>📝 5. Exam Me</h4>
+  <div class="box orange"><b>Diagram banana mat bhoolna!</b> Mirror ka diagram + Ray diagram = 3 marks pakke! Bina diagram ke sirf 1 mark milega.</div>`;
+  if(key.includes('acid')||key.includes('base')) return `
+  <h4>📌 1. Acids Aur Bases Kya Hai?</h4>
+  <p><b>Acid:</b> Jo cheez khatti hoti hai, neela litmus ko laal kar deti hai - wo Acid hai. <b>Example:</b> Nimbu (Citric Acid), Sirka (Acetic Acid). <b>pH:</b> 0-7<br><br><b>Base:</b> Jo cheez kadvi hoti hai, laal litmus ko neela kar deti hai - wo Base hai. <b>Example:</b> Sabun, Baking Soda. <b>pH:</b> 7-14<br><br><b>Neutral:</b> pH = 7 - Na acid, na base. <b>Example:</b> Paani.</p>
+  <div class="box green"><b>Reaction:</b><br><b>Acid + Base → Salt + Water</b><br>Is reaction ko <b>Neutralisation</b> kehte hai.<br>Example: HCl + NaOH → NaCl (Namak) + H2O (Paani)</div>
+  <h4>🏠 2. Real Life</h4>
+  <p>• Pet me acidity hoti hai to hum <b>ENO / Baking Soda</b> (Base) lete hai - Acid ko neutral karne ke liye.<br>• Mitti acidic ho to kisan <b>Chuna</b> (Base) dalta hai.<br>• Dant me keeda lagta hai to toothpaste (Base) use karte hai - muh ke acid ko neutral karne ke liye.</p>
+  <h4>📝 3. Exam Me</h4>
+  <div class="box orange">pH scale ka diagram banao - 0 (strong acid) se 14 (strong base) tak. 2 marks pakke!</div>`;
+  if(key.includes('nibandh')) return `
+  <h4>📌 1. Nibandh Kya Hai?</h4>
+  <p>Nibandh matlab apni soch ko <b>saaf-suthre</b> tarike se likhna. Exam me nibandh se 10 marks aate hai, aur ye sabse aasan marks hai - bas structure pata hona chahiye!</p>
+  <h4>📝 2. Structure - Ye Yaad Kar Lo</h4>
+  <div class="box green"><b>1. Prastavna (Intro) - 3-4 Lines:</b> Topic ka intro do. Jaise - "Mera Priya Khel Cricket hai..."<br><b>2. Madhya (Body) - 3 Paragraph:</b><br>• Para 1 - Kya hai? Definition<br>• Para 2 - Fayde / Kya achha hai?<br>• Para 3 - Example / Real life story<br><b>3. Upasanhar (Conclusion) - 2-3 Lines:</b> Apni soch likho - "Mujhe lagta hai..."</div>
+  <h4>🔥 3. Marks Badhane Ke Liye</h4>
+  <p>• <b>Muhavare</b> use karo - "Aankh ka tara", "Nak me dum karna" - 2 marks extra!<br>• <b>Shuddh Hindi</b> likho - Spelling galat mat karo.<br>• <b>Saaf likho</b> - Handwriting achhi ho to teacher khush ho jata hai.</p>
+  <h4>✍️ 4. Example - Mera Priya Khel</h4>
+  <div class="box blue">Mera priya khel Cricket hai. Cricket me team work sikhte hai. Jab main khelta hu to mujhe khushi milti hai aur meri health bhi achhi rehti hai. Sachin Tendulkar mere favourite player hai. Mujhe lagta hai har bachhe ko khelna chahiye.</div>`;
+  if(key.includes('tenses')||key.includes('grammar')) return `
+  <h4>📌 1. Tenses Kya Hai?</h4>
+  <p>Tense batata hai kaam <b>kab</b> hua - Abhi, Pehle, ya Baad me. Sirf 3 tenses hai - Present, Past, Future. Inko aagaya to English aagayi!</p>
+  <table><tr><th>Tense</th><th>Example</th><th>Hindi</th></tr><tr><td>Present Simple</td><td>I play</td><td>Main khelta hu</td></tr><tr><td>Present Continuous</td><td>I am playing</td><td>Main khel raha hu</td></tr><tr><td>Present Perfect</td><td>I have played</td><td>Main khel chuka hu</td></tr><tr><td>Past Simple</td><td>I played</td><td>Main khela</td></tr><tr><td>Past Continuous</td><td>I was playing</td><td>Main khel raha tha</td></tr><tr><td>Future Simple</td><td>I will play</td><td>Main khelunga</td></tr></table>
+  <h4>🔥 2. Trick</h4>
+  <div class="box green">Daily 5 English sentences bolo. Jaise - "My favourite subject is Science because..." - 1 mahine me fluent ho jaoge!</div>
+  <h4>❌ 3. Common Mistake</h4>
+  <p>❌ "I is playing" - Galat<br>✅ "I am playing" - Sahi<br>❌ "He play" - Galat<br>✅ "He plays" - Sahi (He/She/It ke saath 's' lagta hai)</p>`;
+  // GENERIC - BOHUT SARA TEORIA HAR CHAPTER KE LIYE
   return `
-  <h4>📌 1. Introduction - ${t} Kya Hai?</h4>
-  <p><b>${t}</b> - Ye chapter ${book.name} ka sabse important chapter hai. Exam me isse har saal 5-10 marks ke questions aate hai. Agar tu is chapter ko achhe se samajh lega, to ${book.name} me top kar lega.</p>
-  <p>Socho - Tum roz ${t.toLowerCase()} ko apne aas-paas dekhte ho, par kabhi dhyaan nahi diya. Aaj hum usko bilkul easy language me samjhenge - jaise kahani sun rahe ho!</p>
-
-  <div class="box"><b>🎯 Ek Line Me Yaad Karo:</b><br><b>${t}</b> = Definition + Example + Diagram + Real Life Use. Bas ye 4 cheeze yaad kar lo, full marks pakke!</div>
-
-  <h4>📖 2. Main Concept - Detail Me (Bahut Jyada Teoria)</h4>
-  <p><b>Part A - Definition:</b> ${t} ki sabse simple definition ye hai - Ye ek aisi cheez / process / concept hai jo hamare daily life, science, aur exam teeno me kaam aata hai. Isko yaad karne ke liye pehle iska matlab samjho, ratta mat maro.</p>
-  <p><b>Part B - Kaise Kaam Karta Hai?</b><br>1. Pehle <b>Starting</b> hoti hai - jaha se ye shuru hota hai.<br>2. Phir <b>Process</b> hota hai - beech me kya-kya hota hai, step-by-step.<br>3. Phir <b>Result</b> aata hai - akhir me kya banta hai / kya hota hai.<br><br>Example: Jaise khana banane me - Pehle sabzi katte ho (starting), phir kadhai me dalte ho (process), phir sabzi ban jati hai (result). Bilkul waise hi ${t} bhi kaam karta hai!</p>
+  <h4>📌 1. Introduction - ${topic} Kya Hai?</h4>
+  <p><b>${topic}</b> - Ye chapter ${book.name} ka sabse important chapter hai. Exam me isse har saal 5-10 marks ke questions aate hai. Agar tu is chapter ko achhe se samajh lega, to ${book.name} me top kar lega.</p>
+  <p>Socho - Tum roz ${topic.toLowerCase()} ko apne aas-paas dekhte ho, par kabhi dhyaan nahi diya. Aaj hum usko bilkul easy language me samjhenge - jaise kahani sun rahe ho!</p>
+  <div class="box green"><b>🎯 Ek Line Me Yaad Karo:</b><br><b>${topic}</b> = Definition + Example + Diagram + Real Life Use. Bas ye 4 cheeze yaad kar lo, full marks pakke!</div>
+  <h4>📖 2. Main Concept - Detail Me (Bohut Sara Teoria)</h4>
+  <p><b>Part A - Definition:</b> ${topic} ki sabse simple definition ye hai - Ye ek aisi cheez / process / concept hai jo hamare daily life, science, aur exam teeno me kaam aata hai. Isko yaad karne ke liye pehle iska matlab samjho, ratta mat maro.</p>
+  <p><b>Part B - Kaise Kaam Karta Hai? - Step By Step:</b><br>1. <b>Starting:</b> Jaha se ye shuru hota hai.<br>2. <b>Process:</b> Beech me kya-kya hota hai, step-by-step.<br>3. <b>Result:</b> Akhir me kya banta hai / kya hota hai.<br><br>Example: Jaise khana banane me - Pehle sabzi katte ho (starting), phir kadhai me dalte ho (process), phir sabzi ban jati hai (result). Bilkul waise hi ${topic} bhi kaam karta hai!</p>
   <p><b>Part C - Types / Prakar:</b></p>
   <table><tr><th>Type</th><th>Kya Hai?</th><th>Example</th></tr><tr><td>Type 1 - Basic</td><td>Sabse simple wala, jo roz dikhta hai</td><td>Ghar ka example</td></tr><tr><td>Type 2 - Advanced</td><td>Thoda mushkil, exam me aata hai</td><td>School / Lab ka example</td></tr><tr><td>Type 3 - Special</td><td>Rare wala, topper ko aata hai</td><td>Real life special case</td></tr></table>
-
   <h4>🧪 3. Real Life Examples - 5 Examples</h4>
-  <div class="box blue"><b>Example 1 - Ghar Me:</b> ${t} ko tum apne ghar me dekh sakte ho. Jaise kitchen me, bathroom me, ya apne room me.<br><b>Example 2 - School Me:</b> School me teacher jo experiment karwate hai, usme ${t} use hota hai.<br><b>Example 3 - Nature Me:</b> Ped, paudhe, janwar, mausam - sab me ${t} dikhta hai.<br><b>Example 4 - Technology Me:</b> Phone, computer, TV - sab me ${t} ka use hai.<br><b>Example 5 - Exam Me:</b> Pichle 5 saal me ${t} se ye questions aaye hai - Definition, Diagram, Difference.</div>
-
-  <h4>📐 4. Formulas / Important Points - Ratta Marne Wale</h4>
-  <div class="box orange"><b>⭐ Formula 1:</b> Basic formula - isko copy me 5 baar likho, yaad ho jayega.<br><b>⭐ Formula 2:</b> Advanced formula - isko example ke saath yaad karo.<br><b>⭐ Point 1:</b> ${t} ki definition - 1 line me.<br><b>⭐ Point 2:</b> ${t} ke 3 fayde.<br><b>⭐ Point 3:</b> ${t} ke 2 nuksaan / limitations.<br><b>⭐ Point 4:</b> ${t} se related dusra chapter ka naam.</div>
-
-  <h4>🎨 5. Diagram Kaise Banaye? (Bina Diagram Ke Marks Kam Milenge!)</h4>
-  <p>1. Pehle <b>pencil se halka</b> outline banao.<br>2. Phir <b>label</b> lagao - har part ka naam likho.<br>3. Phir <b>neeche 2 lines</b> me samjhao - diagram kya dikha raha hai.<br>4. <b>Color</b> use karo - teacher ko achha lagega.<br><br><b>Yaad Rakhna:</b> Diagram + 2 lines explanation = 3 marks pakke! Bina diagram ke sirf 1 mark milega.</p>
-
+  <div class="box blue"><b>Example 1 - Ghar Me:</b> ${topic} ko tum apne ghar me dekh sakte ho.<br><b>Example 2 - School Me:</b> Teacher jo experiment karwate hai, usme ${topic} use hota hai.<br><b>Example 3 - Nature Me:</b> Ped, paudhe, janwar, mausam - sab me ${topic} dikhta hai.<br><b>Example 4 - Technology Me:</b> Phone, computer, TV - sab me ${topic} ka use hai.<br><b>Example 5 - Exam Me:</b> Pichle 5 saal me ${topic} se Definition, Diagram, Difference wale questions aaye hai.</div>
+  <h4>📐 4. Formulas / Important Points</h4>
+  <div class="box orange"><b>⭐ Point 1:</b> ${topic} ki definition - 1 line me.<br><b>⭐ Point 2:</b> ${topic} ke 3 fayde.<br><b>⭐ Point 3:</b> ${topic} ke 2 nuksaan / limitations.<br><b>⭐ Point 4:</b> ${topic} se related dusra chapter ka naam.<br><b>⭐ Formula:</b> Jo formula hai wo 5 baar likho, yaad ho jayega.</div>
+  <h4>🎨 5. Diagram Kaise Banaye?</h4>
+  <p>1. Pencil se halka outline banao.<br>2. Har part ka naam likho - Label lagao.<br>3. Neeche 2 lines me samjhao - diagram kya dikha raha hai.<br>4. Color use karo - teacher ko achha lagega.<br><br><b>Yaad Rakhna:</b> Diagram + 2 lines = 3 marks pakke! Bina diagram ke sirf 1 mark milega.</p>
   <h4>📝 6. Exam Me Kaise Likhe? - Topper Wala Tarika</h4>
-  <div class="box pink"><b>2 Marks Ke Liye:</b> Definition (1 line) + 1 Example (1 line) = 2 marks.<br><b>3 Marks Ke Liye:</b> Definition + Diagram + 2 Points = 3 marks.<br><b>5 Marks Ke Liye:</b> Introduction (2 lines) + Main Concept (5 lines) + Diagram + Examples + Conclusion (2 lines) = 5 marks pakke!<br><br><b>Topper Trick:</b> Answer ki shuruaat hamesha definition se karo, beech me example do, ant me conclusion likho. Teacher ko lagega tumhe sab aata hai!</div>
-
+  <div class="box purple"><b>2 Marks:</b> Definition (1 line) + 1 Example<br><b>3 Marks:</b> Definition + Diagram + 2 Points<br><b>5 Marks:</b> Introduction (2 lines) + Main Concept (5 lines) + Diagram + Examples + Conclusion (2 lines) = 5 marks pakke!<br><br><b>Topper Trick:</b> Answer ki shuruaat hamesha definition se karo, beech me example do, ant me conclusion likho.</div>
   <h4>🧠 7. Kaise Yaad Kare? - 4 Step Method</h4>
-  <p><b>Step 1 - Padho (10 Min):</b> Ek baar poora chapter padho, samajhne ke liye, ratta marne ke liye nahi.<br><b>Step 2 - Likhke Dekho (5 Min):</b> Book band karke, bina dekhe, jo yaad hai wo likho.<br><b>Step 3 - AI Se Puchho (5 Min):</b> Jo samajh nahi aaya, AI ko bolo - "Ye part easy me samjhao".<br><b>Step 4 - Dobara Revision (5 Min):</b> Sone se pehle ek baar phir padh lo. Subah tak yaad rahega!</p>
-
-  <h4>❓ 8. Common Mistakes - Ye Mat Karna!</h4>
-  <p>❌ Sirf ratta marna, samajhna nahi - 2 din me bhool jaoge.<br>❌ Diagram nahi banana - marks kat jayenge.<br>❌ Example nahi dena - teacher ko lagega tumne samjha nahi.<br>✅ Hamesha - Definition + Example + Diagram - ye teeno likhna hai!</p>
-
-  <h4>🔗 9. Is Chapter Se Jude Dusre Chapters</h4>
-  <p>Ye chapter akele nahi hai. Iske baad <b>Ch ${idx+2} - ${book.chapters[Math.min(idx+1, book.chapters.length-1)]}</b> padhna, wo isse juda hua hai. Aur pehle wala <b>Ch ${idx} - ${book.chapters[Math.max(idx-1,0)]}</b> bhi dobara dekh lena, to pura flow samajh aa jayega.</p>
-
-  <div class="box"><b>🏆 Final Tip:</b> Agar tumne ye chapter padh liya hai, to upar <b>✅ Padha Hua Mark Karo</b> dabao, aur <b>🤖 AI</b> se bolo - "Mere liye is chapter ka test lo" - AI tumhara test lega, bilkul teacher ki tarah!</div>
-  `;
+  <p><b>Step 1 - Padho (10 Min):</b> Ek baar poora padho, samajhne ke liye.<br><b>Step 2 - Likhke Dekho (5 Min):</b> Book band karke, bina dekhe, jo yaad hai wo likho.<br><b>Step 3 - AI Se Puchho (5 Min):</b> Jo samajh nahi aaya, AI ko bolo.<br><b>Step 4 - Revision (5 Min):</b> Sone se pehle ek baar phir padh lo.</p>
+  <h4>❓ 8. Common Mistakes</h4>
+  <p>❌ Sirf ratta marna - 2 din me bhool jaoge.<br>❌ Diagram nahi banana - marks kat jayenge.<br>❌ Example nahi dena - teacher ko lagega samjha nahi.<br>✅ Hamesha - Definition + Example + Diagram!</p>
+  <div class="box green"><b>🏆 Final Tip:</b> Agar tumne ye chapter padh liya hai, to upar <b>✅ Padha Hua Mark Karo</b> dabao, aur AI se bolo - "Mere liye is chapter ka test lo"!</div>`;
 }
-// ===== AI - MERI TARAH WALA - BADA AI =====
-function addAIMsg(text){ var box=document.getElementById('aiBox'); var div=document.createElement('div'); div.className='msg ai'; div.innerHTML='<b>🤖 AI TEACHER</b><br>'+text; box.appendChild(div); box.scrollTop=box.scrollHeight; }
-function addUserMsg(text){ var box=document.getElementById('aiBox'); var div=document.createElement('div'); div.className='msg me'; div.innerHTML='<b>TUM</b><br>'+text; box.appendChild(div); box.scrollTop=box.scrollHeight; }
-function askAI(){ var inp=document.getElementById('aiInput'); var q=inp.value.trim(); if(!q) return; inp.value=''; addUserMsg(q); setTimeout(function(){ addAIMsg(aiAnswerBig(q)); }, 600); }
-function quickAI(q){ document.getElementById('aiInput').value=q; askAI(); }
-function askAIChapter(){ showSection('ai'); setTimeout(function(){ var inp=document.getElementById('aiInput'); inp.value=currentBook.chapters[currentChapterIdx]+' ko easy me, detail me samjhao, example ke saath'; askAI(); }, 400); }
+function addAIMsg(t){var b=document.getElementById('aiBox');var d=document.createElement('div');d.className='msg ai';d.innerHTML='<b>🤖 AI TEACHER</b><br>'+t;b.appendChild(d);b.scrollTop=b.scrollHeight;}
+function addUserMsg(t){var b=document.getElementById('aiBox');var d=document.createElement('div');d.className='msg me';d.innerHTML='<b>TUM</b><br>'+t;b.appendChild(d);b.scrollTop=b.scrollHeight;}
+function askAI(){var inp=document.getElementById('aiInput');var q=inp.value.trim();if(!q)return;inp.value='';addUserMsg(q);setTimeout(function(){addAIMsg(aiAnswerBig(q));},500);}
+function quickAI(q){document.getElementById('aiInput').value=q;askAI();}
+function askAIChapter(){showSection('ai');setTimeout(function(){var inp=document.getElementById('aiInput');inp.value=currentBook.chapters[currentChapterIdx]+' ko easy me, detail me samjhao';askAI();},400);}
 function aiAnswerBig(q){
   var l=q.toLowerCase();
-  // NOTES
-  if(l.includes('notes') || l.includes('note banao')) return '<b>📝 Notes - '+q+'</b><br><br><b>1. Definition:</b> Iski 1 line definition likho.<br><b>2. Main Points:</b><br>• Point 1 - Sabse important<br>• Point 2 - Example ke saath<br>• Point 3 - Diagram wala<br><b>3. Formula:</b> Jo formula hai wo likho.<br><b>4. Example:</b> Daily life ka 1 example.<br><b>5. Exam Tip:</b> 2 marks ke liye definition, 5 marks ke liye full detail.<br><br>Ye notes copy me likh lo, exam me kaam aayega! Aur chahiye to bolo "Aur detail me notes banao".';
-  // TEST / QUESTIONS
-  if(l.includes('test') || l.includes('question') || l.includes('exam') && l.includes('banao') || l.includes('quiz')) return '<b>📝 Tumhara Test - 5 Questions:</b><br><br><b>Q1.</b> Is chapter ki definition kya hai? (2 marks)<br><b>Q2.</b> Iske 2 examples do daily life se. (3 marks)<br><b>Q3.</b> Iska diagram banao. (3 marks)<br><b>Q4.</b> Isme aur dusri cheez me kya farak hai? (2 marks)<br><b>Q5.</b> Is chapter ko 5 lines me samjhao. (5 marks)<br><br>Jawab likh ke mujhe bhejo, main check kar dunga! Bolo "Mera answer check karo"';
-  // PHOTOSYNTHESIS
-  if(l.includes('photosynthesis') || l.includes('prakash') || l.includes('prkash')) return '<b>🌱 Photosynthesis - Bilkul Detail Me, Meri Tarah Samjho!</b><br><br><b>Kya Hai?</b><br>Plants apna khana khud banate hai - is process ko Photosynthesis kehte hai. Tum khana khate ho, plants khana banate hai. Isliye plants ko <b>Producers</b> kehte hai.<br><br><b>Formula (Yaad Kar Lo!):</b><br><b>CO2 + H2O + Sunlight → Glucose + Oxygen</b><br>Matlab - Carbon Dioxide + Paani + Suraj ki roshni = Glucose (khana) + Oxygen (jo hum saans lete hai)<br><br><b>Kaha Hota Hai?</b><br>Leaf me - <b>Chloroplast</b> me. Chloroplast me <b>Chlorophyll</b> hota hai, jo green color deta hai aur sunlight ko pakadta hai.<br><br><b>2 Parts:</b><br><b>1. Light Reaction:</b> Din me, sunlight se paani tootta hai, Oxygen nikalti hai.<br><b>2. Dark Reaction:</b> Raat me bhi chalta hai, Glucose banta hai.<br><br><b>Real Life Example:</b><br>Jaise tum kitchen me khana banate ho - Gas (sunlight) + Sabzi (CO2 + paani) = Sabzi ban gayi (glucose) + Dhua (oxygen). Bilkul waisa hi!<br><br><b>Exam Me Kaise Likhe? (5 Marks Ke Liye)</b><br>1. Definition - 1 line<br>2. Formula - likhna hi hai<br>3. Diagram - Leaf ka diagram banao, Chloroplast label karo<br>4. 2 Points - Light aur Dark reaction<br>5. Conclusion - Isliye plants zaroori hai<br><br><b>Common Mistake:</b> Formula ulta mat likhna! CO2 pehle, Oxygen baad me.<br><br>Aur puchho - "Photosynthesis ka diagram kaise banau?" ya "Iske notes banao"';
-  if(l.includes('pythagoras') || l.includes('triangle') || l.includes('tribhuj')) return '<b>📐 Pythagoras Theorem - Example Ke Saath, Easy Me!</b><br><br><b>Kya Hai?</b><br>Right Triangle (jisme ek kona 90° hota hai) me ye formula lagta hai:<br><br><b>Hypotenuse² = Base² + Perpendicular²</b><br><br><b>Samjho - Kaun Kya Hai?</b><br>• <b>Hypotenuse:</b> Sabse lambi side, 90° ke saamne wali. Ise <b>c</b> kehte hai.<br>• <b>Base:</b> Neeche wali side - <b>b</b><br>• <b>Perpendicular:</b> Khadi wali side - <b>a</b><br><br><b>Example - Step By Step:</b><br>Agar Base = 3, Perpendicular = 4, to Hypotenuse = ?<br><br>Step 1: c² = 3² + 4²<br>Step 2: c² = 9 + 16<br>Step 3: c² = 25<br>Step 4: c = √25 = <b>5</b><br><br>Answer = 5!<br><br><b>🔥 Topper Trick - Triplets Yaad Kar Lo:</b><br>• 3-4-5<br>• 5-12-13<br>• 6-8-10<br>• 9-12-15<br>Exam me inme se hi ek aayega, direct answer likh dena!<br><br><b>Real Life:</b> Seedhi (ladder) deewar pe lagate ho na? Wahi Pythagoras hai! Deewar = Perpendicular, Zameen = Base, Seedhi = Hypotenuse.<br><br><b>Practice Karo:</b> Base = 6, Perp = 8, Hypo = ? Batao, main check kar dunga!';
-  if(l.includes('light') || l.includes('reflection') || l.includes('refraction')) return '<b>💡 Light - Reflection & Refraction - Detail Me!</b><br><br><b>Light Kya Hai?</b><br>Light ek energy hai jo hame dekhne me madad karti hai. Light seedhi line me chalti hai. Iski speed <b>3,00,000 km/sec</b> hai - duniya ki sabse tez cheez!<br><br><b>1. Reflection (Paravartan):</b><br>Light jab mirror pe girti hai aur wapas aa jati hai - isko Reflection kehte hai.<br><b>Law:</b> Angle of Incidence = Angle of Reflection<br><b>Example:</b> Mirror me apna chehra dekhna, paani me apna reflection.<br><br><b>2. Refraction (Apavartan):</b><br>Light jab ek medium se dusre medium me jati hai (hawa se paani me), to uski disha badal jati hai - isko Refraction kehte hai.<br><b>Example:</b> Paani me pencil teda dikhta hai, talab uthla dikhta hai par hota gehra hai.<br><br><b>Mirror Ke Types:</b><br>• <b>Plane Mirror:</b> Seedha mirror - jaisa hai waisa dikhta hai.<br>• <b>Concave Mirror:</b> Andar dhansa hua - Torch, Headlight me use hota hai.<br>• <b>Convex Mirror:</b> Bahar ubhra hua - Gaadi ke side mirror me, road pe.<br><br><b>Exam Tip:</b> Diagram banana mat bhoolna! Mirror ka diagram + Ray diagram = 3 marks pakke!<br><br>Bolo - "Concave aur Convex me farak samjhao"';
-  if(l.includes('html') || l.includes('website') || l.includes('web')) return '<b>💻 HTML - Website Kaise Banate Hai? Bilkul Easy!</b><br><br><b>HTML Kya Hai?</b><br>HTML = <b>Hyper Text Markup Language</b>. Ye website ki haddi (skeleton) hai. Bina HTML ke website nahi ban sakti.<br><br><b>Basic Structure - Ye Yaad Kar Lo:</b><br><br>&lt;html&gt;<br>&nbsp;&nbsp;&lt;head&gt; - Yaha title hota hai<br>&nbsp;&nbsp;&lt;/head&gt;<br>&nbsp;&nbsp;&lt;body&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Mera Naam&lt;/h1&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Ye mera pehla website hai!&lt;/p&gt;<br>&nbsp;&nbsp;&lt;/body&gt;<br>&lt;/html&gt;<br><br><b>Important Tags:</b><br>• <b>&lt;h1&gt; - &lt;h6&gt;:</b> Heading - bada se chhota<br>• <b>&lt;p&gt;:</b> Paragraph - likhne ke liye<br>• <b>&lt;img&gt;:</b> Photo lagane ke liye<br>• <b>&lt;a&gt;:</b> Link lagane ke liye<br>• <b>&lt;button&gt;:</b> Button banane ke liye<br><br><b>Practice:</b><br>Notepad kholo, upar wala code likho, <b>.html</b> se save karo, double click karo - tumhari website ban gayi! 🎉<br><br><b>Next Kya Sikhe?</b> HTML ke baad <b>CSS</b> sikho - usse website sundar banti hai. Phir <b>JavaScript</b> - usse website chalti hai, jaise ye classroom chal raha hai!<br><br>Bolo - "CSS kya hai?" ya "Mere liye ek website ka code banao"';
-  if(l.includes('trigonometry') || l.includes('trigo') || l.includes('sin') || l.includes('cos')) return '<b>📐 Trigonometry - Formulas Yaad Karne Ka Tarika!</b><br><br><b>Kya Hai?</b><br>Trigonometry me triangle ke angles aur sides ka relation padhte hai. Sin, Cos, Tan - ye teeno sabse important hai.<br><br><b>🔥 Sabse Aasan Trick - Pandit Badri Prasad:</b><br><b>Pandit Badri Prasad, Har Har Bole</b><br>• <b>Pandit</b> = Perpendicular<br>• <b>Badri</b> = Base<br>• <b>Har</b> = Hypotenuse<br><br><b>Formulas:</b><br>• <b>Sin θ = Perpendicular / Hypotenuse</b> (P / H)<br>• <b>Cos θ = Base / Hypotenuse</b> (B / H)<br>• <b>Tan θ = Perpendicular / Base</b> (P / B)<br><br><b>Yaad Karne Ka Tarika:</b><br><b>Sin = P/H, Cos = B/H, Tan = P/B</b> - Isko 5 baar likho, yaad ho jayega!<br><br><b>Table Yaad Karo (0°, 30°, 45°, 60°, 90°):</b><br>Sin: 0, 1/2, 1/√2, √3/2, 1<br>Cos: 1, √3/2, 1/√2, 1/2, 0<br>Tan: 0, 1/√3, 1, √3, ∞<br><br><b>Tip:</b> Sin ka ulta Cos hota hai! Sin 0° = 0, Cos 0° = 1. Bas ye yaad rakho, table ban jayega!<br><br>Bolo - "Sin Cos Tan ke 5 questions banao"';
-  if(l.includes('acid') || l.includes('base') || l.includes('ph')) return '<b>🧪 Acids Aur Bases - Farak Samjho!</b><br><br><b>Acid Kya Hai?</b><br>Jo cheez khatti hoti hai, neela litmus ko laal kar deti hai - wo Acid hai.<br><b>Example:</b> Nimbu (Citric Acid), Sirka (Acetic Acid), Battery ka acid (Sulphuric Acid)<br><b>pH:</b> 0 se 7 ke beech - 7 se kam = Acid<br><br><b>Base Kya Hai?</b><br>Jo cheez kadvi hoti hai, laal litmus ko neela kar deti hai - wo Base hai.<br><b>Example:</b> Sabun, Baking Soda, Chuna<br><b>pH:</b> 7 se 14 ke beech - 7 se zyada = Base<br><br><b>Neutral Kya Hai?</b><br>pH = 7 - Na acid, na base. <b>Example:</b> Paani, Namak ka paani.<br><br><b>Reaction:</b><br><b>Acid + Base → Salt + Water</b><br>Is reaction ko <b>Neutralisation</b> kehte hai.<br><b>Example:</b> HCl + NaOH → NaCl (Namak) + H2O (Paani)<br><br><b>Real Life:</b><br>• Pet me acidity hoti hai to hum <b>ENO / Baking Soda</b> (Base) lete hai - Acid ko neutral karne ke liye.<br>• Mitti acidic ho to kisan <b>Chuna</b> (Base) dalta hai.<br><br><b>Exam Me:</b> pH scale ka diagram banao - 0 (strong acid) se 14 (strong base) tak. 2 marks pakke!<br><br>Bolo - "pH scale samjhao diagram ke saath"';
-  if(l.includes('exam') || l.includes('padh') || l.includes('top') || l.includes('yaad')) return '<b>🏆 Exam Me Topper Kaise Bane? - Mera Secret Tarika!</b><br><br><b>1. Pomodoro Technique:</b><br>25 Min Padhai + 5 Min Break. Phone ko door rakho. 4 baar aisa karo, phir 30 min lambi break.<br><br><b>2. Likhke Yaad Karo:</b><br>Sirf padhne se 20% yaad hota hai, likhne se 80% yaad hota hai. Formula, definition - sab likhke yaad karo.<br><br><b>3. Previous Year Questions:</b><br>50% exam pichle saal wale questions se hi aata hai. Pehle unko karo.<br><br><b>4. Raat Ko Jaldi So Jao:</b><br>Exam se pehle raat ko 7 ghante ki neend zaroori hai. Raat bhar jagke padhne se bhool jaoge.<br><br><b>5. Subah Revision:</b><br>Exam se 1 ghanta pehle sirf formulas aur diagrams dekho, pura chapter mat padho.<br><br><b>6. Exam Me:</b><br>• Pehle aasan questions karo<br>• Har answer me Diagram + Example do<br>• Last 10 min me copy check karo<br><br>Tu kar lega! 💪 Tumhara naam topper list me aayega! Bolo - "Mere liye time table banao"';
-  if(l.includes('nibandh') || l.includes('hindi') || l.includes('essay')) return '<b>📖 Hindi Nibandh - Full Marks Kaise Laye?</b><br><br><b>Structure - Ye Yaad Kar Lo:</b><br><br><b>1. Prastavna (Intro) - 3-4 Lines:</b><br>Topic ka intro do. Jaise - "Mera Priya Khel Cricket hai..."<br><br><b>2. Madhya (Body) - 3 Paragraph:</b><br>• Para 1 - Kya hai? Definition<br>• Para 2 - Fayde / Kya achha hai?<br>• Para 3 - Example / Real life story<br><br><b>3. Upasanhar (Conclusion) - 2-3 Lines:</b><br>Apni soch likho - "Mujhe lagta hai..."<br><br><b>🔥 Marks Badhane Ke Liye:</b><br>• <b>Muhavare</b> use karo - "Aankh ka tara", "Nak me dum karna" - 2 marks extra!<br>• <b>Shuddh Hindi</b> likho - Spelling galat mat karo.<br>• <b>Saaf likho</b> - Handwriting achhi ho to teacher khush ho jata hai.<br><br><b>Example - Mera Priya Khel:</b><br>Mujhe Cricket pasand hai kyuki isme team work sikhte hai. Jab main khelta hu to...<br><br>Bolo - "Mera priya khel par nibandh likh do"';
-  if(l.includes('english') || l.includes('grammar') || l.includes('tense')) return '<b>📘 English Grammar - Tenses Easy Me!</b><br><br><b>3 Tenses - Bas Ye Yaad Kar Lo:</b><br><br><b>1. Present - Abhi Ho Raha Hai:</b><br>• I play - Main khelta hu<br>• I am playing - Main khel raha hu<br>• I have played - Main khel chuka hu<br><br><b>2. Past - Pehle Hua Tha:</b><br>• I played - Main khela<br>• I was playing - Main khel raha tha<br>• I had played - Main khel chuka tha<br><br><b>3. Future - Baad Me Hoga:</b><br>• I will play - Main khelunga<br>• I will be playing - Main khel raha hounga<br><br><b>🔥 Trick:</b><br>Daily 5 English sentences bolo. Jaise - "My favourite subject is Science because..." - 1 mahine me fluent ho jaoge!<br><br><b>Common Mistake:</b><br>❌ "I is playing" - Galat<br>✅ "I am playing" - Sahi<br><br>Bolo - "Mere liye 10 English sentences banao" ya "Active Passive samjhao"';
-  if(l.includes('computer') || l.includes('python') || l.includes('coding')) return '<b>💻 Python - Coding Sabse Easy Language!</b><br><br><b>Python Kya Hai?</b><br>Python ek coding language hai - sabse easy, sabse popular. Google, Instagram, YouTube - sab Python se bane hai!<br><br><b>Pehla Code - Ye Try Karo:</b><br><br>print("Hello, Mera Naam Raistar Hai!")<br><br>Bas! Ye likh ke chalao, screen pe tumhara naam aa jayega! 🎉<br><br><b>Basic Concepts:</b><br>• <b>Variable:</b> Dabba jisme cheez rakhte hai - <i>naam = "Raistar"</i><br>• <b>If-Else:</b> Agar ye hua to ye karo, nahi to wo karo<br>• <b>Loop:</b> Ek kaam baar-baar karna<br><br><b>Kyu Sikhe Python?</b><br>• AI banane ke liye Python chahiye<br>• Game banane ke liye<br>• Website banane ke liye<br>• Job me sabse zyada paisa Python walo ko milta hai!<br><br>Bolo - "Python ka pehla program likh ke do"';
-  if(l.includes('hi') || l.includes('hello') || l.includes('namaste') || l.includes('kaun') || l.includes('tum')) return 'Namaste! 🙏 Main tumhara AI Teacher hu - bilkul us assistant jaisa jo tumhe hamesha samjhata hai!<br><br>Mujhe sab aata hai - <b>Maths, Science, Hindi, English, History, Computer</b> - kuch bhi puchh lo!<br><br>Try karo:<br>• "Photosynthesis kya hai detail me"<br>• "Pythagoras samjhao"<br>• "HTML kaise sikhe"<br>• "Kal exam hai, kaise padhu"<br><br>Kya padhna hai aaj?';
-  if(l.includes('thank') || l.includes('shukriya') || l.includes('dhanyavad')) return 'Koi baat nahi! 😊 Tumhara doubt clear ho gaya, mujhe bahut khushi hui!<br><br>Aur kuch puchhna hai? Ya is chapter ka <b>test</b> lu tumhara? Bolo "Mera test lo" - main 5 questions dunga!';
-  // GENERIC - MERI TARAH HAR SAWAL KA JAWAB
-  return '<b>🤔 '+q+' - Bahut Achha Sawal Hai!</b><br><br><b>Chalo Isko Detail Me Samjhte Hai - Step By Step:</b><br><br><b>1. Iska Matlab Kya Hai?</b><br><b>'+q+'</b> - Ye topic <b>'+(currentBook?currentBook.name:'General')+'</b> se juda hua hai. Iski basic definition ye hai ki ye ek important concept hai jo exam me bhi aata hai aur daily life me bhi dikhta hai.<br><br><b>2. Isko Easy Me Samjho:</b><br>Socho - Jaise tum roz koi cheez dekhte ho, par uska naam nahi pata hota. Aaj hum usko naam + kaam + example - teeno se samjhenge.<br><br><b>3. Example Se Samjho:</b><br>• <b>Ghar Ka Example:</b> Tumhare ghar me ye cheez aise dikhti hai...<br>• <b>School Ka Example:</b> School me teacher isko aise samjhate hai...<br>• <b>Real Life Example:</b> Jab tum bahar jaate ho, to ye waha bhi dikhta hai...<br><br><b>4. Exam Me Kaise Likhe?</b><br>• <b>2 Marks Ke Liye:</b> Definition (1 line) + 1 Example<br>• <b>5 Marks Ke Liye:</b> Introduction + Main Concept + Diagram + Example + Conclusion<br><br><b>5. Kaise Yaad Kare?</b><br>Pehle 1 baar padho, phir bina dekhe likho, phir mujhse dobara puchho - "'+q+' aur detail me samjhao"<br><br><b>Aur Kya Chahiye?</b><br>Bolo -<br>• "Iska notes banao"<br>• "Iske 5 questions banao"<br>• "Iska diagram kaise banau"<br>• "Is chapter ka test lo"<br><br>Main sab kar dunga, bilkul us assistant ki tarah! 😊';
+  if(l.includes('notes')) return '<b>📝 Notes:</b><br>1. Definition 1 line<br>2. Main Points - 3 points<br>3. Formula<br>4. Example - Daily life ka<br>5. Exam Tip - 2 marks ke liye definition, 5 marks ke liye full detail';
+  if(l.includes('test')||l.includes('question')) return '<b>📝 Tumhara Test - 5 Qs:</b><br>Q1. Definition kya hai? (2m)<br>Q2. 2 examples do (3m)<br>Q3. Diagram banao (3m)<br>Q4. Farak batao (2m)<br>Q5. 5 lines me samjhao (5m)<br><br>Jawab bhejo, main check kar dunga!';
+  if(l.includes('photosynthesis')) return '<b>🌱 Photosynthesis:</b><br>CO2 + H2O + Sunlight → Glucose + Oxygen<br>Plants apna khana banate hai. Leaf me Chloroplast me hota hai. 2 parts - Light Reaction + Dark Reaction. Exam me Formula + Diagram = Full Marks! Bolo "Iske notes banao"';
+  if(l.includes('pythagoras')||l.includes('triangle')) return '<b>📐 Pythagoras:</b><br>Hypo² = Base² + Perp²<br>Example: 3-4-5 triplet! Base=3, Perp=4 → Hypo=5. Real Life: Seedhi deewar pe - wahi Pythagoras hai!';
+  if(l.includes('light')) return '<b>💡 Light:</b><br>Speed 3,00,000 km/sec! Reflection = Mirror pe wapas, Refraction = Paani me disha badalna. Mirror: Plane, Concave (Torch), Convex (Gaadi ka mirror)';
+  if(l.includes('html')) return '<b>💻 HTML:</b><br>Hyper Text Markup Language - Website ki haddi! Basic: &lt;html&gt; &lt;body&gt; &lt;h1&gt;Hello&lt;/h1&gt; &lt;/body&gt; &lt;/html&gt; - Notepad me likho, .html se save karo, website ban gayi!';
+  if(l.includes('trigonometry')||l.includes('sin')) return '<b>📐 Trigonometry:</b><br>Pandit Badri Prasad, Har Har Bole! Sin=P/H, Cos=B/H, Tan=P/B. Table: Sin 0°=0, 30°=1/2, 45°=1/√2, 60°=√3/2, 90°=1';
+  if(l.includes('acid')) return '<b>🧪 Acids/Bases:</b><br>Acid: Khatta, pH 0-7, Nimbu. Base: Kadva, pH 7-14, Sabun. Acid + Base → Salt + Water. Acidity me ENO (Base) lete hai!';
+  if(l.includes('exam')||l.includes('padh')) return '<b>🏆 Exam Topper Tips:</b><br>1. 25 Min Padhai + 5 Min Break<br>2. Likhke yaad karo - 80% yaad hota hai<br>3. Previous Year Questions<br>4. 7 Ghante Neend<br>5. Exam me Diagram + Example do';
+  if(l.includes('hi')||l.includes('hello')||l.includes('namaste')) return 'Namaste! 🙏 Main tumhara AI Teacher hu! Kuch bhi puchho - Photosynthesis, Pythagoras, HTML, sab detail me!';
+  return '<b>🤔 '+q+' - Bahut Achha Sawal!</b><br><br><b>1. Matlab:</b> Ye topic important hai, exam me bhi aata hai.<br><b>2. Easy Me:</b> Socho - Jaise tum roz koi cheez dekhte ho, par uska naam nahi pata.<br><b>3. Example:</b> Ghar ka, School ka, Real life ka example.<br><b>4. Exam Me:</b> 2 Marks: Definition + Example, 5 Marks: Full + Diagram<br><br>Bolo: "Iska notes banao" / "Iske 5 questions banao" / "Aur detail me samjhao"';
 }
-renderBooks();
-showSection('books');
+renderCats(); renderBooks();
 </script>
 </body>
 </html>
