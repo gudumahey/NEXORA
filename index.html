@@ -1,224 +1,161 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAISTAR Digital Classroom</title>
+<title>GUDU HOSTING - Fast, Secure, Sasta!</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:#f2f4f7;color:#1a1a1a;user-select:none;-webkit-user-select:none}
-.top{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-.top b{font-size:20px} .top b span{color:#7c3aed}
-.top small{color:#888;font-size:12px}
-.btn{border:none;padding:10px 16px;border-radius:10px;font-weight:700;cursor:pointer;font-size:13px;transition:.15s}
-.btn:active{transform:scale(.97)}
-.btn.purple{background:#7c3aed;color:#fff} .btn.green{background:#00a651;color:#fff} .btn.blue{background:#2563eb;color:#fff} .btn.orange{background:#ff8c00;color:#fff} .btn.red{background:#fff;color:#e11d48;border:1px solid #fecdd3} .btn.black{background:#111;color:#fff} .btn.small{padding:7px 12px;font-size:12px}
-.wrap{display:grid;grid-template-columns:1.2fr 1.6fr 1fr;gap:12px;max-width:1440px;margin:0 auto;padding:12px;align-items:start}
-.card{background:#fff;border-radius:14px;padding:14px;border:1px solid #eef1f4;box-shadow:0 2px 8px rgba(0,0,0,.03);margin-bottom:12px}
-.card h3{font-size:15px;margin-bottom:8px}
-.search{width:100%;padding:11px;border:1px solid #e5e7eb;border-radius:10px;font-size:14px;outline:none;background:#f9fafb}
-.search:focus{border-color:#7c3aed;background:#fff}
-.hero{background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#fff;border-radius:14px;padding:18px;margin-bottom:12px}
-.hero h1{font-size:22px;line-height:1.2} .hero p{font-size:13px;opacity:.9;margin:8px 0;line-height:1.6}
-.hero .pill{display:inline-block;background:rgba(255,255,255,.22);padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-right:5px}
-.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
-.stat{background:#fff;border-radius:12px;padding:13px;text-align:center;border:1px solid #eef1f4}
-.stat b{font-size:22px;display:block} .stat span{font-size:11px;color:#888}
-.student{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f1f5f9;gap:8px}
-.student .info{display:flex;gap:10px;align-items:center;flex:1;min-width:0}
-.avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;flex-shrink:0}
-.student b{font-size:13px;display:block} .student span{font-size:11px;color:#888}
-.att-btns{display:flex;gap:4px;flex-shrink:0}
-.att-btns button{padding:6px 9px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;font-weight:700;cursor:pointer;font-size:11px}
-.att-btns button.on-p{background:#00a651;color:#fff;border-color:#00a651} .att-btns button.on-a{background:#e11d48;color:#fff;border-color:#e11d48} .att-btns button.on-l{background:#ff8c00;color:#fff;border-color:#ff8c00}
-.lesson{border:1px solid #eef1f4;border-radius:12px;padding:12px;margin-bottom:10px;cursor:pointer}
-.lesson:hover{border-color:#7c3aed}
-.lesson b{font-size:14px} .lesson p{font-size:12px;color:#666;line-height:1.6;margin-top:4px}
-.progress{height:6px;background:#eef1f4;border-radius:10px;overflow:hidden;margin-top:8px}
-.progress div{height:100%;background:#7c3aed;border-radius:10px}
-.badge{display:inline-block;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:700;color:#fff}
-.badge.green{background:#00a651} .badge.red{background:#e11d48} .badge.purple{background:#7c3aed} .badge.orange{background:#ff8c00}
-.parte-type{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.parte-type div{border:2px solid #e5e7eb;border-radius:12px;padding:14px;text-align:center;cursor:pointer;background:#fff}
-.parte-type div.on{border-color:#e11d48;background:#fef2f2} .parte-type div.on-green{border-color:#00a651;background:#f0fdf4}
-input,select,textarea{width:100%;padding:11px;border:1px solid #e5e7eb;border-radius:10px;outline:none;margin-bottom:8px;font-size:14px;background:#f9fafb}
-input:focus,select:focus,textarea:focus{border-color:#7c3aed;background:#fff}
-label{font-size:12px;font-weight:700;color:#444;display:block;margin:6px 0 4px}
-.chat{height:280px;overflow-y:auto;background:#f9fafb;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
-.msg{background:#fff;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.6;max-width:90%;box-shadow:0 1px 4px rgba(0,0,0,.04)}
-.msg.ai{background:#ede9fe;border-left:3px solid #7c3aed} .msg.me{background:#dcfce7;align-self:flex-end}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:11px 18px;border-radius:30px;font-weight:700;font-size:13px;z-index:999;display:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
-.modal.show{display:flex}
-.box{background:#fff;border-radius:18px;padding:20px;width:100%;max-width:420px;max-height:92vh;overflow-y:auto}
-@media(max-width:1100px){.wrap{grid-template-columns:1fr 1fr} .wrap>div:last-child{grid-column:1/-1} .stat-row{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){.wrap{grid-template-columns:1fr} .top{flex-wrap:wrap;gap:8px}}
+body{background:#070714;color:#fff;overflow-x:hidden;user-select:none;-webkit-user-select:none}
+a{color:inherit;text-decoration:none}
+.bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,#070714,#1a0b2e,#0b2e2e,#2e0b2e);background-size:400% 400%;animation:grad 12s ease infinite}
+@keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+@keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes shine{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes bounce{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(124,58,237,.4)}50%{box-shadow:0 0 40px rgba(236,72,153,.7)}}
+@keyframes typing{from{width:0}to{width:100%}}
+@keyframes blink{50%{border-color:transparent}}
+.float{animation:float 3.5s ease-in-out infinite}
+.glow{animation:glowPulse 2.5s infinite}
+.bounce{animation:bounce 1.5s infinite}
+.top{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);background:rgba(7,7,20,.7);border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{font-size:26px;font-weight:900;letter-spacing:-1px}
+.logo span{background:linear-gradient(90deg,#a78bfa,#ec4899,#f59e0b,#22c55e,#a78bfa);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite}
+.top nav{display:flex;gap:22px;font-size:14px;font-weight:600;color:#cbd5e1}
+.top nav a:hover{color:#fff}
+.btn{border:none;padding:12px 22px;border-radius:30px;font-weight:800;cursor:pointer;font-size:14px;transition:.2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+.btn.purple{background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;box-shadow:0 8px 24px rgba(124,58,237,.4)}
+.btn.white{background:#fff;color:#111}
+.btn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.btn.small{padding:8px 16px;font-size:12px}
+.wrap{max-width:1200px;margin:0 auto;padding:20px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:center;padding:30px 0 20px}
+.hero h1{font-size:58px;line-height:1.05;letter-spacing:-2px;animation:pop .6s ease}
+.hero h1 .anim{background:linear-gradient(90deg,#a78bfa,#ec4899,#f59e0b,#22c55e,#a78bfa);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite}
+.hero p{font-size:16px;color:#cbd5e1;line-height:1.7;margin:16px 0}
+.typing{font-family:monospace;font-size:14px;color:#4ade80;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);padding:12px 14px;border-radius:12px;margin:14px 0;white-space:nowrap;overflow:hidden;border-right:3px solid #4ade80;animation:typing 3s steps(30) infinite alternate;max-width:420px}
+.pill{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-right:6px}
+.hero-card{background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.15);border-radius:24px;padding:22px;backdrop-filter:blur(16px);position:relative;overflow:hidden}
+.hero-card::before{content:'✦';position:absolute;right:16px;top:8px;font-size:48px;opacity:.25}
+.hero-card h3{font-size:18px} .hero-card p{font-size:13px;color:#cbd5e1;line-height:1.6}
+.domain-box{display:flex;gap:8px;margin-top:14px}
+.domain-box input{flex:1;padding:13px 14px;border-radius:30px;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.3);color:#fff;outline:none;font-size:14px}
+.domain-box input::placeholder{color:#94a3b8}
+.domain-box button{padding:13px 20px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+.stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;text-align:center;backdrop-filter:blur(10px)}
+.stat b{font-size:26px;display:block} .stat span{font-size:12px;color:#94a3b8}
+.card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px;backdrop-filter:blur(12px);margin-bottom:14px}
+.card h3{font-size:18px;margin-bottom:6px} .card p{font-size:13px;color:#cbd5e1;line-height:1.7}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.plan{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:22px;text-align:center;transition:.25s;position:relative}
+.plan:hover{transform:translateY(-6px) scale(1.02);border-color:#7c3aed;box-shadow:0 20px 40px rgba(124,58,237,.25)}
+.plan.popular{background:linear-gradient(135deg,#7c3aed,#ec4899);border:none;transform:scale(1.03)}
+.plan .tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#f59e0b;color:#111;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:900}
+.plan h4{font-size:16px} .plan .price{font-size:34px;font-weight:900;margin:10px 0} .plan .price small{font-size:13px;font-weight:400;opacity:.8}
+.plan ul{list-style:none;text-align:left;font-size:13px;line-height:2;color:#e2e8f0;margin:12px 0}
+.plan ul li::before{content:'✓ ';color:#4ade80;font-weight:900}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.feat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;transition:.2s}
+.feat:hover{transform:translateY(-4px)}
+.feat .ic{font-size:28px;margin-bottom:8px}
+.feat b{font-size:15px} .feat p{font-size:13px;color:#cbd5e1;line-height:1.6;margin-top:6px}
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.rev{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px}
+.rev b{font-size:14px} .rev p{font-size:13px;color:#cbd5e1;line-height:1.6;margin-top:6px}
+.faq{border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;margin-bottom:8px;cursor:pointer;background:rgba(255,255,255,.04)}
+.faq b{font-size:14px} .faq p{font-size:13px;color:#cbd5e1;line-height:1.6;margin-top:6px;display:none}
+.faq.open p{display:block}
+.footer{text-align:center;padding:30px 0 20px;color:#94a3b8;font-size:13px;border-top:1px solid rgba(255,255,255,.08);margin-top:20px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#111;padding:12px 20px;border-radius:30px;font-weight:800;font-size:13px;z-index:99;display:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+@media(max-width:850px){.hero{grid-template-columns:1fr} .hero h1{font-size:38px} .plans,.features,.reviews{grid-template-columns:1fr} .stats{grid-template-columns:repeat(2,1fr)} .top nav{display:none}}
 </style>
 </head>
 <body>
+<div class="bg"></div>
 <div id="toast"></div>
-<div class="top"><div><b>RAISTAR <span>Digital Classroom</span></b><br><small>Class 10 - A &nbsp;•&nbsp; Teacher: RAISTAR &nbsp;•&nbsp; <span id="clock">00:00</span></small></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn purple" onclick="showTab('home')">Home</button><button class="btn black" onclick="showTab('parte')">Parte</button><button class="btn green" onclick="showTab('ai')">AI Teacher</button><button class="btn red" onclick="resetAll()">Reset</button></div></div>
+<div class="top"><div class="logo">GUDU<span> HOSTING</span></div><nav><a href="#plans">Plans</a><a href="#features">Features</a><a href="#reviews">Reviews</a><a href="#faq">FAQ</a></nav><div style="display:flex;gap:8px"><button class="btn ghost small" onclick="toast('Login khul gaya!')">Login</button><button class="btn purple small" onclick="scrollToPlans()">Start Now →</button></div></div>
 
 <div class="wrap">
-<!-- LEFT : STUDENTS -->
+<div class="hero">
 <div>
-<div class="hero"><span class="pill">DIGITAL CLASSROOM</span> <span class="pill">Class 10 - A</span><h1>Namaste, RAISTAR! 👋<br>Aaj Bhi Top Karenge!</h1><p>Aaj: Science - Photosynthesis • Maths - Pythagoras • 30 Students • 7 Day Streak 🔥</p><button class="btn" style="background:#fff;color:#7c3aed" onclick="markAllPresent()">✅ Sab Present Karo</button> <button class="btn" style="background:rgba(255,255,255,.2);color:#fff" onclick="nextDay()">Next Day →</button></div>
-<div class="stat-row"><div class="stat"><b id="statP">0</b><span>Present</span></div><div class="stat"><b id="statA">0</b><span>Absent</span></div><div class="stat"><b id="statL">0</b><span>Late</span></div><div class="stat"><b id="statParte">0</b><span>Parte</span></div></div>
-<div class="card"><h3>👦 Students — 30 Bachhe</h3><input class="search" id="stuSearch" placeholder="Naam se dhoondo..." oninput="renderStudents()"><div id="stuList" style="max-height:480px;overflow-y:auto"></div></div>
+<span class="pill">✨ #1 HOSTING IN SPAIN</span> <span class="pill">🔥 50% OFF AAJ HI</span>
+<h1>Apni Website<br><span class="anim">GUDU</span> Pe<br>Host Karo! 🚀</h1>
+<p><b>GUDU HOSTING</b> — Sabse tez, sabse sasta, sabse secure! 1 click me WordPress, Free Domain, Free SSL, 99.9% Uptime. 10,000+ log pehle se khush hai!</p>
+<div class="typing" id="typingText">$ gudu deploy meri-website.com — DONE in 2s ✓</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn purple glow" onclick="scrollToPlans()">🚀 Hosting Lo — 1.99€/mes</button><button class="btn white" onclick="checkDomain()">🔍 Domain Check Karo</button></div>
+<p style="font-size:12px;margin-top:10px">✓ 30 Din Money-Back Guarantee &nbsp; ✓ 24/7 Support &nbsp; ✓ No Hidden Charges</p>
 </div>
-
-<!-- MIDDLE : LESSONS + PARTE + AI -->
-<div>
-<div id="tab-home">
-<div class="card"><h3>📚 Aaj Ki Class — Kya Padhna Hai?</h3><div id="lessonList"></div></div>
-<div class="card"><h3>📝 Homework — Kaun Laya?</h3><div id="hwList"></div><div style="display:flex;gap:8px;margin-top:10px"><button class="btn small green" onclick="checkAllHw()">✅ Sab Ne Laya</button><button class="btn small black" onclick="addHw()">+ Homework Add Karo</button></div></div>
-<div class="card"><h3>📖 Books — Click Karte Hi Padh Sakte Ho</h3><div id="bookGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px"></div><div id="readBox" style="display:none;margin-top:12px;background:#f9fafb;padding:12px;border-radius:12px"><h3 id="readTitle"></h3><p id="readText" style="font-size:13px;line-height:1.7;color:#333"></p><button class="btn small black" onclick="document.getElementById('readBox').style.display='none'">Band Karo</button></div></div>
-</div>
-
-<div id="tab-parte" style="display:none">
-<div class="card"><h3>📋 Parte / Form — Naya Form Banao</h3><div class="parte-type"><div id="typeS" class="on" onclick="setParteType('suspend')"><div style="font-size:28px">🚨</div><b>FORM SUSPEND</b><br><span style="font-size:12px;color:#666">Ladai / Badtameezi</span></div><div id="typeF" onclick="setParteType('falta')"><div style="font-size:28px">✅</div><b>FALTA JUSTIFICADA</b><br><span style="font-size:12px;color:#666">Justificante laya hai</span></div></div>
-<div id="formS"><label>Student Ka Naam *</label><input id="sName" placeholder="Jaise Rahul Sharma"><label>Roll No</label><input id="sRoll" type="number" placeholder="12"><label>Kya Kiya?</label><select id="sReason"><option>Ladai / Pelea</option><option>Teacher se badtameezi</option><option>Phone use karna</option><option>Cheating</option><option>Homework nahi laya</option></select><label>Kitne Din Suspend?</label><select id="sDays"><option>1 Din - Warning</option><option>2 Din</option><option>3 Din - Parents ko bulana hai</option><option>5 Din</option></select><button class="btn red" style="width:100%;margin-top:6px" onclick="saveParte('suspend')">🚨 SUSPEND FORM BANAO</button></div>
-<div id="formF" style="display:none"><label>Student Ka Naam *</label><input id="fName" placeholder="Jaise Priya Sharma"><label>Kyu Absent Tha?</label><select id="fReason"><option>Bimar tha - Doctor ka justificante</option><option>Family ka kaam</option><option>Doctor ke paas gaya tha</option><option>Bus late</option></select><label>Justificante No.</label><input id="fJust" placeholder="1234"><button class="btn green" style="width:100%;margin-top:6px" onclick="saveParte('falta')">✅ FALTA JUSTIFICADA BANAO</button></div>
-<div id="partePreview" style="margin-top:12px"></div></div>
-<div class="card"><h3>📂 Purane Parte — <span id="parteCount">0</span></h3><div id="parteList"></div></div>
-</div>
-
-<div id="tab-ai" style="display:none">
-<div class="card"><h3>🤖 AI Teacher — Kuch Bhi Puchho!</h3><div class="chat" id="aiBox"></div><div style="display:flex;gap:8px"><input class="search" id="aiInput" placeholder="Photosynthesis kya hai?" onkeydown="if(event.key==='Enter') askAI()"><button class="btn purple" onclick="askAI()">Ask</button></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><button class="btn small" style="background:#ede9fe;color:#5b21b6" onclick="quickAI('Photosynthesis kya hai detail me samjhao')">Photosynthesis</button><button class="btn small blue" onclick="quickAI('Pythagoras theorem samjhao')">Pythagoras</button><button class="btn small orange" onclick="quickAI('Kal exam hai, kaise padhu?')">Exam Tips</button></div></div>
+<div class="hero-card float">
+<h3>🔍 Apna Domain Dhoondo</h3>
+<p>Apni website ke liye perfect naam dhoondo — .com, .es, .shop sab milega!</p>
+<div class="domain-box"><input id="domainInput" placeholder="meri-website.com" value="gudu"><button class="btn purple" onclick="checkDomain()">Check</button></div>
+<p id="domainResult" style="margin-top:10px;font-size:13px"></p>
+<div style="background:rgba(0,0,0,.3);border-radius:12px;padding:12px;margin-top:10px"><b style="font-size:13px">🔥 Aaj Ka Offer</b><br><span style="font-size:12px;color:#cbd5e1">Premium Plan pe <b style="color:#f59e0b">50% OFF</b> + Free Domain + Free SSL!<br>Bas <b style="color:#fff">2.99€/mes</b> — Kal se 5.99€ ho jayega!</span><br><button class="btn purple small" style="margin-top:8px;width:100%" onclick="buyPlan('Premium')">Claim Offer →</button></div>
 </div>
 </div>
 
-<!-- RIGHT : RESULTS + TOPPER -->
-<div>
-<div class="card"><h3>🏆 Top 5 — Leaderboard</h3><div id="topList" style="font-size:13px;line-height:2"></div></div>
-<div class="card"><h3>📊 Aaj Ka Result — Live</h3><div id="resultList" style="max-height:300px;overflow-y:auto"></div></div>
-<div class="card"><h3>💬 Motivation</h3><p id="quoteText" style="font-size:14px;line-height:1.7">“Mehnat itni khamoshi se karo ki safalta shor macha de!”</p><button class="btn small purple" style="margin-top:8px" onclick="newQuote()">Naya Quote</button></div>
-<div class="card"><h3>🎨 Background</h3><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn small purple" onclick="setBg('purple')">Purple</button><button class="btn small blue" onclick="setBg('blue')">Blue</button><button class="btn small" style="background:#111;color:#fff" onclick="setBg('dark')">Dark</button><button class="btn small green" onclick="setBg('green')">Green</button><button class="btn small" style="background:#fff;border:1px solid #ddd" onclick="setBg('light')">Light</button></div></div>
-</div>
+<div class="stats"><div class="stat"><b>10,000+</b><span>Happy Customers</span></div><div class="stat"><b>99.9%</b><span>Uptime Guarantee</span></div><div class="stat"><b>0.4s</b><span>Loading Speed</span></div><div class="stat"><b>24/7</b><span>Support — Hindi + Spanish</span></div></div>
+
+<div class="card" id="plans"><h3>💎 Hosting Plans — Sasta + Tez + Acha Sa</h3><p>Jo plan chahiye uspe click karo — turant buy ho jayega!</p></div>
+<div class="plans">
+<div class="plan"><h4>🌱 BASIC</h4><p style="font-size:12px;color:#cbd5e1">Chhoti website ke liye</p><div class="price">1.99€<small>/mes</small></div><p style="font-size:12px;color:#94a3b8"><s>3.99€</s> — 50% OFF</p><ul><li>1 Website</li><li>10 GB SSD Storage</li><li>Free SSL</li><li>Free Email</li><li>99.9% Uptime</li></ul><button class="btn white" style="width:100%" onclick="buyPlan('Basic')">Basic Lo →</button></div>
+<div class="plan popular"><span class="tag">⭐ SABSE POPULAR</span><h4>🔥 PREMIUM</h4><p style="font-size:12px;color:#fff;opacity:.9">Sabse zyada log ye lete hai!</p><div class="price">2.99€<small>/mes</small></div><p style="font-size:12px;opacity:.8"><s>5.99€</s> — 50% OFF</p><ul><li>100 Websites</li><li>100 GB SSD Storage</li><li>Free Domain (.com)</li><li>Free SSL + Email</li><li>Free CDN + Backup</li><li>AI Website Builder</li></ul><button class="btn white" style="width:100%" onclick="buyPlan('Premium')">Premium Lo →</button></div>
+<div class="plan"><h4>👑 BUSINESS</h4><p style="font-size:12px;color:#cbd5e1">Dukaan / Business ke liye</p><div class="price">4.99€<small>/mes</small></div><p style="font-size:12px;color:#94a3b8"><s>9.99€</s> — 50% OFF</p><ul><li>Unlimited Websites</li><li>200 GB NVMe SSD</li><li>Free Domain + SSL</li><li>Daily Backup</li><li>Priority Support</li><li>Free Migration</li></ul><button class="btn purple" style="width:100%" onclick="buyPlan('Business')">Business Lo →</button></div>
 </div>
 
-<!-- SUCCESS MODAL -->
-<div class="modal" id="okModal"><div class="box"><div style="font-size:52px">✓</div><h2 id="okTitle">Ho Gaya!</h2><p id="okText" style="font-size:13px;color:#666;margin-top:6px"></p><div id="ticketBox" style="background:#fff;border:2px dashed #111;padding:12px;border-radius:10px;text-align:left;font-family:monospace;font-size:13px;line-height:1.6;margin:12px 0"></div><div style="display:flex;gap:8px"><button class="btn purple" style="flex:1" onclick="closeModal('okModal')">OK</button><button class="btn black" style="flex:1" onclick="printParte()">Print</button></div></div></div>
+<div class="card" id="features" style="margin-top:16px"><h3>⚡ Features — Kyu GUDU Hi Best Hai?</h3><p>Baaki hosting slow hai — GUDU rocket jaisa tez hai!</p></div>
+<div class="features">
+<div class="feat"><div class="ic">⚡</div><b>Super Fast — 0.4s Loading</b><p>NVMe SSD + LiteSpeed — Teri website blink karte hi khul jayegi!</p></div>
+<div class="feat"><div class="ic">🔒</div><b>100% Secure</b><p>Free SSL, Daily Backup, Malware Protection — Koi hack nahi kar payega!</p></div>
+<div class="feat"><div class="ic">🤖</div><b>AI Website Builder</b><p>Naam likho, AI 1 minute me puri website bana dega — Bina coding ke!</p></div>
+<div class="feat"><div class="ic">🌍</div><b>Free Domain + Email</b><p>Premium plan pe .com domain FREE! Aur professional email bhi — info@tusitio.com</p></div>
+<div class="feat"><div class="ic">💬</div><b>24/7 Support — Hindi Me Bhi!</b><p>Raat ko 3 baje bhi problem ho to hum hai! Hindi, Spanish, English — sab me!</p></div>
+<div class="feat"><div class="ic">💰</div><b>30 Din Money-Back</b><p>Pasand nahi aaya to 30 din me paise wapas — Koi sawal nahi!</p></div>
+</div>
+
+<div class="card" id="reviews" style="margin-top:16px"><h3>⭐ Log Kya Bolte Hai? — 4.9/5 Rating!</h3></div>
+<div class="reviews">
+<div class="rev"><b>⭐⭐⭐⭐⭐ Maria Garcia</b><p>"Meri dukaan ki website GUDU pe hai — Pehle 5 second lagta tha, ab 0.4 second me khulti hai! Sales double ho gayi!"</p><span style="font-size:11px;color:#94a3b8">— Tienda Online, Barcelona</span></div>
+<div class="rev"><b>⭐⭐⭐⭐⭐ Rahul Sharma</b><p>"Bhai ek dum acha sa hai! Hindi me support mil gaya, 10 minute me meri website live ho gayi. Best hosting hai!"</p><span style="font-size:11px;color:#94a3b8">— Blogger, Delhi</span></div>
+<div class="rev"><b>⭐⭐⭐⭐⭐ Juan Perez</b><p>"1.99€ me itna kuch? Free domain, free SSL, AI builder — Maine 3 websites bana li! GUDU is best!"</p><span style="font-size:11px;color:#94a3b8">— Freelancer, Madrid</span></div>
+</div>
+
+<div class="card" id="faq" style="margin-top:16px"><h3>❓ FAQ — Sab Sawal, Sab Jawab</h3></div>
+<div class="faq" onclick="this.classList.toggle('open')"><b>❓ GUDU Hosting kitne ka hai?</b><p>Bas 1.99€/mes se shuru! Premium 2.99€/mes — Aaj 50% OFF chal raha hai!</p></div>
+<div class="faq" onclick="this.classList.toggle('open')"><b>❓ Kya mujhe coding aani chahiye?</b><p>Nahi! AI Website Builder hai — Naam likho, AI bana dega. Bina coding ke!</p></div>
+<div class="faq" onclick="this.classList.toggle('open')"><b>❓ Agar pasand nahi aaya to?</b><p>30 din me paise wapas — 100% Money-Back Guarantee!</p></div>
+<div class="faq" onclick="this.classList.toggle('open')"><b>❓ Meri purani website transfer ho jayegi?</b><p>Haan! Free Migration — Hum khud kar denge, 1 din me!</p></div>
+
+<div class="card" style="background:linear-gradient(135deg,#7c3aed,#ec4899);border:none;text-align:center;padding:28px"><h3 style="font-size:24px">Abhi Shuru Karo — 50% OFF Khatam Hone Wala Hai! 🔥</h3><p style="color:#fff">Free Domain + Free SSL + AI Builder — Bas 2.99€/mes!</p><button class="btn white" style="margin-top:10px" onclick="buyPlan('Premium')">🚀 Premium Lo — 2.99€/mes →</button> <button class="btn ghost" onclick="checkDomain()">Domain Check Karo</button></div>
+
+<div class="footer"><b style="color:#fff;font-size:16px">GUDU <span style="color:#a78bfa">HOSTING</span></b><br>Fast • Secure • Sasta • Made with ❤️ in Barcelona<br>© 2026 GUDU Hosting — Sab rights reserved.</div>
+</div>
 
 <script>
-var names=["Aarav","Priya","Rahul","Sneha","Amit","Neha","Vikram","Ananya","Rohan","Ishita","Arjun","Pooja","Karan","Riya","Manish","Divya","Aditya","Kavita","Suresh","Meera","Raj","Simran","Vikas","Anjali","Nikhil","Deepak","Sonu","Ritu","Gaurav","Nisha"];
-var colors=["#7c3aed","#2563eb","#00a651","#ff8c00","#e11d48","#0891b2","#db2777","#65a30d"];
-var students=[]; for(var i=0;i<30;i++){ students.push({roll:i+1,name:names[i]+" "+(i+1),att:"Present",score:62+Math.floor(Math.random()*33),absent:0,late:0,hw:true}); }
-var partes=[]; var parteType="suspend"; var day=1;
-var lessons=[
-{title:"Science — Photosynthesis",desc:"Plants apna khana kaise banate hai? CO2 + Paani + Sunlight = Glucose + Oxygen. Leaf me hota hai. Exam me diagram aayega!",prog:70,tag:"SCIENCE"},
-{title:"Maths — Pythagoras",desc:"Hypo² = Base² + Perp². Example: 3-4-5 triplet. Seedhi deewar pe — wahi Pythagoras hai!",prog:55,tag:"MATHS"},
-{title:"Hindi — Surdas",desc:"Surdas Krishna bhakt the. Unke pad me Krishna ki leela hai. Exam me 1 pad aayega!",prog:40,tag:"HINDI"},
-{title:"English — Dust of Snow",desc:"Robert Frost ki poem. Chhoti si cheez bhi mood badal sakti hai. Poet ne crow aur hemlock tree ka example diya!",prog:80,tag:"ENGLISH"},
-{title:"SST — Nationalism",desc:"1857 ki kranti se lekar 1947 tak — Bharat kaise azaad hua? Gandhi ji ka role kya tha?",prog:30,tag:"SST"},
-{title:"Computer — HTML",desc:"HTML = Hyper Text Markup Language. Website ki haddi! Notepad me likho, .html se save karo, website ban gayi!",prog:90,tag:"COMPUTER"}
-];
-var books=[
-{name:"Science",ch:"8 Chapters",color:"#00a651"},{name:"Maths",ch:"8 Chapters",color:"#2563eb"},{name:"Hindi",ch:"8 Chapters",color:"#ff8c00"},{name:"English",ch:"8 Chapters",color:"#7c3aed"},{name:"SST",ch:"8 Chapters",color:"#0891b2"},{name:"Computer",ch:"8 Chapters",color:"#e11d48"}
-];
-var quotes=["Tu kar sakta hai — bas shuru kar!","Mehnat itni khamoshi se karo ki safalta shor macha de!","Aaj ka 1 chapter, kal ka Topper banayega!","Sapne wo nahi jo neend me aaye, sapne wo hai jo neend udaye!","Har din 1% better bano — 100 din me 100% better!"];
-function toast(m){var t=document.getElementById("toast");t.innerText=m;t.style.display="block";setTimeout(function(){t.style.display="none"},2400);}
-function getPenalty(s){return s.absent*1 + s.late*0.5;}
-function getFinal(s){return Math.max(0,Math.round(s.score - getPenalty(s)));}
-function renderStudents(){
-  var q=(document.getElementById("stuSearch").value||"").toLowerCase(); var h=""; var p=0,a=0,l=0;
-  for(var i=0;i<students.length;i++){var s=students[i]; if(s.att==="Present")p++; if(s.att==="Absent")a++; if(s.att==="Late")l++; if(q && s.name.toLowerCase().indexOf(q)===-1) continue;
-    var ini=s.name.charAt(0); var col=colors[i%colors.length];
-    h+='<div class="student"><div class="info"><div class="avatar" style="background:'+col+'">'+ini+'</div><div><b>'+s.roll+'. '+s.name+'</b><span>'+s.score+'% → '+getFinal(s)+'% • Absent: '+s.absent+' • Late: '+s.late+'</span></div></div><div class="att-btns"><button class="'+(s.att==="Present"?"on-p":"")+'" onclick="setAtt('+s.roll+',\'Present\')">Present</button><button class="'+(s.att==="Absent"?"on-a":"")+'" onclick="setAtt('+s.roll+',\'Absent\')">Absent</button><button class="'+(s.att==="Late"?"on-l":"")+'" onclick="setAtt('+s.roll+',\'Late\')">Late</button></div></div>';
-  }
-  document.getElementById("stuList").innerHTML=h;
-  document.getElementById("statP").innerText=p; document.getElementById("statA").innerText=a; document.getElementById("statL").innerText=l;
-  document.getElementById("statParte").innerText=partes.length;
-  renderTop(); renderResults();
+var texts=["$ gudu deploy meri-website.com — DONE in 2s ✓","$ gudu speed test — 0.4s — FASTEST! ⚡","$ gudu ssl install — Secure! 🔒","$ gudu backup — Done! 💾"];
+var ti=0;
+setInterval(function(){ti=(ti+1)%texts.length; document.getElementById("typingText").innerText=texts[ti];},3000);
+function toast(m){var t=document.getElementById("toast");t.innerText=m;t.style.display="block";setTimeout(function(){t.style.display="none"},2600);}
+function scrollToPlans(){document.getElementById("plans").scrollIntoView({behavior:"smooth"});toast("Plans dekh lo — Premium sabse acha hai!");}
+function checkDomain(){
+  var v=document.getElementById("domainInput").value.trim().toLowerCase();
+  if(!v){toast("Pehle domain naam likho!");return;}
+  if(v.indexOf(".")===-1) v=v+".com";
+  var taken=["google","facebook","youtube","gudu","amazon"];
+  var name=v.split(".")[0];
+  var res=document.getElementById("domainResult");
+  if(taken.indexOf(name)>-1){res.innerHTML="❌ <b>"+v+"</b> — Ye to pehle se liya hua hai! Dusra try karo!";res.style.color="#fda4af";}
+  else{res.innerHTML="✅ <b>"+v+"</b> — AVAILABLE HAI! 🎉 Bas <b>0.99€</b> me le lo! <button onclick=\"buyPlan('Domain — "+v+"')\" style='background:#fff;color:#111;border:none;padding:6px 12px;border-radius:20px;font-weight:800;cursor:pointer;margin-left:6px'>Buy Karo →</button>";res.style.color="#4ade80";}
+  toast("Domain check ho gaya: "+v);
 }
-function setAtt(roll,v){
-  for(var i=0;i<students.length;i++){var s=students[i]; if(s.roll===roll){ var old=s.att; if(old===v) return; if(old==="Absent")s.absent--; if(old==="Late")s.late--; if(v==="Absent")s.absent++; if(v==="Late")s.late++; s.att=v; renderStudents(); if(v==="Absent") toast(s.name+" Absent — -1% Turant!"); if(v==="Late") toast(s.name+" Late — -0.5% Turant!"); if(v==="Present") toast(s.name+" Present — Penalty hat gaya!"); return; }}
+function buyPlan(plan){
+  toast("🎉 "+plan+" select ho gaya! Checkout khul raha hai...");
+  setTimeout(function(){alert("🎉 GUDU HOSTING — "+plan+" Plan!\n\n✅ Plan select ho gaya!\n✅ 50% OFF apply ho gaya!\n✅ Free Domain + SSL included!\n\nAbhi checkout pe jao aur apni website live karo! 🚀\n\n— GUDU HOSTING");},400);
 }
-function markAllPresent(){for(var i=0;i<students.length;i++){var s=students[i]; if(s.att==="Absent")s.absent--; if(s.att==="Late")s.late--; s.att="Present";} renderStudents(); toast("Sab Present ho gaye!");}
-function nextDay(){for(var i=0;i<students.length;i++) students[i].att="Present"; day++; toast("Day "+day+" — Naya din shuru!"); renderStudents();}
-function renderLessons(){
-  var h=""; for(var i=0;i<lessons.length;i++){var L=lessons[i]; h+='<div class="lesson" onclick="openLesson('+i+')"><div style="display:flex;justify-content:space-between"><b>'+L.title+'</b><span class="badge purple">'+L.tag+'</span></div><p>'+L.desc+'</p><div class="progress"><div style="width:'+L.prog+'%"></div></div><span style="font-size:11px;color:#888">'+L.prog+'% Complete — Click karke padho</span></div>';}
-  document.getElementById("lessonList").innerHTML=h;
-}
-function openLesson(i){var L=lessons[i]; document.getElementById("readTitle").innerText=L.title; document.getElementById("readText").innerText=L.desc+" — Full detail ke liye AI Teacher se puchho: '"+L.title+" easy me samjhao'"; document.getElementById("readBox").style.display="block"; document.getElementById("readBox").scrollIntoView({behavior:"smooth"}); toast("Lesson khul gaya: "+L.title);}
-function renderHw(){
-  var h=""; for(var i=0;i<Math.min(8,students.length);i++){var s=students[i]; h+='<div class="student"><div class="info"><div class="avatar" style="background:'+colors[i%colors.length]+'">'+s.name.charAt(0)+'</div><div><b>'+s.name+'</b><span>Homework: '+(s.hw?"Laya hai":"Nahi laya")+'</span></div></div><button class="btn small '+(s.hw?"green":"red")+'" onclick="toggleHw('+s.roll+')">'+(s.hw?"✅ Laya":"❌ Nahi Laya")+'</button></div>';}
-  document.getElementById("hwList").innerHTML=h;
-}
-function toggleHw(roll){for(var i=0;i<students.length;i++){if(students[i].roll===roll){students[i].hw=!students[i].hw; toast(students[i].name+" — Homework: "+(students[i].hw?"Laya hai":"Nahi laya")); renderHw(); return;}}}
-function checkAllHw(){for(var i=0;i<students.length;i++) students[i].hw=true; renderHw(); toast("Sab ne homework laya!");}
-function addHw(){var t=prompt("Homework kya hai? Jaise: Maths ke 10 sawal"); if(t){toast("Homework add ho gaya: "+t);}}
-function renderBooks(){
-  var h=""; for(var i=0;i<books.length;i++){var b=books[i]; h+='<div style="border:1px solid #eef1f4;border-radius:12px;padding:12px;text-align:center;cursor:pointer" onclick="openBook('+i+')"><div style="width:100%;height:6px;background:'+b.color+';border-radius:10px;margin-bottom:8px"></div><b style="font-size:13px">'+b.name+'</b><br><span style="font-size:11px;color:#888">'+b.ch+' • Full Teoria</span></div>';}
-  document.getElementById("bookGrid").innerHTML=h;
-}
-function openBook(i){var b=books[i]; document.getElementById("readTitle").innerText=b.name+" — Book"; document.getElementById("readText").innerText=b.name+" ki book me "+b.ch+" hai. Har chapter me Teoria + Example + Quiz hai. AI Teacher se puchho: '"+b.name+" ka pehla chapter samjhao'"; document.getElementById("readBox").style.display="block";}
-function renderTop(){
-  var s=students.slice().sort(function(a,b){return getFinal(b)-getFinal(a)}); var h="";
-  for(var i=0;i<5;i++){var med=i===0?"🥇":i===1?"🥈":i===2?"🥉":"⭐"; h+=med+" "+s[i].name+" — "+getFinal(s[i])+"%<br>";}
-  document.getElementById("topList").innerHTML=h;
-}
-function renderResults(){
-  var s=students.slice().sort(function(a,b){return getFinal(b)-getFinal(a)}); var h="";
-  for(var i=0;i<s.length;i++){var st=s[i]; h+='<div class="student"><div><b>'+(i+1)+'. '+st.name+'</b><br><span>Absent: '+st.absent+' • Late: '+st.late+' • Penalty: -'+getPenalty(st).toFixed(1)+'%</span></div><b>'+st.score+'% → '+getFinal(st)+'%</b></div>';}
-  document.getElementById("resultList").innerHTML=h;
-}
-function showTab(id){
-  document.getElementById("tab-home").style.display=id==="home"?"block":"none";
-  document.getElementById("tab-parte").style.display=id==="parte"?"block":"none";
-  document.getElementById("tab-ai").style.display=id==="ai"?"block":"none";
-  if(id==="ai") addAIMsg("Namaste! Main tumhara AI Teacher hu. Kya padhna hai aaj?");
-}
-function setParteType(t){
-  parteType=t;
-  document.getElementById("typeS").classList.toggle("on",t==="suspend");
-  document.getElementById("typeF").classList.toggle("on-green",t==="falta");
-  document.getElementById("formS").style.display=t==="suspend"?"block":"none";
-  document.getElementById("formF").style.display=t==="falta"?"block":"none";
-}
-function saveParte(type){
-  var data={id:Date.now(),type:type,date:new Date().toLocaleDateString("es-ES")};
-  if(type==="suspend"){data.name=document.getElementById("sName").value.trim(); data.roll=document.getElementById("sRoll").value; data.reason=document.getElementById("sReason").value; data.days=document.getElementById("sDays").value; if(!data.name){toast("Pehle naam dalo!");return;}}
-  else{data.name=document.getElementById("fName").value.trim(); data.reason=document.getElementById("fReason").value; data.just=document.getElementById("fJust").value||"1234"; if(!data.name){toast("Pehle naam dalo!");return;}}
-  partes.unshift(data); renderParte(); renderStudents();
-  var txt=type==="suspend"?"🚨 PARTE DE SUSPENSIÓN\nStudent: "+data.name+"\nReason: "+data.reason+"\nSuspend: "+data.days:"✅ FALTA JUSTIFICADA\nFelicidades "+data.name+"! Tumhari falta maaf ho gayi!\nReason: "+data.reason;
-  document.getElementById("okTitle").innerText=type==="suspend"?"SUSPEND FORM BAN GAYA!":"FALTA JUSTIFICADA BAN GAYI!";
-  document.getElementById("okText").innerText=txt;
-  document.getElementById("ticketBox").innerHTML=txt.replace(/\n/g,"<br>");
-  document.getElementById("okModal").classList.add("show");
-  toast(type==="suspend"?"Suspend Form ban gaya!":"Falta Justificada ban gayi!");
-}
-function renderParte(){
-  var h=""; if(partes.length===0) h='<p style="color:#888;font-size:13px">Abhi koi Parte nahi hai.</p>';
-  for(var i=0;i<partes.length;i++){var d=partes[i]; if(d.type==="suspend") h+='<div class="student"><div><b>🚨 SUSPEND — '+d.name+'</b><br><span>'+d.reason+' • '+d.days+' • '+d.date+'</span></div><button class="btn small red" onclick="delParte('+d.id+')">Delete</button></div>'; else h+='<div class="student"><div><b>✅ FALTA — '+d.name+'</b><br><span>'+d.reason+' • Just: '+d.just+' • '+d.date+'</span></div><button class="btn small red" onclick="delParte('+d.id+')">Delete</button></div>';}
-  document.getElementById("parteList").innerHTML=h; document.getElementById("parteCount").innerText=partes.length;
-}
-function delParte(id){partes=partes.filter(function(x){return x.id!==id}); renderParte(); renderStudents();}
-function printParte(){window.print();}
-function closeModal(id){document.getElementById(id).classList.remove("show");}
-function addAIMsg(t){var b=document.getElementById("aiBox"); var d=document.createElement("div"); d.className="msg ai"; d.innerHTML="<b>🤖 AI Teacher</b><br>"+t; b.appendChild(d); b.scrollTop=b.scrollHeight;}
-function addUserMsg(t){var b=document.getElementById("aiBox"); var d=document.createElement("div"); d.className="msg me"; d.innerHTML="<b>Tu</b><br>"+t; b.appendChild(d); b.scrollTop=b.scrollHeight;}
-function askAI(){var inp=document.getElementById("aiInput"); var q=inp.value.trim(); if(!q) return; inp.value=""; addUserMsg(q); setTimeout(function(){addAIMsg(aiAns(q));},500);}
-function quickAI(q){document.getElementById("aiInput").value=q; askAI();}
-function aiAns(q){
-  var l=q.toLowerCase();
-  if(l.indexOf("photosynthesis")>-1) return "<b>Photosynthesis — Detail Me!</b><br><br>CO2 + Paani + Sunlight → Glucose + Oxygen<br><br>Plants apna khana banate hai. Leaf me Chloroplast me hota hai.<br><br><b>Exam Me:</b> Formula + Diagram = Full Marks!";
-  if(l.indexOf("pythagoras")>-1) return "<b>Pythagoras</b><br><br>Hypo² = Base² + Perp²<br>Example: 3-4-5 triplet!<br><br>Seedhi deewar pe — wahi Pythagoras hai!";
-  if(l.indexOf("exam")>-1 || l.indexOf("padh")>-1) return "<b>Exam Topper Tips</b><br><br>1. 25 Min Padhai + 5 Min Break<br>2. Likhke yaad karo — 80% yaad hota hai!<br>3. Previous Year Questions<br>4. 7 Ghante Neend<br><br>Tu kar lega! 💪";
-  return "<b>"+q+" — Achha Sawal!</b><br><br><b>1. Matlab:</b> Ye topic important hai.<br><b>2. Easy Me:</b> Real life example se samjho.<br><b>3. Exam Me:</b> Definition + Example + Diagram = Full Marks!<br><br>Bolo: 'Aur detail me samjhao'";
-}
-function newQuote(){var q=quotes[Math.floor(Math.random()*quotes.length)]; document.getElementById("quoteText").innerText="“"+q+"”"; toast("Naya Quote: "+q);}
-function setBg(c){
-  if(c==="purple") document.body.style.background="linear-gradient(135deg,#ede9fe,#ddd6fe)";
-  if(c==="blue") document.body.style.background="linear-gradient(135deg,#dbeafe,#bfdbfe)";
-  if(c==="dark") document.body.style.background="#111";
-  if(c==="green") document.body.style.background="linear-gradient(135deg,#dcfce7,#bbf7d0)";
-  if(c==="light") document.body.style.background="#f2f4f7";
-  toast("Background badal gaya!");
-}
-function resetAll(){if(!confirm("Sab reset kar du?")) return; for(var i=0;i<students.length;i++){students[i].att="Present";students[i].absent=0;students[i].late=0;students[i].hw=true;} partes=[]; renderStudents(); renderParte(); renderHw(); toast("Sab reset ho gaya!");}
-setInterval(function(){var d=new Date(); document.getElementById("clock").innerText=d.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});},1000);
-renderStudents(); renderLessons(); renderHw(); renderBooks(); renderParte();
 </script>
 </body>
 </html>
