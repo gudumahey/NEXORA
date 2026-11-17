@@ -3,62 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUDU - 10 Cent Item</title>
+<title>GUDU — Creative Developer & Designer</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#f8f9fc;color:#111}
-.top{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0}
-.logo{font-size:22px;font-weight:900} .logo span{color:#673de6}
-.wrap{max-width:1000px;margin:0 auto;padding:20px}
-.card{background:#fff;border:1px solid #eef1f6;border-radius:16px;padding:20px;margin-bottom:14px}
-.btn{border:none;padding:12px 20px;border-radius:10px;font-weight:700;cursor:pointer}
-.btn.purple{background:#673de6;color:#fff} .btn.apple{background:#000;color:#fff;width:100%;padding:15px;border-radius:12px;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn.gpay{background:#fff;color:#111;border:1px solid #dadce0;width:100%;padding:14px;border-radius:12px;font-size:15px}
-.prod{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center}
-.prod .img{width:120px;height:120px;background:linear-gradient(135deg,#673de6,#a855f7);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:48px;color:#fff}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Inter,Arial,sans-serif;-webkit-tap-highlight-color:transparent;scroll-behavior:smooth}
+body{background:#070714;color:#fff;overflow-x:hidden;user-select:none;-webkit-user-select:none}
+a{color:inherit;text-decoration:none}
+::selection{background:#7c3aed;color:#fff}
+/* ANIMATIONS */
+@keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes pop{0%{transform:scale(.9) translateY(20px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}
+@keyframes shine{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(124,58,237,.4)}50%{box-shadow:0 0 45px rgba(236,72,153,.7)}}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes barFill{from{width:0}to{width:var(--w)}}
+.float{animation:float 3.5s ease-in-out infinite}
+.float2{animation:float 4.5s ease-in-out infinite;animation-delay:.5s}
+.glow{animation:glowPulse 2.5s infinite}
+.pop{animation:pop .7s ease both}
+.bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,#070714,#1a0b2e,#0b1a2e,#2e0b2e);background-size:400% 400%;animation:grad 14s ease infinite}
+.blob{position:fixed;border-radius:50%;filter:blur(80px);opacity:.35;z-index:-1}
+.blob1{width:400px;height:400px;background:#7c3aed;top:-100px;left:-100px}
+.blob2{width:350px;height:350px;background:#ec4899;bottom:-80px;right:-80px}
+.blob3{width:300px;height:300px;background:#06b6d4;top:40%;left:40%}
+/* NAV */
+.top{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;backdrop-filter:blur(20px);background:rgba(7,7,20,.7);border:1px solid rgba(255,255,255,.08);border-radius:0 0 20px 20px}
+.logo{font-size:24px;font-weight:900;letter-spacing:-1px}
+.logo span{background:linear-gradient(90deg,#a78bfa,#ec4899,#f59e0b,#22c55e,#a78bfa);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite}
+.top nav{display:flex;gap:24px;font-size:14px;font-weight:600;color:#cbd5e1}
+.top nav a:hover{color:#fff}
+.btn{border:none;padding:12px 22px;border-radius:30px;font-weight:800;cursor:pointer;font-size:14px;transition:.2s}
+.btn:hover{transform:translateY(-2px) scale(1.03)}
+.btn.purple{background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;box-shadow:0 8px 24px rgba(124,58,237,.4)}
+.btn.white{background:#fff;color:#111}
+.btn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.btn.small{padding:8px 16px;font-size:12px}
+.wrap{max-width:1200px;margin:0 auto;padding:20px}
+/* HERO */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;align-items:center;padding:36px 0 20px}
+.hero h1{font-size:56px;line-height:1.05;letter-spacing:-2px}
+.hero h1 .anim{background:linear-gradient(90deg,#a78bfa,#ec4899,#f59e0b,#22c55e,#a78bfa);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite}
+.hero p{font-size:16px;color:#cbd5e1;line-height:1.7;margin:14px 0}
+.typing{font-family:monospace;font-size:15px;color:#4ade80;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);padding:12px 14px;border-radius:12px;min-height:44px}
+.pill{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-right:6px}
+.hero-card{background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.15);border-radius:24px;padding:22px;backdrop-filter:blur(16px);text-align:center;position:relative}
+.hero-card .avatar{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#ec4899);display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:900;margin:0 auto 12px;border:4px solid rgba(255,255,255,.3);box-shadow:0 0 40px rgba(124,58,237,.5)}
+.hero-card h3{font-size:20px} .hero-card p{font-size:13px;color:#cbd5e1;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+.stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;text-align:center;backdrop-filter:blur(10px);transition:.2s}
+.stat:hover{transform:translateY(-4px)}
+.stat b{font-size:26px;display:block} .stat span{font-size:12px;color:#94a3b8}
+.marquee{overflow:hidden;white-space:nowrap;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:30px;padding:12px 0;margin:16px 0}
+.marquee span{display:inline-block;animation:marquee 18s linear infinite;font-weight:800;font-size:14px;letter-spacing:1px}
+/* SECTION */
+.sec{margin:28px 0}
+.sec h2{font-size:32px;letter-spacing:-1px;margin-bottom:6px}
+.sec h2 span{background:linear-gradient(90deg,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sec p.sub{color:#94a3b8;font-size:14px;margin-bottom:16px}
+.card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px;backdrop-filter:blur(12px)}
+/* PROJECTS */
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.proj{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;overflow:hidden;cursor:pointer;transition:.25s}
+.proj:hover{transform:translateY(-8px) scale(1.02);border-color:#7c3aed;box-shadow:0 20px 40px rgba(124,58,237,.3)}
+.proj .thumb{height:140px;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
+.proj .body{padding:16px}
+.proj b{font-size:16px} .proj p{font-size:13px;color:#cbd5e1;line-height:1.6;margin:6px 0}
+.tag{display:inline-block;background:rgba(255,255,255,.12);padding:4px 9px;border-radius:20px;font-size:11px;font-weight:700;margin-right:4px}
+/* SKILLS */
+.skills{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.skill{margin-bottom:12px}
+.skill .row{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:6px}
+.bar{height:8px;background:rgba(255,255,255,.1);border-radius:20px;overflow:hidden}
+.bar div{height:100%;border-radius:20px;background:linear-gradient(90deg,#7c3aed,#ec4899);animation:barFill 1.2s ease}
+/* SERVICES */
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.serv{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px;transition:.2s;cursor:pointer}
+.serv:hover{transform:translateY(-5px);border-color:#ec4899}
+.serv .ic{font-size:32px;margin-bottom:10px}
+.serv b{font-size:16px} .serv p{font-size:13px;color:#cbd5e1;line-height:1.6;margin-top:6px}
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+input,textarea{width:100%;padding:12px;border:1px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(0,0,0,.3);color:#fff;outline:none;font-size:14px;margin-bottom:10px}
+input:focus,textarea:focus{border-color:#7c3aed}
+.footer{text-align:center;padding:30px 0 20px;color:#94a3b8;font-size:13px;border-top:1px solid rgba(255,255,255,.08);margin-top:20px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#111;padding:12px 20px;border-radius:30px;font-weight:800;font-size:13px;z-index:99;display:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
 .modal.show{display:flex}
-.box{background:#fff;border-radius:18px;padding:22px;width:100%;max-width:420px}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:11px 18px;border-radius:30px;font-weight:700;z-index:999;display:none}
+.box{background:#1a1a2e;border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:22px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
+@media(max-width:900px){.hero{grid-template-columns:1fr} .hero h1{font-size:38px} .projects,.services,.skills,.contact-grid{grid-template-columns:1fr} .stats{grid-template-columns:repeat(2,1fr)} .top nav{display:none}}
 </style>
 </head>
 <body>
+<div class="bg"></div><div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
 <div id="toast"></div>
-<div class="top"><div class="logo">GUDU <span>STORE</span></div><button class="btn purple" onclick="buy10Cent()">Cart — 0.10€</button></div>
-<div class="wrap">
-<div class="card"><h2>🔥 Aaj Ka Offer — Sirf 10 Cent!</h2><p style="color:#666;font-size:14px">Test Product — Real Apple Pay kaise dikhega, ye dekhne ke liye!</p></div>
-<div class="card"><div class="prod"><div class="img">🎁</div><div><b style="font-size:18px">GUDU Sticker Pack — Digital</b><br><span style="color:#666;font-size:13px">10 Premium Stickers • Instant Download • Lifetime Access</span><br><b style="font-size:24px">0.10€</b> <s style="color:#999">1.99€</s> <span style="background:#dcfce7;color:#00a651;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:800">95% OFF</span><br><br><button class="btn purple" onclick="buy10Cent()">Buy Now — 0.10€ →</button></div></div></div>
-<div class="card"><h3>Kya Milega?</h3><p style="color:#666;font-size:14px;line-height:1.7">✅ 10 Stickers<br>✅ Instant Download<br>✅ Lifetime Access<br>✅ No Hidden Charges</p></div>
+<div class="top"><div class="logo">GUDU<span>.DEV</span></div><nav><a href="#home">Home</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#services">Services</a><a href="#contact">Contact</a></nav><div style="display:flex;gap:8px"><button class="btn ghost small" onclick="toast('CV Download ho raha hai!')">Download CV</button><button class="btn purple small" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hire Me →</button></div></div>
+
+<div class="wrap" id="home">
+<div class="hero">
+<div class="pop">
+<span class="pill">✨ Available for Work</span> <span class="pill">📍 Barcelona, Spain</span>
+<h1>Hi, I'm <span class="anim">GUDU</span><br>Creative Developer<br>& Designer 🚀</h1>
+<div class="typing" id="typingText">> I build amazing websites...</div>
+<p>Main websites banata hu jo log dekh ke bole <b style="color:#fff">"WOW!"</b> — Fast, Animated, Professional. Hosting, Portfolio, Shop, Classroom — Sab kuch ek jagah!</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn purple glow" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View My Work →</button><button class="btn white" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact Me</button></div>
+<p style="font-size:12px;margin-top:10px">⭐ 4.9/5 Rating &nbsp; • &nbsp; 50+ Projects &nbsp; • &nbsp; 100% Happy Clients</p>
+</div>
+<div class="hero-card float pop">
+<div class="avatar">G</div>
+<h3>GUDU — Raistar</h3>
+<p>Full Stack Developer • UI Designer<br>Barcelona, Spain</p>
+<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px"><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">JavaScript</span><span class="pill">AI</span></div>
+<div style="background:rgba(0,0,0,.3);border-radius:12px;padding:12px;margin-top:12px;text-align:left"><b style="font-size:13px">🔥 Aaj Ka Focus</b><br><span style="font-size:12px;color:#cbd5e1">Nayi Website bana raha hu — 10/10 wali!<br>Kal tak live ho jayegi!</span></div>
+<button class="btn purple" style="width:100%;margin-top:12px" onclick="hireMe()">💬 WhatsApp Pe Baat Karo →</button>
+</div>
 </div>
 
-<!-- CHECKOUT -->
-<div class="modal" id="checkoutModal"><div class="box">
-<div style="display:flex;justify-content:space-between"><h2>Checkout — 0.10€</h2><button onclick="closeModal()" style="border:none;background:#f3f4f6;width:32px;height:32px;border-radius:50%;cursor:pointer">X</button></div>
-<div style="background:#f8f9fc;border:1px solid #eee;border-radius:12px;padding:12px;margin:12px 0;font-size:13px;line-height:1.8"><b>GUDU Sticker Pack</b><br>Price: 0.10€<br>IVA: 0.00€ (Demo)<br><b>Total: 0.10€</b></div>
-<p style="font-size:12px;color:#888;text-align:center;margin-bottom:10px">⚠️ DEMO MODE — Real paise NAHI katenge.<br>Real ke liye neeche wala Stripe wala step follow karo!</p>
-<button class="btn apple" onclick="payApple()">🍎 Pay with Apple Pay — 0.10€</button>
-<button class="btn gpay" style="margin-top:8px" onclick="payGpay()">G Pay — 0.10€</button>
-<button class="btn purple" style="width:100%;margin-top:8px" onclick="payCard()">💳 Card Se Pay Karo</button>
+<div class="stats"><div class="stat"><b>50+</b><span>Projects Done</span></div><div class="stat"><b>30+</b><span>Happy Clients</span></div><div class="stat"><b>2+</b><span>Years Experience</span></div><div class="stat"><b>10/10</b><span>Quality Score</span></div></div>
+
+<div class="marquee"><span>✦ WEBSITES &nbsp;&nbsp; ✦ HOSTING &nbsp;&nbsp; ✦ PORTFOLIO &nbsp;&nbsp; ✦ E-COMMERCE &nbsp;&nbsp; ✦ AI WEBSITES &nbsp;&nbsp; ✦ DIGITAL CLASSROOM &nbsp;&nbsp; ✦ WEBSITES &nbsp;&nbsp; ✦ HOSTING &nbsp;&nbsp; ✦ PORTFOLIO &nbsp;&nbsp; ✦ E-COMMERCE &nbsp;&nbsp; ✦ AI WEBSITES &nbsp;&nbsp; ✦ DIGITAL CLASSROOM &nbsp;&nbsp;</span></div>
+
+<div class="sec" id="projects"><h2>My <span>Projects</span> — Sabse Ache Wale</h2><p class="sub">Kisi bhi project pe click karo — Detail khulega!</p>
+<div class="projects">
+<div class="proj" onclick="openProj(0)"><div class="thumb" style="background:linear-gradient(135deg,#673de6,#a855f7)">🛍️</div><div class="body"><b>GUDU Hosting — Professional Hosting</b><p>Hostinger jaisi hosting website — Plans, Domain, Apple Pay checkout ke saath!</p><span class="tag">HTML</span><span class="tag">Stripe</span><span class="tag">Apple Pay</span><br><br><button class="btn purple small">View Project →</button></div></div>
+<div class="proj" onclick="openProj(1)"><div class="thumb" style="background:linear-gradient(135deg,#ec4899,#f59e0b)">🏫</div><div class="body"><b>Digital Classroom</b><p>30 students, Attendance, Parte, AI Teacher — Puri school ek website me!</p><span class="tag">Education</span><span class="tag">AI</span><br><br><button class="btn purple small">View Project →</button></div></div>
+<div class="proj" onclick="openProj(2)"><div class="thumb" style="background:linear-gradient(135deg,#06b6d4,#22c55e)">🛒</div><div class="body"><b>RAISTAR Market — POS System</b><p>Mercadona jaisa POS — Bill, Card, Cash, Domicilio — Sab kuch!</p><span class="tag">POS</span><span class="tag">JavaScript</span><br><br><button class="btn purple small">View Project →</button></div></div>
+<div class="proj" onclick="openProj(3)"><div class="thumb" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">🍔</div><div class="body"><b>Food Delivery App</b><p>Zomato jaisa — Menu, Cart, Live Tracking, Payment — Sab kuch!</p><span class="tag">Food</span><span class="tag">App</span><br><br><button class="btn purple small">View Project →</button></div></div>
+<div class="proj" onclick="openProj(4)"><div class="thumb" style="background:linear-gradient(135deg,#8b5cf6,#06b6d4)">🤖</div><div class="body"><b>AI Chat Website</b><p>ChatGPT jaisa AI — Kuch bhi puchho, turant jawab!</p><span class="tag">AI</span><span class="tag">Chat</span><br><br><button class="btn purple small">View Project →</button></div></div>
+<div class="proj" onclick="openProj(5)"><div class="thumb" style="background:linear-gradient(135deg,#22c55e,#06b6d4)">💰</div><div class="body"><b>Payment Store — 0.10€</b><p>Apple Pay + Stripe se real payment — 10 cent ka item!</p><span class="tag">Stripe</span><span class="tag">Apple Pay</span><br><br><button class="btn purple small">View Project →</button></div></div>
 </div></div>
 
-<!-- SUCCESS -->
-<div class="modal" id="okModal"><div class="box" style="text-align:center"><div style="font-size:56px">✓</div><h2>Payment Successful! (Demo)</h2><p id="okText" style="color:#666;font-size:13px;margin-top:8px"></p><button class="btn purple" style="width:100%;margin-top:12px" onclick="closeModal2()">OK</button></div></div>
+<div class="sec" id="skills"><h2>My <span>Skills</span> — Kya-Kya Aata Hai?</h2><p class="sub">Har skill me expert hu — 90%+!</p>
+<div class="skills">
+<div class="card"><h3 style="margin-bottom:12px">💻 Coding Skills</h3>
+<div class="skill"><div class="row"><span>HTML / CSS</span><span>95%</span></div><div class="bar"><div style="--w:95%;width:95%"></div></div></div>
+<div class="skill"><div class="row"><span>JavaScript</span><span>90%</span></div><div class="bar"><div style="--w:90%;width:90%"></div></div></div>
+<div class="skill"><div class="row"><span>Website Design</span><span>92%</span></div><div class="bar"><div style="--w:92%;width:92%"></div></div></div>
+<div class="skill"><div class="row"><span>Stripe / Apple Pay</span><span>85%</span></div><div class="bar"><div style="--w:85%;width:85%"></div></div></div>
+</div>
+<div class="card"><h3 style="margin-bottom:12px">🎨 Design & More</h3>
+<div class="skill"><div class="row"><span>UI / UX Design</span><span>90%</span></div><div class="bar"><div style="--w:90%;width:90%"></div></div></div>
+<div class="skill"><div class="row"><span>Animation</span><span>88%</span></div><div class="bar"><div style="--w:88%;width:88%"></div></div></div>
+<div class="skill"><div class="row"><span>AI Integration</span><span>82%</span></div><div class="bar"><div style="--w:82%;width:82%"></div></div></div>
+<div class="skill"><div class="row"><span>Hosting / Deployment</span><span>89%</span></div><div class="bar"><div style="--w:89%;width:89%"></div></div></div>
+</div>
+</div></div>
+
+<div class="sec" id="services"><h2>My <span>Services</span> — Kya Karwa Sakte Ho?</h2><p class="sub">Kisi bhi service pe click karo — Price pata chalega!</p>
+<div class="services">
+<div class="serv" onclick="buyService('Portfolio Website','49€')"><div class="ic">🌐</div><b>Portfolio Website</b><p>Teri apni professional portfolio — Jaise ye wali! 2 din me ready!</p><p style="color:#f59e0b;font-weight:800;margin-top:8px">49€ se shuru →</p></div>
+<div class="serv" onclick="buyService('Online Shop','99€')"><div class="ic">🛒</div><b>Online Shop / Store</b><p>Apni dukaan online karo — Payment ke saath! Apple Pay + Card!</p><p style="color:#f59e0b;font-weight:800;margin-top:8px">99€ se shuru →</p></div>
+<div class="serv" onclick="buyService('Hosting Website','79€')"><div class="ic">🚀</div><b>Hosting Website</b><p>Hostinger jaisi hosting website — Plans + Checkout ke saath!</p><p style="color:#f59e0b;font-weight:800;margin-top:8px">79€ se shuru →</p></div>
+<div class="serv" onclick="buyService('AI Website','129€')"><div class="ic">🤖</div><b>AI Website</b><p>AI Chat, AI Teacher, AI Builder — Sab kuch AI ke saath!</p><p style="color:#f59e0b;font-weight:800;margin-top:8px">129€ se shuru →</p></div>
+<div class="serv" onclick="buyService('School / Classroom','89€')"><div class="ic">🏫</div><b>School / Classroom App</b><p>Digital Classroom — Attendance, Parte, Marks — Pura school!</p><p style="color:#f59e0b;font-weight:800;margin-top:8px">89€ se shuru →</p></div>
+<div class="serv" onclick="buyService('Custom Website','149€')"><div class="ic">✨</div><b>Custom Website — Jo Chaho!</b><p>Jo man me hai wo batao — Main bana dunga! 10/10 wali!</p><p style="color:#f59e0b;font-weight:800;margin-top:8px">149€ se shuru →</p></div>
+</div></div>
+
+<div class="sec" id="contact"><h2>Let's <span>Work Together!</span></h2><p class="sub">Project hai? Baat karte hai — 1 din me reply dunga!</p>
+<div class="contact-grid">
+<div class="card"><h3>📩 Message Bhejo</h3><input id="cName" placeholder="Tera Naam"><input id="cEmail" placeholder="Email — tu@email.com"><textarea id="cMsg" rows="4" placeholder="Kaisi website chahiye? Batao..."></textarea><button class="btn purple" style="width:100%" onclick="sendMsg()">Send Message →</button><p style="font-size:12px;color:#94a3b8;margin-top:8px">Form bharte hi WhatsApp khul jayega!</p></div>
+<div class="card"><h3>📞 Contact Info</h3><p style="color:#cbd5e1;line-height:2">📍 Barcelona, Spain<br>📧 hello@gudu.dev<br>📱 WhatsApp: +34 XXX XXX XXX<br>🌐 www.gudu.dev<br>⏰ Mon - Sat: 9 AM - 9 PM</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn white small" onclick="toast('Instagram khul raha hai!')">Instagram</button><button class="btn white small" onclick="toast('GitHub khul raha hai!')">GitHub</button><button class="btn white small" onclick="toast('YouTube khul raha hai!')">YouTube</button><button class="btn white small" onclick="toast('LinkedIn khul raha hai!')">LinkedIn</button></div><div style="background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);border-radius:12px;padding:12px;margin-top:12px"><b>⚡ Fast Reply!</b><br><span style="font-size:13px;color:#cbd5e1">Aaj message karo — Kal tak teri website ka demo ready!</span></div></div>
+</div></div>
+
+<div class="card" style="background:linear-gradient(135deg,#7c3aed,#ec4899);border:none;text-align:center;padding:28px"><h2 style="font-size:28px">Teri Website Bhi Aisi Hi 10/10 Ban Sakti Hai! 🔥</h2><p style="color:#fff;opacity:.9">Abhi message karo — 50% OFF chal raha hai!</p><button class="btn white" style="margin-top:12px" onclick="hireMe()">🚀 Project Shuru Karo →</button></div>
+
+<div class="footer"><b style="color:#fff;font-size:18px">GUDU<span style="color:#a78bfa">.DEV</span></b><br>Designed & Built with ❤️ by GUDU in Barcelona<br>© 2026 GUDU. All rights reserved.</div>
+</div>
+
+<!-- PROJECT MODAL -->
+<div class="modal" id="projModal"><div class="box"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="projTitle">Project</h2><button onclick="closeModal('projModal')" style="border:none;background:rgba(255,255,255,.1);color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer">X</button></div><p id="projDesc" style="color:#cbd5e1;line-height:1.7;margin:12px 0"></p><div id="projTech" style="display:flex;gap:6px;flex-wrap:wrap"></div><button class="btn purple" style="width:100%;margin-top:14px" onclick="hireMe()">Is Jaisa Banwana Hai →</button></div></div>
 
 <script>
-function toast(m){var t=document.getElementById("toast");t.innerText=m;t.style.display="block";setTimeout(function(){t.style.display="none"},2500);}
-function buy10Cent(){document.getElementById("checkoutModal").classList.add("show");}
-function closeModal(){document.getElementById("checkoutModal").classList.remove("show");}
-function closeModal2(){document.getElementById("okModal").classList.remove("show");}
-function payApple(){
-  toast("🍎 Apple Pay — Face ID dekh raha hai...");
+var texts=["> I build amazing websites...","> I make 10/10 designs...","> I love animations & AI...","> Let's build your dream website! 🚀"];
+var ti=0; setInterval(function(){ti=(ti+1)%texts.length; document.getElementById("typingText").innerText=texts[ti];},2200);
+var projects=[
+{title:"🛍️ GUDU Hosting",desc:"Hostinger jaisi professional hosting website. Plans, Domain Search, Checkout — Apple Pay, Google Pay, Card, PayPal sab ke saath! Theme White + Purple — Bilkul company jaisi!",tech:["HTML","Stripe","Apple Pay","Hosting"]},
+{title:"🏫 Digital Classroom",desc:"Puri school ek website me! 30 students, Attendance, Parte, Homework, Marks, AI Teacher — Sab kuch! Teacher ko sab kuch ek click me mil jata hai!",tech:["Education","AI","JavaScript"]},
+{title:"🛒 RAISTAR Market POS",desc:"Mercadona jaisa POS System. Bill, Cash, Card, Domicilio, Discount — Sab kuch! Dukaan wale ke liye best!",tech:["POS","Billing","JavaScript"]},
+{title:"🍔 Food Delivery App",desc:"Zomato jaisa app — Menu, Cart, Live Tracking, Payment. Customer ko sab kuch ek jagah mil jata hai!",tech:["Food","App","Payment"]},
+{title:"🤖 AI Chat Website",desc:"ChatGPT jaisa AI — Kuch bhi puchho, turant jawab! Photosynthesis se lekar Pythagoras tak — Sab samjha dega!",tech:["AI","Chat","Education"]},
+{title:"💰 Payment Store — 0.10€",desc:"Real Stripe + Apple Pay se payment! 0.10€ ka item — Face ID karke pay karo, paise Bank me aate hai!",tech:["Stripe","Apple Pay","Payment"]}
+];
+function toast(m){var t=document.getElementById("toast");t.innerText=m;t.style.display="block";setTimeout(function(){t.style.display="none"},2400);}
+function openProj(i){var p=projects[i]; document.getElementById("projTitle").innerText=p.title; document.getElementById("projDesc").innerText=p.desc; var h=""; for(var j=0;j<p.tech.length;j++) h+='<span style="background:rgba(255,255,255,.12);padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700">'+p.tech[j]+'</span>'; document.getElementById("projTech").innerHTML=h; document.getElementById("projModal").classList.add("show");}
+function closeModal(id){document.getElementById(id).classList.remove("show");}
+function hireMe(){toast("WhatsApp khul raha hai — Message karo!"); setTimeout(function(){window.open("https://wa.me/34600000000?text=Hi GUDU! Mujhe website banwani hai!","_blank");},500);}
+function buyService(name,price){toast(name+" — "+price+" select ho gaya!"); setTimeout(function(){if(confirm(name+" — "+price+" — Order karna hai?\n\nHaan dabao to WhatsApp khulega!")) hireMe();},300);}
+function sendMsg(){
+  var n=document.getElementById("cName").value.trim(); var e=document.getElementById("cEmail").value.trim(); var m=document.getElementById("cMsg").value.trim();
+  if(!n || !m){toast("Naam aur Message to likho!");return;}
+  toast("Message bheja ja raha hai...");
   setTimeout(function(){
-    closeModal();
-    document.getElementById("okText").innerText="Apple Pay (DEMO) — 0.10€ pay ho gaya!\n\nReal me paise katne ke liye Stripe chahiye — Neeche steps dekho!";
-    document.getElementById("okModal").classList.add("show");
-  },1800);
+    window.open("https://wa.me/34600000000?text=Hi GUDU! Main "+encodeURIComponent(n)+" hu. "+encodeURIComponent(m)," _blank");
+    document.getElementById("cName").value=""; document.getElementById("cEmail").value=""; document.getElementById("cMsg").value="";
+    toast("Message bhej diya! Jaldi reply dunga!");
+  },600);
 }
-function payGpay(){toast("G Pay — Demo...");setTimeout(function(){closeModal();document.getElementById("okText").innerText="G Pay (DEMO) — 0.10€ pay ho gaya!";document.getElementById("okModal").classList.add("show");},1200);}
-function payCard(){toast("Card — Demo...");setTimeout(function(){closeModal();document.getElementById("okText").innerText="Card (DEMO) — 0.10€ pay ho gaya!";document.getElementById("okModal").classList.add("show");},1200);}
 </script>
 </body>
 </html>
