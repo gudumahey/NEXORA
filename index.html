@@ -3,300 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUDU Hosting — Fast, Secure Web Hosting</title>
+<title>GUDU - 10 Cent Item</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Inter,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:#f8f9fc;color:#1a1a2e;user-select:none;-webkit-user-select:none;line-height:1.5}
-a{color:inherit;text-decoration:none}
-.top{max-width:1240px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid #eef1f6}
-.logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:900;letter-spacing:-.5px;cursor:pointer}
-.logo .icon{width:38px;height:38px;background:linear-gradient(135deg,#673de6,#a855f7);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900}
-.logo span{color:#673de6}
-.top nav{display:flex;gap:26px;font-size:14px;font-weight:600;color:#4a4a68}
-.top nav a:hover{color:#673de6}
-.btn{border:none;padding:12px 22px;border-radius:10px;font-weight:700;cursor:pointer;font-size:14px;transition:.15s}
-.btn:active{transform:scale(.97)}
-.btn.purple{background:#673de6;color:#fff;box-shadow:0 6px 18px rgba(103,61,230,.25)} .btn.purple:hover{background:#5a31d1}
-.btn.white{background:#fff;color:#111;border:1px solid #e5e7eb} .btn.black{background:#111;color:#fff} .btn.small{padding:8px 16px;font-size:13px}
-.btn.apple{background:#000;color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px}
-.btn.gpay{background:#fff;color:#111;border:1px solid #dadce0;display:flex;align-items:center;justify-content:center;gap:8px}
-.wrap{max-width:1240px;margin:0 auto;padding:20px}
-.hero{background:linear-gradient(135deg,#673de6 0%,#7c3aed 45%,#a855f7 100%);color:#fff;border-radius:20px;padding:36px 28px;display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:center;position:relative;overflow:hidden}
-.hero::after{content:'';position:absolute;right:-40px;top:-40px;width:220px;height:220px;background:rgba(255,255,255,.12);border-radius:50%}
-.hero h1{font-size:44px;line-height:1.1;letter-spacing:-1.5px}
-.hero h1 span{color:#fde68a}
-.hero p{font-size:15px;opacity:.92;line-height:1.7;margin:14px 0}
-.hero .pill{display:inline-block;background:rgba(255,255,255,.18);padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-right:6px}
-.hero-card{background:#fff;color:#111;border-radius:16px;padding:20px;box-shadow:0 20px 40px rgba(0,0,0,.2);position:relative;z-index:1}
-.hero-card h3{font-size:17px} .hero-card p{font-size:13px;color:#666;line-height:1.6}
-.domain-box{display:flex;gap:8px;margin-top:12px}
-.domain-box input{flex:1;padding:12px;border:1px solid #e5e7eb;border-radius:10px;outline:none;font-size:14px;background:#f9fafb}
-.domain-box input:focus{border-color:#673de6;background:#fff}
-.trust{display:flex;gap:16px;flex-wrap:wrap;margin:18px 0;font-size:13px;color:#4a4a68}
-.trust b{color:#111}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
-.stat{background:#fff;border:1px solid #eef1f6;border-radius:14px;padding:16px;text-align:center}
-.stat b{font-size:24px;display:block;color:#111} .stat span{font-size:12px;color:#888}
-.card{background:#fff;border:1px solid #eef1f6;border-radius:16px;padding:20px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.02)}
-.card h3{font-size:19px;margin-bottom:6px} .card p{font-size:14px;color:#666;line-height:1.6}
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.plan{background:#fff;border:1px solid #eef1f6;border-radius:16px;padding:22px;position:relative;transition:.2s}
-.plan:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.08);border-color:#ddd6fe}
-.plan.popular{border:2px solid #673de6;box-shadow:0 16px 32px rgba(103,61,230,.15)}
-.plan .tag{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#673de6;color:#fff;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;white-space:nowrap}
-.plan h4{font-size:16px} .plan .price{font-size:32px;font-weight:900;margin:8px 0} .plan .price small{font-size:13px;font-weight:400;color:#888}
-.plan ul{list-style:none;font-size:13px;line-height:2;color:#444;margin:12px 0}
-.plan ul li::before{content:'✓ ';color:#00a651;font-weight:900}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.feat{background:#fff;border:1px solid #eef1f6;border-radius:14px;padding:16px}
-.feat .ic{width:44px;height:44px;background:#f3f0ff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
-.feat b{font-size:15px} .feat p{font-size:13px;color:#666;line-height:1.6;margin-top:6px}
-.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.rev{background:#fff;border:1px solid #eef1f6;border-radius:14px;padding:16px}
-.rev b{font-size:14px} .rev p{font-size:13px;color:#555;line-height:1.6;margin-top:6px}
-.faq{border:1px solid #eef1f6;border-radius:12px;padding:14px;margin-bottom:8px;cursor:pointer;background:#fff}
-.faq b{font-size:14px} .faq p{font-size:13px;color:#666;line-height:1.6;margin-top:6px;display:none}
-.faq.open p{display:block}
-.footer{text-align:center;padding:28px 0;color:#888;font-size:13px;border-top:1px solid #eef1f6;margin-top:16px}
-/* CHECKOUT */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f8f9fc;color:#111}
+.top{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0}
+.logo{font-size:22px;font-weight:900} .logo span{color:#673de6}
+.wrap{max-width:1000px;margin:0 auto;padding:20px}
+.card{background:#fff;border:1px solid #eef1f6;border-radius:16px;padding:20px;margin-bottom:14px}
+.btn{border:none;padding:12px 20px;border-radius:10px;font-weight:700;cursor:pointer}
+.btn.purple{background:#673de6;color:#fff} .btn.apple{background:#000;color:#fff;width:100%;padding:15px;border-radius:12px;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn.gpay{background:#fff;color:#111;border:1px solid #dadce0;width:100%;padding:14px;border-radius:12px;font-size:15px}
+.prod{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center}
+.prod .img{width:120px;height:120px;background:linear-gradient(135deg,#673de6,#a855f7);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:48px;color:#fff}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
 .modal.show{display:flex}
-.box{background:#fff;border-radius:18px;padding:22px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;text-align:left}
-.box h2{font-size:20px} .box p{font-size:13px;color:#666}
-.summary{background:#f8f9fc;border:1px solid #eef1f6;border-radius:12px;padding:12px;margin:12px 0;font-size:13px;line-height:1.8}
-.summary .row{display:flex;justify-content:space-between}
-.pay-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
-.pay-tabs button{padding:10px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;font-weight:700;cursor:pointer;font-size:12px}
-.pay-tabs button.on{border-color:#673de6;background:#f3f0ff;color:#673de6}
-.pay-tabs button.on-apple{border-color:#111;background:#111;color:#fff}
-.pay-tabs button.on-gpay{border-color:#4285f4;background:#e8f0fe;color:#1a73e8}
-.pay-tabs button.on-paypal{border-color:#003087;background:#e6f0ff;color:#003087}
-.field{margin-bottom:10px}
-.field label{font-size:12px;font-weight:700;color:#444;display:block;margin-bottom:4px}
-.field input{width:100%;padding:11px;border:1px solid #e5e7eb;border-radius:10px;outline:none;font-size:14px;background:#f9fafb}
-.field input:focus{border-color:#673de6;background:#fff}
-.apple-box{background:#000;color:#fff;border-radius:12px;padding:16px;text-align:center}
-.apple-box .face{font-size:36px}
-.gpay-box{background:#fff;border:1px solid #dadce0;border-radius:12px;padding:16px;text-align:center}
-.paypal-box{background:#003087;color:#fff;border-radius:12px;padding:16px;text-align:center}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:11px 18px;border-radius:30px;font-weight:700;font-size:13px;z-index:999;display:none;box-shadow:0 8px 24px rgba(0,0,0,.25)}
-@media(max-width:900px){.hero{grid-template-columns:1fr} .hero h1{font-size:32px} .plans,.features,.reviews{grid-template-columns:1fr} .stats{grid-template-columns:repeat(2,1fr)} .top nav{display:none} .pay-tabs{grid-template-columns:repeat(2,1fr)}}
+.box{background:#fff;border-radius:18px;padding:22px;width:100%;max-width:420px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:11px 18px;border-radius:30px;font-weight:700;z-index:999;display:none}
 </style>
 </head>
 <body>
 <div id="toast"></div>
-<div class="top"><div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})"><div class="icon">G</div>GUDU <span>HOSTING</span></div><nav><a href="#plans">Hosting</a><a href="#domains">Domains</a><a href="#features">Features</a><a href="#reviews">Reviews</a><a href="#faq">FAQ</a></nav><div style="display:flex;gap:8px"><button class="btn white small" onclick="toast('Login — Demo me login ho gaya!')">Log in</button><button class="btn purple small" onclick="buyPlan('Premium','2.99','24 meses')">Get Started →</button></div></div>
-
+<div class="top"><div class="logo">GUDU <span>STORE</span></div><button class="btn purple" onclick="buy10Cent()">Cart — 0.10€</button></div>
 <div class="wrap">
-<div class="hero">
-<div>
-<span class="pill">● 50% OFF — Aaj Hi</span> <span class="pill">★ 4.9/5 — 10,000+ Reviews</span>
-<h1>Fast, Secure<br>Web Hosting<br><span>2.99€/mes se shuru.</span></h1>
-<p>Apni website ko GUDU pe host karo. Free Domain, Free SSL, AI Builder, 99.9% Uptime aur 24/7 Support — sab ek jagah. 2 minute me live!</p>
-<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" style="background:#fff;color:#111" onclick="buyPlan('Premium','2.99','24 meses')">Claim 50% OFF →</button><button class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)" onclick="document.getElementById('plans').scrollIntoView({behavior:'smooth'})">Plans Dekho</button></div>
-<p style="font-size:12px;margin-top:10px">✓ 30-Day Money-Back Guarantee &nbsp; ✓ Free Migration &nbsp; ✓ No Hidden Fees</p>
-</div>
-<div class="hero-card">
-<h3>Apna Domain Dhoondo</h3>
-<p>Perfect naam dhoondo — .com, .es, .shop, .online sab milega.</p>
-<div class="domain-box"><input id="domainInput" placeholder="meri-website.com" value="gudu"><button class="btn purple" onclick="checkDomain()">Search</button></div>
-<p id="domainResult" style="margin-top:10px;font-size:13px"></p>
-<div style="background:#f3f0ff;border-radius:12px;padding:12px;margin-top:10px"><b style="font-size:13px">🔥 Aaj Ka Offer — Premium Plan</b><br><span style="font-size:12px;color:#666">50% OFF + Free Domain + Free SSL. Bas <b style="color:#111">2.99€/mes</b>. Kal se 5.99€!</span><br><button class="btn purple small" style="margin-top:8px;width:100%" onclick="buyPlan('Premium','2.99','24 meses')">Claim Offer →</button></div>
-</div>
+<div class="card"><h2>🔥 Aaj Ka Offer — Sirf 10 Cent!</h2><p style="color:#666;font-size:14px">Test Product — Real Apple Pay kaise dikhega, ye dekhne ke liye!</p></div>
+<div class="card"><div class="prod"><div class="img">🎁</div><div><b style="font-size:18px">GUDU Sticker Pack — Digital</b><br><span style="color:#666;font-size:13px">10 Premium Stickers • Instant Download • Lifetime Access</span><br><b style="font-size:24px">0.10€</b> <s style="color:#999">1.99€</s> <span style="background:#dcfce7;color:#00a651;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:800">95% OFF</span><br><br><button class="btn purple" onclick="buy10Cent()">Buy Now — 0.10€ →</button></div></div></div>
+<div class="card"><h3>Kya Milega?</h3><p style="color:#666;font-size:14px;line-height:1.7">✅ 10 Stickers<br>✅ Instant Download<br>✅ Lifetime Access<br>✅ No Hidden Charges</p></div>
 </div>
 
-<div class="trust"><span><b>10,000+</b> Happy Customers</span><span><b>99.9%</b> Uptime</span><span><b>0.4s</b> Avg. Load Time</span><span><b>24/7</b> Expert Support</span><span><b>30-Day</b> Money-Back</span></div>
-<div class="stats"><div class="stat"><b>10,000+</b><span>Websites Hosted</span></div><div class="stat"><b>99.9%</b><span>Uptime Guarantee</span></div><div class="stat"><b>0.4s</b><span>Loading Speed</span></div><div class="stat"><b>4.9/5</b><span>Customer Rating</span></div></div>
-
-<div class="card" id="plans"><h3>Hosting Plans — Har Kisi Ke Liye</h3><p>Transparent pricing. Koi hidden charges nahi. Kisi bhi plan pe click karo — Checkout khulega, Apple Pay se bhi pay kar sakte ho!</p></div>
-<div class="plans">
-<div class="plan"><h4>Basic</h4><p style="font-size:13px;color:#666">Personal website / Blog ke liye</p><div class="price">1.99€<small>/mes</small></div><p style="font-size:12px;color:#888"><s>3.99€</s> — 50% OFF • 24 meses</p><ul><li>1 Website</li><li>10 GB SSD Storage</li><li>Free SSL Certificate</li><li>1 Email Account</li><li>99.9% Uptime</li><li>Weekly Backup</li></ul><button class="btn purple" style="width:100%" onclick="buyPlan('Basic','1.99','24 meses')">Basic Lo — 1.99€ →</button></div>
-<div class="plan popular"><span class="tag">MOST POPULAR</span><h4>Premium</h4><p style="font-size:13px;color:#666">Business / Dukaan ke liye — Sabse zyada log ye lete hai</p><div class="price">2.99€<small>/mes</small></div><p style="font-size:12px;color:#888"><s>5.99€</s> — 50% OFF • 24 meses</p><ul><li>100 Websites</li><li>100 GB SSD Storage</li><li>Free Domain (.com) — 1 Saal</li><li>Free SSL + Email</li><li>Free CDN + Daily Backup</li><li>AI Website Builder</li><li>Free Migration</li></ul><button class="btn purple" style="width:100%" onclick="buyPlan('Premium','2.99','24 meses')">Premium Lo — 2.99€ →</button></div>
-<div class="plan"><h4>Business</h4><p style="font-size:13px;color:#666">High-traffic / E-commerce ke liye</p><div class="price">4.99€<small>/mes</small></div><p style="font-size:12px;color:#888"><s>9.99€</s> — 50% OFF • 24 meses</p><ul><li>Unlimited Websites</li><li>200 GB NVMe SSD</li><li>Free Domain + SSL</li><li>Daily Backup + Priority Support</li><li>Free CDN + Staging</li><li>Advanced Security</li></ul><button class="btn purple" style="width:100%" onclick="buyPlan('Business','4.99','24 meses')">Business Lo — 4.99€ →</button></div>
-</div>
-
-<div class="card" id="domains" style="margin-top:16px"><h3>Popular Domains — Ek Click Me Buy Karo</h3><p>Domain pe click karo — Checkout khulega, Apple Pay se pay karo!</p><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px" id="domainGrid"></div></div>
-
-<div class="card" id="features" style="margin-top:4px"><h3>Kyu GUDU Hi Best Hai?</h3></div>
-<div class="features">
-<div class="feat"><div class="ic">⚡</div><b>Super Fast — 0.4s</b><p>NVMe SSD + LiteSpeed + Global CDN. Teri website blink karte hi khulegi, Google bhi khush!</p></div>
-<div class="feat"><div class="ic">🔒</div><b>100% Secure</b><p>Free SSL, Daily Backup, DDoS Protection, Malware Scan — Hack hone ka tension khatam.</p></div>
-<div class="feat"><div class="ic">🤖</div><b>AI Website Builder</b><p>Naam likho, AI 1 minute me puri website bana dega. Bina coding ke, bina designer ke.</p></div>
-<div class="feat"><div class="ic">🌍</div><b>Free Domain + Email</b><p>Premium pe .com FREE + Professional Email — info@tusitio.com jaisa.</p></div>
-<div class="feat"><div class="ic">💬</div><b>24/7 Human Support</b><p>Bot nahi, real insaan! Hindi, Spanish, English — Raat ko 3 baje bhi.</p></div>
-<div class="feat"><div class="ic">💰</div><b>30-Day Money-Back</b><p>Pasand nahi aaya? 30 din me full paise wapas. Koi sawal nahi.</p></div>
-</div>
-
-<div class="card" id="reviews" style="margin-top:16px"><h3>Customers Kya Bolte Hai? — 4.9/5</h3></div>
-<div class="reviews">
-<div class="rev"><b>★★★★★ Maria Garcia</b><p>"Meri dukaan ki website GUDU pe hai. Pehle 5s lagta tha, ab 0.4s me khulti hai. Sales double ho gayi!"</p><span style="font-size:11px;color:#888">Tienda Online — Barcelona</span></div>
-<div class="rev"><b>★★★★★ Rahul Sharma</b><p>"Hindi me support mil gaya, 10 minute me website live ho gayi. Apple Pay se pay kiya, 5 second me ho gaya!"</p><span style="font-size:11px;color:#888">Blogger — Delhi</span></div>
-<div class="rev"><b>★★★★★ Juan Perez</b><p>"1.99€ me itna kuch? Free domain, SSL, AI builder — Maine 3 websites bana li. Best hosting!"</p><span style="font-size:11px;color:#888">Freelancer — Madrid</span></div>
-</div>
-
-<div class="card" id="faq" style="margin-top:16px"><h3>Frequently Asked Questions</h3></div>
-<div class="faq" onclick="this.classList.toggle('open')"><b>Q: Kya mujhe coding aani chahiye?</b><p>Nahi! AI Builder hai — Naam likho, AI bana dega. Bina coding ke.</p></div>
-<div class="faq" onclick="this.classList.toggle('open')"><b>Q: Apple Pay se pay kar sakta hu?</b><p>Haan! Checkout me Apple Pay, Google Pay, Card aur PayPal — sab chalega!</p></div>
-<div class="faq" onclick="this.classList.toggle('open')"><b>Q: Agar pasand nahi aaya to?</b><p>30 din me full refund — 100% Money-Back Guarantee.</p></div>
-<div class="faq" onclick="this.classList.toggle('open')"><b>Q: Meri purani website transfer ho jayegi?</b><p>Haan! Free Migration — Hum khud kar denge, 1 din me.</p></div>
-
-<div class="card" style="background:linear-gradient(135deg,#673de6,#a855f7);border:none;text-align:center;padding:28px"><h3 style="color:#fff;font-size:24px">Abhi Shuru Karo — 50% OFF Khatam Hone Wala Hai!</h3><p style="color:#fff;opacity:.9">Free Domain + Free SSL + AI Builder — Bas 2.99€/mes</p><button class="btn" style="background:#fff;color:#111;margin-top:10px" onclick="buyPlan('Premium','2.99','24 meses')">Premium Lo — 2.99€/mes →</button></div>
-
-<div class="footer"><b style="color:#111;font-size:16px">GUDU HOSTING</b><br>Fast • Secure • Affordable • Made with care in Barcelona<br>© 2026 GUDU Hosting. All rights reserved. &nbsp;|&nbsp; Privacy &nbsp;|&nbsp; Terms &nbsp;|&nbsp; Support</div>
-</div>
-
-<!-- CHECKOUT MODAL -->
+<!-- CHECKOUT -->
 <div class="modal" id="checkoutModal"><div class="box">
-<div style="display:flex;justify-content:space-between;align-items:center"><h2>Checkout — Secure 🔒</h2><button onclick="closeModal('checkoutModal')" style="border:none;background:#f3f4f6;width:32px;height:32px;border-radius:50%;cursor:pointer;font-weight:800">X</button></div>
-<p style="margin-top:4px">GUDU Hosting — 256-bit SSL Encrypted Payment</p>
-<div class="summary" id="orderSummary"></div>
-
-<p style="font-weight:700;color:#111;margin-bottom:6px">Payment Method Chuno:</p>
-<div class="pay-tabs">
-<button id="tabApple" class="on-apple" onclick="setPay('apple')">🍎 Apple Pay</button>
-<button id="tabCard" onclick="setPay('card')">💳 Card</button>
-<button id="tabGpay" onclick="setPay('gpay')">G Pay</button>
-<button id="tabPaypal" onclick="setPay('paypal')">PayPal</button>
-</div>
-
-<!-- APPLE PAY -->
-<div id="payApple">
-<div class="apple-box"><div class="face">Face ID</div><p style="color:#fff;opacity:.8;font-size:13px;margin-top:6px">Apna face dikhao ya Touch ID dabao<br>Apple Pay se <b id="appleTotal" style="color:#fff">0.00€</b> pay hoga</p><p style="font-size:11px;opacity:.6;margin-top:6px">iPhone • Mac • Apple Watch — Sab chalega</p></div>
-<button class="btn apple" style="width:100%;margin-top:10px;padding:14px" onclick="payApple()">🍎 Pay with Apple Pay</button>
-<p style="font-size:11px;text-align:center;margin-top:8px">Demo me Face ID simulate hoga — 2 second me APPROVED!</p>
-</div>
-
-<!-- CARD -->
-<div id="payCard" style="display:none">
-<div class="field"><label>Card Number</label><input id="cardNum" placeholder="4242 4242 4242 4242" maxlength="19" oninput="formatCard(this)"></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="field"><label>Expiry (MM/YY)</label><input id="cardExp" placeholder="12/28" maxlength="5"></div><div class="field"><label>CVV</label><input id="cardCvv" placeholder="123" maxlength="4" type="password"></div></div>
-<div class="field"><label>Name on Card</label><input id="cardName" placeholder="RAISTAR GUDU"></div>
-<div class="field"><label>Email (Invoice ke liye)</label><input id="cardEmail" placeholder="tu@email.com"></div>
-<button class="btn purple" style="width:100%;padding:14px" onclick="payCard()">🔒 Pay <span id="cardTotalBtn">0.00€</span> Securely →</button>
-<p style="font-size:11px;text-align:center;margin-top:8px">Demo Card: <b>4242 4242 4242 4242</b> — Koi bhi Expiry / CVV chalega!</p>
-</div>
-
-<!-- GPAY -->
-<div id="payGpay" style="display:none">
-<div class="gpay-box"><div style="font-size:28px;font-weight:900"><span style="color:#4285f4">G</span> <span style="color:#ea4335">Pay</span></div><p style="color:#666;font-size:13px;margin-top:6px">Google Pay se <b id="gpayTotal">0.00€</b> pay hoga<br>Apna Google account chuno</p></div>
-<button class="btn gpay" style="width:100%;margin-top:10px;padding:14px" onclick="payGpay()">G Pay — Pay Now</button>
-</div>
-
-<!-- PAYPAL -->
-<div id="payPaypal" style="display:none">
-<div class="paypal-box"><div style="font-size:22px;font-weight:900">PayPal</div><p style="font-size:13px;opacity:.9;margin-top:6px">PayPal se <b id="paypalTotal">0.00€</b> pay hoga<br>Secure Buyer Protection ke saath</p></div>
-<button class="btn" style="background:#003087;color:#fff;width:100%;margin-top:10px;padding:14px" onclick="payPaypal()">Pay with PayPal →</button>
-</div>
-
-<p style="font-size:11px;color:#888;text-align:center;margin-top:12px">🔒 256-bit SSL Secure • PCI-DSS Compliant • 30-Day Money-Back</p>
+<div style="display:flex;justify-content:space-between"><h2>Checkout — 0.10€</h2><button onclick="closeModal()" style="border:none;background:#f3f4f6;width:32px;height:32px;border-radius:50%;cursor:pointer">X</button></div>
+<div style="background:#f8f9fc;border:1px solid #eee;border-radius:12px;padding:12px;margin:12px 0;font-size:13px;line-height:1.8"><b>GUDU Sticker Pack</b><br>Price: 0.10€<br>IVA: 0.00€ (Demo)<br><b>Total: 0.10€</b></div>
+<p style="font-size:12px;color:#888;text-align:center;margin-bottom:10px">⚠️ DEMO MODE — Real paise NAHI katenge.<br>Real ke liye neeche wala Stripe wala step follow karo!</p>
+<button class="btn apple" onclick="payApple()">🍎 Pay with Apple Pay — 0.10€</button>
+<button class="btn gpay" style="margin-top:8px" onclick="payGpay()">G Pay — 0.10€</button>
+<button class="btn purple" style="width:100%;margin-top:8px" onclick="payCard()">💳 Card Se Pay Karo</button>
 </div></div>
 
-<!-- SUCCESS MODAL -->
-<div class="modal" id="successModal"><div class="box" style="text-align:center">
-<div style="width:64px;height:64px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto">✓</div>
-<h2 style="margin-top:12px" id="successTitle">Payment Successful!</h2>
-<p id="successText" style="margin-top:6px"></p>
-<div id="invoiceBox" style="background:#f8f9fc;border:1px dashed #111;padding:14px;border-radius:12px;text-align:left;font-family:monospace;font-size:13px;line-height:1.7;margin:14px 0"></div>
-<div style="display:flex;gap:8px"><button class="btn purple" style="flex:1" onclick="closeModal('successModal')">Dashboard →</button><button class="btn black" style="flex:1" onclick="printInvoice()">Print Invoice</button></div>
-</div></div>
+<!-- SUCCESS -->
+<div class="modal" id="okModal"><div class="box" style="text-align:center"><div style="font-size:56px">✓</div><h2>Payment Successful! (Demo)</h2><p id="okText" style="color:#666;font-size:13px;margin-top:8px"></p><button class="btn purple" style="width:100%;margin-top:12px" onclick="closeModal2()">OK</button></div></div>
 
 <script>
-var currentItem={name:"Premium",price:2.99,period:"24 meses"};
-var currentPay="apple";
-var domains=[
-{name:"gudu.com",price:0.99,old:12.99,status:"Available"},
-{name:"meritienda.es",price:1.99,old:9.99,status:"Available"},
-{name:"miblog.shop",price:0.99,old:8.99,status:"Available"},
-{name:"raistar.online",price:1.49,old:7.99,status:"Available"},
-{name:"tienda24.com",price:2.99,old:14.99,status:"Available"},
-{name:"gudu.es",price:1.99,old:9.99,status:"Taken"},
-{name:"mipagina.com",price:2.49,old:11.99,status:"Available"},
-{name:"hostingpro.io",price:3.99,old:19.99,status:"Available"}
-];
-function toast(m){var t=document.getElementById("toast");t.innerText=m;t.style.display="block";setTimeout(function(){t.style.display="none"},2600);}
-function renderDomains(){
-  var h=""; for(var i=0;i<domains.length;i++){var d=domains[i]; var isTaken=d.status==="Taken";
-    h+='<div style="border:1px solid #eef1f6;border-radius:12px;padding:12px;text-align:center;'+(isTaken?'opacity:.5':'')+'"><b style="font-size:13px">'+d.name+'</b><br><span style="font-size:11px;color:'+(isTaken?'#e11d48':'#00a651')+'">'+d.status+'</span><br><b style="font-size:16px">'+d.price+'€</b> <s style="font-size:11px;color:#999">'+d.old+'€</s><br><button class="btn '+(isTaken?'white':'purple')+' small" style="margin-top:6px;width:100%" onclick="'+(isTaken?'toast(\'Ye domain pehle se liya hua hai!\')':'buyDomain(\''+d.name+'\',\''+d.price+'\')')+'">'+(isTaken?'Taken':'Buy →')+'</button></div>';}
-  document.getElementById("domainGrid").innerHTML=h;
-}
-function checkDomain(){
-  var v=document.getElementById("domainInput").value.trim().toLowerCase();
-  if(!v){toast("Pehle domain naam likho!");return;}
-  if(v.indexOf(".")===-1) v=v+".com";
-  var taken=["google","facebook","youtube","gudu","amazon","instagram"];
-  var name=v.split(".")[0];
-  var res=document.getElementById("domainResult");
-  if(taken.indexOf(name)>-1){res.innerHTML="❌ <b>"+v+"</b> — Pehle se liya hua hai! Dusra try karo.";res.style.color="#e11d48";}
-  else{res.innerHTML="✅ <b>"+v+"</b> — AVAILABLE HAI! 🎉 Bas <b>0.99€</b> me! <button onclick=\"buyDomain('"+v+"','0.99')\" style='background:#673de6;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-weight:700;cursor:pointer;margin-left:6px'>Buy Karo →</button>";res.style.color="#00a651";}
-}
-function buyDomain(name,price){ buyPlan("Domain — "+name, price, "1 año"); }
-function buyPlan(name,price,period){
-  currentItem={name:name,price:parseFloat(price),period:period};
-  var total=currentItem.price;
-  var fee=total*0.10; var grand=total+fee;
-  document.getElementById("orderSummary").innerHTML='<div class="row"><span><b>'+name+'</b> — '+period+'</span><b>'+total.toFixed(2)+'€</b></div><div class="row"><span>Free SSL + Setup</span><b style="color:#00a651">FREE</b></div><div class="row"><span>IVA (10%)</span><b>'+fee.toFixed(2)+'€</b></div><div class="row" style="border-top:1px dashed #ddd;padding-top:6px;margin-top:4px"><span><b>Total a Pagar</b></span><b style="font-size:16px;color:#673de6">'+grand.toFixed(2)+'€</b></div>';
-  document.getElementById("appleTotal").innerText=grand.toFixed(2)+"€";
-  document.getElementById("gpayTotal").innerText=grand.toFixed(2)+"€";
-  document.getElementById("paypalTotal").innerText=grand.toFixed(2)+"€";
-  document.getElementById("cardTotalBtn").innerText=grand.toFixed(2)+"€";
-  setPay("apple");
-  document.getElementById("checkoutModal").classList.add("show");
-  toast(name+" select ho gaya — Checkout khul gaya!");
-}
-function setPay(p){
-  currentPay=p;
-  document.getElementById("tabApple").className=""; document.getElementById("tabCard").className=""; document.getElementById("tabGpay").className=""; document.getElementById("tabPaypal").className="";
-  if(p==="apple") document.getElementById("tabApple").className="on-apple";
-  if(p==="card") document.getElementById("tabCard").className="on";
-  if(p==="gpay") document.getElementById("tabGpay").className="on-gpay";
-  if(p==="paypal") document.getElementById("tabPaypal").className="on-paypal";
-  document.getElementById("payApple").style.display=p==="apple"?"block":"none";
-  document.getElementById("payCard").style.display=p==="card"?"block":"none";
-  document.getElementById("payGpay").style.display=p==="gpay"?"block":"none";
-  document.getElementById("payPaypal").style.display=p==="paypal"?"block":"none";
-}
-function formatCard(el){
-  var v=el.value.replace(/\D/g,"").slice(0,16);
-  var out=""; for(var i=0;i<v.length;i++){ if(i>0 && i%4===0) out+=" "; out+=v[i]; }
-  el.value=out;
-}
-function getGrand(){ return (currentItem.price*1.10).toFixed(2); }
-function showSuccess(method,extra){
-  var grand=getGrand();
-  document.getElementById("successTitle").innerText=method==="Apple Pay"?"🍎 Apple Pay — Payment Successful!":method+" — Payment Successful!";
-  document.getElementById("successText").innerText=currentItem.name+" — "+currentItem.period+" — Total: "+grand+"€ — "+extra;
-  document.getElementById("invoiceBox").innerHTML="<b>GUDU HOSTING — INVOICE</b><br>Invoice #GUDU-"+Math.floor(1000+Math.random()*9000)+"<br>Date: "+new Date().toLocaleDateString("es-ES")+"<br>----------------<br>Item: "+currentItem.name+"<br>Period: "+currentItem.period+"<br>Price: "+currentItem.price.toFixed(2)+"€<br>IVA: "+(currentItem.price*0.10).toFixed(2)+"€<br><b>TOTAL PAID: "+grand+"€</b><br>Method: "+method+"<br>"+extra+"<br>----------------<br>Gracias! Teri website 2 min me live hogi!";
-  closeModal("checkoutModal");
-  document.getElementById("successModal").classList.add("show");
-}
+function toast(m){var t=document.getElementById("toast");t.innerText=m;t.style.display="block";setTimeout(function(){t.style.display="none"},2500);}
+function buy10Cent(){document.getElementById("checkoutModal").classList.add("show");}
+function closeModal(){document.getElementById("checkoutModal").classList.remove("show");}
+function closeModal2(){document.getElementById("okModal").classList.remove("show");}
 function payApple(){
-  var btn=event.target; btn.innerText="Authenticating with Face ID..."; btn.disabled=true;
-  setTimeout(function(){ btn.innerText="🍎 Pay with Apple Pay"; btn.disabled=false; showSuccess("Apple Pay","Face ID ✓ • Apple Pay • Aut: AP"+Math.floor(1000+Math.random()*9000)); },1800);
   toast("🍎 Apple Pay — Face ID dekh raha hai...");
+  setTimeout(function(){
+    closeModal();
+    document.getElementById("okText").innerText="Apple Pay (DEMO) — 0.10€ pay ho gaya!\n\nReal me paise katne ke liye Stripe chahiye — Neeche steps dekho!";
+    document.getElementById("okModal").classList.add("show");
+  },1800);
 }
-function payCard(){
-  var num=document.getElementById("cardNum").value.replace(/\s/g,"");
-  var exp=document.getElementById("cardExp").value;
-  var cvv=document.getElementById("cardCvv").value;
-  var name=document.getElementById("cardName").value.trim();
-  if(num.length<15){toast("❌ Card number sahi dalo! Demo: 4242 4242 4242 4242");return;}
-  if(!exp || exp.length<4){toast("❌ Expiry dalo! Jaise 12/28");return;}
-  if(!cvv || cvv.length<3){toast("❌ CVV dalo! Jaise 123");return;}
-  if(!name){toast("❌ Naam dalo!");return;}
-  toast("Card process ho raha hai...");
-  setTimeout(function(){ showSuccess("Card","Card **** "+num.slice(-4)+" • Visa • Aut: CD"+Math.floor(1000+Math.random()*9000)); },1200);
-}
-function payGpay(){
-  toast("G Pay khul raha hai...");
-  setTimeout(function(){ showSuccess("Google Pay","Google Pay • Aut: GP"+Math.floor(1000+Math.random()*9000)); },1200);
-}
-function payPaypal(){
-  toast("PayPal khul raha hai...");
-  setTimeout(function(){ showSuccess("PayPal","PayPal • Buyer Protection • Aut: PP"+Math.floor(1000+Math.random()*9000)); },1200);
-}
-function closeModal(id){document.getElementById(id).classList.remove("show");}
-function printInvoice(){window.print();}
-renderDomains();
+function payGpay(){toast("G Pay — Demo...");setTimeout(function(){closeModal();document.getElementById("okText").innerText="G Pay (DEMO) — 0.10€ pay ho gaya!";document.getElementById("okModal").classList.add("show");},1200);}
+function payCard(){toast("Card — Demo...");setTimeout(function(){closeModal();document.getElementById("okText").innerText="Card (DEMO) — 0.10€ pay ho gaya!";document.getElementById("okModal").classList.add("show");},1200);}
 </script>
 </body>
 </html>
