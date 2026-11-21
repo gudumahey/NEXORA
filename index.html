@@ -1,228 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUDU — Award Winning Developer</title>
+<title>RAISTAR Market — Caja / POS</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Inter,Arial,sans-serif;-webkit-tap-highlight-color:transparent;scroll-behavior:smooth}
-body{background:#06060f;color:#fff;overflow-x:hidden;user-select:none;-webkit-user-select:none;transition:.3s}
-body.light{background:#f8f9fc;color:#111}
-body.light .card,body.light .proj,body.light .serv{ background:#fff !important; color:#111 !important; border-color:#eef1f6 !important }
-body.light .top{ background:rgba(255,255,255,.9) !important; color:#111 !important }
-body.light .top nav a{ color:#555 !important }
-a{color:inherit;text-decoration:none}
-@keyframes grad{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-14px) rotate(1deg)}}
-@keyframes pop{0%{transform:scale(.92) translateY(24px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}
-@keyframes shine{0%{background-position:-200% 0}100%{background-position:200% 0}}
-@keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(124,58,237,.4)}50%{box-shadow:0 0 50px rgba(236,72,153,.8)}}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(20deg)}}
-@keyframes bar{from{width:0}to{width:var(--w)}}
-@keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.float{animation:float 3.5s ease-in-out infinite}
-.glow{animation:glowPulse 2.5s infinite}
-.pop{animation:pop .7s ease both}
-.wave{display:inline-block;animation:wave 1s ease-in-out infinite}
-.bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,#06060f,#1a0b2e,#0b1a2e,#2e0b2e);background-size:400% 400%;animation:grad 14s ease infinite}
-body.light .bg{background:linear-gradient(135deg,#e0e7ff,#fdf2f8,#dbeafe);background-size:400% 400%;animation:grad 14s ease infinite}
-.blob{position:fixed;border-radius:50%;filter:blur(90px);opacity:.4;z-index:-1;pointer-events:none}
-.blob1{width:420px;height:420px;background:#7c3aed;top:-120px;left:-120px}
-.blob2{width:380px;height:380px;background:#ec4899;bottom:-100px;right:-100px}
-.blob3{width:320px;height:320px;background:#06b6d4;top:45%;left:45%}
-#cursorGlow{position:fixed;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.25),transparent 70%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);transition:.1s}
-.top{max-width:1220px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;backdrop-filter:blur(20px);background:rgba(6,6,15,.7);border:1px solid rgba(255,255,255,.08);border-radius:0 0 20px 20px}
-.logo{font-size:25px;font-weight:900;letter-spacing:-1px;cursor:pointer}
-.logo span{background:linear-gradient(90deg,#a78bfa,#ec4899,#f59e0b,#22c55e,#a78bfa);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite}
-.top nav{display:flex;gap:22px;font-size:14px;font-weight:600;color:#cbd5e1}
-.top nav a:hover{color:#fff}
-.btn{border:none;padding:12px 22px;border-radius:30px;font-weight:800;cursor:pointer;font-size:14px;transition:.2s;position:relative;overflow:hidden}
-.btn:hover{transform:translateY(-2px) scale(1.03)}
-.btn.purple{background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;box-shadow:0 8px 24px rgba(124,58,237,.4)}
-.btn.white{background:#fff;color:#111}
-.btn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
-.btn.small{padding:8px 16px;font-size:12px}
-.btn.magic::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);animation:shine 2.5s infinite}
-.wrap{max-width:1220px;margin:0 auto;padding:20px;position:relative;z-index:2}
-.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;align-items:center;padding:32px 0 18px}
-.hero h1{font-size:58px;line-height:1.03;letter-spacing:-2px}
-.hero h1 .anim{background:linear-gradient(90deg,#a78bfa,#ec4899,#f59e0b,#22c55e,#a78bfa);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite}
-.hero p{font-size:16px;color:#cbd5e1;line-height:1.7;margin:14px 0}
-body.light .hero p{color:#555}
-.typing{font-family:monospace;font-size:15px;color:#4ade80;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.12);padding:12px 14px;border-radius:12px;min-height:44px}
-body.light .typing{background:#111;color:#4ade80}
-.pill{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-right:6px}
-body.light .pill{background:#fff;border-color:#ddd;color:#111}
-.hero-card{background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.18);border-radius:26px;padding:24px;backdrop-filter:blur(18px);text-align:center;position:relative;transition:.3s;transform-style:preserve-3d}
-.hero-card:hover{transform:rotateY(4deg) rotateX(2deg) scale(1.01)}
-.hero-card .avatar{width:148px;height:148px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#ec4899,#f59e0b);background-size:300% 300%;animation:grad 4s ease infinite;display:flex;align-items:center;justify-content:center;font-size:66px;font-weight:900;margin:0 auto 12px;border:5px solid rgba(255,255,255,.35);box-shadow:0 0 50px rgba(124,58,237,.6);position:relative}
-.hero-card .avatar::after{content:'●';position:absolute;bottom:8px;right:8px;color:#22c55e;font-size:22px;background:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:12px}
-.hero-card h3{font-size:21px} .hero-card p{font-size:13px;color:#cbd5e1;line-height:1.6}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
-.stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;text-align:center;backdrop-filter:blur(10px);transition:.2s;animation:countUp .6s ease both}
-.stat:hover{transform:translateY(-4px) scale(1.02)}
-.stat b{font-size:28px;display:block} .stat span{font-size:12px;color:#94a3b8}
-.marquee{overflow:hidden;white-space:nowrap;background:linear-gradient(90deg,#7c3aed,#ec4899);border-radius:30px;padding:13px 0;margin:16px 0;box-shadow:0 10px 30px rgba(124,58,237,.3)}
-.marquee span{display:inline-block;animation:marquee 18s linear infinite;font-weight:900;font-size:14px;letter-spacing:1px;color:#fff}
-.sec{margin:30px 0}
-.sec h2{font-size:34px;letter-spacing:-1px;margin-bottom:6px}
-.sec h2 span{background:linear-gradient(90deg,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.sec p.sub{color:#94a3b8;font-size:14px;margin-bottom:16px}
-.card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px;backdrop-filter:blur(12px)}
-.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.proj{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;overflow:hidden;cursor:pointer;transition:.25s}
-.proj:hover{transform:translateY(-8px) scale(1.02);border-color:#7c3aed;box-shadow:0 20px 40px rgba(124,58,237,.3)}
-.proj .thumb{height:150px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden}
-.proj .thumb::after{content:'View →';position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.5);color:#fff;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;opacity:0;transition:.2s}
-.proj:hover .thumb::after{opacity:1}
-.proj .body{padding:16px}
-.proj b{font-size:16px} .proj p{font-size:13px;color:#cbd5e1;line-height:1.6;margin:6px 0}
-.tag{display:inline-block;background:rgba(255,255,255,.12);padding:4px 9px;border-radius:20px;font-size:11px;font-weight:700;margin-right:4px}
-.skills{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.skill{margin-bottom:12px}
-.skill .row{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:6px}
-.bar{height:9px;background:rgba(255,255,255,.1);border-radius:20px;overflow:hidden}
-.bar div{height:100%;border-radius:20px;background:linear-gradient(90deg,#7c3aed,#ec4899,#f59e0b);animation:bar 1.4s ease}
-.services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.serv{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px;transition:.2s;cursor:pointer;position:relative;overflow:hidden}
-.serv:hover{transform:translateY(-5px);border-color:#ec4899;box-shadow:0 16px 32px rgba(236,72,153,.2)}
-.serv .ic{font-size:34px;margin-bottom:10px}
-.serv b{font-size:16px} .serv p{font-size:13px;color:#cbd5e1;line-height:1.6;margin-top:6px}
-.serv .price{color:#f59e0b;font-weight:900;margin-top:10px;font-size:15px}
-.testis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.testi{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px;transition:.2s}
-.testi:hover{transform:translateY(-4px)}
-.testi b{font-size:14px} .testi p{font-size:13px;color:#cbd5e1;line-height:1.6;margin-top:6px}
-.testi .stars{color:#f59e0b;font-size:14px}
-.faq{border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;margin-bottom:8px;cursor:pointer;background:rgba(255,255,255,.04)}
-.faq b{font-size:14px} .faq p{font-size:13px;color:#cbd5e1;line-height:1.6;margin-top:6px;display:none}
-.faq.open p{display:block}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-input,textarea{width:100%;padding:12px;border:1px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(0,0,0,.3);color:#fff;outline:none;font-size:14px;margin-bottom:10px}
-input:focus,textarea:focus{border-color:#7c3aed}
-body.light input,body.light textarea{background:#f9fafb;color:#111;border-color:#ddd}
-.footer{text-align:center;padding:30px 0 20px;color:#94a3b8;font-size:13px;border-top:1px solid rgba(255,255,255,.08);margin-top:20px}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#fff;color:#111;padding:12px 20px;border-radius:30px;font-weight:800;font-size:13px;z-index:999;display:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:#f1f5f9;color:#111;overflow-x:hidden}
+.top{max-width:1300px;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;background:#fff;border-bottom:2px solid #e2e8f0;position:sticky;top:0;z-index:20}
+.logo{font-size:24px;font-weight:900}.logo span{color:#16a34a}.logo small{font-size:11px;color:#888;display:block;font-weight:600;letter-spacing:1px}
+.btn{border:none;padding:11px 18px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13px;transition:.15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.green{background:#16a34a;color:#fff}.btn.green:hover{background:#15803d}
+.btn.blue{background:#2563eb;color:#fff}.btn.dark{background:#111;color:#fff}.btn.white{background:#fff;color:#111;border:1px solid #ddd}.btn.orange{background:#f97316;color:#fff}.btn.purple{background:#7c3aed;color:#fff}
+.btn.big{width:100%;padding:14px;font-size:15px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.wrap{max-width:1300px;margin:0 auto;padding:14px;display:grid;grid-template-columns:1fr 380px;gap:14px;align-items:start}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px}
+.cat{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.cat button{border:1px solid #e2e8f0;background:#fff;padding:8px 14px;border-radius:30px;font-weight:700;font-size:12px;cursor:pointer}
+.cat button.active{background:#111;color:#fff;border-color:#111}
+.search{width:100%;padding:11px 14px;border:1px solid #e2e8f0;border-radius:12px;outline:none;font-size:14px;margin-bottom:12px}
+.search:focus{border-color:#16a34a}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.prod{border:1px solid #eef2f7;border-radius:14px;padding:10px;cursor:pointer;transition:.15s;background:#fff;text-align:center;position:relative}
+.prod:hover{transform:translateY(-3px);border-color:#16a34a;box-shadow:0 10px 20px rgba(0,0,0,.08)}
+.prod .emoji{font-size:42px;display:block;margin:4px 0}
+.prod b{font-size:13px;line-height:1.3;display:block;min-height:34px}
+.prod .price{font-size:16px;font-weight:900;color:#16a34a;margin-top:4px}
+.prod .old{font-size:11px;color:#999;text-decoration:line-through}
+.prod .off{position:absolute;top:8px;right:8px;background:#ef4444;color:#fff;font-size:10px;font-weight:900;padding:3px 7px;border-radius:20px}
+.prod .stock{font-size:11px;color:#888}
+.bill-item{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed #e2e8f0}
+.bill-item .em{width:44px;height:44px;background:#f8fafc;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.bill-item .info{flex:1}
+.bill-item .info b{font-size:13px;display:block;line-height:1.3}
+.bill-item .info span{font-size:11px;color:#888}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:28px;height:28px;border-radius:50%;border:1px solid #ddd;background:#fff;font-weight:900;cursor:pointer}
+.qty b{font-size:13px;min-width:18px;text-align:center}
+.totals{font-size:13px;line-height:2}
+.totals .row{display:flex;justify-content:space-between}
+.totals .total{font-size:20px;font-weight:900;border-top:2px solid #111;padding-top:8px;margin-top:6px}
+.paygrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:11px 18px;border-radius:30px;font-weight:700;font-size:13px;z-index:999;display:none;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:99;padding:16px}
 .modal.show{display:flex}
-.box{background:#1a1a2e;border:1px solid rgba(255,255,255,.15);border-radius:22px;padding:22px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto}
-@media(max-width:900px){.hero{grid-template-columns:1fr} .hero h1{font-size:38px} .projects,.services,.skills,.contact-grid,.testis{grid-template-columns:1fr} .stats{grid-template-columns:repeat(2,1fr)} .top nav{display:none} #cursorGlow{display:none}}
+.box{background:#fff;border-radius:20px;padding:20px;width:100%;max-width:440px;max-height:92vh;overflow-y:auto}
+input,select,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;outline:none;font-size:14px;margin-bottom:10px}
+input:focus{border-color:#16a34a}
+.machine{background:#111;color:#fff;border-radius:18px;padding:18px;text-align:center}
+.machine .screen{background:#0f172a;border:2px solid #334155;border-radius:12px;padding:14px;min-height:82px;margin-bottom:12px}
+.machine .screen small{color:#94a3b8;font-size:11px;letter-spacing:1px}
+.machine .screen b{font-size:22px;display:block;margin-top:4px}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.keypad button{background:#1e293b;color:#fff;border:1px solid #334155;border-radius:12px;padding:14px;font-size:18px;font-weight:900;cursor:pointer}
+.keypad button:hover{background:#334155}
+.keypad button.green{background:#16a34a;border-color:#16a34a}
+.keypad button.red{background:#ef4444;border-color:#ef4444}
+.ticket{background:#fff;border:1px dashed #999;padding:16px;font-family:monospace;font-size:13px;line-height:1.6;border-radius:10px}
+.ticket h3{text-align:center}
+.ticket .center{text-align:center}
+@media(max-width:1000px){.wrap{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
-<div class="bg"></div><div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div><div id="cursorGlow"></div>
 <div id="toast"></div>
-<div class="top"><div class="logo">GUDU<span>.DEV</span></div><nav><a href="#home">Home</a><a href="#projects">Work</a><a href="#skills">Skills</a><a href="#services">Services</a><a href="#testi">Reviews</a><a href="#contact">Contact</a></nav><div style="display:flex;gap:8px;align-items:center"><button class="btn ghost small" onclick="toggleTheme()" id="themeBtn">☀️ Light</button><button class="btn purple small" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hire Me →</button></div></div>
+<div class="top"><div class="logo">RAISTAR <span>MARKET</span><small>MERCADONA JESA — CAJA 01 • BARCELONA</small></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span style="font-size:12px;font-weight:700;background:#dcfce7;color:#16a34a;padding:6px 10px;border-radius:20px">● CAJA ABIERTA</span><button class="btn white" onclick="toast('Turno cerrado!')">Cerrar Caja</button><button class="btn dark" onclick="showSales()">📊 Ventas Hoy: <span id="salesToday">0.00€</span></button></div></div>
 
-<div class="wrap" id="home">
-<div class="hero">
-<div class="pop">
-<span class="pill">● Available for Work</span> <span class="pill">🏆 Top Rated 4.9/5</span> <span class="pill">📍 Barcelona</span>
-<h1>Hi <span class="wave">👋</span>, I'm <span class="anim">GUDU</span><br>I Build Websites<br>That Say <span class="anim">WOW!</span></h1>
-<div class="typing" id="typingText">> I build 10/10 websites...</div>
-<p>Main aisi websites banata hu jisko dekh ke log bole <b style="color:#fff">"Yaar ye kisne banaya?!"</b> — Fast, Animated, Professional. Hosting, Shop, Portfolio, Classroom — Sab kuch!</p>
-<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn purple glow magic" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">✨ View My Work →</button><button class="btn white" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">💬 Let's Talk</button></div>
-<p style="font-size:12px;margin-top:10px">⭐ 50+ Projects &nbsp; • &nbsp; 30+ Happy Clients &nbsp; • &nbsp; 100% Satisfaction</p>
+<div class="wrap">
+<!-- LEFT - PRODUCTS -->
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><h2 style="font-size:20px">🛒 Productos — Click karo, Bill me add!</h2><span style="font-size:12px;color:#888" id="prodCount">24 productos</span></div>
+<input class="search" id="search" placeholder="🔍 Buscar — Leche, Pan, Arroz..." oninput="renderProducts()">
+<div class="cat" id="cats">
+<button class="active" onclick="setCat('Todos',this)">Todos</button>
+<button onclick="setCat('Lacteos',this)">🥛 Lácteos</button>
+<button onclick="setCat('Panaderia',this)">🍞 Panadería</button>
+<button onclick="setCat('Frutas',this)">🍎 Frutas</button>
+<button onclick="setCat('Carnes',this)">🥩 Carnes</button>
+<button onclick="setCat('Bebidas',this)">🥤 Bebidas</button>
+<button onclick="setCat('Limpieza',this)">🧹 Limpieza</button>
+<button onclick="setCat('Snacks',this)">🍫 Snacks</button>
 </div>
-<div class="hero-card float pop">
-<div class="avatar">G</div>
-<h3>GUDU — Raistar</h3>
-<p>Full Stack Developer • UI/UX Designer<br>Barcelona, Spain 🇪🇸</p>
-<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:12px"><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">JavaScript</span><span class="pill">AI</span><span class="pill">Stripe</span></div>
-<div style="background:rgba(0,0,0,.35);border-radius:14px;padding:12px;margin-top:12px;text-align:left"><b style="font-size:13px">🔥 Abhi Kya Kar Raha Hu?</b><br><span style="font-size:12px;color:#cbd5e1">Teri wali 11/10 portfolio bana raha hu!<br>Kal tak live ho jayegi! 🚀</span><br><div style="height:6px;background:rgba(255,255,255,.15);border-radius:10px;margin-top:8px;overflow:hidden"><div style="width:85%;height:100%;background:linear-gradient(90deg,#7c3aed,#ec4899);border-radius:10px"></div></div><span style="font-size:11px;color:#94a3b8">85% Complete</span></div>
-<button class="btn purple magic" style="width:100%;margin-top:12px" onclick="hireMe()">💬 WhatsApp Pe Baat Karo →</button>
+<div class="grid" id="prodGrid"></div>
+<div style="background:#fefce8;border:1px solid #fde68a;border-radius:12px;padding:12px;margin-top:12px;font-size:12px;line-height:1.6"><b>💡 Tip:</b> Product pe <b>click</b> karo — Bill me add ho jayega! • <b>Barcode</b> scan jaisa — Fast hai! • <b>Domicilio</b> ke liye right side me <b>🛵 Domicilio</b> dabao!</div>
+</div>
+
+<!-- RIGHT - BILL / CAJA -->
+<div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;align-items:center"><h3>🧾 Ticket — Caja 01</h3><button class="btn white" style="padding:6px 10px;font-size:11px" onclick="clearCart()">🗑️ Limpiar</button></div>
+<p style="font-size:12px;color:#888;margin-top:4px">Cliente: <b id="clientName">Cliente General</b> • <span id="ticketNo">#0001</span> • <span id="ticketDate"></span></p>
+<div style="display:flex;gap:6px;margin:10px 0"><button class="btn white" style="flex:1;font-size:12px" onclick="setClient()">👤 Cliente</button><button class="btn white" style="flex:1;font-size:12px" onclick="applyDiscount()">🎟️ Descuento</button><button class="btn orange" style="flex:1;font-size:12px" onclick="openDomicilio()">🛵 Domicilio</button></div>
+<div id="billItems" style="min-height:120px;max-height:320px;overflow-y:auto"></div>
+<div class="totals">
+<div class="row"><span>Subtotal</span><b id="subtotal">0.00€</b></div>
+<div class="row"><span>Descuento <span id="discLabel"></span></span><b id="discount">-0.00€</b></div>
+<div class="row"><span>Domicilio <span id="deliLabel"></span></span><b id="deliCost">0.00€</b></div>
+<div class="row"><span>IVA (10% incluido)</span><b id="iva">0.00€</b></div>
+<div class="row total"><span>TOTAL</span><span id="grandTotal" style="color:#16a34a">0.00€</span></div>
+</div>
+<div class="paygrid">
+<button class="btn green big" onclick="payCash()">💶 Cash</button>
+<button class="btn dark big" onclick="openCardMachine()">💳 Pay with Card</button>
+</div>
+<button class="btn blue big" style="margin-top:8px" onclick="openDomicilio()">🛵 Domicilio — Enviar a Casa →</button>
+<button class="btn purple big" style="margin-top:8px" onclick="payBizum()">📱 Bizum — Pagar →</button>
+<p style="font-size:11px;color:#888;text-align:center;margin-top:8px">Card ke liye Code <b style="color:#111">2010</b> dalna hai — Demo ke liye!</p>
+</div>
+
+<div class="card" style="margin-top:12px;background:#f0fdf4;border-color:#bbf7d0"><h3 style="font-size:14px">📈 Hoy — Ventas</h3><p style="font-size:12px;color:#555;line-height:1.8;margin-top:6px">Tickets: <b id="todayTickets">0</b><br>Total: <b id="todayTotal">0.00€</b><br>Última venta: <b id="lastSale">—</b></p><button class="btn white big" style="margin-top:8px" onclick="showSales()">Ver Todas Las Ventas →</button></div>
 </div>
 </div>
 
-<div class="stats"><div class="stat"><b><span class="count" data-target="50">0</span>+</b><span>Projects Done</span></div><div class="stat"><b><span class="count" data-target="30">0</span>+</b><span>Happy Clients</span></div><div class="stat"><b><span class="count" data-target="15">0</span>k+</b><span>Lines of Code</span></div><div class="stat"><b>10/10</b><span>Quality Score</span></div></div>
-
-<div class="marquee"><span>✦ WEBSITES &nbsp;&nbsp; ✦ HOSTING &nbsp;&nbsp; ✦ PORTFOLIO &nbsp;&nbsp; ✦ E-COMMERCE &nbsp;&nbsp; ✦ AI WEBSITES &nbsp;&nbsp; ✦ DIGITAL CLASSROOM &nbsp;&nbsp; ✦ PAYMENT STORE &nbsp;&nbsp; ✦ WEBSITES &nbsp;&nbsp; ✦ HOSTING &nbsp;&nbsp; ✦ PORTFOLIO &nbsp;&nbsp; ✦ E-COMMERCE &nbsp;&nbsp; ✦ AI WEBSITES &nbsp;&nbsp; ✦ DIGITAL CLASSROOM &nbsp;&nbsp; ✦ PAYMENT STORE &nbsp;&nbsp;</span></div>
-
-<div class="sec" id="projects"><h2>My <span>Best Work</span> — Dekh Ke Bol WOW!</h2><p class="sub">Kisi bhi project pe click karo — Pura detail khulega!</p>
-<div class="projects">
-<div class="proj" onclick="openProj(0)"><div class="thumb" style="background:linear-gradient(135deg,#673de6,#a855f7)">🛍️</div><div class="body"><b>GUDU Hosting — Professional</b><p>Hostinger jaisi hosting — Plans, Domain, Apple Pay checkout!</p><span class="tag">HTML</span><span class="tag">Stripe</span><span class="tag">Apple Pay</span><br><br><button class="btn purple small">View →</button></div></div>
-<div class="proj" onclick="openProj(1)"><div class="thumb" style="background:linear-gradient(135deg,#ec4899,#f59e0b)">🏫</div><div class="body"><b>Digital Classroom</b><p>30 students, Attendance, Parte, AI Teacher — Pura school!</p><span class="tag">Education</span><span class="tag">AI</span><br><br><button class="btn purple small">View →</button></div></div>
-<div class="proj" onclick="openProj(2)"><div class="thumb" style="background:linear-gradient(135deg,#06b6d4,#22c55e)">🛒</div><div class="body"><b>RAISTAR Market — POS</b><p>Mercadona jaisa POS — Bill, Card, Cash, Domicilio!</p><span class="tag">POS</span><span class="tag">Billing</span><br><br><button class="btn purple small">View →</button></div></div>
-<div class="proj" onclick="openProj(3)"><div class="thumb" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">🍔</div><div class="body"><b>Food Delivery App</b><p>Zomato jaisa — Menu, Cart, Live Tracking, Payment!</p><span class="tag">Food</span><span class="tag">App</span><br><br><button class="btn purple small">View →</button></div></div>
-<div class="proj" onclick="openProj(4)"><div class="thumb" style="background:linear-gradient(135deg,#8b5cf6,#06b6d4)">🤖</div><div class="body"><b>AI Chat Website</b><p>ChatGPT jaisa AI — Kuch bhi puchho, turant jawab!</p><span class="tag">AI</span><span class="tag">Chat</span><br><br><button class="btn purple small">View →</button></div></div>
-<div class="proj" onclick="openProj(5)"><div class="thumb" style="background:linear-gradient(135deg,#22c55e,#06b6d4)">💰</div><div class="body"><b>Payment Store — 0.10€</b><p>Real Stripe + Apple Pay — Face ID karke pay karo!</p><span class="tag">Stripe</span><span class="tag">Apple Pay</span><br><br><button class="btn purple small">View →</button></div></div>
+<!-- CARD MACHINE MODAL -->
+<div class="modal" id="cardModal"><div class="box" style="max-width:400px">
+<div style="display:flex;justify-content:space-between;align-items:center"><h2>💳 Card Machine</h2><button onclick="closeModal('cardModal')" style="border:none;background:#f1f5f9;width:32px;height:32px;border-radius:50%;cursor:pointer">X</button></div>
+<p style="font-size:12px;color:#888;margin:6px 0">RAISTAR Market • Caja 01 • <span id="cardTotalLabel">0.00€</span></p>
+<div class="machine">
+<div class="screen"><small>●●● DATÁFONO — INSERTA / ACERCA TU TARJETA</small><b id="machineScreen">Total: 0.00€<br><span style="font-size:13px;color:#94a3b8">Introduce PIN: ****</span></b><p id="machineMsg" style="font-size:12px;color:#4ade80;margin-top:4px"></p></div>
+<div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn white" style="flex:1" onclick="setCardType('Visa')">VISA</button><button class="btn white" style="flex:1" onclick="setCardType('Mastercard')">Mastercard</button><button class="btn white" style="flex:1" onclick="setCardType('Apple Pay')">🍎 Apple Pay</button></div>
+<p style="font-size:12px;color:#94a3b8;margin-bottom:8px">PIN Code: <b id="pinDots" style="color:#fff;font-size:18px;letter-spacing:4px">____</b> &nbsp; <span id="cardTypeLabel" style="color:#f59e0b">Visa</span></p>
+<div class="keypad">
+<button onclick="pressKey('1')">1</button><button onclick="pressKey('2')">2</button><button onclick="pressKey('3')">3</button>
+<button onclick="pressKey('4')">4</button><button onclick="pressKey('5')">5</button><button onclick="pressKey('6')">6</button>
+<button onclick="pressKey('7')">7</button><button onclick="pressKey('8')">8</button><button onclick="pressKey('9')">9</button>
+<button class="red" onclick="clearPin()">⌫</button><button onclick="pressKey('0')">0</button><button class="green" onclick="confirmPin()">✓ OK</button>
+</div>
+<p style="font-size:11px;color:#94a3b8;margin-top:10px">Demo PIN: <b style="color:#fff">2010</b> — Ise dalo to payment ho jayega!</p>
+</div>
+<button class="btn white big" style="margin-top:10px" onclick="closeModal('cardModal')">Cancelar</button>
 </div></div>
 
-<div class="sec" id="skills"><h2>My <span>Skills</span> — 90%+ Expert!</h2><p class="sub">Har skill me best hu — Bar dekh lo!</p>
-<div class="skills">
-<div class="card"><h3 style="margin-bottom:12px">💻 Coding</h3>
-<div class="skill"><div class="row"><span>HTML / CSS — Design</span><span>95%</span></div><div class="bar"><div style="--w:95%;width:95%"></div></div></div>
-<div class="skill"><div class="row"><span>JavaScript — Logic</span><span>90%</span></div><div class="bar"><div style="--w:90%;width:90%"></div></div></div>
-<div class="skill"><div class="row"><span>Animations — WOW Effect</span><span>93%</span></div><div class="bar"><div style="--w:93%;width:93%"></div></div></div>
-<div class="skill"><div class="row"><span>Stripe / Apple Pay</span><span>85%</span></div><div class="bar"><div style="--w:85%;width:85%"></div></div></div>
-</div>
-<div class="card"><h3 style="margin-bottom:12px">🎨 Design & More</h3>
-<div class="skill"><div class="row"><span>UI / UX — Professional Look</span><span>92%</span></div><div class="bar"><div style="--w:92%;width:92%"></div></div></div>
-<div class="skill"><div class="row"><span>AI Integration</span><span>84%</span></div><div class="bar"><div style="--w:84%;width:84%"></div></div></div>
-<div class="skill"><div class="row"><span>Hosting / Deployment</span><span>89%</span></div><div class="bar"><div style="--w:89%;width:89%"></div></div></div>
-<div class="skill"><div class="row"><span>Speed Optimization</span><span>91%</span></div><div class="bar"><div style="--w:91%;width:91%"></div></div></div>
-</div>
+<!-- CASH MODAL -->
+<div class="modal" id="cashModal"><div class="box">
+<div style="display:flex;justify-content:space-between"><h2>💶 Pago en Efectivo — Cash</h2><button onclick="closeModal('cashModal')" style="border:none;background:#f1f5f9;width:32px;height:32px;border-radius:50%;cursor:pointer">X</button></div>
+<p style="font-size:13px;color:#666;margin:8px 0">Total a pagar: <b id="cashTotal" style="font-size:20px;color:#16a34a">0.00€</b></p>
+<label style="font-size:12px;font-weight:700">Cliente ne kitne diye?</label>
+<input id="cashGiven" type="number" placeholder="Ej: 20" oninput="calcChange()">
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"><button class="btn white" onclick="setCash(5)">5€</button><button class="btn white" onclick="setCash(10)">10€</button><button class="btn white" onclick="setCash(20)">20€</button><button class="btn white" onclick="setCash(50)">50€</button><button class="btn white" onclick="setCash(100)">100€</button><button class="btn white" onclick="setCashExact()">Exacto</button></div>
+<div style="background:#f0fdf4;border-radius:12px;padding:12px;font-size:14px;line-height:1.8"><div style="display:flex;justify-content:space-between"><span>Cambio / Vuelto:</span><b id="cashChange" style="font-size:20px;color:#16a34a">0.00€</b></div><div style="font-size:12px;color:#888" id="cashMsg">Paisa dalo...</div></div>
+<button class="btn green big" style="margin-top:12px" onclick="confirmCash()">✅ Cobrar Cash — Ticket Print Karo →</button>
 </div></div>
 
-<div class="sec" id="services"><h2>My <span>Services</span> — Kya Banwana Hai?</h2><p class="sub">Click karo — Price + WhatsApp khulega!</p>
-<div class="services">
-<div class="serv" onclick="buyService('Portfolio Website','49€')"><div class="ic">🌐</div><b>Portfolio Website</b><p>Teri apni 11/10 portfolio — Jaise ye wali! 2 din me ready!</p><div class="price">49€ se shuru →</div></div>
-<div class="serv" onclick="buyService('Online Shop','99€')"><div class="ic">🛒</div><b>Online Shop / Store</b><p>Apni dukaan online — Apple Pay + Card payment ke saath!</p><div class="price">99€ se shuru →</div></div>
-<div class="serv" onclick="buyService('Hosting Website','79€')"><div class="ic">🚀</div><b>Hosting Website</b><p>Hostinger jaisi — Plans + Checkout ke saath!</p><div class="price">79€ se shuru →</div></div>
-<div class="serv" onclick="buyService('AI Website','129€')"><div class="ic">🤖</div><b>AI Website</b><p>AI Chat, AI Teacher, AI Builder — Sab AI ke saath!</p><div class="price">129€ se shuru →</div></div>
-<div class="serv" onclick="buyService('School App','89€')"><div class="ic">🏫</div><b>School / Classroom App</b><p>Attendance, Parte, Marks — Pura school ek website me!</p><div class="price">89€ se shuru →</div></div>
-<div class="serv" onclick="buyService('Custom Website','149€')"><div class="ic">✨</div><b>Custom — Jo Chaho!</b><p>Jo man me hai wo batao — Main bana dunga! 11/10 wali!</p><div class="price">149€ se shuru →</div></div>
+<!-- DOMICILIO MODAL -->
+<div class="modal" id="deliModal"><div class="box">
+<div style="display:flex;justify-content:space-between"><h2>🛵 Domicilio — Enviar a Casa</h2><button onclick="closeModal('deliModal')" style="border:none;background:#f1f5f9;width:32px;height:32px;border-radius:50%;cursor:pointer">X</button></div>
+<p style="font-size:13px;color:#666;margin:8px 0">Total productos: <b id="deliTotal">0.00€</b> + Envío <b>2.99€</b> = <b id="deliGrand" style="color:#16a34a">0.00€</b><br>Entrega en 30-45 min • Barcelona</p>
+<input id="dName" placeholder="Nombre — Ej: Maria Garcia">
+<input id="dPhone" placeholder="Teléfono — Ej: 600 123 456">
+<input id="dAddr" placeholder="Dirección — Ej: Carrer Mallorca 123, Barcelona">
+<select id="dPay"><option value="Card">💳 Card al entregar</option><option value="Cash">💶 Cash al entregar</option><option value="Bizum">📱 Bizum ahora</option><option value="Apple Pay">🍎 Apple Pay ahora</option></select>
+<textarea id="dNote" rows="2" placeholder="Nota — Ej: Timbre 2A, Sin cebolla..."></textarea>
+<button class="btn orange big" onclick="confirmDomicilio()">🛵 Confirmar Pedido — Domicilio →</button>
+<p style="font-size:11px;color:#888;text-align:center;margin-top:8px">Pedido confirm hote hi Rider ko jayega!</p>
 </div></div>
 
-<div class="sec" id="testi"><h2>Clients <span>Kya Bolte Hai?</span> — WOW Wale Reviews!</h2><p class="sub">Sab khush hai — Tu bhi khush hoga!</p>
-<div class="testis">
-<div class="testi"><div class="stars">★★★★★</div><p>"Bhai ne meri website banayi — Sab ne bola WOW! Sales double ho gayi! 10/10!"</p><b>— Maria Garcia, Tienda Owner</b><br><span style="font-size:11px;color:#94a3b8">Barcelona</span></div>
-<div class="testi"><div class="stars">★★★★★</div><p>"Maine bola portfolio chahiye, isne 11/10 bana diya! Ab sab mujhe hire karna chahte hai!"</p><b>— Rahul Sharma, Blogger</b><br><span style="font-size:11px;color:#94a3b8">Delhi</span></div>
-<div class="testi"><div class="stars">★★★★★</div><p>"2 din me website ready! Animation dekh ke sab pagal ho gaye! Best developer hai!"</p><b>— Juan Perez, Freelancer</b><br><span style="font-size:11px;color:#94a3b8">Madrid</span></div>
+<!-- TICKET MODAL -->
+<div class="modal" id="ticketModal"><div class="box">
+<div style="display:flex;justify-content:space-between"><h2>✅ Pago Exitoso!</h2><button onclick="closeModal('ticketModal')" style="border:none;background:#f1f5f9;width:32px;height:32px;border-radius:50%;cursor:pointer">X</button></div>
+<div class="ticket" id="ticketContent" style="margin:12px 0"></div>
+<div style="display:flex;gap:8px"><button class="btn dark" style="flex:1" onclick="printTicket()">🖨️ Imprimir Ticket</button><button class="btn green" style="flex:1" onclick="newSale()">➕ Nueva Venta →</button></div>
 </div></div>
 
-<div class="sec"><h2>Frequently Asked <span>Questions</span></h2>
-<div class="faq" onclick="this.classList.toggle('open')"><b>Q: Kitne din me website ban jayegi?</b><p>Portfolio 2 din me, Shop 3-4 din me, Custom 5 din me! Jaldi chahiye to bol — 1 din me bhi ho jayega!</p></div>
-<div class="faq" onclick="this.classList.toggle('open')"><b>Q: Payment kaise karu?</b><p>Apple Pay, Card, Google Pay, PayPal, Bizum — Sab chalega! 50% pehle, 50% baad me!</p></div>
-<div class="faq" onclick="this.classList.toggle('open')"><b>Q: Agar pasand nahi aayi to?</b><p>3 baar free me change kar dunga! Jab tak WOW na bole, tab tak kaam karunga!</p></div>
-</div>
-
-<div class="sec" id="contact"><h2>Let's <span>Work Together!</span> 🚀</h2><p class="sub">Project hai? Abhi baat karte hai — 1 din me reply!</p>
-<div class="contact-grid">
-<div class="card"><h3>📩 Message Bhejo</h3><input id="cName" placeholder="Tera Naam"><input id="cEmail" placeholder="Email"><textarea id="cMsg" rows="4" placeholder="Kaisi website chahiye? Batao..."></textarea><button class="btn purple magic" style="width:100%" onclick="sendMsg()">Send Message →</button><p style="font-size:12px;color:#94a3b8;margin-top:8px">Form bharte hi WhatsApp khul jayega!</p></div>
-<div class="card"><h3>📞 Contact Info</h3><p style="color:#cbd5e1;line-height:2">📍 Barcelona, Spain<br>📧 hello@gudu.dev<br>📱 WhatsApp: +34 XXX XXX XXX<br>🌐 www.gudu.dev<br>⏰ Mon - Sat: 9 AM - 9 PM</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="btn white small" onclick="toast('Instagram khul raha hai!')">Instagram</button><button class="btn white small" onclick="toast('GitHub khul raha hai!')">GitHub</button><button class="btn white small" onclick="toast('YouTube khul raha hai!')">YouTube</button><button class="btn white small" onclick="toast('LinkedIn khul raha hai!')">LinkedIn</button></div><div style="background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);border-radius:12px;padding:12px;margin-top:12px"><b>⚡ Fast Reply!</b><br><span style="font-size:13px;color:#cbd5e1">Aaj message karo — Kal tak demo ready!</span></div></div>
-</div></div>
-
-<div class="card" style="background:linear-gradient(135deg,#7c3aed,#ec4899);border:none;text-align:center;padding:30px"><h2 style="font-size:28px">Teri Website Bhi 11/10 Ban Sakti Hai! 🔥</h2><p style="color:#fff;opacity:.9">Abhi message karo — 50% OFF chal raha hai!</p><button class="btn white" style="margin-top:12px" onclick="hireMe()">🚀 Project Shuru Karo →</button></div>
-
-<div class="footer"><b style="color:#fff;font-size:18px">GUDU<span style="color:#a78bfa">.DEV</span></b><br>Designed & Built with ❤️ by GUDU in Barcelona<br>© 2026 GUDU. All rights reserved.</div>
-</div>
-
-<div class="modal" id="projModal"><div class="box"><div style="display:flex;justify-content:space-between"><h2 id="projTitle">Project</h2><button onclick="closeModal('projModal')" style="border:none;background:rgba(255,255,255,.1);color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer">X</button></div><p id="projDesc" style="color:#cbd5e1;line-height:1.7;margin:12px 0"></p><div id="projTech" style="display:flex;gap:6px;flex-wrap:wrap"></div><button class="btn purple magic" style="width:100%;margin-top:14px" onclick="hireMe()">Is Jaisa Banwana Hai →</button></div></div>
+<!-- SALES MODAL -->
+<div class="modal" id="salesModal"><div class="box"><div style="display:flex;justify-content:space-between"><h2>📊 Ventas Hoy</h2><button onclick="closeModal('salesModal')" style="border:none;background:#f1f5f9;width:32px;height:32px;border-radius:50%;cursor:pointer">X</button></div><div id="salesList" style="margin-top:12px"></div><button class="btn dark big" style="margin-top:10px" onclick="closeModal('salesModal')">Cerrar</button></div></div>
 
 <script>
-document.addEventListener('mousemove',function(e){var g=document.getElementById('cursorGlow');g.style.left=e.clientX+'px';g.style.top=e.clientY+'px';});
-var texts=["> I build 11/10 websites...","> I make WOW designs...","> I love animations & AI...","> Let's build your dream website! 🚀"];
-var ti=0; setInterval(function(){ti=(ti+1)%texts.length; document.getElementById('typingText').innerText=texts[ti];},2200);
-var counters=document.querySelectorAll('.count');
-counters.forEach(function(el){var target=parseInt(el.getAttribute('data-target'));var cur=0;var int=setInterval(function(){cur+=2;if(cur>=target){cur=target;clearInterval(int);}el.innerText=cur;},30);});
-function toggleTheme(){document.body.classList.toggle('light');var isLight=document.body.classList.contains('light');document.getElementById('themeBtn').innerText=isLight?'🌙 Dark':'☀️ Light';toast(isLight?'Light theme ON!':'Dark theme ON!');}
-var projects=[
-{title:"🛍️ GUDU Hosting",desc:"Hostinger jaisi professional hosting website. Plans, Domain Search, Checkout — Apple Pay, Google Pay, Card, PayPal sab ke saath!",tech:["HTML","Stripe","Apple Pay"]},
-{title:"🏫 Digital Classroom",desc:"Puri school ek website me! 30 students, Attendance, Parte, Homework, Marks, AI Teacher — Sab kuch!",tech:["Education","AI"]},
-{title:"🛒 RAISTAR Market POS",desc:"Mercadona jaisa POS. Bill, Cash, Card, Domicilio, Discount — Sab kuch!",tech:["POS","Billing"]},
-{title:"🍔 Food Delivery App",desc:"Zomato jaisa — Menu, Cart, Live Tracking, Payment!",tech:["Food","App"]},
-{title:"🤖 AI Chat Website",desc:"ChatGPT jaisa AI — Kuch bhi puchho, turant jawab!",tech:["AI","Chat"]},
-{title:"💰 Payment Store — 0.10€",desc:"Real Stripe + Apple Pay se payment! Face ID karke pay karo, paise Bank me aate hai!",tech:["Stripe","Apple Pay"]}
+var products=[
+{id:1,name:"Leche Entera 1L",cat:"Lacteos",price:1.25,old:1.45,emoji:"🥛",stock:45,off:"-14%"},
+{id:2,name:"Pan de Molde",cat:"Panaderia",price:1.10,old:0,emoji:"🍞",stock:30},
+{id:3,name:"Huevos 12 uds",cat:"Lacteos",price:2.35,old:2.80,emoji:"🥚",stock:25,off:"-16%"},
+{id:4,name:"Arroz 1kg",cat:"Panaderia",price:1.45,old:0,emoji:"🍚",stock:50},
+{id:5,name:"Pollo Entero 1.5kg",cat:"Carnes",price:5.99,old:7.50,emoji:"🍗",stock:12,off:"-20%"},
+{id:6,name:"Plátanos 1kg",cat:"Frutas",price:1.65,old:0,emoji:"🍌",stock:40},
+{id:7,name:"Manzanas 1kg",cat:"Frutas",price:1.95,old:0,emoji:"🍎",stock:35},
+{id:8,name:"Coca-Cola 2L",cat:"Bebidas",price:1.85,old:2.10,emoji:"🥤",stock:28,off:"-12%"},
+{id:9,name:"Agua 1.5L",cat:"Bebidas",price:0.55,old:0,emoji:"💧",stock:60},
+{id:10,name:"Aceite Oliva 1L",cat:"Panaderia",price:4.95,old:5.80,emoji:"🫒",stock:18,off:"-15%"},
+{id:11,name:"Queso Manchego 250g",cat:"Lacteos",price:3.45,old:0,emoji:"🧀",stock:20},
+{id:12,name:"Jamón Serrano 100g",cat:"Carnes",price:3.95,old:0,emoji:"🥓",stock:15},
+{id:13,name:"Fairy Lavavajillas",cat:"Limpieza",price:2.75,old:0,emoji:"🧴",stock:22},
+{id:14,name:"Papel Higiénico 12 rollos",cat:"Limpieza",price:4.50,old:5.20,emoji:"🧻",stock:14,off:"-13%"},
+{id:15,name:"Chocolate Valor 200g",cat:"Snacks",price:1.95,old:0,emoji:"🍫",stock:33},
+{id:16,name:"Patatas Fritas 300g",cat:"Snacks",price:1.65,old:0,emoji:"🍟",stock:27},
+{id:17,name:"Café 250g",cat:"Bebidas",price:3.25,old:0,emoji:"☕",stock:19},
+{id:18,name:"Tomates 1kg",cat:"Frutas",price:1.85,old:0,emoji:"🍅",stock:38},
+{id:19,name:"Yogur Natural x4",cat:"Lacteos",price:1.55,old:0,emoji:"🍶",stock:29},
+{id:20,name:"Croissant x4",cat:"Panaderia",price:2.20,old:0,emoji:"🥐",stock:16},
+{id:21,name:"Zumo Naranja 1L",cat:"Bebidas",price:1.75,old:0,emoji:"🍊",stock:24},
+{id:22,name:"Helado Vainilla 500ml",cat:"Snacks",price:2.95,old:3.50,emoji:"🍦",stock:11,off:"-16%"},
+{id:23,name:"Pasta 500g",cat:"Panaderia",price:0.95,old:0,emoji:"🍝",stock:48},
+{id:24,name:"Detergente 3L",cat:"Limpieza",price:5.50,old:0,emoji:"🧺",stock:10},
 ];
-function toast(m){var t=document.getElementById('toast');t.innerText=m;t.style.display='block';setTimeout(function(){t.style.display='none'},2400);}
-function openProj(i){var p=projects[i];document.getElementById('projTitle').innerText=p.title;document.getElementById('projDesc').innerText=p.desc;var h='';for(var j=0;j<p.tech.length;j++)h+='<span style="background:rgba(255,255,255,.12);padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700">'+p.tech[j]+'</span>';document.getElementById('projTech').innerHTML=h;document.getElementById('projModal').classList.add('show');}
-function closeModal(id){document.getElementById(id).classList.remove('show');}
-function hireMe(){toast('WhatsApp khul raha hai!');setTimeout(function(){window.open('https://wa.me/34600000000?text=Hi GUDU! Mujhe website banwani hai!','_blank');},500);}
-function buyService(name,price){toast(name+' — '+price+' select!');setTimeout(function(){if(confirm(name+' — '+price+' — Order karna hai?'))hireMe();},300);}
-function sendMsg(){var n=document.getElementById('cName').value.trim();var m=document.getElementById('cMsg').value.trim();if(!n||!m){toast('Naam aur Message likho!');return;}toast('Message bheja ja raha hai...');setTimeout(function(){window.open('https://wa.me/34600000000?text=Hi GUDU! Main '+encodeURIComponent(n)+' hu. '+encodeURIComponent(m),'_blank');document.getElementById('cName').value='';document.getElementById('cMsg').value='';toast('Message bhej diya!');},600);}
-</script>
-</body>
-</html>
+var cart={}; var cat="Todos"; var discountPct=0; var discountCode=""; var deliMode=false; var deliInfo=null; var client="Cliente General"; var ticketCounter=1; var sales=[]; var pin=""; var cardType="Visa";
+function money(n){return n.toFixed(2)+"€";}
+function toast(m){var t=document.getElementById("toast");t.innerText=m;t.style.display="block";setTimeout(function(){t.style.display="none"},2400);}
+function setCat(c,el){cat=c;document.querySelectorAll("#cats button").forEach(function(b){b.classList.remove("active")});el.classList.add("active");renderProducts();}
+function renderProducts(){
+  var q=document.getElementById("search").value.toLowerCase();
+  var list=products.filter(function(p){return (cat==="Todos"||p.cat===cat) && p.name.toLowerCase().includes(q)});
+  document.getElementById("prodCount").innerText=list.length+" productos";
+  var html="";
+  list.forEach(function(p){
+    html+='<div class="prod" onclick="addToCart('+p.id+')">'+(p.off?'<span class="off">'+p.off+'</span>':'')+'<span class="emoji">'+p.emoji+'</span><b>'+p.name+'</b><div class="price">'+money(p.price)+' '+(p.old?'<span class="old">'+money(p.old)+'</span>':'')+'</div><div class="stock">Stock: '+p.stock+' • '+p.cat+'</div><div style="background:#16a34a;color:#fff;font-size:11px;font-weight:800;padding:5px;border-radius:8px;margin-top:6px">+ AÑADIR →</div></div>';
+  });
+  document.getElementById("prodGrid").innerHTML=html||'<p style="grid-column:1/-1;text-align:center;color:#888">Koi product nahi mila!</p>';
+}
+function addToCart(id){
+  cart[id]=(cart[id]||0)+1;
+  var p=products.find(function(x){return x.id===id});
+  toast(p.emoji+" "+p.name+" — Bill me add ho gaya! ✅");
+  renderBill();
+}
+function changeQty(id,d){
+  cart[id]=(cart[id]||0)+d;
+  if(cart[id]<=0) delete cart[id];
+  renderBill();
+}
+function removeItem(id){delete cart[id];renderBill();}
+function clearCart(){cart={};discountPct=0;discountCode="";deliMode=false;deliInfo=null;document.getElementById("discLabel").innerText="";document.getElementById("deliLabel").innerText="";renderBill();toast("Bill saaf ho gaya!");}
+function getTotals(){
+  var sub=0; Object.keys(cart).forEach(function(id){var p=products.find(function(x){return x.id==id}); sub+=p.price*cart[id];});
+  var disc=sub*discountPct/100;
