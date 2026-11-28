@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GUDU SCHOOL - Attendance</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#eef2ff;padding:12px}
+.top{background:#1e40af;color:#fff;padding:14px;border-radius:16px;display:flex;justify-content:space-between;align-items:center}
+.top b{font-size:18px}.top span{font-size:11px;opacity:.9}
+.box{background:#fff;border-radius:16px;padding:14px;margin-top:12px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+label{font-size:12px;font-weight:700;display:block;margin:10px 0 5px}
+input,select{width:100%;padding:11px;border:1.5px solid #e2e8f0;border-radius:12px;font-size:14px}
+.btn{width:100%;border:0;padding:12px;border-radius:30px;font-weight:900;font-size:13px;cursor:pointer;margin-top:10px}
+.blue{background:#1e40af;color:#fff}.green{background:#22c55e;color:#fff}.yellow{background:#facc15}.dark{background:#111;color:#fff}
+.row{display:flex;gap:8px}.row .btn{flex:1}
+.attRow{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #f1f5f9}
+.pill{padding:7px 14px;border-radius:20px;font-weight:900;font-size:12px;border:0;cursor:pointer}
+.p{background:#dcfce7;color:#15803d}.a{background:#fee2e2;color:#dc2626}.l{background:#fef9c3;color:#a16207}
+.waBox{background:#dcfce7;border:1px solid #86efac;border-radius:14px;padding:12px;margin-top:12px;font-size:13px;display:none}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.stat div{background:#f8fafc;border-radius:12px;padding:10px;text-align:center}
+.stat b{font-size:18px;display:block}.stat span{font-size:11px;color:#64748b}
+.toast{position:fixed;left:50%;top:14px;transform:translateX(-50%);background:#111;color:#fff;padding:11px 16px;border-radius:30px;font-size:13px;font-weight:700;z-index:99;display:none}
+</style>
+</head>
+<body>
+<div class="top"><div><b>🎓 GUDU SCHOOL</b><br><span>Attendance • Class 5-A • Session 2026-27</span></div><span style="background:#fff;color:#1e40af;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:900">📅 <span id="todayTxt"></span></span></div>
+
+<div class="box">
+<label>📅 Date Select Karo</label><input type="date" id="attDate">
+<label>🏫 Class Select Karo</label><select id="attClass" onchange="changeClass()"><option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option selected>Class 5-A</option><option>Class 6-A</option><option>Class 7-A</option><option>Class 8-A</option><option>Class 9-A</option><option>Class 10-A</option></select>
+<label>👩‍🏫 Teacher ka Naam</label><input id="teacherName" placeholder="e.g. Priya Ma'am" value="Priya Ma'am">
+<div class="row"><button class="btn green" onclick="markAll('P')">✅ Sabko Present Karo</button><button class="btn yellow" onclick="markAll('A')">❌ Sabko Absent</button></div>
+<div class="stat"><div><b id="cTotal">0</b><span>Total</span></div><div><b id="cPresent" style="color:#15803d">0</b><span>Present</span></div><div><b id="cAbsent" style="color:#dc2626">0</b><span>Absent</span></div></div>
+</div>
+
+<div class="box"><h3>👧👦 Bachcho ki List — Tap karke P / A / L badlo</h3><p style="font-size:11px;color:#64748b;margin-top:4px">P = Present • A = Absent • L = Leave / Chhutti</p><div id="attList"></div>
+<button class="btn blue" onclick="saveAttendance()">💾 Attendance Save Karo</button>
+<button class="btn dark" onclick="sendAbsentAlerts()">⏰ 10:00 AM — Absent walo ko WhatsApp Alert Bhejo</button>
+<div class="waBox" id="attWa"></div>
+</div>
+
+<div class="box"><h3>📊 Is Mahine ki Report</h3><div id="monthlyReport"></div><div class="row"><button class="btn yellow" onclick="showMonthly()">📊 Monthly Report Dekho</button><button class="btn green" onclick="exportAttendance()">⬇️ Attendance Download</button></div></div>
+
+<div class="box"><h3>📜 Pichhli Attendance</h3><div id="history"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== GUDU SCHOOL - ATTENDANCE SYSTEM =====
+let students=[
+ {name:"Aanya Gupta",roll:"1041",phone:"919876543210",status:"P",present:22,absent:1},
+ {name:"Aarav Sharma",roll:"1042",phone:"919876543211",status:"A",present:20,absent:3},
+ {name:"Ishaan Roy",roll:"1043",phone:"919876543212",status:"P",present:23,absent:0},
+ {name:"Meera Das",roll:"1044",phone:"919876543213",status:"P",present:21,absent:2},
+ {name:"Rohan Paul",roll:"1045",phone:"919876543214",status:"P",present:22,absent:1},
+ {name:"Sara Khan",roll:"1046",phone:"919876543215",status:"P",present:23,absent:0},
+ {name:"Kabir Singh",roll:"1047",phone:"919876543216",status:"P",present:19,absent:4},
+ {name:"Diya Verma",roll:"1048",phone:"919876543217",status:"L",present:21,absent:1},
+];
+let historyList=JSON.parse(localStorage.getItem("gudu_att_history")||"[]");
+function toast(m){let t=document.getElementById("toast");t.innerText=m;t.style.display="block";setTimeout(()=>t.style.display="none",3000);}
+function today(){let d=new Date();document.getElementById("attDate").value=d.toISOString().slice(0,10);document.getElementById("todayTxt").innerText=d.toLocaleDateString("hi-IN",{day:"numeric",month:"short"});}
+today();
+function changeClass(){toast("🏫 "+document.getElementById("attClass").value+" ki list khul gayi!");render();}
+function render(){
+ let h="";
+ students.forEach((s,i)=>{
+  let label=s.status==="P"?"✅ Present":s.status==="A"?"❌ Absent":"🟡 Leave";
+  let cls=s.status==="P"?"p":s.status==="A"?"a":"l";
+  h+=`<div class="attRow"><div><b>${s.name}</b><br><span style="font-size:11px;color:#64748b">Roll ${s.roll} • Is mahine: ${s.present} Present, ${s.absent} Absent</span></div><button class="pill ${cls}" onclick="cycle(${i})">${label}</button></div>`;
+ });
+ document.getElementById("attList").innerHTML=h;
+ updateCount();
+ renderHistory();
+}
+function cycle(i){
+ let s=students[i];
+ s.status=s.status==="P"?"A":s.status==="A"?"L":"P";
+ render();
+}
+function markAll(st){students.forEach(s=>s.status=st);render();toast(st==="P"?"✅ Sabko Present kar diya!":"❌ Sabko Absent kar diya!");}
+function updateCount(){
+ let p=students.filter(s=>s.status==="P").length;
+ let a=students.filter(s=>s.status==="A").length;
+ document.getElementById("cTotal").innerText=students.length;
+ document.getElementById("cPresent").innerText=p;
+ document.getElementById("cAbsent").innerText=a;
+}
+function saveAttendance(){
+ let date=document.getElementById("attDate").value;
+ let cls=document.getElementById("attClass").value;
+ let teacher=document.getElementById("teacherName").value||"Teacher";
+ let p=students.filter(s=>s.status==="P").length;
+ let a=students.filter(s=>s.status==="A").length;
+ let rec={date,cls,teacher,present:p,absent:a,total:students.length,students:students.map(s=>({name:s.name,roll:s.roll,status:s.status}))};
+ historyList.unshift(rec);
+ localStorage.setItem("gudu_att_history",JSON.stringify(historyList));
+ // Monthly count badhao
+ students.forEach(s=>{if(s.status==="P")s.present++; if(s.status==="A")s.absent++;});
+ render();
+ toast("💾 Attendance Save Ho Gayi! "+date+" • "+p+" Present, "+a+" Absent");
+}
+function sendAbsentAlerts(){
+ let absent=students.filter(s=>s.status==="A");
+ let leave=students.filter(s=>s.status==="L");
+ if(absent.length===0){toast("✅ Aaj koi absent nahi hai!");return;}
+ let msg=`⏰ GUDU SCHOOL - Absent Alert (10:00 AM)\n\nAaj ${new Date().toLocaleDateString("hi-IN")} ko ye bachche school nahi aaye:\n${absent.map(s=>"• "+s.name+" (Roll "+s.roll+")").join("\n")}\n\nSab theek hai? Reply karein.\n- Gudu School, ${document.getElementById("teacherName").value}`;
+ let box=document.getElementById("attWa");box.style.display="block";
+ box.innerHTML=`<b>⏰ 10:00 AM — Absent Alerts Ready!</b><br>Absent: <b>${absent.map(s=>s.name).join(", ")}</b><br>Leave: ${leave.map(s=>s.name).join(", ")||"Koi nahi"}<br><br>${absent.map(s=>`<button onclick="sendOne('${s.phone}','${s.name}')" style="background:#22c55e;color:#fff;border:0;padding:9px 12px;border-radius:20px;font-weight:900;margin:3px;cursor:pointer">📩 ${s.name} ke Parent ko Bhejo</button>`).join("")}<br><button onclick="sendAllAbsent()" style="background:#111;color:#fff;border:0;padding:10px 16px;border-radius:20px;font-weight:900;margin-top:6px">📤 Sabko Ek Saath Bhejo</button>`;
+ toast("⏰ "+absent.length+" absent alerts ready!");
+}
+function sendOne(phone,name){
+ let msg=`⏰ GUDU SCHOOL\n\nNamaste, ${name} aaj school nahi aaya. Sab theek hai? Reply karein.\n- Gudu School`;
+ window.open("https://wa.me/"+phone+"?text="+encodeURIComponent(msg),"_blank");
+}
+function sendAllAbsent(){
+ let absent=students.filter(s=>s.status==="A");
+ let msg=`⏰ GUDU SCHOOL - Absent Alert\n\nAaj absent: ${absent.map(s=>s.name).join(", ")}\nSab theek hai? Reply karein.\n- Gudu School`;
+ window.open("https://wa.me/919876543210?text="+encodeURIComponent(msg),"_blank");
+}
+function showMonthly(){
+ let h=students.map(s=>{
+  let total=s.present+s.absent; let per=total?Math.round(s.present/total*100):100;
+  let color=per>=90?"#15803d":per>=75?"#a16207":"#dc2626";
+  return `<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #f1f5f9"><div><b>${s.name}</b><br><span style="font-size:11px;color:#64748b">${s.present} Present • ${s.absent} Absent</span></div><b style="color:${color}">${per}%</b></div>`;
+ }).join("");
+ document.getElementById("monthlyReport").innerHTML=h;
+ toast("📊 Monthly Report aa gayi!");
+}
+function exportAttendance(){
+ let data=JSON.stringify({history:historyList,students},null,2);
+ let blob=new Blob([data],{type:"application/json"});let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="gudu-attendance.json";a.click();
+ toast("⬇️ Attendance download ho gayi!");
+}
+function renderHistory(){
+ if(historyList.length===0){document.getElementById("history").innerHTML=`<p style="font-size:12px;color:#64748b">Abhi koi purani attendance nahi hai. Upar se Save karo!</p>`;return;}
+ document.getElementById("history").innerHTML=historyList.slice(0,5).map(r=>`<div style="padding:9px 0;border-bottom:1px solid #f1f5f9"><b>${r.date}</b> • ${r.cls} • ${r.teacher}<br><span style="font-size:12px">✅ ${r.present} Present • ❌ ${r.absent} Absent • Total ${r.total}</span></div>`).join("");
+}
+render();
+</script>
+</body>
+</html>
